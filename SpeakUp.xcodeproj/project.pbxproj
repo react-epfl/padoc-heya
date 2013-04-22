@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		805F611F17031B2600ED8414 /* iWall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F611C17031A8E00ED8414 /* iWall.framework */; };
 		80864DE416FF649700ED1724 /* non-official-room-mine.png in Resources */ = {isa = PBXBuildFile; fileRef = 80864DE216FF649700ED1724 /* non-official-room-mine.png */; };
 		80864DE516FF649700ED1724 /* official-room-notmine.png in Resources */ = {isa = PBXBuildFile; fileRef = 80864DE316FF649700ED1724 /* official-room-notmine.png */; };
 		8089F91B16E4DB0E0081E322 /* speakUPlogoRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = 8089F91A16E4DB0E0081E322 /* speakUPlogoRetina.png */; };
@@ -58,33 +57,19 @@
 		8096A9241636F37E0092F049 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9231636F37D0092F049 /* QuartzCore.framework */; };
 		8096A9261636F39C0092F049 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9251636F39B0092F049 /* CoreLocation.framework */; };
 		8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9271636F3FD0092F049 /* MessageUI.framework */; };
-		8096A92A1636F4950092F049 /* SUlogoSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 8096A9291636F4950092F049 /* SUlogoSmall.png */; };
-		8096A92C1636F49C0092F049 /* SUlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8096A92B1636F49C0092F049 /* SUlogo.png */; };
 		8096A92E1636F7E60092F049 /* chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 8096A92D1636F7E60092F049 /* chevron.png */; };
 		80EEBC5316D3C07C001B87FA /* iPadStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */; };
+		80FB4C4317251EE40004965A /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3C17251EE40004965A /* base64.c */; };
+		80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */; };
+		80FB4C4517251EE40004965A /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C4217251EE40004965A /* SRWebSocket.m */; };
+		80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4617251F460004965A /* CFNetwork.framework */; };
+		80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4817251F540004965A /* libicucore.dylib */; };
+		80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4A17251F5D0004965A /* Security.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		805F611B17031A8E00ED8414 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 80864DE61703028600ED1724 /* iWall.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 427D1A1114D42EB40026418F;
-			remoteInfo = iWall;
-		};
-		805F611D17031B0A00ED8414 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 80864DE61703028600ED1724 /* iWall.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 427D1A1014D42EB40026418F;
-			remoteInfo = iWall;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		80864DE216FF649700ED1724 /* non-official-room-mine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "non-official-room-mine.png"; sourceTree = "<group>"; };
 		80864DE316FF649700ED1724 /* official-room-notmine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "official-room-notmine.png"; sourceTree = "<group>"; };
-		80864DE61703028600ED1724 /* iWall.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iWall.xcodeproj; path = "../iWall-Middleware-PROXY-iOS/iWall/iWall.xcodeproj"; sourceTree = "<group>"; };
 		8089F91A16E4DB0E0081E322 /* speakUPlogoRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speakUPlogoRetina.png; path = ../speakUPlogoRetina.png; sourceTree = "<group>"; };
 		8089F91C16E4DB480081E322 /* speakUPlogoNotRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speakUPlogoNotRetina.png; path = ../speakUPlogoNotRetina.png; sourceTree = "<group>"; };
 		8089F91E16E4DBFE0081E322 /* speakUPlogoRetinaiPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speakUPlogoRetinaiPad.png; path = ../speakUPlogoRetinaiPad.png; sourceTree = "<group>"; };
@@ -150,10 +135,18 @@
 		8096A9231636F37D0092F049 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8096A9251636F39B0092F049 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8096A9271636F3FD0092F049 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		8096A9291636F4950092F049 /* SUlogoSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SUlogoSmall.png; path = ../SUlogoSmall.png; sourceTree = "<group>"; };
-		8096A92B1636F49C0092F049 /* SUlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SUlogo.png; path = ../SUlogo.png; sourceTree = "<group>"; };
 		8096A92D1636F7E60092F049 /* chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chevron.png; sourceTree = "<group>"; };
 		80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPadStoryboard.storyboard; sourceTree = "<group>"; };
+		80FB4C3C17251EE40004965A /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/base64.c; sourceTree = "<group>"; };
+		80FB4C3D17251EE40004965A /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/base64.h; sourceTree = "<group>"; };
+		80FB4C3E17251EE40004965A /* NSData+SRB64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+SRB64Additions.h"; path = "SocketRocket/NSData+SRB64Additions.h"; sourceTree = "<group>"; };
+		80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+SRB64Additions.m"; path = "SocketRocket/NSData+SRB64Additions.m"; sourceTree = "<group>"; };
+		80FB4C4017251EE40004965A /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SocketRocket-Prefix.pch"; path = "SocketRocket/SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
+		80FB4C4117251EE40004965A /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRWebSocket.h; path = SocketRocket/SRWebSocket.h; sourceTree = "<group>"; };
+		80FB4C4217251EE40004965A /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SRWebSocket.m; sourceTree = "<group>"; };
+		80FB4C4617251F460004965A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		80FB4C4817251F540004965A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		80FB4C4A17251F5D0004965A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +154,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				805F611F17031B2600ED8414 /* iWall.framework in Frameworks */,
+				80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */,
+				80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */,
+				80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */,
 				80939B88166E0D7D0079BEF0 /* MapKit.framework in Frameworks */,
 				8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */,
 				8096A9261636F39C0092F049 /* CoreLocation.framework in Frameworks */,
@@ -175,17 +170,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		805F611817031A8E00ED8414 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				805F611C17031A8E00ED8414 /* iWall.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		8096A89C1636E80B0092F049 = {
 			isa = PBXGroup;
 			children = (
+				80FB4C3B17251E950004965A /* SocketRocket */,
 				80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */,
 				8096A8D01636E9C60092F049 /* MainStoryboard.storyboard */,
 				8096A8B11636E80C0092F049 /* SpeakUp */,
@@ -205,7 +193,9 @@
 		8096A8AA1636E80C0092F049 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				80864DE61703028600ED1724 /* iWall.xcodeproj */,
+				80FB4C4817251F540004965A /* libicucore.dylib */,
+				80FB4C4A17251F5D0004965A /* Security.framework */,
+				80FB4C4617251F460004965A /* CFNetwork.framework */,
 				80939B87166E0D7D0079BEF0 /* MapKit.framework */,
 				8096A9231636F37D0092F049 /* QuartzCore.framework */,
 				8096A9251636F39B0092F049 /* CoreLocation.framework */,
@@ -289,8 +279,6 @@
 				8089F91E16E4DBFE0081E322 /* speakUPlogoRetinaiPad.png */,
 				8089F91C16E4DB480081E322 /* speakUPlogoNotRetina.png */,
 				8089F91A16E4DB0E0081E322 /* speakUPlogoRetina.png */,
-				8096A92B1636F49C0092F049 /* SUlogo.png */,
-				8096A9291636F4950092F049 /* SUlogoSmall.png */,
 				8096A8DA1636E9C60092F049 /* noMsg.png */,
 				8096A8DB1636E9C60092F049 /* non-official-room.png */,
 				8096A8DC1636E9C60092F049 /* noroom.png */,
@@ -341,6 +329,20 @@
 			name = CopyPaste;
 			sourceTree = "<group>";
 		};
+		80FB4C3B17251E950004965A /* SocketRocket */ = {
+			isa = PBXGroup;
+			children = (
+				80FB4C3C17251EE40004965A /* base64.c */,
+				80FB4C3D17251EE40004965A /* base64.h */,
+				80FB4C3E17251EE40004965A /* NSData+SRB64Additions.h */,
+				80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */,
+				80FB4C4017251EE40004965A /* SocketRocket-Prefix.pch */,
+				80FB4C4117251EE40004965A /* SRWebSocket.h */,
+				80FB4C4217251EE40004965A /* SRWebSocket.m */,
+			);
+			name = SocketRocket;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -355,7 +357,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				805F611E17031B0A00ED8414 /* PBXTargetDependency */,
 			);
 			name = SpeakUp;
 			productName = SpeakUp;
@@ -381,28 +382,12 @@
 			mainGroup = 8096A89C1636E80B0092F049;
 			productRefGroup = 8096A8A81636E80C0092F049 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 805F611817031A8E00ED8414 /* Products */;
-					ProjectRef = 80864DE61703028600ED1724 /* iWall.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8096A8A61636E80B0092F049 /* SpeakUp */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		805F611C17031A8E00ED8414 /* iWall.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework.static;
-			path = iWall.framework;
-			remoteRef = 805F611B17031A8E00ED8414 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8096A8A51636E80B0092F049 /* Resources */ = {
@@ -428,8 +413,6 @@
 				8096A91C1636E9DA0092F049 /* grayArrow@2x.png in Resources */,
 				8096A91D1636E9DA0092F049 /* whiteArrow.png in Resources */,
 				8096A91E1636E9DA0092F049 /* whiteArrow@2x.png in Resources */,
-				8096A92A1636F4950092F049 /* SUlogoSmall.png in Resources */,
-				8096A92C1636F49C0092F049 /* SUlogo.png in Resources */,
 				8096A92E1636F7E60092F049 /* chevron.png in Resources */,
 				80EEBC5316D3C07C001B87FA /* iPadStoryboard.storyboard in Resources */,
 				8089F91B16E4DB0E0081E322 /* speakUPlogoRetina.png in Resources */,
@@ -466,18 +449,13 @@
 				8096A9031636E9C60092F049 /* RoomTableViewController.m in Sources */,
 				8096A9161636E9DA0092F049 /* EGORefreshTableHeaderView.m in Sources */,
 				8090FE6D1664FC6A005A6358 /* SpeakUpManager.m in Sources */,
+				80FB4C4317251EE40004965A /* base64.c in Sources */,
+				80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */,
+				80FB4C4517251EE40004965A /* SRWebSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		805F611E17031B0A00ED8414 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = iWall;
-			targetProxy = 805F611D17031B0A00ED8414 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8096A8B41636E80C0092F049 /* InfoPlist.strings */ = {
