@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, isVisible, peersWhoFlagged, authorPeerID, publication, publicationID, publicationRequest,subscription,subscriptionID,subscriptionRequest,ratingPerPeer;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, isVisible, peersWhoFlagged, authorPeerID,ratingPerPeer;
 
 - (id)init{
     self = [super init];
@@ -21,8 +21,6 @@
         numberOfYes=0;
         score=0;
         ratingPerPeer= [[NSMutableDictionary alloc] init];
-        subscription=nil;
-        subscriptionID=nil;
     }
     return self;
 }

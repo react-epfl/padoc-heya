@@ -16,4 +16,6 @@
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room;
 
+-(void)notifyThatLocationHasChangedSignificantly;
+
 @end

@@ -44,37 +44,29 @@
     [input becomeFirstResponder];
     self.mapView.delegate = self;
     self.input.delegate=self;
-    int characterNumber = [[input text] length];
-    [createButton setEnabled:NO];
+//    int characterNumber = [[input text] length];
+    [createButton setEnabled:YES];
     
-    int myNumberOfRooms = [[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] count];
+//    int myNumberOfRooms = [[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] count];
+//    
+//    
+//    if((characterNumber>0 && myNumberOfRooms<MAX_ROOMS)|| [[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
+//        [createButton setEnabled:YES];
+//        [input setEnabled:YES];
+//    }else if(myNumberOfRooms>=MAX_ROOMS){
+//        [input setPlaceholder:@"You cannot create more rooms"];
+//        [input setUserInteractionEnabled:NO];
+//    }
+//    if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
+//        [input setPlaceholder:@"You are super :)"];
+//        self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
+//    }else {
+//        int numberOfRoomsLeft = MAX_ROOMS - myNumberOfRooms;
+//        self.navigationItem.title=[NSString stringWithFormat:@"Create room (%d left)",numberOfRoomsLeft];
+//    }
     
+    self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
     
-    if((characterNumber>0 && myNumberOfRooms<MAX_ROOMS)|| [[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-        [createButton setEnabled:YES];
-        [input setEnabled:YES];
-    }else if(myNumberOfRooms>=MAX_ROOMS){
-        [input setPlaceholder:@"You cannot create more rooms"];
-        [input setUserInteractionEnabled:NO];
-    }
-    if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-        [input setPlaceholder:@"You are super :)"];
-        self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
-    }else {
-        int numberOfRoomsLeft = MAX_ROOMS - myNumberOfRooms;
-        self.navigationItem.title=[NSString stringWithFormat:@"Create room (%d left)",numberOfRoomsLeft];
-    }
-    
-    //self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
-    
-    // MKCoordinateRegion mapRegion;
-    /// mapRegion.center = self.mapView.userLocation.coordinate;
-    //mapRegion.span.latitudeDelta = 25;
-    //mapRegion.span.longitudeDelta = 10;
-    
-    //[self.mapView setRegion:mapRegion animated: YES];
-    
-    // [self.view insertSubview:mapView atIndex:0];
 }
 
 - (void)viewDidUnload
@@ -118,12 +110,12 @@
     }else if(self.input.text.length>0){
         NSLog(@"creating a new room %@ ", input.text);
         Room* myRoom = [[Room alloc] init];
-        int roomNumber= [[SpeakUpManager sharedSpeakUpManager] getNextRoomNumber];
-        int peerID= [[[SpeakUpManager sharedSpeakUpManager] peerID] intValue] ;
+       // int roomNumber= [[SpeakUpManager sharedSpeakUpManager] getNextRoomNumber];
+        //int peerID= [[[SpeakUpManager sharedSpeakUpManager] peerID] intValue] ;
         if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
             myRoom.isOfficial=YES;
         }
-        myRoom.roomID=[NSString stringWithFormat: @"peer%droom%d", peerID, roomNumber];
+       // myRoom.roomID=[NSString stringWithFormat: @"peer%droom%d", peerID, roomNumber];
         
         myRoom.name = self.input.text;
         myRoom.latitude=self.mapView.userLocation.coordinate.latitude;

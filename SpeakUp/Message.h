@@ -35,13 +35,6 @@
 @property (nonatomic) BOOL  yesIsPressed;
 @property (nonatomic) BOOL  noIsPressed;
 
-@property (strong, nonatomic) Request* publicationRequest;
-@property (strong, nonatomic) Publication  *publication;
-@property (strong, nonatomic) NSNumber  *publicationID;
-
-@property (strong, nonatomic) Request* subscriptionRequest;
-@property (strong, nonatomic) Subscription  *subscription;
-@property (strong, nonatomic) NSNumber  *subscriptionID;
 
 
 

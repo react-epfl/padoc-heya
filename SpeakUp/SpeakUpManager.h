@@ -6,13 +6,14 @@
 //  Copyright (c) 2012 Adrian Holzer. All rights reserved.
 //
 
-#import <iWall/iWall.h>
 #import <Foundation/Foundation.h>
 #import "Message.h"
 #import "Room.h"
 #import "SpeakUpManagerDelegate.h"
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
+#import "SRWebSocket.h"
+
 
 #define BOOLEAN  @"BOOLEAN"
 #define STRING   @"STRING"
@@ -23,12 +24,17 @@
 #define FLOAT    @"FLOAT"
 #define DOUBLE   @"DOUBLE"
 
-@interface SpeakUpManager : NSObject <MobilePeerDelegate,CLLocationManagerDelegate, MatchRepositoryDelegate>
+@interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
 
 +(id) sharedSpeakUpManager;
 
+
+
+
 // PEER RELATED METHODS
 -(void)savePeerData;
+
+- (void)getNearbyRooms;
 
 // MESSAGE RELATED METHODS
 -(void) deleteMessage:(Message *) message;
@@ -41,11 +47,15 @@
 - (void)createRoom:(Room *)room;
 - (void)resetData;// initiates a process that leads to the removal of all subscriptions and reinitialization of the roomArray
 
+- (void)resetPeerID;
 
-//increments and returns the next message number for this peer, then saves the data
--(int)getNextMessageNumber;
-//increments and returns the next room number for this peer, then saves the data
--(int)getNextRoomNumber;
+
+
+
+
+//WebSocket
+@property (strong, nonatomic)  SRWebSocket *myWebSocket;
+
 
 
 @property (nonatomic) BOOL connectionIsOK;
@@ -53,6 +63,7 @@
 
 // Peer fields
 @property (strong, nonatomic)  CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocation* locationAtLastReset;
 @property (strong, nonatomic) CLLocation* location;
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
@@ -80,8 +91,7 @@
 @property (strong, nonatomic) NSMutableArray *roomArray;
 
 // Fields used to communicate with the middleware
-@property (nonatomic,strong)  MobilePeer  *me;
-@property (nonatomic)  NSNumber  *peerID;
+@property (nonatomic)  NSString  *peerID;
 @property (nonatomic)  NSNumber  *roomCounter;
 @property (nonatomic)  NSNumber  *messageCounter;
 
@@ -91,7 +101,7 @@
 @property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;
 
 // repo where matches are stored
-@property (nonatomic,strong) MatchRepository* matchRepository;
+
 // timer is used to retrieve matches from the repo
 @property (nonatomic,strong) NSTimer* timer; 
 // shared topic for publications and subscriptions: SpeakUp
@@ -102,10 +112,8 @@
 @property (nonatomic,strong) NSNumber* roomLifetime;
 
 // Fields related to the subscription
-@property (nonatomic,strong)  Subscription *subscription;
-@property (nonatomic, strong) NSString* subscriptionSelector;
 @property (nonatomic,strong) NSNumber* subscriptionRadius;
-@property (nonatomic,strong) NSNumber* subscriptionLifetime;
+
 
 // Field used to store the matches
 @property (nonatomic,strong)  NSMutableArray *matches;

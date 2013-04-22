@@ -89,11 +89,21 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        [[SpeakUpManager sharedSpeakUpManager] resetData];
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
 }
+
+
+-(void)notifyThatLocationHasChangedSignificantly{
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
+//                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", currentRoom.name ]
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
+        [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {

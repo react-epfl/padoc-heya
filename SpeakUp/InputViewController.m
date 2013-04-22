@@ -11,7 +11,7 @@
 #import "SpeakUpManager.h"
 #import "Message.h"
 
-#define MAX_LENGTH 160
+#define MAX_LENGTH 500
 
 @implementation InputViewController
 
@@ -127,10 +127,10 @@
         newMessage.content= input.text;
         newMessage.roomID=room.roomID;
         
-        int messageNumber= [[SpeakUpManager sharedSpeakUpManager] getNextMessageNumber];
-        int peerID= [[[SpeakUpManager sharedSpeakUpManager] peerID] intValue] ;
+       // int messageNumber= [[SpeakUpManager sharedSpeakUpManager] getNextMessageNumber];
+        //int peerID= [[[SpeakUpManager sharedSpeakUpManager] peerID] intValue] ;
         
-        newMessage.messageID=[NSString stringWithFormat: @"peer%dmessage%d", peerID, messageNumber];
+        //newMessage.messageID=[NSString stringWithFormat: @"peer%dmessage%d", peerID, messageNumber];
         
         [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
         

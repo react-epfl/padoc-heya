@@ -64,6 +64,12 @@
     [self.tableView reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+   // [[SpeakUpManager sharedSpeakUpManager] subscribeToNearbyRooms];
+    [super viewDidDisappear:animated];
+}
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -190,7 +196,7 @@
 }
 //callback from the server
 -(void)updateRooms:(NSArray*)updatedRooms{
-    NSLog(@"UPDATES DATA");
+    //NSLog(@"UPDATES DATA");
     if(!self.editing){
         nearbyRooms=updatedRooms;
         [self.tableView reloadData];
@@ -238,7 +244,7 @@
 #pragma mark -
 #pragma mark Data Source Loading / Reloading Methods
 - (void)reloadTableViewDataSource{
-    [[SpeakUpManager sharedSpeakUpManager] resetData];
+    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
 	//  should be calling your tableviews data source model to reload
 	//  put here just for demo
 	_reloading = YES;

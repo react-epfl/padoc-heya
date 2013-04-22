@@ -5,12 +5,13 @@
 //  Created by Adrian Holzer on 02.04.12.
 //  Copyright (c) 2012 Adrian Holzer. All rights reserved.
 //
-
-#import <iWall/iWall.h>
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 
 @interface Room : NSObject
+
+
+- (id)initWithDictionary:(NSDictionary*) dict;
 
 @property (strong, nonatomic) NSString* roomID;
 @property (nonatomic) float distance;
@@ -26,13 +27,6 @@
 @property (strong, nonatomic) NSMutableArray  *messages;
 
 
-@property (strong, nonatomic) Request* subscriptionRequest;
-@property (strong, nonatomic) Subscription  *subscription;
-
-@property (strong, nonatomic) NSNumber  *subscriptionID;
-
-@property (strong, nonatomic) Request* publicationRequest;
-@property (strong, nonatomic) NSNumber  *publicationID;
 
 
 
