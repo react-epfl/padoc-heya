@@ -113,7 +113,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lon"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
@@ -162,7 +162,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lon"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
         
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
