@@ -55,7 +55,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSString* type = [json objectForKey:@"type"];
     if ([type isEqual:@"rooms"]) {
-         NSLog(@"got rooms");
+        NSLog(@"got rooms");
+        
+        // Probably we need to clean the list of rooms before inserting recently received rooms there?
+        // Imagine when the room is not anymore in the list of visible rooms
+        // I might be wrong and not understanding something :)
+        
         NSArray *rooms = [json objectForKey:@"data"];
         for (NSDictionary *roomData in rooms) {
            [self processReceivedRoom:[[Room alloc] initWithDictionary:roomData]];
@@ -79,6 +84,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             roomAlreadyInArray= YES;
         }
     }
+    
     if (!roomAlreadyInArray) {
         [roomArray addObject:room];
         roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
@@ -103,9 +109,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myDict setValue:@"peer" forKey:@"type"];
     
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:self.peerID forKey:@"id"];
-    [myData setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myData setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myData setValue:self.peerID forKey:@"peer_id"];
+    
+    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myData setValue:myLoc forKey:@"loc"];
+    
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myData setValue:[NSNumber numberWithDouble:2000000.0] forKey:@"range"];
     [myDict setValue:myData forKey:@"data"];
@@ -124,8 +134,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     [myDict setValue:@"createmessage" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    
-    
     
     [myData setValue:self.peerID forKey:@"id"];
     [myData setValue:message.content forKey:@"message_content"];
@@ -151,8 +159,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     [myData setValue:self.peerID forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
-    [myData setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myData setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    
+    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myData setValue:myLoc forKey:@"loc"];
+        
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myDict setValue:myData forKey:@"data"];
     
