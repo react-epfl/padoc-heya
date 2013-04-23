@@ -28,9 +28,9 @@
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
-        [self setRoomID: [dict objectForKey:@"id"]];
+        [self setRoomID: [dict objectForKey:@"_id"]];
         [self setLatitude: [[dict objectForKey:@"lat"] doubleValue]];
-        [self setLongitude: [[dict objectForKey:@"lng"] doubleValue]];
+        [self setLongitude: [[dict objectForKey:@"lon"] doubleValue]];
         [self setName: [dict objectForKey:@"name"]];
         [self setIsOfficial:[[dict objectForKey:@"isOfficial"] boolValue]];
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
