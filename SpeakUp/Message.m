@@ -25,5 +25,17 @@
     return self;
 }
 
+- (id)initWithDictionary:(NSDictionary*) dict{
+    self = [super init];
+    if(self){
+        [self setMessageID: [dict objectForKey:@"_id"]];
+        [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
+        [self setCreationTime: [dict objectForKey:@"creation_time"]];
+        [self setContent: [dict objectForKey:@"body"]];
+        [self setNumberOfNo: [dict objectForKey:@"dislikes"]];
+        [self setNumberOfYes: [dict objectForKey:@"likes"]];
+    }
+    return self;
+}
 
 @end

@@ -50,12 +50,12 @@
 }
 
 -(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    NSLog(@"%@",[url description]);
+   // NSLog(@"%@",[url description]);
     
-    if ([[url description] isEqual:@"speakup://reset"]) {
-        NSLog(@"resetting the peer ID");
-       [[SpeakUpManager sharedSpeakUpManager] resetPeerID];
-    }
+  //  if ([[url description] isEqual:@"speakup://reset"]) {
+  //      NSLog(@"resetting the peer ID");
+  //     [[SpeakUpManager sharedSpeakUpManager] resetPeerID];
+   // }
     
     return YES;
 }

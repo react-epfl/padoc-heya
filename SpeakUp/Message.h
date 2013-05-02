@@ -12,6 +12,8 @@
 
 @interface Message : NSObject
 
+- (id)initWithDictionary:(NSDictionary*) dict;
+
 @property (strong, nonatomic) NSString* messageID;
 @property (nonatomic)NSNumber  *  authorPeerID;
 @property (strong, nonatomic) NSString* roomID;

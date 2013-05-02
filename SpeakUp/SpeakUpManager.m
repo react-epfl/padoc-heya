@@ -13,7 +13,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize matches, publicationRadius, peerID,subscriptionRadius, likedMessages, sharedTopic, timer, messageLifetime, roomLifetime, speakUpDelegate,dislikedMessages,myMessagePublicationIDs,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomCounter, messageCounter, roomArray, locationIsOK, connectionIsOK,myRoomPublicationIDs, myMessageIDs, locationAtLastReset, myWebSocket;
+@synthesize matches, publicationRadius, peer_id, dev_id,subscriptionRadius, likedMessages, sharedTopic, timer, messageLifetime, roomLifetime, speakUpDelegate,dislikedMessages,myMessagePublicationIDs,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomCounter, messageCounter, roomArray, locationIsOK, connectionIsOK,myRoomPublicationIDs, myMessageIDs, locationAtLastReset, myWebSocket, range;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -26,14 +26,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
             sharedSpeakUpManager.connectionIsOK=YES;
             sharedSpeakUpManager.locationIsOK=NO;
-            // connection to the middleware
-            //sharedSpeakUpManager.matchRepository =  [[MatchRepository alloc] initWithRepositoryURI:@"http://isi02.unil.ch:8080/iWall-Middleware-TEST-Bridging/MatchRepository"];
+            
             // sets up the local location manager, this triggers the didUpdateToLocation callback
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-            
             
             [sharedSpeakUpManager reconnect];
             
@@ -47,14 +45,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSLog(@"webSocket received a message: %@", [message description]);
     
-    
     NSError* error;
     NSData *jsonData = [[message description] dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];//breaks
-    NSLog(@"JSON DIct: %@", json);
+    NSLog(@"JSON Dict: %@", json);
     
     NSString* type = [json objectForKey:@"type"];
     if ([type isEqual:@"rooms"]) {
+        // {type: 'rooms', data: [{_id, creation_time, creator_id, name, loc: {lat, lng}}, ...]}
         NSLog(@"got rooms");
         
         // Probably we need to clean the list of rooms before inserting recently received rooms there?
@@ -63,15 +61,25 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         
         NSArray *rooms = [json objectForKey:@"data"];
         for (NSDictionary *roomData in rooms) {
-           [self processReceivedRoom:[[Room alloc] initWithDictionary:roomData]];
+            [self processReceivedRoom:[[Room alloc] initWithDictionary:roomData]];
         }
-    } else if ([type isEqual:@"room"]) {
+    } else if ([type isEqual:@"roomcreated"]) {
+        // {type: 'roomcreated', data: {_id, creation_time, creator_id, name, loc: {lat, lng}}}
         NSLog(@"got a room");
         [self processReceivedRoom:[[Room alloc] initWithDictionary:json]];
     } else if ([type isEqual:@"messages"]) {
+        NSArray *messages = [json objectForKey:@"data"];
+        for (NSDictionary *msgData in messages) {
+            [self processReceivedMessages:[[Message alloc] initWithDictionary:msgData]];
+        }
+        // {type: 'messages', data: [{_id, creation_time, creator_id, body, likes, dislikes}, ...]
         NSLog(@"got messages");
     } else if ([type isEqual:@"message"]) {
         NSLog(@"got a message");
+    }else if ([type isEqual:@"peer_welcome"]) {
+        NSDictionary *data = [json objectForKey:@"data"];
+        peer_id = [data objectForKey:@"peer_id"];
+        NSLog(@"welcome peer %@",peer_id);
     }else{
         NSLog(@"got something else");
     }
@@ -84,11 +92,28 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             roomAlreadyInArray= YES;
         }
     }
-    
     if (!roomAlreadyInArray) {
         [roomArray addObject:room];
         roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
         [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
+    }
+}
+
+-(void)processReceivedMessages:(Message*)message{
+    for(Room *room in roomArray){
+        if ([room.roomID isEqual:message.roomID]) {
+            BOOL msgAlreadyInRoom = NO;
+            for(Message *msg in room.messages){
+                if ([msg.messageID isEqual:message.messageID]) {
+                    msgAlreadyInRoom= YES;
+                }
+            }
+            if (!msgAlreadyInRoom) {
+                [room.messages addObject:message];
+                //[self subscribeToInfoOfMessage: message.messageID inRoom:room.roomID]; // SUBSCRIBE TO INFO OF MESSAGE
+                [messageManagerDelegate updateMessages:room.messages inRoom: room];
+            }
+        }
     }
 }
 
@@ -100,16 +125,33 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     myWebSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:1337"]]];
     myWebSocket.delegate = self;
     [myWebSocket open];
+    
 }
 
+
+- (void)webSocketDidOpen:(SRWebSocket *)webSocket{
+    NSLog(@"socket is now open");
+    [self hanshake];
+    
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error{
+    NSLog(@"socket did fail with error: %@",[error description]);
+}
+- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean{
+    NSLog(@"socket did close with code: %d for reseaon %@ and it was clean %d",code, [reason description], wasClean);
+}
+
+
 // WS call to get nearby rooms
+// {type: 'getrooms', data: {peer_id, loc: {lat, lng}, accu, range}}
 -(void)getNearbyRooms{
     
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
-    [myDict setValue:@"peer" forKey:@"type"];
+    [myDict setValue:@"getrooms" forKey:@"type"];
     
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:self.peerID forKey:@"peer_id"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
     
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
@@ -128,6 +170,22 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSLog(@"getNearbyRooms sends: %@", jsonString);
 }
 
+// WS call to get messages in room
+// {type: 'getmessages', data: {peer_id, room_id}}
+-(void)getMessagesInRoom:(NSString*)room_id{
+    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
+    [myDict setValue:@"getmessages" forKey:@"type"];
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:room_id forKey:@"room_id"];
+    [myDict setValue:myData forKey:@"data"];
+    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
+    [myWebSocket send:jsonData];
+    NSLog(@"getMessagesInRooms sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+}
+
 
 // WS call to create a new message
 -(void) createMessage:(Message *) message{
@@ -135,7 +193,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myDict setValue:@"createmessage" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     
-    [myData setValue:self.peerID forKey:@"id"];
+    [myData setValue:self.peer_id forKey:@"id"];
     [myData setValue:message.content forKey:@"message_content"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myDict setValue:myData forKey:@"data"];
@@ -150,21 +208,21 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 
 
-// CREATE ROOMS
-//-------------
-- (void)createRoom:(Room *)room{    
+// WS call to create a new room
+// {type: 'createroom', data: {creator_id, name, loc: {lat, lng}, accu}}
+- (void)createRoom:(Room *)room{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     [myDict setValue:@"createroom" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     
-    [myData setValue:self.peerID forKey:@"creator_id"];
+    [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
     
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
-        
+    
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myDict setValue:myData forKey:@"data"];
     
@@ -172,12 +230,37 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [myWebSocket send:jsonString];
     NSLog(@"createroom sends %@", jsonString);
-
+    
     [self savePeerData];
 }
 
 
-
+// WS Handshake
+- (void)hanshake{
+    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
+    [myDict setValue:@"peer" forKey:@"type"];
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    
+    [myData setValue:self.dev_id forKey:@"dev_id"];
+    [myData setValue:self.range forKey:@"range"];
+    
+    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myData setValue:myLoc forKey:@"loc"];
+    
+    [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
+    [myDict setValue:myData forKey:@"data"];
+    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
+    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [myWebSocket send:jsonString];
+    NSLog(@"handshake sends %@", jsonString);
+    
+    
+    
+    
+}
 
 
 
@@ -212,15 +295,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // RESET PROCEDURES (called asynchronously)
 // called when opened through the speakup://reset url
 - (void)resetPeerID{
-    [self savePeerData];
-    [self resetData];
+  [self savePeerData];
+[self resetData];
 }
 
 //called by appdelegate
 - (void)resetData{
-    locationIsOK=NO;
-    [self.locationManager startUpdatingLocation];
-    //once the right location is retrieved, the reset process starts
+  locationIsOK=NO;
+[self.locationManager startUpdatingLocation];
+//once the right location is retrieved, the reset process starts
 }
 // called when a correct location is found
 //-(void)resetProcedureStepOne{
@@ -380,20 +463,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // SUBSCRIBE TO MESSAGES IN A ROOM
 //---------------------------------
-- (void)subscribeToAllMessagesInRoom:(NSString*)roomID{
-    // here we might want to unsubscribe to
-    for(Room *room in roomArray){
-        //        if ([roomID isEqual:room.roomID] && room.subscriptionID==nil) {
-        //            NSString* roomSelector = [NSString stringWithFormat:@"eventType LIKE 'message' AND roomID LIKE '%@'",roomID];
-        //           // Request *subscriptionRequest = [me subscribe:roomSelector onTopic:sharedTopic inRange:[subscriptionRadius doubleValue] isOutward:NO  forDuration:eternity isMobile:NO delegate:self];
-        //            [self startNetworking];
-        //            //room.subscriptionRequest=subscriptionRequest;
-        //            // also subscribe to deletedRoom
-        //            NSString* deleteRoomSelector = [NSString stringWithFormat:@"eventType LIKE 'deleteRoom' AND roomID LIKE '%@'",roomID];
-        // [me subscribe:deleteRoomSelector onTopic:sharedTopic inRange:[subscriptionRadius doubleValue] isOutward:NO  forDuration:eternity isMobile:NO delegate:self];
-        //        }
-    }
-}
+//- (void)subscribeToAllMessagesInRoom:(NSString*)roomID{
+// here we might want to unsubscribe to
+//   for(Room *room in roomArray){
+//        if ([roomID isEqual:room.roomID] && room.subscriptionID==nil) {
+//            NSString* roomSelector = [NSString stringWithFormat:@"eventType LIKE 'message' AND roomID LIKE '%@'",roomID];
+//           // Request *subscriptionRequest = [me subscribe:roomSelector onTopic:sharedTopic inRange:[subscriptionRadius doubleValue] isOutward:NO  forDuration:eternity isMobile:NO delegate:self];
+//            [self startNetworking];
+//            //room.subscriptionRequest=subscriptionRequest;
+//            // also subscribe to deletedRoom
+//            NSString* deleteRoomSelector = [NSString stringWithFormat:@"eventType LIKE 'deleteRoom' AND roomID LIKE '%@'",roomID];
+// [me subscribe:deleteRoomSelector onTopic:sharedTopic inRange:[subscriptionRadius doubleValue] isOutward:NO  forDuration:eternity isMobile:NO delegate:self];
+//        }
+// }
+//}
 
 // SUBSCRIBE TO MESSAGE RATINGS OF MESSAGE MSGID IN ROOM
 //---------------------------------
@@ -663,7 +746,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         locationIsOK=YES;
         [speakUpDelegate updateData];
         [messageManagerDelegate notifyThatLocationHasChangedSignificantly];
-       // [self getNearbyRooms];
+        // [self getNearbyRooms];
     }
 }
 // location failed
@@ -676,10 +759,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)initPeerData{
     // ID of the device
     if  ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] != NSOrderedAscending){
-        peerID = [UIDevice currentDevice].identifierForVendor.UUIDString;
+        dev_id = [UIDevice currentDevice].identifierForVendor.UUIDString;
     }else{
-        peerID = [UIDevice currentDevice].uniqueIdentifier;
+        dev_id = [UIDevice currentDevice].uniqueIdentifier;
     }
+    range=[NSNumber numberWithInt:500000000];
+    
     sharedTopic=@"SpeakUp";
     subscriptionRadius=[NSNumber numberWithInt:0];
     publicationRadius=[NSNumber numberWithInt:200];

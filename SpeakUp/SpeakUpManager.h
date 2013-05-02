@@ -39,7 +39,7 @@
 // MESSAGE RELATED METHODS
 -(void) deleteMessage:(Message *) message;
 -(void)createMessage:(Message *) message;
-- (void)subscribeToAllMessagesInRoom:(NSString*)roomID;
+- (void)getMessagesInRoom:(NSString*)roomID;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
 
 // ROOM RELATED METHODS
@@ -91,7 +91,13 @@
 @property (strong, nonatomic) NSMutableArray *roomArray;
 
 // Fields used to communicate with the middleware
-@property (nonatomic)  NSString  *peerID;
+@property (nonatomic)  NSString  *dev_id;//device ID
+@property (nonatomic)  NSString  *peer_id;// peer ID recieved from the server
+
+
+@property (nonatomic,strong) NSNumber* range;
+
+
 @property (nonatomic)  NSNumber  *roomCounter;
 @property (nonatomic)  NSNumber  *messageCounter;
 

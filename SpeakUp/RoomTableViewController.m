@@ -188,6 +188,7 @@
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
         Room *room = [nearbyRooms objectAtIndex:row];
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom:room.roomID];
         [messageTVC setCurrentRoom: room];
         // if (!room.subscriptionRequest) {
         //   [[SpeakUpManager sharedSpeakUpManager] subscribeToAllMessagesInRoom:room.roomID];
