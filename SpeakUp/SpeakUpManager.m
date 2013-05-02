@@ -110,7 +110,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             }
             if (!msgAlreadyInRoom) {
                 [room.messages addObject:message];
-                //[self subscribeToInfoOfMessage: message.messageID inRoom:room.roomID]; // SUBSCRIBE TO INFO OF MESSAGE
                 [messageManagerDelegate updateMessages:room.messages inRoom: room];
             }
         }
@@ -128,16 +127,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
 }
 
-
+// WS callback
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket{
     NSLog(@"socket is now open");
     [self hanshake];
     
 }
-
+// WS callback
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error{
     NSLog(@"socket did fail with error: %@",[error description]);
 }
+// WS callback
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean{
     NSLog(@"socket did close with code: %d for reseaon %@ and it was clean %d",code, [reason description], wasClean);
 }
@@ -182,7 +182,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myDict setValue:myData forKey:@"data"];
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    [myWebSocket send:jsonData];
+    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    [myWebSocket send:jsonString];
     NSLog(@"getMessagesInRooms sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
 }
 
@@ -194,12 +196,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     
     [myData setValue:self.peer_id forKey:@"id"];
-    [myData setValue:message.content forKey:@"message_content"];
+    [myData setValue:message.content forKey:@"body"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myDict setValue:myData forKey:@"data"];
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    [myWebSocket send:jsonData];
+    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [myWebSocket send:jsonString];
+    
     NSLog(@"createMessage sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     [myMessageIDs addObject:message.messageID];
     [self savePeerData];
