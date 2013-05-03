@@ -68,14 +68,22 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSLog(@"got a room");
         [self processReceivedRoom:[[Room alloc] initWithDictionary:json]];
     } else if ([type isEqual:@"messages"]) {
+        // {type: 'messages', data: [{_id, creation_time, creator_id, body, likes, dislikes}, ...]
+        NSLog(@"got messages");
         NSArray *messages = [json objectForKey:@"data"];
         for (NSDictionary *msgData in messages) {
             [self processReceivedMessages:[[Message alloc] initWithDictionary:msgData]];
         }
-        // {type: 'messages', data: [{_id, creation_time, creator_id, body, likes, dislikes}, ...]
-        NSLog(@"got messages");
-    } else if ([type isEqual:@"message"]) {
-        NSLog(@"got a message");
+    } else if ([type isEqual:@"messagecreated"]) {
+        //{type: 'messagecreated', data: {peer_id, room_id, body}}
+        NSDictionary *data = [json objectForKey:@"data"];
+        Message* message = [[Message alloc] init];
+        [message setMessageID: [data objectForKey:@"_id"]];
+        [message setAuthorPeerID: self.peer_id];
+        [message setCreationTime: [data objectForKey:@"creation_time"]];
+        [message setContent: [data objectForKey:@"body"]];
+        NSLog(@"RECEIVED NEW MESSAGE: %@, IN ROOM %@", message.content, message.roomID);
+        [self assignMessage:message];
     }else if ([type isEqual:@"peer_welcome"]) {
         NSDictionary *data = [json objectForKey:@"data"];
         peer_id = [data objectForKey:@"peer_id"];
@@ -159,7 +167,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:myLoc forKey:@"loc"];
     
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-    [myData setValue:[NSNumber numberWithDouble:2000000.0] forKey:@"range"];
+    [myData setValue:self.range forKey:@"range"];
     [myDict setValue:myData forKey:@"data"];
     
     
@@ -209,6 +217,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [self savePeerData];
     [self assignMessage:message];
 }
+
+
+
 
 
 
@@ -265,28 +276,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
