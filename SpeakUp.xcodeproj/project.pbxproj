@@ -58,6 +58,11 @@
 		8096A9261636F39C0092F049 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9251636F39B0092F049 /* CoreLocation.framework */; };
 		8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9271636F3FD0092F049 /* MessageUI.framework */; };
 		8096A92E1636F7E60092F049 /* chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 8096A92D1636F7E60092F049 /* chevron.png */; };
+		80A6705917381C3C0082275E /* SocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A6704F17381C3C0082275E /* SocketIO.m */; };
+		80A6705A17381C3C0082275E /* SocketIOJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A6705117381C3C0082275E /* SocketIOJSONSerialization.m */; };
+		80A6705B17381C3C0082275E /* SocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A6705317381C3C0082275E /* SocketIOPacket.m */; };
+		80A6705C17381C3C0082275E /* SocketIOTransportWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A6705617381C3C0082275E /* SocketIOTransportWebsocket.m */; };
+		80A6705D17381C3C0082275E /* SocketIOTransportXHR.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A6705817381C3C0082275E /* SocketIOTransportXHR.m */; };
 		80EEBC5316D3C07C001B87FA /* iPadStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */; };
 		80FB4C4317251EE40004965A /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3C17251EE40004965A /* base64.c */; };
 		80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */; };
@@ -136,6 +141,17 @@
 		8096A9251636F39B0092F049 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8096A9271636F3FD0092F049 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8096A92D1636F7E60092F049 /* chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chevron.png; sourceTree = "<group>"; };
+		80A6704E17381C3C0082275E /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
+		80A6704F17381C3C0082275E /* SocketIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIO.m; sourceTree = "<group>"; };
+		80A6705017381C3C0082275E /* SocketIOJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOJSONSerialization.h; sourceTree = "<group>"; };
+		80A6705117381C3C0082275E /* SocketIOJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOJSONSerialization.m; sourceTree = "<group>"; };
+		80A6705217381C3C0082275E /* SocketIOPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOPacket.h; sourceTree = "<group>"; };
+		80A6705317381C3C0082275E /* SocketIOPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOPacket.m; sourceTree = "<group>"; };
+		80A6705417381C3C0082275E /* SocketIOTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransport.h; sourceTree = "<group>"; };
+		80A6705517381C3C0082275E /* SocketIOTransportWebsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransportWebsocket.h; sourceTree = "<group>"; };
+		80A6705617381C3C0082275E /* SocketIOTransportWebsocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOTransportWebsocket.m; sourceTree = "<group>"; };
+		80A6705717381C3C0082275E /* SocketIOTransportXHR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransportXHR.h; sourceTree = "<group>"; };
+		80A6705817381C3C0082275E /* SocketIOTransportXHR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOTransportXHR.m; sourceTree = "<group>"; };
 		80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPadStoryboard.storyboard; sourceTree = "<group>"; };
 		80FB4C3C17251EE40004965A /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/base64.c; sourceTree = "<group>"; };
 		80FB4C3D17251EE40004965A /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/base64.h; sourceTree = "<group>"; };
@@ -173,6 +189,7 @@
 		8096A89C1636E80B0092F049 = {
 			isa = PBXGroup;
 			children = (
+				80A6704D17381C150082275E /* Socket.io */,
 				80FB4C3B17251E950004965A /* SocketRocket */,
 				80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */,
 				8096A8D01636E9C60092F049 /* MainStoryboard.storyboard */,
@@ -329,6 +346,24 @@
 			name = CopyPaste;
 			sourceTree = "<group>";
 		};
+		80A6704D17381C150082275E /* Socket.io */ = {
+			isa = PBXGroup;
+			children = (
+				80A6704E17381C3C0082275E /* SocketIO.h */,
+				80A6704F17381C3C0082275E /* SocketIO.m */,
+				80A6705017381C3C0082275E /* SocketIOJSONSerialization.h */,
+				80A6705117381C3C0082275E /* SocketIOJSONSerialization.m */,
+				80A6705217381C3C0082275E /* SocketIOPacket.h */,
+				80A6705317381C3C0082275E /* SocketIOPacket.m */,
+				80A6705417381C3C0082275E /* SocketIOTransport.h */,
+				80A6705517381C3C0082275E /* SocketIOTransportWebsocket.h */,
+				80A6705617381C3C0082275E /* SocketIOTransportWebsocket.m */,
+				80A6705717381C3C0082275E /* SocketIOTransportXHR.h */,
+				80A6705817381C3C0082275E /* SocketIOTransportXHR.m */,
+			);
+			name = Socket.io;
+			sourceTree = "<group>";
+		};
 		80FB4C3B17251E950004965A /* SocketRocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +487,11 @@
 				80FB4C4317251EE40004965A /* base64.c in Sources */,
 				80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */,
 				80FB4C4517251EE40004965A /* SRWebSocket.m in Sources */,
+				80A6705917381C3C0082275E /* SocketIO.m in Sources */,
+				80A6705A17381C3C0082275E /* SocketIOJSONSerialization.m in Sources */,
+				80A6705B17381C3C0082275E /* SocketIOPacket.m in Sources */,
+				80A6705C17381C3C0082275E /* SocketIOTransportWebsocket.m in Sources */,
+				80A6705D17381C3C0082275E /* SocketIOTransportXHR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

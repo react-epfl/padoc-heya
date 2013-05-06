@@ -12,8 +12,8 @@
 #import "SpeakUpManagerDelegate.h"
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
-#import "SRWebSocket.h"
-
+// socket rocket removed #import "SRWebSocket.h"
+#import "SocketIO.h"
 
 #define BOOLEAN  @"BOOLEAN"
 #define STRING   @"STRING"
@@ -24,7 +24,8 @@
 #define FLOAT    @"FLOAT"
 #define DOUBLE   @"DOUBLE"
 
-@interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
+// socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
+@interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>
 
 +(id) sharedSpeakUpManager;
 
@@ -54,7 +55,8 @@
 
 
 //WebSocket
-@property (strong, nonatomic)  SRWebSocket *myWebSocket;
+// socket rocket removed @property (strong, nonatomic)  SRWebSocket *myWebSocket;
+@property (strong, nonatomic)  SocketIO *socketIO;
 
 
 

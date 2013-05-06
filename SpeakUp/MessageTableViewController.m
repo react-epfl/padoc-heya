@@ -95,13 +95,13 @@
 
 
 -(void)notifyThatLocationHasChangedSignificantly{
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
+//       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
 //                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", currentRoom.name ]
 //                                                       delegate:nil
 //                                              cancelButtonTitle:@"OK"
 //                                              otherButtonTitles:nil];
 //        [alert show];
-        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -131,19 +131,19 @@
 
 // test if the peer is still in the range of the room , if this is not the case, leaves the room with a alert
 -(void)testLocationMatchAndLeaveRoomIfNecessary{
-    CLLocation * peerlocation = [[CLLocation alloc] initWithLatitude:[[SpeakUpManager sharedSpeakUpManager] latitude] longitude:[[SpeakUpManager sharedSpeakUpManager] longitude]];
-    CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[currentRoom latitude] longitude: [currentRoom longitude]];
-    if([peerlocation distanceFromLocation:roomlocation]> currentRoom.range){
+   // CLLocation * peerlocation = [[CLLocation alloc] initWithLatitude:[[SpeakUpManager sharedSpeakUpManager] latitude] longitude:[[SpeakUpManager sharedSpeakUpManager] longitude]];
+    //CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[currentRoom latitude] longitude: [currentRoom longitude]];
+   // if([peerlocation distanceFromLocation:roomlocation]> currentRoom.range){
         // goes back to the room view,
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: [NSString stringWithFormat: @"You have left %@", currentRoom.name ]
-                              message: [NSString stringWithFormat: @"Messages in %@ are no longer available", currentRoom.name ]
-                              delegate: nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+     //   UIAlertView *alert = [[UIAlertView alloc]
+       //                       initWithTitle: [NSString stringWithFormat: @"You have left %@", currentRoom.name ]
+         //                     message: [NSString stringWithFormat: @"Messages in %@ are no longer available", currentRoom.name ]
+           //                   delegate: nil
+             //                 cancelButtonTitle:@"OK"
+               //               otherButtonTitles:nil];
+        //[alert show];
+        //[self.navigationController popViewControllerAnimated:YES];
+    //}
 }
 
 

@@ -6,6 +6,7 @@
 //
 
 #import "SpeakUpManager.h"
+#import "SocketIOPacket.h"
 
 #define DURATION 43200 // a month in minutes
 
@@ -13,7 +14,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize matches, publicationRadius, peer_id, dev_id,subscriptionRadius, likedMessages, sharedTopic, timer, messageLifetime, roomLifetime, speakUpDelegate,dislikedMessages,myMessagePublicationIDs,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomCounter, messageCounter, roomArray, locationIsOK, connectionIsOK,myRoomPublicationIDs, myMessageIDs, locationAtLastReset, myWebSocket, range;
+@synthesize matches, publicationRadius, peer_id, dev_id,subscriptionRadius, likedMessages, sharedTopic, timer, messageLifetime, roomLifetime, speakUpDelegate,dislikedMessages,myMessagePublicationIDs,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomCounter, messageCounter, roomArray, locationIsOK, connectionIsOK,myRoomPublicationIDs, myMessageIDs, locationAtLastReset, socketIO, range;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -41,12 +42,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 // WS did receive a message
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
+//- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
+- (void) socketIO:(SocketIO *)socket didReceiveMessage:(SocketIOPacket *)packet{
     
-    NSLog(@"webSocket received a message: %@", [message description]);
+    NSLog(@"webSocket received a message: %@", packet.data );
     
     NSError* error;
-    NSData *jsonData = [[message description] dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *jsonData = [packet.data dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];//breaks
     NSLog(@"JSON Dict: %@", json);
     
@@ -88,6 +90,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSDictionary *data = [json objectForKey:@"data"];
         peer_id = [data objectForKey:@"peer_id"];
         NSLog(@"welcome peer %@",peer_id);
+        [self getNearbyRooms];
     }else{
         NSLog(@"got something else");
     }
@@ -127,27 +130,36 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // WS connection
 - (void)reconnect;
 {
-    myWebSocket.delegate = nil;
-    [myWebSocket close];
-    myWebSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:1337"]]];
-    myWebSocket.delegate = self;
-    [myWebSocket open];
+   // myWebSocket.delegate = nil;
+   // [myWebSocket close];
+   // myWebSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:1337"]]];
+   // myWebSocket.delegate = self;
+   // [myWebSocket open];
+    
+    socketIO = [[SocketIO alloc] initWithDelegate:self];
+    //socketIO.useSecure = YES;
+    [socketIO connectToHost:@"localhost" onPort:1337];
+    
     
 }
 
 // WS callback
-- (void)webSocketDidOpen:(SRWebSocket *)webSocket{
+//- (void)webSocketDidOpen:(SRWebSocket *)webSocket{
+- (void) socketIODidConnect:(SocketIO *)socket{
     NSLog(@"socket is now open");
-    [self hanshake];
+    [self handshake];
     
 }
 // WS callback
-- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error{
+//- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error{
+- (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
     NSLog(@"socket did fail with error: %@",[error description]);
 }
 // WS callback
-- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean{
-    NSLog(@"socket did close with code: %d for reseaon %@ and it was clean %d",code, [reason description], wasClean);
+//- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean{
+//NSLog(@"socket did close with code: %d for reseaon %@ and it was clean %d",code, [reason description], wasClean);
+- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
+    NSLog(@"socket did close with error %@ ",[error description]);
 }
 
 
@@ -174,7 +186,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    [myWebSocket send:jsonString];
+    //[myWebSocket send:jsonString];
+    [socketIO sendMessage:jsonString];
     NSLog(@"getNearbyRooms sends: %@", jsonString);
 }
 
@@ -192,7 +205,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    [myWebSocket send:jsonString];
+    //[myWebSocket send:jsonString];
+    [socketIO sendMessage:jsonString];
     NSLog(@"getMessagesInRooms sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
 }
 
@@ -210,7 +224,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [myWebSocket send:jsonString];
+    //[myWebSocket send:jsonString];
+    [socketIO sendMessage:jsonString];
     
     NSLog(@"createMessage sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     [myMessageIDs addObject:message.messageID];
@@ -243,7 +258,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [myWebSocket send:jsonString];
+    //[myWebSocket send:jsonString];
+    [socketIO sendMessage:jsonString];
     NSLog(@"createroom sends %@", jsonString);
     
     [self savePeerData];
@@ -251,7 +267,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 
 // WS Handshake
-- (void)hanshake{
+- (void)handshake{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     [myDict setValue:@"peer" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -269,7 +285,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [myWebSocket send:jsonString];
+    //[myWebSocket send:jsonString];
+    [socketIO sendMessage:jsonString];
     NSLog(@"handshake sends %@", jsonString);
     
     
