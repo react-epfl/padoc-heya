@@ -260,7 +260,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "59"
          endingLineNumber = "59"
-         landmarkName = "-socketIO:didReceiveMessage:"
+         landmarkName = "-socketIO:didReceiveEvent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -299,7 +299,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "72"
          endingLineNumber = "72"
-         landmarkName = "-socketIO:didReceiveMessage:"
+         landmarkName = "-socketIO:didReceiveEvent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -312,7 +312,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "70"
          endingLineNumber = "70"
-         landmarkName = "-socketIO:didReceiveMessage:"
+         landmarkName = "-socketIO:didReceiveEvent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

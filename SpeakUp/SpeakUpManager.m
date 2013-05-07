@@ -53,16 +53,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //===========================
 // SOCKET DID RECEIVE MESSAGE
 //===========================
-- (void) socketIO:(SocketIO *)socket didReceiveMessage:(SocketIOPacket *)packet{
+- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet{
     
     NSLog(@"webSocket received a message: %@", packet.data );
     
     NSError* error;
     NSData *jsonData = [packet.data dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];//breaks
-    NSLog(@"JSON Dict: %@", json);
+    NSLog(@"JSON Dict: %@", json);// DECAPUSLATION MAY BE BROKEN
     
-    NSString* type = [json objectForKey:@"type"];
+    NSString* type = [json objectForKey:@"name"]; // ADRIAN NOT SURE BUT IT LOOKS LIKE THE EVENT NAME IS STORE IN "NAME"
     if ([type isEqual:@"rooms"]) {
         // {type: 'rooms', data: [{_id, creation_time, creator_id, name, loc: {lat, lng}}, ...]}
         NSLog(@"got rooms");
@@ -141,9 +141,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // SOCKET CONNECT
 //========================
 - (void)connect{
-   // myWebSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:1337"]]];
     socketIO = [[SocketIO alloc] initWithDelegate:self];
-    //socketIO.useSecure = YES;
     [socketIO connectToHost:@"localhost" onPort:1337];
 }
 
@@ -162,11 +160,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 
-// WS call to get nearby rooms
+//========================
+// GET ROOMS SOCKET.IO
+//========================
 // {type: 'getrooms', data: {peer_id, loc: {lat, lng}, accu, range}}
 -(void)getNearbyRooms{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
-    [myDict setValue:@"getrooms" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
@@ -177,83 +176,67 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:self.range forKey:@"range"];
     [myDict setValue:myData forKey:@"data"];
     
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    //[myWebSocket send:jsonString];
-    [socketIO sendMessage:jsonString];
-    NSLog(@"getNearbyRooms sends: %@", jsonString);
+    [socketIO sendEvent:@"getrooms" withData:myDict];
 }
 
-// WS call to get messages in room
+
+//========================
+// GET MESSAGES SOCKET.IO
+//========================
 // {type: 'getmessages', data: {peer_id, room_id}}
 -(void)getMessagesInRoom:(NSString*)room_id{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
-    [myDict setValue:@"getmessages" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room_id forKey:@"room_id"];
     [myDict setValue:myData forKey:@"data"];
     
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    //[myWebSocket send:jsonString];
-    [socketIO sendMessage:jsonString];
-    NSLog(@"getMessagesInRooms sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    [socketIO sendEvent:@"getmessages" withData:myDict];
 }
 
 
-// WS call to create a new message
+//========================
+// CREATE MSG SOCKET.IO
+//========================
 -(void) createMessage:(Message *) message{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
-    [myDict setValue:@"createmessage" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    
     [myData setValue:self.peer_id forKey:@"id"];
     [myData setValue:message.content forKey:@"body"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myDict setValue:myData forKey:@"data"];
     
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    //[myWebSocket send:jsonString];
-    [socketIO sendMessage:jsonString];
+   [socketIO sendEvent:@"createmessage" withData:myDict];
     
-    NSLog(@"createMessage sends %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     [myMessageIDs addObject:message.messageID];
     [self savePeerData];
     [self assignMessage:message];
 }
 
-// WS call to create a new room
+//========================
+// CREATE ROOM SOCKET.IO
+//========================
 // {type: 'createroom', data: {creator_id, name, loc: {lat, lng}, accu}}
 - (void)createRoom:(Room *)room{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
-    [myDict setValue:@"createroom" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
-    
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
-    
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myDict setValue:myData forKey:@"data"];
     
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    //[myWebSocket send:jsonString];
-    [socketIO sendMessage:jsonString];
-    NSLog(@"createroom sends %@", jsonData);
+    [socketIO sendEvent:@"createroom" withData:myDict];
     
     [self savePeerData];
 }
 
-// WS Handshake
+//========================
+// HANDSHAKE SOCKET.IO
+//========================
 - (void)handshake{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -268,11 +251,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     [socketIO sendEvent:@"peer" withData:myDict];
 }
+
+
+
+
+
+
 // RESET PROCEDURES (called asynchronously)
 // called when opened through the speakup://reset url
 - (void)resetPeerID{
-  [self savePeerData];
-[self resetData];
+    [self savePeerData];
+    [self resetData];
 }
 
 //called by appdelegate
@@ -490,13 +479,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //        // [self getNearbyRooms];
 //    }
 }
-// location failed
+
+//========================
+// LOCATION FAILED
+//========================
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     self.latitude=-1;
     self.longitude=-1;
 }
-// METHODS RELATED TO SAVING AND INITIALIZING DATA
-//------------------------------------------------
+
+//========================
+// SAVING DATA
+//========================
 -(void)initPeerData{
     // ID of the device
     if  ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] != NSOrderedAscending){
@@ -569,6 +563,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [defaults setObject:[NSNumber numberWithBool:self.isSuperUser] forKey:@"isSuperUser"];
     [defaults synchronize];
 }
+
+//========================
+// UTILS
+//========================
+
 // Get Unique room and message IDs
 -(int)getNextMessageNumber{
     int value = [self.messageCounter intValue];
