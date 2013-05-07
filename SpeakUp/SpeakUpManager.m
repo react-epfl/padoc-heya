@@ -248,7 +248,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     //[myWebSocket send:jsonString];
     [socketIO sendMessage:jsonString];
-    NSLog(@"createroom sends %@", jsonString);
+    NSLog(@"createroom sends %@", jsonData);
     
     [self savePeerData];
 }
@@ -459,6 +459,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     if (!locationIsOK ){
         [sharedSpeakUpManager connect];
+          [speakUpDelegate updateData];
         locationIsOK=YES;
     }
     
