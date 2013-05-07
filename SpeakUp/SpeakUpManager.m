@@ -256,25 +256,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // WS Handshake
 - (void)handshake{
     NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
-    [myDict setValue:@"peer" forKey:@"type"];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    
     [myData setValue:self.dev_id forKey:@"dev_id"];
     [myData setValue:self.range forKey:@"range"];
-    
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
-    
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myDict setValue:myData forKey:@"data"];
     
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:myDict options:kNilOptions error:nil];
-    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    //[myWebSocket send:jsonString];
-    [socketIO sendMessage:jsonString];
-    NSLog(@"handshake sends %@", jsonString);
+    [socketIO sendEvent:@"peer" withData:myDict];
 }
 // RESET PROCEDURES (called asynchronously)
 // called when opened through the speakup://reset url
