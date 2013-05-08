@@ -46,16 +46,8 @@
 // ROOM RELATED METHODS
 -(NSArray*) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;
-//- (void)resetData;// initiates a process that leads to the removal of all subscriptions and reinitialization of the roomArray
-
-//- (void)resetPeerID;
 
 
-
-
-
-//WebSocket
-// socket rocket removed @property (strong, nonatomic)  SRWebSocket *myWebSocket;
 @property (strong, nonatomic)  SocketIO *socketIO;
 
 
@@ -78,15 +70,10 @@
 @property (strong, nonatomic) NSMutableArray *likedMessages;
 // dislikedMessages contains the id (NSNumber)  of the user's disliked messages
 @property (strong, nonatomic) NSMutableArray *dislikedMessages;
-// myMessages contains the user's messages
-@property (strong, nonatomic) NSMutableDictionary *myMessagePublicationIDs;
 // myMessages contains the id (NSNumber)  of the user's messages
 @property (strong, nonatomic) NSMutableArray *myMessageIDs;
 // myRoomIDs contains the id (NSNumber) of the user's rooms
 @property (strong, nonatomic) NSMutableArray *myRoomIDs;
-// myRoomIDs contains the user's roomPublicationID indexed by roomID
-@property (strong, nonatomic) NSMutableDictionary *myRoomPublicationIDs;
-
 
 
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
@@ -100,9 +87,6 @@
 @property (nonatomic,strong) NSNumber* range;
 
 
-@property (nonatomic)  NSNumber  *roomCounter;
-@property (nonatomic)  NSNumber  *messageCounter;
-
 //Delegates
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
@@ -112,19 +96,9 @@
 
 // timer is used to retrieve matches from the repo
 @property (nonatomic,strong) NSTimer* timer; 
-// shared topic for publications and subscriptions: SpeakUp
-@property (nonatomic,strong) NSString* sharedTopic;
-// publication radius: 200 m
-@property (nonatomic,strong) NSNumber* publicationRadius;
-@property (nonatomic,strong) NSNumber* messageLifetime;
-@property (nonatomic,strong) NSNumber* roomLifetime;
-
-// Fields related to the subscription
-@property (nonatomic,strong) NSNumber* subscriptionRadius;
 
 
-// Field used to store the matches
-@property (nonatomic,strong)  NSMutableArray *matches;
+
 
 
 @end

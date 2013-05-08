@@ -32,8 +32,9 @@
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
         [self setContent: [dict objectForKey:@"body"]];
-        [self setNumberOfNo: [dict objectForKey:@"dislikes"]];
-        [self setNumberOfYes: [dict objectForKey:@"likes"]];
+        [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
+        [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];
+        [self setScore:numberOfYes-numberOfNo];
     }
     return self;
 }

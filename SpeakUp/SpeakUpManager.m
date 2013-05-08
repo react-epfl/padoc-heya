@@ -8,13 +8,12 @@
 #import "SpeakUpManager.h"
 #import "SocketIOPacket.h"
 
-#define DURATION 43200 // a month in minutes
+#define RANGE 500000000 // as big as it gets
 
-#define iWallMiddlewareUnknownPeerException  @"net.headfirst.iwall.UnknownPeerException"
 
 @implementation SpeakUpManager
 
-@synthesize matches, publicationRadius, peer_id, dev_id,subscriptionRadius, likedMessages, sharedTopic, timer, messageLifetime, roomLifetime, speakUpDelegate,dislikedMessages,myMessagePublicationIDs,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomCounter, messageCounter, roomArray, locationIsOK, connectionIsOK,myRoomPublicationIDs, myMessageIDs, locationAtLastReset, socketIO, range;
+@synthesize peer_id, dev_id, likedMessages, timer, speakUpDelegate,dislikedMessages,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, myMessageIDs, locationAtLastReset, socketIO, range;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -76,6 +75,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else{
         NSLog(@"got something else");
     }
+    [self savePeerData];
 }
 //================
 // RECEIVED ROOMS
@@ -130,6 +130,24 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [messageManagerDelegate updateMessages:room.messages inRoom: room];
         }
     }
+}
+//========================
+// HANDSHAKE SOCKET.IO
+//========================
+- (void)handshake{
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:self.dev_id forKey:@"dev_id"];
+    if (peer_id) {
+        [myData setValue:self.peer_id forKey:@"peer_id"];
+    }
+    [myData setValue:self.range forKey:@"range"];
+    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myData setValue:myLoc forKey:@"loc"];
+    [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
+    
+    [socketIO sendEvent:@"peer" withData:myData];
 }
 //========================
 // SOCKET CONNECT
@@ -217,26 +235,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socketIO sendEvent:@"messageupdate" withData:myData];
     [self savePeerData];
 }
-
-//========================
-// HANDSHAKE SOCKET.IO
-//========================
-- (void)handshake{
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:self.dev_id forKey:@"dev_id"];
-    [myData setValue:self.range forKey:@"range"];
-    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
-    [myData setValue:myLoc forKey:@"loc"];
-    [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-    
-    [socketIO sendEvent:@"peer" withData:myData];
-}
-
-
-
-
 //============================
 // LOCATION MANAGER CALLBACK
 //============================
@@ -247,9 +245,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     if (!locationIsOK ){
         [sharedSpeakUpManager connect];
-        [speakUpDelegate updateData];
         locationIsOK=YES;
     }
+    for(Room *room in roomArray){
+        CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
+        room.distance = [self.location distanceFromLocation:roomlocation];
+    }
+    self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
+    [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
 }
 //========================
 // LOCATION FAILED
@@ -258,7 +261,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     self.latitude=-1;
     self.longitude=-1;
 }
-
 //========================
 // SAVING DATA
 //========================
@@ -269,12 +271,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else{
         dev_id = [UIDevice currentDevice].uniqueIdentifier;
     }
-    range=[NSNumber numberWithInt:500000000];
+    range=[NSNumber numberWithInt:RANGE];
     
-    sharedTopic=@"SpeakUp";
-    subscriptionRadius=[NSNumber numberWithInt:0];
-    publicationRadius=[NSNumber numberWithInt:200];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"peer_id"]){
+        peer_id= [defaults objectForKey:@"peer_id"];
+    }else {
+        peer_id= nil;
+    }
     if([defaults objectForKey:@"likedMessages"]){
         likedMessages= [defaults objectForKey:@"likedMessages"];
     }else {
@@ -284,11 +288,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         dislikedMessages= [defaults objectForKey:@"dislikedMessages"];
     }else {
         dislikedMessages= [[NSMutableArray alloc] init];
-    }
-    if([defaults objectForKey:@"myMessagePublicationIDs"]){
-        myMessagePublicationIDs= [defaults objectForKey:@"myMessagePublicationIDs"];
-    }else {
-        myMessagePublicationIDs= [[NSMutableDictionary alloc] init];
     }
     if([defaults objectForKey:@"myMessageIDs"]){
         myMessageIDs= [defaults objectForKey:@"myMessageIDs"];
@@ -300,11 +299,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         myRoomIDs= [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"myRoomPublicationIDs"]){
-        myRoomPublicationIDs= [defaults objectForKey:@"myRoomPublicationIDs"];
-    }else {
-        myRoomPublicationIDs= [[NSMutableDictionary alloc] init];
-    }
     if([defaults objectForKey:@"isSuperUser"]){
         NSNumber* booleanNumber;
         booleanNumber = [defaults objectForKey:@"isSuperUser"] ;
@@ -312,9 +306,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         isSuperUser= NO;
     }
-    roomCounter = [NSNumber numberWithInt:[defaults integerForKey:@"roomCounter"]];
-    messageCounter = [NSNumber numberWithInt:[defaults integerForKey:@"messageCounter"]];
-    
     inputText=@"";
     sharedSpeakUpManager.locationAtLastReset = nil;
     sharedSpeakUpManager.location = nil;
@@ -323,20 +314,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 -(void)savePeerData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:[roomCounter intValue] forKey:@"roomCounter"];
-    [defaults setInteger:[messageCounter intValue] forKey:@"messageCounter"];
+    [defaults setObject:peer_id forKey:@"peer_id"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
-    [defaults setObject:myMessagePublicationIDs forKey:@"myMessagePublicationIDs"];
     [defaults setObject:myMessageIDs forKey:@"myMessageIDs"];
     [defaults setObject:myRoomIDs forKey:@"myRoomIDs"];
-    [defaults setObject:myRoomPublicationIDs  forKey:@"myRoomPublicationIDs"];
     [defaults setObject:[NSNumber numberWithBool:self.isSuperUser] forKey:@"isSuperUser"];
     [defaults synchronize];
 }
-
 //========================
-// UTILS
+// UTILITIES
 //========================
 -(NSArray*) sortArrayByDistance:(NSArray*) unsortedRooms{
     NSSortDescriptor *sortDescriptor;
