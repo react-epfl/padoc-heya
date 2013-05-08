@@ -130,8 +130,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "592"
          endingLineNumber = "592"
-         landmarkName = "-getNextRoomNumber"
-         landmarkType = "5">
+         landmarkName = "@implementation SpeakUpManager"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -325,8 +325,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "231"
          endingLineNumber = "231"
-         landmarkName = "@implementation SpeakUpManager"
-         landmarkType = "3">
+         landmarkName = "-createRoom:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
