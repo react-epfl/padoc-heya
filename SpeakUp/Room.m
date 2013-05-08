@@ -36,6 +36,8 @@
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [peerlocation distanceFromLocation:roomlocation];
+        messages = [NSMutableArray array];
+        isOfficial=NO;
     }
     return self;
 }

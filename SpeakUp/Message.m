@@ -25,9 +25,10 @@
     return self;
 }
 
-- (id)initWithDictionary:(NSDictionary*) dict{
+- (id)initWithDictionary:(NSDictionary*) dict roomID:(NSString *)aRoomID{
     self = [super init];
     if(self){
+        [self setRoomID:aRoomID];
         [self setMessageID: [dict objectForKey:@"_id"]];
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];

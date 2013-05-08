@@ -60,27 +60,25 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSString* type = packet.name;
     if ([type isEqual:@"rooms"]) {
-        // {type: 'rooms', data: [{_id, creation_time, creator_id, name, loc: {lat, lng}}, ...]}
         NSLog(@"got rooms");
         
-        // Probably we need to clean the list of rooms before inserting recently received rooms there?
-        // Imagine when the room is not anymore in the list of visible rooms
-        // I might be wrong and not understanding something :)
+        // ANDRII: Probably we need to clean the list of rooms before inserting recently received rooms there? Imagine when the room is not anymore in the list of visible rooms I might be wrong and not understanding something :)
         
         NSArray *rooms = [packet.args objectAtIndex:0];
         for (NSDictionary *roomData in rooms) {
             [self processReceivedRoom:[[Room alloc] initWithDictionary:roomData]];
         }
     } else if ([type isEqual:@"roomcreated"]) {
-        // {type: 'roomcreated', data: {_id, creation_time, creator_id, name, loc: {lat, lng}}}
         NSLog(@"got a room");
         [self processReceivedRoom:[[Room alloc] initWithDictionary:[packet.args objectAtIndex:0]]];
-    } else if ([type isEqual:@"messages"]) {
+    } else if ([type isEqual:@"roommessages"]) {
         // {type: 'messages', data: [{_id, creation_time, creator_id, body, likes, dislikes}, ...]
         NSLog(@"got messages");
-        NSArray *messages = [packet.args objectAtIndex:0];
+        NSArray *argsArray = packet.args;
+         NSMutableDictionary* dict = [argsArray objectAtIndex:0];
+        NSArray *messages =[dict objectForKey:@"messages"];
         for (NSDictionary *msgData in messages) {
-            [self processReceivedMessages:[[Message alloc] initWithDictionary:msgData]];
+            [self processReceivedMessages:[[Message alloc] initWithDictionary:msgData roomID:[dict objectForKey:@"room_id"]]];
        }
     } else if ([type isEqual:@"messagecreated"]) {
         //{type: 'messagecreated', data: {peer_id, room_id, body}}
@@ -317,7 +315,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     //    [event setIntProperty:@"noRating" to:noRating];
     // create a publication that represents a rating of a message
     //[me publish:event onTopic:sharedTopic inRange:[publicationRadius doubleValue] isOutward:NO forDuration:DURATION isMobile:NO  delegate:self];
-    [self startNetworking];
+   // [self startNetworking];
 }
 
 - (void)assignRatingToMessage:(NSString*)messageID inRoom:(NSString*)roomID byPeer:(NSString*)peerStringID  yesRating:(int)yesRating noRating:(int) noRating{
@@ -407,7 +405,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         //        [event setStringProperty:@"eventType" to:@"deleteMessage"];
         //        [event setStringProperty:@"messageID" to:message.messageID];
         //        [event setStringProperty:@"roomID" to:message.roomID];
-        [self startNetworking];
+       // [self startNetworking];
     }
 }
 
@@ -572,9 +570,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 // METHODS RELATED TO NETWORKING
 -(void)startNetworking{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+   // [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 -(void)stopNetworking{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+  //  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 @end

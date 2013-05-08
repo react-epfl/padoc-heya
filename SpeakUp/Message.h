@@ -12,7 +12,7 @@
 
 @interface Message : NSObject
 
-- (id)initWithDictionary:(NSDictionary*) dict;
+- (id)initWithDictionary:(NSDictionary*) dict roomID:(NSString*) roomID;
 
 @property (strong, nonatomic) NSString* messageID;
 @property (nonatomic)NSString*  authorPeerID;
