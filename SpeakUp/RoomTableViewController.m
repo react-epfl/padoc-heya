@@ -212,25 +212,25 @@
 }
 
 //request sent to the server
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
-    if([[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] containsObject:room.roomID]){
-        return @"Delete";
-    }
-    return @"Hide";
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
+//    if([[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] containsObject:room.roomID]){
+//        return @"Delete";
+//    }
+//    return @"Hide";
+//}
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
-        NSLog(@"hiding room %@ ", room.roomID);
-        nearbyRooms = [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
-        [tableView reloadData];
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
+//        NSLog(@"hiding room %@ ", room.roomID);
+//        nearbyRooms = [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
+//        [tableView reloadData];
+//    }
+//}
 
 ///////////////////////////
 //// EGO STUFF BEGINS

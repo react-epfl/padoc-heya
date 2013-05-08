@@ -23,7 +23,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager = [[self alloc] init];
             sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
-            sharedSpeakUpManager.connectionIsOK=YES;
+            sharedSpeakUpManager.connectionIsOK=NO;
             sharedSpeakUpManager.locationIsOK=NO;
             
             // sets up the local location manager, this triggers the didUpdateToLocation callback
@@ -44,7 +44,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     return sharedSpeakUpManager;
 }
-
 //===========================
 // SOCKET DID RECEIVE MESSAGE
 //===========================
@@ -55,6 +54,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     if ([type isEqual:@"peer_welcome"]) {
         NSDictionary *data = [packet.args objectAtIndex:0];
         peer_id = [data objectForKey:@"peer_id"];
+        connectionIsOK=YES;
         [self getNearbyRooms];
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
@@ -165,12 +165,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSLog(@"socket did fail with error: %@",[error description]);
 }
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
+    connectionIsOK=NO;
     NSLog(@"socket did close with error %@ ",[error description]);
 }
 //========================
 // GET ROOMS SOCKET.IO
 //========================
 -(void)getNearbyRooms{
+    if (connectionIsOK) {
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
@@ -179,8 +181,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myData setValue:self.range forKey:@"range"];
-    
     [socketIO sendEvent:@"getrooms" withData:myData];
+    }else if(locationIsOK){
+        [self connect];
+    }
 }
 //========================
 // GET MESSAGES SOCKET.IO
@@ -257,9 +261,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
-    
-
-
 }
 //========================
 // LOCATION FAILED

@@ -30,11 +30,8 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    
-    
     self = [super initWithStyle:style];
     if (self) {
-        
     }
     return self;
 }
@@ -377,14 +374,14 @@
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Message* message = [self getMessageForIndex:indexPath.section];
-    if([[[SpeakUpManager sharedSpeakUpManager] myMessageIDs] containsObject:message.messageID]){
-        return @"Delete";
-    }
-    return @"Hide";
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    Message* message = [self getMessageForIndex:indexPath.section];
+//    if([[[SpeakUpManager sharedSpeakUpManager] myMessageIDs] containsObject:message.messageID]){
+//        return @"Delete";
+//    }
+//    return @"Hide";
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
