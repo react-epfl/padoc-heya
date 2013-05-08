@@ -25,6 +25,7 @@
 @property(strong, nonatomic) IBOutlet UIBarButtonItem * plusButton;
 @property(strong, nonatomic) IBOutlet UIImageView * roomLogo;
 @property(strong, nonatomic) NSArray *nearbyRooms;
+@property (nonatomic, retain) NSTimer * timer;
 
 
 @end

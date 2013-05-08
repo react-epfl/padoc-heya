@@ -10,7 +10,6 @@
 
 #define RANGE 500000000 // as big as it gets
 
-
 @implementation SpeakUpManager
 
 @synthesize peer_id, dev_id, likedMessages, timer, speakUpDelegate,dislikedMessages,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, myMessageIDs, locationAtLastReset, socketIO, range;
@@ -58,7 +57,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         peer_id = [data objectForKey:@"peer_id"];
         [self getNearbyRooms];
     }else if ([type isEqual:@"rooms"]) {
-        // ANDRII: Probably we need to clean the list of rooms before inserting recently received rooms there? Imagine when the room is not anymore in the list of visible rooms I might be wrong and not understanding something :)
         [self receivedRooms: [packet.args objectAtIndex:0]];
     } else if ([type isEqual:@"roomcreated"]) {
         [self receivedRoom: [packet.args objectAtIndex:0]];
@@ -81,6 +79,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // RECEIVED ROOMS
 //================
 -(void)receivedRooms:(NSArray*)roomDictionaries{
+    [roomArray removeAllObjects];
+    self.locationAtLastReset=self.location;
+    NSLog(@"ALL OBJECT ARE REMOVED FROM NEARBY ROOMS");
     for (NSDictionary *roomDictionary in roomDictionaries) {
         [self receivedRoom:roomDictionary];
     }
@@ -197,8 +198,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void) createMessage:(Message *) message{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
-    [myData setValue:message.content forKey:@"body"];
     [myData setValue:message.roomID forKey:@"room_id"];
+    NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
+    [messageData setValue:message.content forKey:@"body"];
+    [myData setValue:messageData forKey:@"message"];
     
     [socketIO sendEvent:@"createmessage" withData:myData];
 
@@ -247,12 +250,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [sharedSpeakUpManager connect];
         locationIsOK=YES;
     }
+        
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.location distanceFromLocation:roomlocation];
     }
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
+    
+
+
 }
 //========================
 // LOCATION FAILED
@@ -482,10 +489,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    }
 //}
 
-//target method is called every time the timer wakes up and queries the repository for matches
-//-(void) targetMethod: (NSTimer*) theTimer{
-// here we might want to get rooms or something else... not sure yet how and what
-//}
+
 
 
 // RESET PROCEDURES (called asynchronously)

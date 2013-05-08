@@ -16,7 +16,7 @@
 
 @implementation RoomTableViewController
 
-@synthesize nearbyRooms, plusButton, roomLogo;
+@synthesize nearbyRooms, plusButton, roomLogo, timer;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,6 +26,13 @@
     
     
     return self;
+}
+
+//=======
+// TIMER
+//=======
+-(void) targetMethod: (NSTimer*) theTimer{
+    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,13 +73,14 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-   // [[SpeakUpManager sharedSpeakUpManager] subscribeToNearbyRooms];
+    timer = [NSTimer scheduledTimerWithTimeInterval: 10.0 target:self selector:@selector(targetMethod:) userInfo:nil repeats: YES];
     [super viewDidDisappear:animated];
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [timer invalidate];
     [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     [super viewDidDisappear:animated];
 }
@@ -244,7 +252,6 @@
 - (void)reloadTableViewDataSource{
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
 	//  should be calling your tableviews data source model to reload
-	//  put here just for demo
 	_reloading = YES;
 }
 - (void)doneLoadingTableViewData{
