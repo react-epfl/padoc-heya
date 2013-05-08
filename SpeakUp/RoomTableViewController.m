@@ -190,9 +190,6 @@
         Room *room = [nearbyRooms objectAtIndex:row];
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom:room.roomID];
         [messageTVC setCurrentRoom: room];
-        // if (!room.subscriptionRequest) {
-        //   [[SpeakUpManager sharedSpeakUpManager] subscribeToAllMessagesInRoom:room.roomID];
-        // }
     }
 }
 //callback from the server

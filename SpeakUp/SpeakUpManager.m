@@ -55,14 +55,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //===========================
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet{
     
-    NSLog(@"webSocket received a message: %@", packet.data );
+    NSLog(@"webSocket received a message: %@", packet.args );
     
-    NSError* error;
-    NSData *jsonData = [packet.data dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];//breaks
-    NSLog(@"JSON Dict: %@", json);// DECAPUSLATION MAY BE BROKEN
     
-    NSString* type = [json objectForKey:@"name"]; // ADRIAN NOT SURE BUT IT LOOKS LIKE THE EVENT NAME IS STORE IN "NAME"
+    NSString* type = packet.name;
     if ([type isEqual:@"rooms"]) {
         // {type: 'rooms', data: [{_id, creation_time, creator_id, name, loc: {lat, lng}}, ...]}
         NSLog(@"got rooms");
@@ -71,34 +67,34 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         // Imagine when the room is not anymore in the list of visible rooms
         // I might be wrong and not understanding something :)
         
-        NSArray *rooms = [json objectForKey:@"data"];
+        NSArray *rooms = [packet.args objectAtIndex:0];
         for (NSDictionary *roomData in rooms) {
             [self processReceivedRoom:[[Room alloc] initWithDictionary:roomData]];
         }
     } else if ([type isEqual:@"roomcreated"]) {
         // {type: 'roomcreated', data: {_id, creation_time, creator_id, name, loc: {lat, lng}}}
         NSLog(@"got a room");
-        [self processReceivedRoom:[[Room alloc] initWithDictionary:json]];
+        [self processReceivedRoom:[[Room alloc] initWithDictionary:[packet.args objectAtIndex:0]]];
     } else if ([type isEqual:@"messages"]) {
         // {type: 'messages', data: [{_id, creation_time, creator_id, body, likes, dislikes}, ...]
         NSLog(@"got messages");
-        NSArray *messages = [json objectForKey:@"data"];
+        NSArray *messages = [packet.args objectAtIndex:0];
         for (NSDictionary *msgData in messages) {
             [self processReceivedMessages:[[Message alloc] initWithDictionary:msgData]];
-        }
+       }
     } else if ([type isEqual:@"messagecreated"]) {
         //{type: 'messagecreated', data: {peer_id, room_id, body}}
-        NSDictionary *data = [json objectForKey:@"data"];
+        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         Message* message = [[Message alloc] init];
-        [message setMessageID: [data objectForKey:@"_id"]];
+        [message setMessageID: [dict objectForKey:@"_id"]];
         [message setAuthorPeerID: self.peer_id];
-        [message setCreationTime: [data objectForKey:@"creation_time"]];
-        [message setContent: [data objectForKey:@"body"]];
+        [message setCreationTime: [dict objectForKey:@"creation_time"]];
+        [message setContent: [dict objectForKey:@"body"]];
         NSLog(@"RECEIVED NEW MESSAGE: %@, IN ROOM %@", message.content, message.roomID);
         [self assignMessage:message];
     }else if ([type isEqual:@"peer_welcome"]) {
-        NSDictionary *data = [json objectForKey:@"data"];
-        peer_id = [data objectForKey:@"peer_id"];
+       NSDictionary *data = [packet.args objectAtIndex:0];
+       peer_id = [data objectForKey:@"peer_id"];
         NSLog(@"welcome peer %@",peer_id);
         [self getNearbyRooms];
     }else{
@@ -202,7 +198,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
    [socketIO sendEvent:@"createmessage" withData:myData];
     
-    [myMessageIDs addObject:message.messageID];
+   // [myMessageIDs addObject:message.messageID];
     [self savePeerData];
     [self assignMessage:message];
 }
