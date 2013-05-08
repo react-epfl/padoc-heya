@@ -69,7 +69,7 @@
 
 //- (void)viewDidUnload
 //{
-  //  [super viewDidUnload];
+//  [super viewDidUnload];
 //}
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,13 +92,13 @@
 
 
 -(void)notifyThatLocationHasChangedSignificantly{
-//       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
-//                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", currentRoom.name ]
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"OK"
-//                                              otherButtonTitles:nil];
-//        [alert show];
-//        [self.navigationController popViewControllerAnimated:YES];
+    //       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
+    //                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", currentRoom.name ]
+    //                                                       delegate:nil
+    //                                              cancelButtonTitle:@"OK"
+    //                                              otherButtonTitles:nil];
+    //        [alert show];
+    //        [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -128,18 +128,18 @@
 
 // test if the peer is still in the range of the room , if this is not the case, leaves the room with a alert
 -(void)testLocationMatchAndLeaveRoomIfNecessary{
-   // CLLocation * peerlocation = [[CLLocation alloc] initWithLatitude:[[SpeakUpManager sharedSpeakUpManager] latitude] longitude:[[SpeakUpManager sharedSpeakUpManager] longitude]];
+    // CLLocation * peerlocation = [[CLLocation alloc] initWithLatitude:[[SpeakUpManager sharedSpeakUpManager] latitude] longitude:[[SpeakUpManager sharedSpeakUpManager] longitude]];
     //CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[currentRoom latitude] longitude: [currentRoom longitude]];
-   // if([peerlocation distanceFromLocation:roomlocation]> currentRoom.range){
-        // goes back to the room view,
-     //   UIAlertView *alert = [[UIAlertView alloc]
-       //                       initWithTitle: [NSString stringWithFormat: @"You have left %@", currentRoom.name ]
-         //                     message: [NSString stringWithFormat: @"Messages in %@ are no longer available", currentRoom.name ]
-           //                   delegate: nil
-             //                 cancelButtonTitle:@"OK"
-               //               otherButtonTitles:nil];
-        //[alert show];
-        //[self.navigationController popViewControllerAnimated:YES];
+    // if([peerlocation distanceFromLocation:roomlocation]> currentRoom.range){
+    // goes back to the room view,
+    //   UIAlertView *alert = [[UIAlertView alloc]
+    //                       initWithTitle: [NSString stringWithFormat: @"You have left %@", currentRoom.name ]
+    //                     message: [NSString stringWithFormat: @"Messages in %@ are no longer available", currentRoom.name ]
+    //                   delegate: nil
+    //                 cancelButtonTitle:@"OK"
+    //               otherButtonTitles:nil];
+    //[alert show];
+    //[self.navigationController popViewControllerAnimated:YES];
     //}
 }
 
@@ -164,8 +164,8 @@
         }
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:2];
         [thumbUpButton setImage:[UIImage imageNamed:@"noMsg.png"] forState:UIControlStateNormal] ;
-         cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-         cell.backgroundView.backgroundColor = [UIColor whiteColor];
+        cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+        cell.backgroundView.backgroundColor = [UIColor whiteColor];
         cell.backgroundView.layer.cornerRadius  =2;
         return cell;
     }
@@ -176,7 +176,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        // CONTENT - set up the content 
+        // CONTENT - set up the content
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         NSUInteger section = [indexPath section];
         Message* message = [self getMessageForIndex:section];
@@ -202,6 +202,7 @@
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        // NSDate *messageCreationTime = [dateFormatter dateFromString:@"2013-05-08 23:55:18"]; // ADER Switch these lines
         NSDate *messageCreationTime = [dateFormatter dateFromString:message.creationTime];
         NSTimeInterval elapsedTimeSinceMessageCreation = [messageCreationTime timeIntervalSinceNow];
         message.secondsSinceCreation = elapsedTimeSinceMessageCreation;
@@ -246,11 +247,11 @@
             //cell.backgroundColor = [UIColor whiteColor ];
             cell.backgroundView.backgroundColor = [UIColor whiteColor];
         }
-       // cell.backgroundView.layer.shadowColor =[[UIColor blackColor] CGColor];
+        // cell.backgroundView.layer.shadowColor =[[UIColor blackColor] CGColor];
         cell.backgroundView.layer.cornerRadius  =2;
-       // cell.backgroundView.layer.shadowRadius=2;
+        // cell.backgroundView.layer.shadowRadius=2;
         //cell.backgroundView.layer.shadowOpacity=.8;
-       // cell.backgroundView.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+        // cell.backgroundView.layer.shadowOffset = CGSizeMake(2.0, 2.0);
         return cell;
     }
 }
@@ -306,27 +307,32 @@
         NSUInteger section = [indexPath section];
         Message* message = [self getMessageForIndex:section];
         messageID = message.messageID;
-        //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
-        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-            noRating = NO  ;
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-            yesRating= YES;
+        if (messageID) {
+            
+            //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
+            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+                noRating = NO  ;
+                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+                yesRating= YES;
+            }
+            //else if the message was liked remove it from the list of liked messages
+            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+                yesRating=NO;
+            }
+            // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
+            else{
+                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+                yesRating=YES;
+            }
+            [self.tableView reloadData];
+            // update the message rating on the server
+            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
+            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        }else{
+            NSLog(@"the message %@ does not have an id",[message description]);
         }
-        //else if the message was liked remove it from the list of liked messages
-        else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-            yesRating=NO;
-        }
-        // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
-        else{
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-            yesRating=YES;
-        }
-        [self.tableView reloadData];
-        // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
-        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }
 
@@ -342,27 +348,31 @@
         NSUInteger section = [indexPath section];
         Message* message = [self getMessageForIndex:section];
         messageID = message.messageID;
-        //if the message was disliked, remove the message from the list of disliked messages
-        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-            noRating=NO;
+        if (messageID) {
+            //if the message was disliked, remove the message from the list of disliked messages
+            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+                noRating=NO;
+            }
+            //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
+            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+                yesRating=NO ;
+                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
+                noRating= YES ;
+            }
+            // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
+            else{
+                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+                noRating=YES;
+            }
+            [self.tableView reloadData];
+            // update the message rating on the server
+            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
+            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        }else{
+            NSLog(@"the message %@ does not have an id",[message description]);
         }
-        //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
-        else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-            yesRating=NO ;
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
-            noRating= YES ;
-        }
-        // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
-        else{
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
-            noRating=YES;
-        }
-        [self.tableView reloadData];
-        // update the message rating on the server
-         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
-        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }
 
@@ -414,7 +424,7 @@
     if([room.roomID isEqual:currentRoom.roomID]){
         if(!self.editing){
             [self.tableView reloadData];
-          //  [self doneLoadingTableViewData]; // EGO finnish loading
+            //  [self doneLoadingTableViewData]; // EGO finnish loading
         }
     }
 }

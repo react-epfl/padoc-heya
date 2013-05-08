@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729647.23408"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "414"
-         endingLineNumber = "414"
+         startingLineNumber = "420"
+         endingLineNumber = "420"
          landmarkName = "-updateMessages:inRoom:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729647.23408"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "414"
-         endingLineNumber = "414"
+         startingLineNumber = "420"
+         endingLineNumber = "420"
          landmarkName = "-updateMessages:inRoom:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -375,11 +375,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729077.103784"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "259"
-         endingLineNumber = "259"
+         startingLineNumber = "260"
+         endingLineNumber = "260"
          landmarkName = "-getMessageForIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -505,11 +505,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729647.23408"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "335"
-         endingLineNumber = "335"
+         startingLineNumber = "341"
+         endingLineNumber = "341"
          landmarkName = "-rateMessageDown:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -518,11 +518,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729077.103784"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "299"
-         endingLineNumber = "299"
+         startingLineNumber = "300"
+         endingLineNumber = "300"
          landmarkName = "-rateMessageUp:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -531,72 +531,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "310"
-         endingLineNumber = "310"
-         landmarkName = "-rateMessageUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "317"
-         endingLineNumber = "317"
-         landmarkName = "-rateMessageUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "323"
-         endingLineNumber = "323"
-         landmarkName = "-rateMessageUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "318"
-         endingLineNumber = "318"
-         landmarkName = "-rateMessageUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "311"
-         endingLineNumber = "311"
-         landmarkName = "-rateMessageUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729647.23408"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "313"
@@ -605,15 +540,80 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/MessageTableViewController.m"
+         timestampString = "389729647.23408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "320"
+         endingLineNumber = "320"
+         landmarkName = "-rateMessageUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/MessageTableViewController.m"
-         timestampString = "389725004.652764"
+         timestampString = "389729647.23408"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "328"
-         endingLineNumber = "328"
+         startingLineNumber = "326"
+         endingLineNumber = "326"
+         landmarkName = "-rateMessageUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/MessageTableViewController.m"
+         timestampString = "389729647.23408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "321"
+         endingLineNumber = "321"
+         landmarkName = "-rateMessageUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/MessageTableViewController.m"
+         timestampString = "389729647.23408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "314"
+         endingLineNumber = "314"
+         landmarkName = "-rateMessageUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/MessageTableViewController.m"
+         timestampString = "389729647.23408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "316"
+         endingLineNumber = "316"
+         landmarkName = "-rateMessageUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/MessageTableViewController.m"
+         timestampString = "389729647.23408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "331"
+         endingLineNumber = "331"
          landmarkName = "-rateMessageUp:"
          landmarkType = "5">
       </FileBreakpoint>
