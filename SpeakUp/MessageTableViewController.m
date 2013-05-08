@@ -328,7 +328,7 @@
         }
         [self.tableView reloadData];
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislkies:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }
@@ -364,7 +364,7 @@
         }
         [self.tableView reloadData];
         // update the message rating on the server
-         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislkies:noRating];
+         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }

@@ -26,10 +26,6 @@
 @property ( nonatomic) BOOL isVisible;
 
 
-@property (strong, nonatomic) NSMutableArray  *peersWhoFlagged;
-
-@property (strong, nonatomic) NSMutableDictionary  *ratingPerPeer;
-
 @property ( nonatomic) int numberOfYes;
 @property ( nonatomic) int numberOfNo;
 @property ( nonatomic) int score;

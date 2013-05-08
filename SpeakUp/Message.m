@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, isVisible, peersWhoFlagged, authorPeerID,ratingPerPeer;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, isVisible, authorPeerID;
 
 - (id)init{
     self = [super init];
@@ -20,7 +20,6 @@
         numberOfNo=0;
         numberOfYes=0;
         score=0;
-        ratingPerPeer= [[NSMutableDictionary alloc] init];
     }
     return self;
 }
