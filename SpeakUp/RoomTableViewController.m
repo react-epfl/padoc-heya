@@ -32,7 +32,7 @@
 // TIMER
 //=======
 -(void) targetMethod: (NSTimer*) theTimer{
-    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    //ADER removed for debuging [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +73,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    timer = [NSTimer scheduledTimerWithTimeInterval: 10.0 target:self selector:@selector(targetMethod:) userInfo:nil repeats: YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval: 60.0 target:self selector:@selector(targetMethod:) userInfo:nil repeats: YES];
     [super viewDidDisappear:animated];
 }
 

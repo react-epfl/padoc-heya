@@ -94,8 +94,7 @@
 
 // repo where matches are stored
 
-// timer is used to retrieve matches from the repo
-@property (nonatomic,strong) NSTimer* timer; 
+
 
 
 

@@ -12,7 +12,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, timer, speakUpDelegate,dislikedMessages,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, myMessageIDs, locationAtLastReset, socketIO, range;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, myMessageIDs, locationAtLastReset, socketIO, range;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 

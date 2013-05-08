@@ -395,17 +395,17 @@
     return height + (CELL_CONTENT_MARGIN * 2);
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Message* message = [self getMessageForIndex:indexPath.section];
-        [currentRoom.messages removeObject:message];
-        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
-        [tableView reloadData];
-
-    }
-}
+//// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        Message* message = [self getMessageForIndex:indexPath.section];
+//        [currentRoom.messages removeObject:message];
+//        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
+//        [tableView reloadData];
+//
+//    }
+//}
 
 
 // callback from server
