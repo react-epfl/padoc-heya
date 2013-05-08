@@ -48,6 +48,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // SOCKET DID RECEIVE MESSAGE
 //===========================
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet{
+    [self stopNetworking];
     NSLog(@"webSocket received a message: %@", packet.args );
     
     NSString* type = packet.name;
@@ -149,6 +150,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     
     [socketIO sendEvent:@"peer" withData:myData];
+    [self startNetworking];
 }
 //========================
 // SOCKET CONNECT
@@ -156,15 +158,19 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 - (void)connect{
     socketIO = [[SocketIO alloc] initWithDelegate:self];
     [socketIO connectToHost:@"localhost" onPort:1337];
+    [self startNetworking];
 }
 - (void) socketIODidConnect:(SocketIO *)socket{
+    [self stopNetworking];
     NSLog(@"socket is now open");
     [self handshake];
 }
 - (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
+    [self stopNetworking];
     NSLog(@"socket did fail with error: %@",[error description]);
 }
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
+    [self stopNetworking];
     connectionIsOK=NO;
     NSLog(@"socket did close with error %@ ",[error description]);
 }
@@ -182,6 +188,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myData setValue:self.range forKey:@"range"];
     [socketIO sendEvent:@"getrooms" withData:myData];
+    [self startNetworking];
     }else if(locationIsOK){
         [self connect];
     }
@@ -195,6 +202,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:room_id forKey:@"room_id"];
     
     [socketIO sendEvent:@"getmessages" withData:myData];
+    [self startNetworking];
 }
 //========================
 // CREATE MSG SOCKET.IO
@@ -208,6 +216,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:messageData forKey:@"message"];
     
     [socketIO sendEvent:@"createmessage" withData:myData];
+    [self startNetworking];
 
 }
 //========================
@@ -224,6 +233,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     
     [socketIO sendEvent:@"createroom" withData:myData];
+    [self startNetworking];
     
     [self savePeerData];
 }
@@ -240,6 +250,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:messageDict forKey:@"message"];
     
     [socketIO sendEvent:@"messageupdate" withData:myData];
+    [self startNetworking];
+    
     [self savePeerData];
 }
 //============================
@@ -343,10 +355,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 // METHODS RELATED TO NETWORKING
 -(void)startNetworking{
-    // [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 -(void)stopNetworking{
-    //  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 //========================
