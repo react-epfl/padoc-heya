@@ -165,7 +165,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 // {type: 'getrooms', data: {peer_id, loc: {lat, lng}, accu, range}}
 -(void)getNearbyRooms{
-    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
@@ -174,9 +173,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [myData setValue:self.range forKey:@"range"];
-    [myDict setValue:myData forKey:@"data"];
     
-    [socketIO sendEvent:@"getrooms" withData:myDict];
+    [socketIO sendEvent:@"getrooms" withData:myData];
 }
 
 
@@ -185,13 +183,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 // {type: 'getmessages', data: {peer_id, room_id}}
 -(void)getMessagesInRoom:(NSString*)room_id{
-    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room_id forKey:@"room_id"];
-    [myDict setValue:myData forKey:@"data"];
     
-    [socketIO sendEvent:@"getmessages" withData:myDict];
+    [socketIO sendEvent:@"getmessages" withData:myData];
 }
 
 
@@ -199,14 +195,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // CREATE MSG SOCKET.IO
 //========================
 -(void) createMessage:(Message *) message{
-    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"id"];
     [myData setValue:message.content forKey:@"body"];
     [myData setValue:message.roomID forKey:@"room_id"];
-    [myDict setValue:myData forKey:@"data"];
-    
-   [socketIO sendEvent:@"createmessage" withData:myDict];
+
+   [socketIO sendEvent:@"createmessage" withData:myData];
     
     [myMessageIDs addObject:message.messageID];
     [self savePeerData];
@@ -218,7 +212,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 // {type: 'createroom', data: {creator_id, name, loc: {lat, lng}, accu}}
 - (void)createRoom:(Room *)room{
-    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
@@ -227,9 +220,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-    [myDict setValue:myData forKey:@"data"];
     
-    [socketIO sendEvent:@"createroom" withData:myDict];
+    [socketIO sendEvent:@"createroom" withData:myData];
     
     [self savePeerData];
 }
@@ -238,7 +230,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // HANDSHAKE SOCKET.IO
 //========================
 - (void)handshake{
-    NSMutableDictionary* myDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.dev_id forKey:@"dev_id"];
     [myData setValue:self.range forKey:@"range"];
@@ -247,15 +238,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-    [myDict setValue:myData forKey:@"data"];
     
-    [socketIO sendEvent:@"peer" withData:myDict];
+    [socketIO sendEvent:@"peer" withData:myData];
 }
-
-
-
-
-
 
 // RESET PROCEDURES (called asynchronously)
 // called when opened through the speakup://reset url
