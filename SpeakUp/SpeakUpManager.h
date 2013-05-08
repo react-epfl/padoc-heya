@@ -41,12 +41,12 @@
 -(void) deleteMessage:(Message *) message;
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoom:(NSString*)roomID;
-- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
+- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislkies:(BOOL) disliked;
 
 // ROOM RELATED METHODS
 -(NSArray*) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;
-- (void)resetData;// initiates a process that leads to the removal of all subscriptions and reinitialization of the roomArray
+//- (void)resetData;// initiates a process that leads to the removal of all subscriptions and reinitialization of the roomArray
 
 - (void)resetPeerID;
 

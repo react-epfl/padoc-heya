@@ -41,10 +41,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-            
-           
-            //NSLog(@"Location service is %d",[CLLocationManager locationServicesEnabled]);
+            [sharedSpeakUpManager.locationManager startUpdatingLocation];
 
+            
         }
     }
     return sharedSpeakUpManager;
@@ -60,39 +59,22 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     NSString* type = packet.name;
     if ([type isEqual:@"rooms"]) {
-        NSLog(@"got rooms");
-        
         // ANDRII: Probably we need to clean the list of rooms before inserting recently received rooms there? Imagine when the room is not anymore in the list of visible rooms I might be wrong and not understanding something :)
-        
-        NSArray *rooms = [packet.args objectAtIndex:0];
-        for (NSDictionary *roomData in rooms) {
-            [self processReceivedRoom:[[Room alloc] initWithDictionary:roomData]];
-        }
+        [self receivedRooms: [packet.args objectAtIndex:0]];
     } else if ([type isEqual:@"roomcreated"]) {
-        NSLog(@"got a room");
-        [self processReceivedRoom:[[Room alloc] initWithDictionary:[packet.args objectAtIndex:0]]];
+        [self receivedRoom: [packet.args objectAtIndex:0]];
     } else if ([type isEqual:@"roommessages"]) {
-        // {type: 'messages', data: [{_id, creation_time, creator_id, body, likes, dislikes}, ...]
         NSLog(@"got messages");
         NSArray *argsArray = packet.args;
-         NSMutableDictionary* dict = [argsArray objectAtIndex:0];
-        NSArray *messages =[dict objectForKey:@"messages"];
-        for (NSDictionary *msgData in messages) {
-            [self processReceivedMessages:[[Message alloc] initWithDictionary:msgData roomID:[dict objectForKey:@"room_id"]]];
-       }
+        NSMutableDictionary* dict = [argsArray objectAtIndex:0];
+        [self receivedMessages: [dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
     } else if ([type isEqual:@"messagecreated"]) {
-        //{type: 'messagecreated', data: {peer_id, room_id, body}}
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
-        Message* message = [[Message alloc] init];
-        [message setMessageID: [dict objectForKey:@"_id"]];
-        [message setAuthorPeerID: self.peer_id];
-        [message setCreationTime: [dict objectForKey:@"creation_time"]];
-        [message setContent: [dict objectForKey:@"body"]];
-        NSLog(@"RECEIVED NEW MESSAGE: %@, IN ROOM %@", message.content, message.roomID);
-        [self assignMessage:message];
+        [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
+        
     }else if ([type isEqual:@"peer_welcome"]) {
-       NSDictionary *data = [packet.args objectAtIndex:0];
-       peer_id = [data objectForKey:@"peer_id"];
+        NSDictionary *data = [packet.args objectAtIndex:0];
+        peer_id = [data objectForKey:@"peer_id"];
         NSLog(@"welcome peer %@",peer_id);
         [self getNearbyRooms];
     }else{
@@ -100,7 +82,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
 }
 
--(void)processReceivedRoom:(Room*)room{
+
+//================
+// RECEIVED ROOMS
+//================
+-(void)receivedRooms:(NSArray*)roomDictionaries{
+    for (NSDictionary *roomDictionary in roomDictionaries) {
+        [self receivedRoom:roomDictionary];
+    }
+}
+//==============
+// RECEIVED ROOM
+//==============
+-(void)receivedRoom:(NSDictionary*)roomDictionary{
+    Room *room = [[Room alloc] initWithDictionary:roomDictionary];
     BOOL roomAlreadyInArray = NO;
     for(Room *r in roomArray){
         if ([r.roomID isEqual:room.roomID]) {
@@ -113,8 +108,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
     }
 }
-
--(void)processReceivedMessages:(Message*)message{
+//==================
+// RECEIVED MESSAGES
+//==================
+-(void)receivedMessages:(NSArray*)messageDictionaries roomID:(NSString*)roomID{
+    for (NSDictionary *messageDictionary in messageDictionaries) {
+        [self receivedMessage:messageDictionary roomID:roomID];
+    }
+}
+//=================
+// RECEIVED MESSAGE
+//=================
+-(void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
+    Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
+    
     for(Room *room in roomArray){
         if ([room.roomID isEqual:message.roomID]) {
             BOOL msgAlreadyInRoom = NO;
@@ -175,7 +182,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 // GET MESSAGES SOCKET.IO
 //========================
-// {type: 'getmessages', data: {peer_id, room_id}}
 -(void)getMessagesInRoom:(NSString*)room_id{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
@@ -184,19 +190,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socketIO sendEvent:@"getmessages" withData:myData];
 }
 
-
 //========================
 // CREATE MSG SOCKET.IO
 //========================
 -(void) createMessage:(Message *) message{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:self.peer_id forKey:@"id"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.content forKey:@"body"];
     [myData setValue:message.roomID forKey:@"room_id"];
-
-   [socketIO sendEvent:@"createmessage" withData:myData];
     
-   // [myMessageIDs addObject:message.messageID];
+    [socketIO sendEvent:@"createmessage" withData:myData];
+    // [myMessageIDs addObject:message.messageID];
     [self savePeerData];
     [self assignMessage:message];
 }
@@ -240,19 +244,19 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // called when opened through the speakup://reset url
 - (void)resetPeerID{
     [self savePeerData];
-    [self resetData];
+   // [self resetData];
 }
 
 //called by appdelegate
-- (void)resetData{
-  locationIsOK=NO;
-[self.locationManager startUpdatingLocation];
-//once the right location is retrieved, the reset process starts
-}
+//- (void)resetData{
+//    locationIsOK=NO;
+//    [self.locationManager startUpdatingLocation];
+//    //once the right location is retrieved, the reset process starts
+//}
 
 //target method is called every time the timer wakes up and queries the repository for matches
 -(void) targetMethod: (NSTimer*) theTimer{
-   // here we might want to get rooms or something else... not sure yet how and what
+    // here we might want to get rooms or something else... not sure yet how and what
 }
 
 // DELIVER EVENTS
@@ -305,66 +309,66 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // RATE MESSAGE
 //-------------
-- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
-    //    Event *event = [[Event alloc] init];
-    //    [event setStringProperty:@"eventType" to:@"messageRating"];
-    //    [event setStringProperty:@"messageID" to:messageID];
-    //    [event setStringProperty:@"roomID" to:roomID];
-    //    [event setStringProperty:@"peerID" to:[NSString stringWithFormat:@"peer%d",[peerID intValue]]];
-    //    [event setIntProperty:@"yesRating" to:yesRating];
-    //    [event setIntProperty:@"noRating" to:noRating];
-    // create a publication that represents a rating of a message
-    //[me publish:event onTopic:sharedTopic inRange:[publicationRadius doubleValue] isOutward:NO forDuration:DURATION isMobile:NO  delegate:self];
-   // [self startNetworking];
+- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislkies:(BOOL) disliked{
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
+    [messageDict setValue:messageID forKey:@"msg_id"];
+    [messageDict setValue:[NSNumber numberWithBool:liked] forKey:@"liked"];
+    [messageDict setValue:[NSNumber numberWithBool:disliked] forKey:@"disliked"];
+    [myData setValue:messageDict forKey:@"message"];
+    
+    [socketIO sendEvent:@"messageupdate" withData:myData];
+    [self savePeerData];
 }
 
-- (void)assignRatingToMessage:(NSString*)messageID inRoom:(NSString*)roomID byPeer:(NSString*)peerStringID  yesRating:(int)yesRating noRating:(int) noRating{
-    for(Room *room in roomArray){
-        if ([room.roomID isEqual:roomID]) {
-            for(Message *msg in room.messages){
-                if ([msg.messageID isEqual:messageID]) {
-                    NSNumber* peerRating = [msg.ratingPerPeer objectForKey:peerStringID];
-                    if(!peerRating){
-                        peerRating= [NSNumber numberWithInt:0];
-                    }
-                    int value = [peerRating intValue];
-                    if(yesRating ==1){
-                        value++;
-                    }
-                    if(yesRating ==-1){
-                        value--;
-                    }
-                    if(noRating ==1){
-                        value--;
-                    }
-                    if(noRating ==-1){
-                        value++;
-                    }
-                    peerRating = [NSNumber numberWithInt:value];
-                    [msg.ratingPerPeer setObject:peerRating forKey:peerStringID];
-                    //update the score for the message
-                    int numberOfYes=0;
-                    int numberOfNo=0;
-                    for(NSString* key in msg.ratingPerPeer) {
-                        NSNumber* ratingInNumber = [msg.ratingPerPeer objectForKey:key];
-                        int rating = [ratingInNumber intValue];
-                        if(rating==-1){
-                            numberOfNo++;
-                        }if (rating==1) {
-                            numberOfYes++;
-                        }if(rating*rating > 1){
-                            NSLog(@"something went wrong with the ratings a peer %@ has the following rating %d", key, rating);
-                        }
-                    }
-                    msg.numberOfNo=numberOfNo;
-                    msg.numberOfYes= numberOfYes;
-                    msg.score=msg.numberOfYes-msg.numberOfNo;
-                    [messageManagerDelegate updateMessages:room.messages inRoom: room];
-                }
-            }
-        }
-    }
-}
+//- (void)assignRatingToMessage:(NSString*)messageID inRoom:(NSString*)roomID byPeer:(NSString*)peerStringID  yesRating:(int)yesRating noRating:(int) noRating{
+//    for(Room *room in roomArray){
+//        if ([room.roomID isEqual:roomID]) {
+//            for(Message *msg in room.messages){
+//                if ([msg.messageID isEqual:messageID]) {
+//                    NSNumber* peerRating = [msg.ratingPerPeer objectForKey:peerStringID];
+//                    if(!peerRating){
+//                        peerRating= [NSNumber numberWithInt:0];
+//                    }
+//                    int value = [peerRating intValue];
+//                    if(yesRating ==1){
+//                        value++;
+//                    }
+//                    if(yesRating ==-1){
+//                        value--;
+//                    }
+//                    if(noRating ==1){
+//                        value--;
+//                    }
+//                    if(noRating ==-1){
+//                        value++;
+//                    }
+//                    peerRating = [NSNumber numberWithInt:value];
+//                    [msg.ratingPerPeer setObject:peerRating forKey:peerStringID];
+//                    //update the score for the message
+//                    int numberOfYes=0;
+//                    int numberOfNo=0;
+//                    for(NSString* key in msg.ratingPerPeer) {
+//                        NSNumber* ratingInNumber = [msg.ratingPerPeer objectForKey:key];
+//                        int rating = [ratingInNumber intValue];
+//                        if(rating==-1){
+//                            numberOfNo++;
+//                        }if (rating==1) {
+//                            numberOfYes++;
+//                        }if(rating*rating > 1){
+//                            NSLog(@"something went wrong with the ratings a peer %@ has the following rating %d", key, rating);
+//                        }
+//                    }
+//                    msg.numberOfNo=numberOfNo;
+//                    msg.numberOfYes= numberOfYes;
+//                    msg.score=msg.numberOfYes-msg.numberOfNo;
+//                    [messageManagerDelegate updateMessages:room.messages inRoom: room];
+//                }
+//            }
+//        }
+//    }
+//}
 
 -(void) assignMessage:(Message *) message{
     for(Room *room in roomArray){
@@ -405,7 +409,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         //        [event setStringProperty:@"eventType" to:@"deleteMessage"];
         //        [event setStringProperty:@"messageID" to:message.messageID];
         //        [event setStringProperty:@"roomID" to:message.roomID];
-       // [self startNetworking];
+        // [self startNetworking];
     }
 }
 
@@ -419,44 +423,44 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     if (!locationIsOK ){
         [sharedSpeakUpManager connect];
-          [speakUpDelegate updateData];
+        [speakUpDelegate updateData];
         locationIsOK=YES;
     }
     
-//    BOOL reset = NO;
-//    self.location = newLocation;
-//    self.latitude = newLocation.coordinate.latitude;
-//    self.longitude = newLocation.coordinate.longitude;
-//    if([roomArray count]>0){
-//        for(Room *room in roomArray){
-//            CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
-//            room.distance = [self.location distanceFromLocation:roomlocation];
-//            if (room.distance>250.0) {
-//                reset=YES;
-//            }
-//        }
-//        if(!reset){
-//            [roomManagerDelegate updateRooms:roomArray];
-//        }
-//    }
-//    if (!locationIsOK && oldLocation){
-//        double distance = [oldLocation distanceFromLocation:self.location];
-//        locationIsOK=YES;
-//        [speakUpDelegate updateData];
-//        if(distance>250.0){
-//            reset=YES;
-//        }
-//    }
-//    if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >250.0) {
-//        reset = YES;
-//    }
-//    if(reset){
-//        self.locationAtLastReset=self.location;
-//        locationIsOK=YES;
-//        [speakUpDelegate updateData];
-//        [messageManagerDelegate notifyThatLocationHasChangedSignificantly];
-//        // [self getNearbyRooms];
-//    }
+    //    BOOL reset = NO;
+    //    self.location = newLocation;
+    //    self.latitude = newLocation.coordinate.latitude;
+    //    self.longitude = newLocation.coordinate.longitude;
+    //    if([roomArray count]>0){
+    //        for(Room *room in roomArray){
+    //            CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
+    //            room.distance = [self.location distanceFromLocation:roomlocation];
+    //            if (room.distance>250.0) {
+    //                reset=YES;
+    //            }
+    //        }
+    //        if(!reset){
+    //            [roomManagerDelegate updateRooms:roomArray];
+    //        }
+    //    }
+    //    if (!locationIsOK && oldLocation){
+    //        double distance = [oldLocation distanceFromLocation:self.location];
+    //        locationIsOK=YES;
+    //        [speakUpDelegate updateData];
+    //        if(distance>250.0){
+    //            reset=YES;
+    //        }
+    //    }
+    //    if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >250.0) {
+    //        reset = YES;
+    //    }
+    //    if(reset){
+    //        self.locationAtLastReset=self.location;
+    //        locationIsOK=YES;
+    //        [speakUpDelegate updateData];
+    //        [messageManagerDelegate notifyThatLocationHasChangedSignificantly];
+    //        // [self getNearbyRooms];
+    //    }
 }
 
 //========================
@@ -546,20 +550,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 // UTILS
 //========================
-
-// Get Unique room and message IDs
--(int)getNextMessageNumber{
-    int value = [self.messageCounter intValue];
-    self.messageCounter = [NSNumber numberWithInt:value + 1];
-    [self savePeerData];
-    return [self.messageCounter intValue];
-}
--(int)getNextRoomNumber{
-    int value = [self.roomCounter intValue];
-    self.roomCounter = [NSNumber numberWithInt:value + 1];
-    [self savePeerData];
-    return [self.roomCounter intValue];
-}
 -(NSArray*) sortArrayByDistance:(NSArray*) unsortedRooms{
     NSSortDescriptor *sortDescriptor;
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
@@ -570,9 +560,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 // METHODS RELATED TO NETWORKING
 -(void)startNetworking{
-   // [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    // [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 -(void)stopNetworking{
-  //  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    //  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 @end

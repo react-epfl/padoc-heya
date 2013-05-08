@@ -300,8 +300,8 @@
 -(IBAction)rateMessageUp:(id)sender{
     @synchronized(self){
         NSString* messageID;
-        int yesRating = 0;
-        int noRating = 0;
+        BOOL yesRating = NO;
+        BOOL noRating = NO;
         UIButton *aButton = (UIButton *)sender;
         UIView *contentView = [aButton superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
@@ -312,23 +312,23 @@
         //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
         if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
             [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-            noRating = -1;
+            noRating = NO  ;
             [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-            yesRating=1;
+            yesRating= YES;
         }
         //else if the message was liked remove it from the list of liked messages
         else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
             [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-            yesRating=-1;
+            yesRating=NO;
         }
         // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
         else{
             [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-            yesRating=1;
+            yesRating=YES;
         }
         [self.tableView reloadData];
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislkies:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }
@@ -336,8 +336,8 @@
 -(IBAction)rateMessageDown:(id)sender{
     @synchronized(self){
         NSString* messageID;
-        int yesRating = 0;
-        int noRating = 0;
+        BOOL yesRating = NO;
+        BOOL noRating = NO;
         UIButton *aButton = (UIButton *)sender;
         UIView *contentView = [aButton superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
@@ -348,23 +348,23 @@
         //if the message was disliked, remove the message from the list of disliked messages
         if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
             [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-            noRating--;
+            noRating=NO;
         }
         //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
         else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
             [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-            yesRating--;
+            yesRating=NO ;
             [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
-            noRating++;
+            noRating= YES ;
         }
         // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
         else{
             [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
-            noRating++;
+            noRating=YES;
         }
         [self.tableView reloadData];
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
+         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislkies:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }
