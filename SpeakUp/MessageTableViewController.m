@@ -440,7 +440,7 @@
 
 -(NSArray*) getMessagesSortedByTime{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
     for (Message* message in currentRoom.messages){
         NSDate *messageCreationTime = [dateFormatter dateFromString:message.creationTime];
         NSTimeInterval elapsedTimeSinceMessageCreation = [messageCreationTime timeIntervalSinceNow];
