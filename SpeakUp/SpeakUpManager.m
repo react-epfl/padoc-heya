@@ -243,6 +243,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:roomID forKey:@"room_id"];
     NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
     [messageDict setValue:messageID forKey:@"msg_id"];
     [messageDict setValue:[NSNumber numberWithBool:liked] forKey:@"liked"];

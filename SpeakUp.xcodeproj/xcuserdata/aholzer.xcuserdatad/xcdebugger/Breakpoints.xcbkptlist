@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "509"
-         endingLineNumber = "509">
+         startingLineNumber = "510"
+         endingLineNumber = "510">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -227,22 +227,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "533"
-         endingLineNumber = "533">
+         startingLineNumber = "534"
+         endingLineNumber = "534">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "662"
-         endingLineNumber = "662">
+         startingLineNumber = "663"
+         endingLineNumber = "663">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -288,11 +288,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "673"
-         endingLineNumber = "673">
+         startingLineNumber = "674"
+         endingLineNumber = "674">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -338,11 +338,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "520"
-         endingLineNumber = "520">
+         startingLineNumber = "521"
+         endingLineNumber = "521">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -622,11 +622,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "291"
-         endingLineNumber = "291"
+         startingLineNumber = "292"
+         endingLineNumber = "292"
          landmarkName = "-initPeerData"
          landmarkType = "5">
       </FileBreakpoint>
@@ -635,11 +635,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "293"
-         endingLineNumber = "293"
+         startingLineNumber = "294"
+         endingLineNumber = "294"
          landmarkName = "-initPeerData"
          landmarkType = "5">
       </FileBreakpoint>
@@ -648,11 +648,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389801012.120318"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "260"
-         endingLineNumber = "260"
+         startingLineNumber = "261"
+         endingLineNumber = "261"
          landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
          landmarkType = "5">
       </FileBreakpoint>
