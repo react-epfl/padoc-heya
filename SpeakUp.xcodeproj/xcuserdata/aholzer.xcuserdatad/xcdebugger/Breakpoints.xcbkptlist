@@ -453,11 +453,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/Message.m"
-         timestampString = "389783699.827012"
+         timestampString = "389800433.453134"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
+         startingLineNumber = "32"
+         endingLineNumber = "32"
          landmarkName = "-initWithDictionary:roomID:"
          landmarkType = "5">
       </FileBreakpoint>

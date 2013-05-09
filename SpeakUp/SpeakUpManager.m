@@ -249,7 +249,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [messageDict setValue:[NSNumber numberWithBool:disliked] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];
     
-    [socketIO sendEvent:@"messageupdate" withData:myData];
+    [socketIO sendEvent:@"updatemessage" withData:myData];
     [self startNetworking];
     
     [self savePeerData];
