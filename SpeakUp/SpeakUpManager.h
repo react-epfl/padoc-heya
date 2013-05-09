@@ -41,8 +41,8 @@
 -(void) deleteMessage:(Message *) message;
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoom:(NSString*)roomID;
-- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked;
-
+//- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked;
+- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
 // ROOM RELATED METHODS
 -(NSArray*) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;

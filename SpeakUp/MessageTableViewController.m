@@ -295,12 +295,99 @@
 }
 
 
+////press like
+//-(IBAction)rateMessageUp:(id)sender{
+//    @synchronized(self){
+//        NSString* messageID;
+//        BOOL yesRating = NO;
+//        BOOL noRating = NO;
+//        UIButton *aButton = (UIButton *)sender;
+//        UIView *contentView = [aButton superview];
+//        UITableViewCell *cell = (UITableViewCell *)[contentView superview];
+//        NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
+//        NSUInteger section = [indexPath section];
+//        Message* message = [self getMessageForIndex:section];
+//        messageID = message.messageID;
+//        if (messageID) {
+//            
+//            //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
+//            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+//                noRating = NO  ;
+//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+//                yesRating= YES;
+//            }
+//            //else if the message was liked remove it from the list of liked messages
+//            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+//                yesRating=NO;
+//            }
+//            // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
+//            else{
+//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+//                yesRating=YES;
+//            }
+//            [self.tableView reloadData];
+//            // update the message rating on the server
+//            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
+//            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+//        }else{
+//            NSLog(@"the message %@ does not have an id",[message description]);
+//        }
+//    }
+//}
+//
+//-(IBAction)rateMessageDown:(id)sender{
+//    @synchronized(self){
+//        NSString* messageID;
+//        BOOL yesRating = NO;
+//        BOOL noRating = NO;
+//        UIButton *aButton = (UIButton *)sender;
+//        UIView *contentView = [aButton superview];
+//        UITableViewCell *cell = (UITableViewCell *)[contentView superview];
+//        NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
+//        NSUInteger section = [indexPath section];
+//        Message* message = [self getMessageForIndex:section];
+//        messageID = message.messageID;
+//        if (messageID) {
+//            //if the message was disliked, remove the message from the list of disliked messages
+//            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+//                noRating=NO;
+//            }
+//            //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
+//            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+//                yesRating=NO ;
+//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
+//                noRating= YES ;
+//            }
+//            // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
+//            else{
+//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+//                noRating=YES;
+//            }
+//            [self.tableView reloadData];
+//            // update the message rating on the server
+//            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
+//            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+//        }else{
+//            NSLog(@"the message %@ does not have an id",[message description]);
+//        }
+//    }
+//}
+
+
+//////=====================================
+//////=====================================
+//////=====================================
+//////=====================================
 //press like
 -(IBAction)rateMessageUp:(id)sender{
     @synchronized(self){
         NSString* messageID;
-        BOOL yesRating = NO;
-        BOOL noRating = NO;
+        int yesRating = 0;
+        int noRating = 0;
         UIButton *aButton = (UIButton *)sender;
         UIView *contentView = [aButton superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
@@ -309,28 +396,27 @@
         Message* message = [self getMessageForIndex:section];
         messageID = message.messageID;
         if (messageID) {
-            
-            //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
-            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-                noRating = NO  ;
-                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-                yesRating= YES;
-            }
-            //else if the message was liked remove it from the list of liked messages
-            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-                yesRating=NO;
-            }
-            // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
-            else{
-                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-                yesRating=YES;
-            }
-            [self.tableView reloadData];
-            // update the message rating on the server
-            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
-            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
+        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+            noRating = -1;
+            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+            yesRating=1;
+        }
+        //else if the message was liked remove it from the list of liked messages
+        else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+            yesRating=-1;
+        }
+        // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
+        else{
+            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+            yesRating=1;
+        }
+        [self.tableView reloadData];
+        // update the message rating on the server
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
         }else{
             NSLog(@"the message %@ does not have an id",[message description]);
         }
@@ -340,8 +426,8 @@
 -(IBAction)rateMessageDown:(id)sender{
     @synchronized(self){
         NSString* messageID;
-        BOOL yesRating = NO;
-        BOOL noRating = NO;
+        int yesRating = 0;
+        int noRating = 0;
         UIButton *aButton = (UIButton *)sender;
         UIView *contentView = [aButton superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
@@ -350,32 +436,39 @@
         Message* message = [self getMessageForIndex:section];
         messageID = message.messageID;
         if (messageID) {
-            //if the message was disliked, remove the message from the list of disliked messages
-            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-                noRating=NO;
-            }
-            //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
-            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-                yesRating=NO ;
-                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
-                noRating= YES ;
-            }
-            // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
-            else{
-                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
-                noRating=YES;
-            }
-            [self.tableView reloadData];
-            // update the message rating on the server
-            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
-            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        //if the message was disliked, remove the message from the list of disliked messages
+        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+            noRating--;
+        }
+        //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
+        else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+            yesRating--;
+            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
+            noRating++;
+        }
+        // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
+        else{
+            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+            noRating++;
+        }
+        [self.tableView reloadData];
+        // update the message rating on the server
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
         }else{
             NSLog(@"the message %@ does not have an id",[message description]);
         }
     }
 }
+//////=====================================
+//////=====================================
+//////=====================================
+//////=====================================
+//////=====================================
+
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

@@ -240,14 +240,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //==============
 // RATE MESSAGE
 //==============
-- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked{
+//- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked{
+- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:roomID forKey:@"room_id"];
     NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
     [messageDict setValue:messageID forKey:@"msg_id"];
-    [messageDict setValue:[NSNumber numberWithBool:liked] forKey:@"liked"];
-    [messageDict setValue:[NSNumber numberWithBool:disliked] forKey:@"disliked"];
+    [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
+    [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];
     
     [socketIO sendEvent:@"updatemessage" withData:myData];
