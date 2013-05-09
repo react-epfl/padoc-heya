@@ -201,7 +201,8 @@
         // TIME - Setup the time label
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        //[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         // NSDate *messageCreationTime = [dateFormatter dateFromString:@"2013-05-08 23:55:18"]; // ADER Switch these lines
         NSDate *messageCreationTime = [dateFormatter dateFromString:message.creationTime];
         NSTimeInterval elapsedTimeSinceMessageCreation = [messageCreationTime timeIntervalSinceNow];

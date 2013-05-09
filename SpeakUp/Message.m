@@ -28,7 +28,12 @@
     self = [super init];
     if(self){
         [self setRoomID:aRoomID];
-        [self setMessageID: [dict objectForKey:@"_id"]];
+        NSString* myMessage_id = [dict objectForKey:@"msg_id"];
+        if (!myMessage_id) {
+            myMessage_id = [dict objectForKey:@"_id"];    
+        }
+        [self setMessageID:myMessage_id];// ADER: should be uniform, either _id or msg_id
+        
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
         [self setContent: [dict objectForKey:@"body"]];
