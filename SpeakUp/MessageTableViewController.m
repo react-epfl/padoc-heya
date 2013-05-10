@@ -91,14 +91,26 @@
 }
 
 
+-(void)notifyThatRoomIsTooFar:(Room*) room{
+     if ([room.roomID isEqual:currentRoom.roomID]) {
+          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Exit"
+                                                            message:[NSString stringWithFormat: @"You have moved out of room %@", currentRoom.name ]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+           [self.navigationController popViewControllerAnimated:YES];
+     }
+}
+
 -(void)notifyThatLocationHasChangedSignificantly{
-    //       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
-    //                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", currentRoom.name ]
-    //                                                       delegate:nil
-    //                                              cancelButtonTitle:@"OK"
-    //                                              otherButtonTitles:nil];
-    //        [alert show];
-    //        [self.navigationController popViewControllerAnimated:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Exit"
+                                                    message:[NSString stringWithFormat: @"You have moved out of room %@", currentRoom.name ]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

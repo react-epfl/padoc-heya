@@ -15,8 +15,8 @@
 // socket rocket removed #import "SRWebSocket.h"
 #import "SocketIO.h"
 
-
-#define SERVER_URL @"reacttest.epfl.ch"
+#define SERVER_URL @"localhost"
+//#define SERVER_URL @"reacttest.epfl.ch"
 #define RANGE 200 
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
@@ -41,7 +41,7 @@
 // ROOM RELATED METHODS
 -(NSArray*) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;
-
+- (void)connect;
 
 @property (strong, nonatomic)  SocketIO *socketIO;
 

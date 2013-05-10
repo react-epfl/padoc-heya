@@ -59,6 +59,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self getNearbyRooms];
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
+        self.locationAtLastReset=self.location;
     } else if ([type isEqual:@"roomcreated"]) {
         [self receivedRoom: [packet.args objectAtIndex:0]];
     } else if ([type isEqual:@"roommessages"]) {
@@ -108,6 +109,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }else{
         NSLog(@"room is too far");
+        [messageManagerDelegate notifyThatRoomIsTooFar:room];
     }
 }
 //==================
@@ -162,9 +164,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // SOCKET CONNECT
 //========================
 - (void)connect{
-    socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:SERVER_URL onPort:1337];
+    if (locationIsOK) {
+        socketIO = [[SocketIO alloc] initWithDelegate:self];
+        [socketIO connectToHost:SERVER_URL onPort:1337];
     [self startNetworking];
+    }
 }
 - (void) socketIODidConnect:(SocketIO *)socket{
     [self stopNetworking];
@@ -232,6 +236,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
+    [myData setValue:[NSNumber numberWithDouble:room.isOfficial] forKey:@"official"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
@@ -269,16 +274,28 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     self.location = newLocation;
     self.latitude = newLocation.coordinate.latitude;
     self.longitude = newLocation.coordinate.longitude;
-    
-    if (!locationIsOK ){
-        [sharedSpeakUpManager connect];
+    NSLog(@"location update");
+    if (!locationIsOK ||!connectionIsOK){
         locationIsOK=YES;
+        [sharedSpeakUpManager connect];
+        
     }
-    
+
+    NSMutableArray* roomsToRemove = [NSMutableArray array];
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.location distanceFromLocation:roomlocation];
+        if (room.distance>RANGE) {
+            [roomsToRemove addObject:room];
+            [messageManagerDelegate notifyThatRoomIsTooFar:room];
+        }
     }
+    //if location is too far from last refresh, need to reload
+    if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >RANGE*2) {
+        self.locationAtLastReset=self.location;
+        [self getNearbyRooms];
+    }
+    
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
 }

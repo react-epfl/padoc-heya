@@ -33,7 +33,7 @@
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
         [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
         [self setName: [dict objectForKey:@"name"]];
-        [self setIsOfficial:[[dict objectForKey:@"isOfficial"] boolValue]];
+        [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [peerlocation distanceFromLocation:roomlocation];

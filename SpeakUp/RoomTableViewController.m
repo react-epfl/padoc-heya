@@ -52,7 +52,6 @@
     
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
-    //[[SpeakUpManager sharedSpeakUpManager] checkIfReady];
     // EGO STUFF
     if (_refreshHeaderView == nil) {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
@@ -75,6 +74,8 @@
 {
     timer = [NSTimer scheduledTimerWithTimeInterval: 60.0 target:self selector:@selector(targetMethod:) userInfo:nil repeats: YES];
     [super viewDidDisappear:animated];
+    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    
 }
 
 
@@ -125,6 +126,7 @@
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
             nameLabel.text = @"Waiting for location...";
         }else if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+            //[[SpeakUpManager sharedSpeakUpManager] connect];
             nameLabel.text = @"Waiting for connection...";
         }
         return cell;
@@ -139,7 +141,7 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-            nameLabel.text = @"Looking for nearby rooms";
+            nameLabel.text = @"No room nearby, create one!";
             return cell;
         }
         else{

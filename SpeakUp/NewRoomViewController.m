@@ -57,10 +57,11 @@
 //        [input setPlaceholder:@"You cannot create more rooms"];
 //        [input setUserInteractionEnabled:NO];
 //    }
-//    if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-//        [input setPlaceholder:@"You are super :)"];
+if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
+        [input setPlaceholder:@"You are super :)"];
 //        self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
-//    }else {
+   }
+//else {
 //        int numberOfRoomsLeft = MAX_ROOMS - myNumberOfRooms;
 //        self.navigationItem.title=[NSString stringWithFormat:@"Create room (%d left)",numberOfRoomsLeft];
 //    }
@@ -110,8 +111,6 @@
     }else if(self.input.text.length>0){
         NSLog(@"creating a new room %@ ", input.text);
         Room* myRoom = [[Room alloc] init];
-       // int roomNumber= [[SpeakUpManager sharedSpeakUpManager] getNextRoomNumber];
-        //int peerID= [[[SpeakUpManager sharedSpeakUpManager] peerID] intValue] ;
         if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
             myRoom.isOfficial=YES;
         }
