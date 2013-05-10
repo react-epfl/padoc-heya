@@ -274,7 +274,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     self.location = newLocation;
     self.latitude = newLocation.coordinate.latitude;
     self.longitude = newLocation.coordinate.longitude;
-    NSLog(@"location update");
+    //NSLog(@"location update");
     if (!locationIsOK ||!connectionIsOK){
         locationIsOK=YES;
         [sharedSpeakUpManager connect];
