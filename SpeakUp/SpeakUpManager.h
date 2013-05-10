@@ -15,14 +15,9 @@
 // socket rocket removed #import "SRWebSocket.h"
 #import "SocketIO.h"
 
-#define BOOLEAN  @"BOOLEAN"
-#define STRING   @"STRING"
-#define BYTE     @"BYTE"
-#define SHORT    @"SHORT"
-#define INT      @"INT"
-#define LONG     @"LONG"
-#define FLOAT    @"FLOAT"
-#define DOUBLE   @"DOUBLE"
+
+#define SERVER_URL @"reacttest.epfl.ch"
+#define RANGE 200 
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
 @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>

@@ -8,7 +8,7 @@
 #import "SpeakUpManager.h"
 #import "SocketIOPacket.h"
 
-#define RANGE 500000000 // as big as it gets
+
 
 @implementation SpeakUpManager
 
@@ -157,7 +157,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 - (void)connect{
     socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:@"localhost" onPort:1337];
+    [socketIO connectToHost:SERVER_URL onPort:1337];
     [self startNetworking];
 }
 - (void) socketIODidConnect:(SocketIO *)socket{
