@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "389717939.326817"
+         timestampString = "389872022.707818"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "150"
-         endingLineNumber = "150"
+         startingLineNumber = "146"
+         endingLineNumber = "146"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "389717939.326817"
+         timestampString = "389872022.707818"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "140"
+         endingLineNumber = "140"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "511"
-         endingLineNumber = "511">
+         startingLineNumber = "517"
+         endingLineNumber = "517">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -214,11 +214,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "389717939.326817"
+         timestampString = "389872022.707818"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "137"
-         endingLineNumber = "137"
+         startingLineNumber = "133"
+         endingLineNumber = "133"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -227,33 +227,33 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "535"
-         endingLineNumber = "535">
+         startingLineNumber = "541"
+         endingLineNumber = "541">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "664"
-         endingLineNumber = "664">
+         startingLineNumber = "670"
+         endingLineNumber = "670">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "389717939.326817"
+         timestampString = "389872022.707818"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "207"
-         endingLineNumber = "207"
+         startingLineNumber = "203"
+         endingLineNumber = "203"
          landmarkName = "-updateRooms:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -288,11 +288,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "675"
-         endingLineNumber = "675">
+         startingLineNumber = "681"
+         endingLineNumber = "681">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -338,11 +338,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "522"
-         endingLineNumber = "522">
+         startingLineNumber = "528"
+         endingLineNumber = "528">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -362,11 +362,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "389717939.326817"
+         timestampString = "389872022.707818"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "199"
-         endingLineNumber = "199"
+         startingLineNumber = "195"
+         endingLineNumber = "195"
          landmarkName = "-prepareForSegue:sender:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -492,11 +492,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389720278.912873"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "234"
-         endingLineNumber = "234"
+         startingLineNumber = "240"
+         endingLineNumber = "240"
          landmarkName = "-createRoom:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -505,11 +505,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "293"
-         endingLineNumber = "293"
+         startingLineNumber = "299"
+         endingLineNumber = "299"
          landmarkName = "-initPeerData"
          landmarkType = "5">
       </FileBreakpoint>
@@ -518,11 +518,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "295"
-         endingLineNumber = "295"
+         startingLineNumber = "301"
+         endingLineNumber = "301"
          landmarkName = "-initPeerData"
          landmarkType = "5">
       </FileBreakpoint>
@@ -531,11 +531,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389803729.817249"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "262"
-         endingLineNumber = "262"
+         startingLineNumber = "268"
+         endingLineNumber = "268"
          landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -557,11 +557,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389718519.585626"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "82"
-         endingLineNumber = "82"
+         startingLineNumber = "83"
+         endingLineNumber = "83"
          landmarkName = "-receivedRooms:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -596,11 +596,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389725929.86781"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "-receivedMessage:roomID:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -609,11 +609,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389725940.924654"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "119"
-         endingLineNumber = "119"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
          landmarkName = "-receivedMessage:roomID:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -635,12 +635,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SpeakUp/SpeakUpManager.m"
-         timestampString = "389782993.572459"
+         timestampString = "389872351.772416"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "131"
-         endingLineNumber = "131"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
          landmarkName = "-receivedMessage:roomID:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/SpeakUpManager.m"
+         timestampString = "389872243.887813"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
+         landmarkName = "-socketIO:didReceiveEvent:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SpeakUp/SpeakUpManager.m"
+         timestampString = "389872351.772416"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "180"
+         endingLineNumber = "180"
+         landmarkName = "-socketIODidDisconnect:disconnectedWithError:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -122,13 +122,9 @@
         }
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-        if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] &&![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
-            nameLabel.text = @"Waiting for location and connection...";
-        }
-        else if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
+        if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
             nameLabel.text = @"Waiting for location...";
-        }
-        else if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        }else if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             nameLabel.text = @"Waiting for connection...";
         }
         return cell;

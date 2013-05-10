@@ -75,6 +75,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSLog(@"got something else");
     }
     [self savePeerData];
+    [speakUpDelegate updateData];
 }
 //================
 // RECEIVED ROOMS
@@ -92,16 +93,21 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //==============
 -(void)receivedRoom:(NSDictionary*)roomDictionary{
     Room *room = [[Room alloc] initWithDictionary:roomDictionary];
-    BOOL roomAlreadyInArray = NO;
-    for(Room *r in roomArray){
-        if ([r.roomID isEqual:room.roomID]) {
-            roomAlreadyInArray= YES;
+    // IF room too far, do nothing
+    if([self.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]]]<=RANGE){
+        BOOL roomAlreadyInArray = NO;
+        for(Room *r in roomArray){
+            if ([r.roomID isEqual:room.roomID]) {
+                roomAlreadyInArray= YES;
+            }
         }
-    }
-    if (!roomAlreadyInArray) {
-        [roomArray addObject:room];
-        roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-        [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
+        if (!roomAlreadyInArray) {
+            [roomArray addObject:room];
+            roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
+            [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
+        }
+    }else{
+        NSLog(@"room is too far");
     }
 }
 //==================
@@ -179,16 +185,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 -(void)getNearbyRooms{
     if (connectionIsOK) {
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
-    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
-    [myData setValue:myLoc forKey:@"loc"];
-    [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-    [myData setValue:self.range forKey:@"range"];
-    [socketIO sendEvent:@"getrooms" withData:myData];
-    [self startNetworking];
+        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+        [myData setValue:self.peer_id forKey:@"peer_id"];
+        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+        [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
+        [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+        [myData setValue:myLoc forKey:@"loc"];
+        [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
+        [myData setValue:self.range forKey:@"range"];
+        [socketIO sendEvent:@"getrooms" withData:myData];
+        [self startNetworking];
     }else if(locationIsOK){
         [self connect];
     }
@@ -217,7 +223,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     [socketIO sendEvent:@"createmessage" withData:myData];
     [self startNetworking];
-
+    
 }
 //========================
 // CREATE ROOM SOCKET.IO
@@ -268,7 +274,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [sharedSpeakUpManager connect];
         locationIsOK=YES;
     }
-        
+    
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.location distanceFromLocation:roomlocation];
@@ -442,49 +448,49 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // DELIVER EVENTS
 //-(void)retrieveMatchesForSucceededWithResponse{
-    //            // NEW RATING RECEIVED
-    //        } else if([eventType isEqual:@"messageRating"]){
-    //            NSString* roomID = [match.event getStringProperty:@"roomID" ];
-    //            NSString* peerStringID = [match.event getStringProperty:@"peerID" ];
-    //            NSString* messageID = [match.event getStringProperty:@"messageID" ];
-    //            NSNumber* yesRating = [match.event getIntProperty:@"yesRating"];
-    //            NSNumber* noRating = [match.event getIntProperty:@"noRating"];
-    //            [self assignRatingToMessage:messageID inRoom: roomID byPeer:peerStringID  yesRating: [yesRating intValue] noRating: [noRating intValue]];
-    //            NSLog(@"RECEIVED RATING: y %d n %d, FOR MESSAGE %@ IN ROOM %@", [yesRating intValue], [noRating intValue], messageID, roomID);
-    //        } else if([eventType isEqual:@"deleteMessage"]){
-    //            NSString* messageID = [match.event getStringProperty:@"messageID" ];
-    //            NSString* roomID = [match.event getStringProperty:@"roomID" ];
-    //            for(Room *room in roomArray){
-    //                if ([room.roomID isEqual:roomID]) {
-    //                    Message* messageToRemove = nil;
-    //                    for (Message* message in room.messages) {
-    //                        if([message.messageID isEqual:messageID]){
-    //                            messageToRemove=message;
-    //                        }
-    //                    }
-    //                    [room.messages removeObject:messageToRemove];
-    //                    NSLog(@"Received notification to delete message %@ %@ ", messageToRemove.content, messageID);
-    //                    [messageManagerDelegate updateMessages:room.messages inRoom:room];
-    //                }
-    //            }
-    //        }else if([eventType isEqual:@"deleteRoom"]){
-    //
-    //            NSString* roomID = [match.event getStringProperty:@"roomID" ];
-    //            Room* roomToRemove = nil;
-    //            for(Room *room in roomArray){
-    //                if ([room.roomID isEqual:roomID]) {
-    //                    roomToRemove=room;
-    //                }
-    //            }
-    //            NSMutableArray* rooms = [[NSMutableArray alloc] initWithArray:roomArray];
-    //            [rooms removeObject:roomToRemove];
-    //            roomArray=rooms;
-    //            [messageManagerDelegate notifyThatRoomHasBeenDeleted:roomToRemove];
-    //            NSLog(@"Received notification to delete room %@ %@ ", roomToRemove.name, roomID);
-    //            [roomManagerDelegate updateRooms:roomArray];
-    //            // ADER DO SOETHING TO MAKE SOMEONE LEAVE THE ROOM IF SHE IS INSIDE
-    //        }
-    //    }
+//            // NEW RATING RECEIVED
+//        } else if([eventType isEqual:@"messageRating"]){
+//            NSString* roomID = [match.event getStringProperty:@"roomID" ];
+//            NSString* peerStringID = [match.event getStringProperty:@"peerID" ];
+//            NSString* messageID = [match.event getStringProperty:@"messageID" ];
+//            NSNumber* yesRating = [match.event getIntProperty:@"yesRating"];
+//            NSNumber* noRating = [match.event getIntProperty:@"noRating"];
+//            [self assignRatingToMessage:messageID inRoom: roomID byPeer:peerStringID  yesRating: [yesRating intValue] noRating: [noRating intValue]];
+//            NSLog(@"RECEIVED RATING: y %d n %d, FOR MESSAGE %@ IN ROOM %@", [yesRating intValue], [noRating intValue], messageID, roomID);
+//        } else if([eventType isEqual:@"deleteMessage"]){
+//            NSString* messageID = [match.event getStringProperty:@"messageID" ];
+//            NSString* roomID = [match.event getStringProperty:@"roomID" ];
+//            for(Room *room in roomArray){
+//                if ([room.roomID isEqual:roomID]) {
+//                    Message* messageToRemove = nil;
+//                    for (Message* message in room.messages) {
+//                        if([message.messageID isEqual:messageID]){
+//                            messageToRemove=message;
+//                        }
+//                    }
+//                    [room.messages removeObject:messageToRemove];
+//                    NSLog(@"Received notification to delete message %@ %@ ", messageToRemove.content, messageID);
+//                    [messageManagerDelegate updateMessages:room.messages inRoom:room];
+//                }
+//            }
+//        }else if([eventType isEqual:@"deleteRoom"]){
+//
+//            NSString* roomID = [match.event getStringProperty:@"roomID" ];
+//            Room* roomToRemove = nil;
+//            for(Room *room in roomArray){
+//                if ([room.roomID isEqual:roomID]) {
+//                    roomToRemove=room;
+//                }
+//            }
+//            NSMutableArray* rooms = [[NSMutableArray alloc] initWithArray:roomArray];
+//            [rooms removeObject:roomToRemove];
+//            roomArray=rooms;
+//            [messageManagerDelegate notifyThatRoomHasBeenDeleted:roomToRemove];
+//            NSLog(@"Received notification to delete room %@ %@ ", roomToRemove.name, roomID);
+//            [roomManagerDelegate updateRooms:roomArray];
+//            // ADER DO SOETHING TO MAKE SOMEONE LEAVE THE ROOM IF SHE IS INSIDE
+//        }
+//    }
 //}
 
 //-(void) assignMessage:(Message *) message{
