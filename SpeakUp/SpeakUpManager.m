@@ -311,14 +311,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 -(void)initPeerData{
     // ID of the device
-    if  ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] != NSOrderedAscending){
-        dev_id = [UIDevice currentDevice].identifierForVendor.UUIDString;
-    }else{
-        dev_id = [UIDevice currentDevice].uniqueIdentifier;
-    }
+   
+
+
+    
+    
     range=[NSNumber numberWithInt:RANGE];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if([defaults objectForKey:@"dev_id"]){
+        dev_id= [defaults objectForKey:@"dev_id"];
+    }else {
+        dev_id = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    }
     if([defaults objectForKey:@"peer_id"]){
         peer_id= [defaults objectForKey:@"peer_id"];
     }else {
@@ -359,6 +365,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 -(void)savePeerData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:dev_id forKey:@"dev_id"];
     [defaults setObject:peer_id forKey:@"peer_id"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
