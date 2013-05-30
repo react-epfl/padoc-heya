@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial;
+@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, isVisible;
 
 
 - (id)init{
@@ -38,7 +38,6 @@
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [peerlocation distanceFromLocation:roomlocation];
         self.messages = [NSMutableArray array];
-        isOfficial=NO;
     }
     return self;
 }

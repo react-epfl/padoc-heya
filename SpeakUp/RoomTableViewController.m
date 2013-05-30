@@ -159,7 +159,7 @@
             UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
             [distanceLabel setText: [NSString stringWithFormat:@"%.0f m", room.distance]];
             
-            if (room.isOfficial==1){
+            if (room.isOfficial){
                 if([[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] containsObject:room.roomID]){
                     cell.imageView.image = [UIImage imageNamed:@"official-room.png"];
                 }else{
