@@ -32,7 +32,7 @@
 // TIMER
 //=======
 -(void) targetMethod: (NSTimer*) theTimer{
-    //ADER removed for debuging [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
 }
 
 - (void)didReceiveMemoryWarning

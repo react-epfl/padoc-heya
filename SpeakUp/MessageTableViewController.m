@@ -32,6 +32,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+
     }
     return self;
 }
@@ -67,13 +68,11 @@
     //[self requestMessages];
 }
 
-//- (void)viewDidUnload
-//{
-//  [super viewDidUnload];
-//}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
 }
@@ -88,29 +87,6 @@
         [alert show];
         [self.navigationController popViewControllerAnimated:YES];
     }
-}
-
-
--(void)notifyThatRoomIsTooFar:(Room*) room{
-     if ([room.roomID isEqual:currentRoom.roomID]) {
-          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Exit"
-                                                            message:[NSString stringWithFormat: @"You have moved out of room %@", currentRoom.name ]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-           [self.navigationController popViewControllerAnimated:YES];
-     }
-}
-
--(void)notifyThatLocationHasChangedSignificantly{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Exit"
-                                                    message:[NSString stringWithFormat: @"You have moved out of room %@", currentRoom.name ]
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -137,24 +113,6 @@
     return [currentRoom.messages count];
     
 }
-
-// test if the peer is still in the range of the room , if this is not the case, leaves the room with a alert
--(void)testLocationMatchAndLeaveRoomIfNecessary{
-    // CLLocation * peerlocation = [[CLLocation alloc] initWithLatitude:[[SpeakUpManager sharedSpeakUpManager] latitude] longitude:[[SpeakUpManager sharedSpeakUpManager] longitude]];
-    //CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[currentRoom latitude] longitude: [currentRoom longitude]];
-    // if([peerlocation distanceFromLocation:roomlocation]> currentRoom.range){
-    // goes back to the room view,
-    //   UIAlertView *alert = [[UIAlertView alloc]
-    //                       initWithTitle: [NSString stringWithFormat: @"You have left %@", currentRoom.name ]
-    //                     message: [NSString stringWithFormat: @"Messages in %@ are no longer available", currentRoom.name ]
-    //                   delegate: nil
-    //                 cancelButtonTitle:@"OK"
-    //               otherButtonTitles:nil];
-    //[alert show];
-    //[self.navigationController popViewControllerAnimated:YES];
-    //}
-}
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -270,25 +228,26 @@
 }
 
 -(Message*)getMessageForIndex:(NSInteger)index{
-    Message  *message;
     if ([currentRoom.messages count]>0){
-        switch (self.segmentedControl.selectedSegmentIndex) {
-            case 0:
-                message = (Message *)[[self getMessagesSortedByScore] objectAtIndex:index];
-                return message;
-            case 1:
-                message = (Message *)[[self getMessagesSortedByTime] objectAtIndex:index];
-                return message;
-            default:
-                break;
-        }
+        return (Message *)[currentRoom.messages objectAtIndex:index];
     }
     return nil;
 }
 
 
 -(IBAction)sortBy:(id)sender{
+    UISegmentedControl *seg = (UISegmentedControl *) sender;
+    NSInteger selectedSegment = seg.selectedSegmentIndex;
+    
+    if (selectedSegment == 0) {
+        currentRoom.messagesSortedBy=BEST_RATING;
+    }else if(selectedSegment == 1){
+        currentRoom.messagesSortedBy=MOST_RECENT;
+    }
+    
+    [self sortMessages];
     [self.tableView reloadData];
+    
 }
 
 
@@ -425,7 +384,8 @@
             [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
             yesRating=1;
         }
-        [self.tableView reloadData];
+        //[self sortMessages];
+        //[self.tableView reloadData];
         // update the message rating on the server
         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
@@ -465,7 +425,8 @@
             [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
             noRating++;
         }
-        [self.tableView reloadData];
+        //[self sortMessages];
+        //[self.tableView reloadData];
         // update the message rating on the server
         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
@@ -525,28 +486,39 @@
 
 
 // callback from server
--(void)updateMessages:(NSArray*)updatedMessages inRoom:(Room*) room{
+-(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
-    if([room.roomID isEqual:currentRoom.roomID]){
+    if([roomID isEqual:currentRoom.roomID]){
         if(!self.editing){
+            [self sortMessages];
             [self.tableView reloadData];
             //  [self doneLoadingTableViewData]; // EGO finnish loading
         }
     }
 }
 
--(NSArray*) getMessagesSortedByScore{
+
+-(void) sortMessages{
+    if (currentRoom.messagesSortedBy==MOST_RECENT) {
+        [currentRoom setMessages:  [self sortMessagesByTime:currentRoom.messages]];
+    }else{
+        [currentRoom setMessages: [self sortMessagesByScore:currentRoom.messages]];
+    }
+}
+
+
+-(NSMutableArray*) sortMessagesByScore:(NSMutableArray*)messages{
     NSSortDescriptor *sortDescriptor;
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
     NSMutableArray *sortDescriptors = [NSMutableArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray = [currentRoom.messages sortedArrayUsingDescriptors:sortDescriptors];
-    return sortedArray;
+    NSArray *sortedArray = [messages sortedArrayUsingDescriptors:sortDescriptors];
+    return [sortedArray mutableCopy];
 }
 
--(NSArray*) getMessagesSortedByTime{
+-(NSMutableArray*) sortMessagesByTime:(NSMutableArray*)messages{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    for (Message* message in currentRoom.messages){
+    for (Message* message in messages){
         NSDate *messageCreationTime = [dateFormatter dateFromString:message.creationTime];
         NSTimeInterval elapsedTimeSinceMessageCreation = [messageCreationTime timeIntervalSinceNow];
         message.secondsSinceCreation = elapsedTimeSinceMessageCreation;
@@ -554,9 +526,10 @@
     NSSortDescriptor *sortDescriptor;
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"secondsSinceCreation" ascending:NO];
     NSMutableArray *sortDescriptors = [NSMutableArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray = [currentRoom.messages sortedArrayUsingDescriptors:sortDescriptors];
-    return sortedArray;
+    NSArray *sortedArray = [messages sortedArrayUsingDescriptors:sortDescriptors];
+    return [sortedArray mutableCopy];
 }
+
 
 
 @end

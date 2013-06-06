@@ -12,12 +12,12 @@
 
 
 
--(void)updateMessages:(NSArray*)messages inRoom: (Room*) room;
+-(void)updateMessagesInRoom: (NSString*) roomID;
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room;
 
--(void)notifyThatRoomIsTooFar:(Room*) room;
+//-(void)notifyThatRoomIsTooFar:(Room*) room;
 
--(void)notifyThatLocationHasChangedSignificantly;
+//-(void)notifyThatLocationHasChangedSignificantly;
 
 @end

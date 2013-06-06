@@ -28,9 +28,10 @@
 //press thumb up
 -(IBAction)sortBy:(id)sender;
 
+
+
 //@property (nonatomic, retain) NSTimer * timer;
 @property(strong, nonatomic) Room *currentRoom;
-//@property(strong, nonatomic) NSArray *messages;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
 

@@ -23,6 +23,7 @@
 @property (nonatomic) int  range;
 @property (nonatomic) BOOL  isOfficial;
 @property ( nonatomic) BOOL isVisible;
+@property ( nonatomic) int messagesSortedBy;
 
 @property (strong, nonatomic) NSMutableArray  *messages;
 

@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, isVisible;
+@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, isVisible, messagesSortedBy ;
 
 
 - (id)init{
@@ -19,6 +19,7 @@
     if(self){
         messages = [NSMutableArray array];
         isOfficial=NO;
+        messagesSortedBy=BEST_RATING;
     }
     return self;
 }
@@ -28,6 +29,7 @@
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
+        messagesSortedBy=BEST_RATING;
         [self setRoomID: [dict objectForKey:@"_id"]];
         NSDictionary* loc = [dict objectForKey:@"loc"];
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];

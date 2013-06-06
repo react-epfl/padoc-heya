@@ -40,6 +40,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
             [sharedSpeakUpManager.locationManager startUpdatingLocation];
+            
         }
     }
     return sharedSpeakUpManager;
@@ -66,12 +67,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSArray *argsArray = packet.args;
         NSMutableDictionary* dict = [argsArray objectAtIndex:0];
         [self receivedMessages: [dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     } else if ([type isEqual:@"messagecreated"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     }else if ([type isEqual:@"messageupdated"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     }else{
         NSLog(@"got something else");
     }
@@ -108,8 +112,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
         }
     }else{
-        NSLog(@"room is too far");
-        [messageManagerDelegate notifyThatRoomIsTooFar:room];
+        //NSLog(@"room is too far");
+       // [messageManagerDelegate notifyThatRoomIsTooFar:room];
     }
 }
 //==================
@@ -137,7 +141,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                 [room.messages removeObject:messageToRemove];
             }
             [room.messages addObject:message];
-            [messageManagerDelegate updateMessages:room.messages inRoom: room];
         }
     }
 }
@@ -251,7 +254,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //==============
 // RATE MESSAGE
 //==============
-//- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked{
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
@@ -264,7 +266,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     [socketIO sendEvent:@"updatemessage" withData:myData];
     [self startNetworking];
-    
     [self savePeerData];
 }
 //============================
@@ -278,24 +279,21 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     if (!locationIsOK ||!connectionIsOK){
         locationIsOK=YES;
         [sharedSpeakUpManager connect];
-        
     }
-
-    NSMutableArray* roomsToRemove = [NSMutableArray array];
+   // NSMutableArray* roomsToRemove = [NSMutableArray array];
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.location distanceFromLocation:roomlocation];
-        if (room.distance>RANGE) {
-            [roomsToRemove addObject:room];
-            [messageManagerDelegate notifyThatRoomIsTooFar:room];
-        }
+       // if (room.distance>RANGE) {
+            //[roomsToRemove addObject:room];
+            //[messageManagerDelegate notifyThatRoomIsTooFar:room];
+        //}
     }
     //if location is too far from last refresh, need to reload
     if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >RANGE*2) {
         self.locationAtLastReset=self.location;
         [self getNearbyRooms];
     }
-    
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
 }
@@ -310,12 +308,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // SAVING DATA
 //========================
 -(void)initPeerData{
-    // ID of the device
-   
-
-
-    
-    
     range=[NSNumber numberWithInt:RANGE];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -395,50 +387,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 //========================
 //========================
-//========================
-//========================
-//========================
-//========================
-//========================
-//========================
 
-
-/// LOCATION CHECKS
-
-//    BOOL reset = NO;
-//    self.location = newLocation;
-//    self.latitude = newLocation.coordinate.latitude;
-//    self.longitude = newLocation.coordinate.longitude;
-//    if([roomArray count]>0){
-//        for(Room *room in roomArray){
-//            CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
-//            room.distance = [self.location distanceFromLocation:roomlocation];
-//            if (room.distance>250.0) {
-//                reset=YES;
-//            }
-//        }
-//        if(!reset){
-//            [roomManagerDelegate updateRooms:roomArray];
-//        }
-//    }
-//    if (!locationIsOK && oldLocation){
-//        double distance = [oldLocation distanceFromLocation:self.location];
-//        locationIsOK=YES;
-//        [speakUpDelegate updateData];
-//        if(distance>250.0){
-//            reset=YES;
-//        }
-//    }
-//    if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >250.0) {
-//        reset = YES;
-//    }
-//    if(reset){
-//        self.locationAtLastReset=self.location;
-//        locationIsOK=YES;
-//        [speakUpDelegate updateData];
-//        [messageManagerDelegate notifyThatLocationHasChangedSignificantly];
-//        // [self getNearbyRooms];
-//    }
 
 
 // DELETE ROOM
@@ -467,6 +416,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     // [self startNetworking];
     // }
 }
+
+
+
+
+
 
 @end
 
@@ -515,31 +469,4 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //            // ADER DO SOETHING TO MAKE SOMEONE LEAVE THE ROOM IF SHE IS INSIDE
 //        }
 //    }
-//}
-
-//-(void) assignMessage:(Message *) message{
-//    for(Room *room in roomArray){
-//        if ([room.roomID isEqual:message.roomID]) {
-//            BOOL msgAlreadyInRoom = NO;
-//            for(Message *msg in room.messages){
-//                if ([msg.messageID isEqual:message.messageID]) {
-//                    msgAlreadyInRoom= YES;
-//                }
-//            }
-//            if (!msgAlreadyInRoom) {
-//                [room.messages addObject:message];
-//                [messageManagerDelegate updateMessages:room.messages inRoom: room];
-//            }
-//        }
-//    }
-//}
-
-
-
-
-// RESET PROCEDURES (called asynchronously)
-// called when opened through the speakup://reset url
-//- (void)resetPeerID{
-//    [self savePeerData];
-//    // [self resetData];
 //}
