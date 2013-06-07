@@ -126,7 +126,6 @@
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
             nameLabel.text = @"Waiting for location...";
         }else if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-            //[[SpeakUpManager sharedSpeakUpManager] connect];
             nameLabel.text = @"Waiting for connection...";
         }
         return cell;
@@ -160,13 +159,13 @@
             [distanceLabel setText: [NSString stringWithFormat:@"%.0f m", room.distance]];
             
             if (room.isOfficial){
-                if([[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] containsObject:room.roomID]){
+                if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:room.creatorID]){
                     cell.imageView.image = [UIImage imageNamed:@"official-room.png"];
                 }else{
                     cell.imageView.image = [UIImage imageNamed:@"official-room-notmine.png"];
                 }
             }else{
-                if([[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] containsObject:room.roomID]){
+                 if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:room.creatorID]){
                     cell.imageView.image = [UIImage imageNamed:@"non-official-room-mine.png"];
                 }
                 else{
@@ -210,25 +209,26 @@
 }
 
 //request sent to the server
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
-//    if([[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] containsObject:room.roomID]){
-//        return @"Delete";
-//    }
-//    return @"Hide";
-//}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
+    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
+        return @"Delete";
+    }
+    return @"Hide";
+}
 
 // Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
-//        NSLog(@"hiding room %@ ", room.roomID);
-//        nearbyRooms = [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
-//        [tableView reloadData];
-//    }
-//}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
+        NSLog(@"hiding room %@ ", room.roomID);
+        [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
+        [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
+        [tableView reloadData];
+
+    }
+}
 
 ///////////////////////////
 //// EGO STUFF BEGINS

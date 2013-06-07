@@ -14,6 +14,7 @@
 - (id)initWithDictionary:(NSDictionary*) dict;
 
 @property (strong, nonatomic) NSString* roomID;
+@property (strong, nonatomic) NSString* creatorID;
 @property (nonatomic) float distance;
 @property (strong, nonatomic) NSString  *name;
 @property (strong, nonatomic) CLLocation  *location;
@@ -22,7 +23,7 @@
 @property (nonatomic) int  lifetime;
 @property (nonatomic) int  range;
 @property (nonatomic) BOOL  isOfficial;
-@property ( nonatomic) BOOL isVisible;
+@property ( nonatomic) BOOL deleted;
 @property ( nonatomic) int messagesSortedBy;
 
 @property (strong, nonatomic) NSMutableArray  *messages;

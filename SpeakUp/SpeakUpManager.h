@@ -26,9 +26,6 @@
 
 +(id) sharedSpeakUpManager;
 
-
-
-
 // PEER RELATED METHODS
 -(void)savePeerData;
 
@@ -38,10 +35,9 @@
 -(void) deleteMessage:(Message *) message;
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoom:(NSString*)roomID;
-//- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  likes:(BOOL) liked dislikes:(BOOL) disliked;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
 // ROOM RELATED METHODS
--(NSArray*) deleteRoom:(Room *) room;
+-(void) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;
 - (void)connect;
 
@@ -67,19 +63,21 @@
 @property (strong, nonatomic) NSMutableArray *likedMessages;
 // dislikedMessages contains the id (NSNumber)  of the user's disliked messages
 @property (strong, nonatomic) NSMutableArray *dislikedMessages;
-// myMessages contains the id (NSNumber)  of the user's messages
-@property (strong, nonatomic) NSMutableArray *myMessageIDs;
-// myRoomIDs contains the id (NSNumber) of the user's rooms
-@property (strong, nonatomic) NSMutableArray *myRoomIDs;
+
+// contains the message ids that were deleted
+@property (strong, nonatomic) NSMutableArray *deletedMessageIDs;
+// contains the message ids that were deleted
+@property (strong, nonatomic) NSMutableArray *deletedRoomIDs;
 
 
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
 @property (strong, nonatomic) NSMutableArray *roomArray;
 
+
+
 // Fields used to communicate with the middleware
 @property (nonatomic)  NSString  *dev_id;//device ID
 @property (nonatomic)  NSString  *peer_id;// peer ID recieved from the server
-
 
 @property (nonatomic,strong) NSNumber* range;
 
@@ -88,13 +86,6 @@
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
 @property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;
-
-// repo where matches are stored
-
-
-
-
-
 
 
 @end

@@ -12,7 +12,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,myRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, myMessageIDs, locationAtLastReset, socketIO, range;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, range;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -106,7 +106,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                 roomAlreadyInArray= YES;
             }
         }
-        if (!roomAlreadyInArray) {
+        if (roomAlreadyInArray && room.deleted) {
+            [roomArray removeObject:room];
+        }
+        if (!roomAlreadyInArray && ![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
             [roomArray addObject:room];
             roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
             [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
@@ -134,13 +137,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             Message* messageToRemove=nil;
             for(Message *msg in room.messages){
                 if ([msg.messageID isEqual:message.messageID]) {
+                    // update received, therefore the message must be deleted
                     messageToRemove=msg;
                 }
             }
             if (messageToRemove) {
                 [room.messages removeObject:messageToRemove];
             }
-            [room.messages addObject:message];
+            if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+                [room.messages addObject:message];
+            }
         }
     }
 }
@@ -275,19 +281,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     self.location = newLocation;
     self.latitude = newLocation.coordinate.latitude;
     self.longitude = newLocation.coordinate.longitude;
-    //NSLog(@"location update");
+
     if (!locationIsOK ||!connectionIsOK){
         locationIsOK=YES;
         [sharedSpeakUpManager connect];
     }
-   // NSMutableArray* roomsToRemove = [NSMutableArray array];
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.location distanceFromLocation:roomlocation];
-       // if (room.distance>RANGE) {
-            //[roomsToRemove addObject:room];
-            //[messageManagerDelegate notifyThatRoomIsTooFar:room];
-        //}
     }
     //if location is too far from last refresh, need to reload
     if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >RANGE*2) {
@@ -303,6 +304,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     self.latitude=-1;
     self.longitude=-1;
+    NSLog(@"location FAILED %@", [error description]);
 }
 //========================
 // SAVING DATA
@@ -332,15 +334,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         dislikedMessages= [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"myMessageIDs"]){
-        myMessageIDs= [defaults objectForKey:@"myMessageIDs"];
+    if([defaults objectForKey:@"deletedMessageIDs"]){
+        deletedMessageIDs= [defaults objectForKey:@"deletedMessageIDs"];
     }else {
-        myMessageIDs= [[NSMutableArray alloc] init];
+        deletedMessageIDs= [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"myRoomIDs"]){
-        myRoomIDs= [defaults objectForKey:@"myRoomIDs"];
+    if([defaults objectForKey:@"deletedRoomIDs"]){
+        deletedRoomIDs= [defaults objectForKey:@"deletedRoomIDs"];
     }else {
-        myRoomIDs= [[NSMutableArray alloc] init];
+        deletedRoomIDs= [[NSMutableArray alloc] init];
     }
     if([defaults objectForKey:@"isSuperUser"]){
         NSNumber* booleanNumber;
@@ -361,8 +363,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [defaults setObject:peer_id forKey:@"peer_id"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
-    [defaults setObject:myMessageIDs forKey:@"myMessageIDs"];
-    [defaults setObject:myRoomIDs forKey:@"myRoomIDs"];
+    [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];
+    [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];
     [defaults setObject:[NSNumber numberWithBool:self.isSuperUser] forKey:@"isSuperUser"];
     [defaults synchronize];
 }
@@ -392,33 +394,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // DELETE ROOM
 //------------
--(NSArray*) deleteRoom:(Room *) room{
-    //NSNumber* publicationID = [myRoomPublicationIDs objectForKey:room.roomID];
-    //if(publicationID){
-    //        [event setStringProperty:@"eventType" to:@"deleteRoom"];
-    //        [event setStringProperty:@"roomID" to:room.roomID];
-    //        // create a publication to indicate that the message is not visible any longer
-    // }
-    // NSMutableArray* rooms = [[NSMutableArray alloc] initWithArray:roomArray];
-    // [rooms removeObject:room];
-    // roomArray=rooms;
-    return roomArray;
+-(void) deleteRoom:(Room *) room{
+    [deletedRoomIDs addObject:room.roomID];
+    // should inform the server if the room was the peer's rooms
 }
 
 // DELETE MESSAGE
 //---------------
 -(void) deleteMessage:(Message *) message{
-    //  NSNumber* publicationID = [myMessagePublicationIDs objectForKey:message.messageID];
-    // if(publicationID){
-    //        [event setStringProperty:@"eventType" to:@"deleteMessage"];
-    //        [event setStringProperty:@"messageID" to:message.messageID];
-    //        [event setStringProperty:@"roomID" to:message.roomID];
-    // [self startNetworking];
-    // }
+    [deletedMessageIDs addObject:message.messageID];
+    // should inform the server if the message was the peer's message
 }
-
-
-
 
 
 

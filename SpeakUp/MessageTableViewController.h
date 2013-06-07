@@ -13,9 +13,7 @@
 
 @interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource>{
     
-    
     EGORefreshTableHeaderView *_refreshHeaderView;
-	
 	//  Reloading var should really be your tableviews datasource
 	//  Putting it here for demo purposes
 	BOOL _reloading;
@@ -28,9 +26,6 @@
 //press thumb up
 -(IBAction)sortBy:(id)sender;
 
-
-
-//@property (nonatomic, retain) NSTimer * timer;
 @property(strong, nonatomic) Room *currentRoom;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;

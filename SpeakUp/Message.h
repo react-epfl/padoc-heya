@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSString  *creationTime;
 @property (strong, nonatomic) NSString  *lastModified;
 @property ( nonatomic) int secondsSinceCreation;
-@property ( nonatomic) BOOL isVisible;
+@property ( nonatomic) BOOL deleted;
 
 
 @property ( nonatomic) int numberOfYes;

@@ -10,17 +10,10 @@
 #import "Room.h"
 #import "SpeakUpManager.h"
 
-
-//@interface NewRoomViewController ()
-
-//@end
-
 #define MAX_ROOMS 3
 #define MAX_LENGTH 40
-// a room has a 200 meter range
-#define RANGE 200
-//message remain 12 hours in the room
-#define LIFETIME 720
+#define RANGE 200 // a room has a 200 meter range
+#define LIFETIME 720//message remain 12 hours in the room 
 
 @implementation NewRoomViewController
 
@@ -32,7 +25,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
     }
     return self;
 }
@@ -44,38 +36,15 @@
     [input becomeFirstResponder];
     self.mapView.delegate = self;
     self.input.delegate=self;
-//    int characterNumber = [[input text] length];
     [createButton setEnabled:YES];
     
-//    int myNumberOfRooms = [[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] count];
-//    
-//    
-//    if((characterNumber>0 && myNumberOfRooms<MAX_ROOMS)|| [[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-//        [createButton setEnabled:YES];
-//        [input setEnabled:YES];
-//    }else if(myNumberOfRooms>=MAX_ROOMS){
-//        [input setPlaceholder:@"You cannot create more rooms"];
-//        [input setUserInteractionEnabled:NO];
-//    }
-if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
+    if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
         [input setPlaceholder:@"You are super :)"];
-//        self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
-   }
-//else {
-//        int numberOfRoomsLeft = MAX_ROOMS - myNumberOfRooms;
-//        self.navigationItem.title=[NSString stringWithFormat:@"Create room (%d left)",numberOfRoomsLeft];
-//    }
-    
+    }
     self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
     
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -90,13 +59,11 @@ if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
     mapRegion.span.longitudeDelta = 0.008;
     [self.mapView setRegion:mapRegion animated: YES];
     [self.mapView regionThatFits:mapRegion];
-    
 }
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    int myNumberOfRooms = [[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] count];
-    if(([[input text] length]>0 && myNumberOfRooms<MAX_ROOMS) || [[SpeakUpManager sharedSpeakUpManager] isSuperUser] ){
+    if([[input text] length]>0){
         [self createRoom:nil];
     }
     return NO;
@@ -114,8 +81,6 @@ if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
         if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
             myRoom.isOfficial=YES;
         }
-       // myRoom.roomID=[NSString stringWithFormat: @"peer%droom%d", peerID, roomNumber];
-        
         myRoom.name = self.input.text;
         myRoom.latitude=self.mapView.userLocation.coordinate.latitude;
         myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
@@ -168,30 +133,21 @@ if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
             alert.message = @"Message Not Sent";
             break;
     }
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
     [alert show];
-    
 }
 
 // used to limit the number of characters to MAX_LENGTH
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if(textField.text.length==0){
         [createButton setEnabled:NO];
     }
     NSUInteger newLength = (textField.text.length - range.length) + string.length;
-    if(newLength <= MAX_LENGTH)
-    {
-        int myNumberOfRooms = [[[SpeakUpManager sharedSpeakUpManager] myRoomIDs] count];
-        if((newLength>0 && myNumberOfRooms<MAX_ROOMS )|| [[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-            [createButton setEnabled:YES];
-        }
+    if(newLength <= MAX_LENGTH){
+        [createButton setEnabled:YES];
         return YES;
-    } else {
-        return NO;
-    }
+    } 
+    return NO;
 }
 
 @end

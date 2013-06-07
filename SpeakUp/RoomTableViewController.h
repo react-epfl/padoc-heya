@@ -1,6 +1,5 @@
 //
 //  HomeTableViewController.h
-//  InterMix
 //
 //  Created by Adrian Holzer on 19.12.11.
 //  Copyright (c) 2012 Adrian Holzer. All rights reserved.

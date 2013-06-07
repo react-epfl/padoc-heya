@@ -61,10 +61,9 @@
     }
     
     [characterCounterLabel setText:[NSString stringWithFormat:@"%d / %d", characterNumber, MAX_LENGTH]];
-    //input.textInputView.clipsToBounds=NO;
     input.textInputView.layer.shadowColor =[[UIColor blackColor] CGColor];
     input.textInputView.layer.shadowRadius=2;
-    input.textInputView.layer.cornerRadius=5;
+    input.textInputView.layer.cornerRadius=1;
     input.textInputView.layer.shadowOpacity=.5;
     input.textInputView.layer.shadowOffset = CGSizeMake(2.0, 2.0);
     
@@ -75,12 +74,6 @@
     [[SpeakUpManager sharedSpeakUpManager] savePeerData];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -109,13 +102,9 @@
     if(newLength <= MAX_LENGTH)
     {
         return YES;
-    } else {
-        // NSUInteger emptySpace = MAX_LENGTH - (textView.text.length - range.length);
-        // textView.text = [[[textView.text substringToIndex:range.location]
-        //  stringByAppendingString:[text substringToIndex:emptySpace]]
-        // stringByAppendingString:[textView.text substringFromIndex:(range.location + range.length)]];
-        return NO;
     }
+    return NO;
+
 }
 
 
@@ -126,11 +115,6 @@
         Message *newMessage = [[Message alloc] init];
         newMessage.content= input.text;
         newMessage.roomID=room.roomID;
-        
-       // int messageNumber= [[SpeakUpManager sharedSpeakUpManager] getNextMessageNumber];
-        //int peerID= [[[SpeakUpManager sharedSpeakUpManager] peerID] intValue] ;
-        
-        //newMessage.messageID=[NSString stringWithFormat: @"peer%dmessage%d", peerID, messageNumber];
         
         [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
         

@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, isVisible, authorPeerID;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID;
 
 - (id)init{
     self = [super init];
@@ -20,6 +20,7 @@
         numberOfNo=0;
         numberOfYes=0;
         score=0;
+        deleted=NO;
     }
     return self;
 }
@@ -28,7 +29,7 @@
     self = [super init];
     if(self){
         [self setRoomID:aRoomID];
-
+        [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         [self setMessageID:[dict objectForKey:@"_id"]];
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];

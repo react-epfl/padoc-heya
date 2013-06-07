@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, isVisible, messagesSortedBy ;
+@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID ;
 
 
 - (id)init{
@@ -20,6 +20,7 @@
         messages = [NSMutableArray array];
         isOfficial=NO;
         messagesSortedBy=BEST_RATING;
+        deleted=NO;
     }
     return self;
 }
@@ -31,10 +32,12 @@
     if(self){
         messagesSortedBy=BEST_RATING;
         [self setRoomID: [dict objectForKey:@"_id"]];
+        [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         NSDictionary* loc = [dict objectForKey:@"loc"];
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
         [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
         [self setName: [dict objectForKey:@"name"]];
+        [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];

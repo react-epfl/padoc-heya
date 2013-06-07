@@ -1,6 +1,5 @@
 //
 //  ProfileTableViewController.m
-//  InterMix
 //
 //  Created by Adrian Holzer on 20.12.11.
 //  Copyright (c) 2012 Adrian Holzer. All rights reserved.
@@ -37,37 +36,17 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
-    
-    //[self.navigationItem setTitle:room.name];
     [self.roomNameLabel setText:currentRoom.name];
     [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
-    
 }
-
-//define the targetmethod
--(void) targetMethod: (NSTimer*) theTimer{
-    // test if peer is still in the vicinity
-    //[self testLocationMatchAndLeaveRoomIfNecessary];
-    // NSLog(@"request messages");
-    //[self requestMessages];
-}
-
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,7 +71,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    //Saving peer data
     [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     [super viewDidDisappear:animated];
 }
@@ -116,7 +94,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // returns one the number of communities. in a following version, we would only see the activated communities.
     return 1;
 }
 
@@ -136,7 +113,7 @@
         [thumbUpButton setImage:[UIImage imageNamed:@"noMsg.png"] forState:UIControlStateNormal] ;
         cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
         cell.backgroundView.backgroundColor = [UIColor whiteColor];
-        cell.backgroundView.layer.cornerRadius  =2;
+        cell.backgroundView.layer.cornerRadius  =1;
         return cell;
     }
     else{
@@ -172,8 +149,6 @@
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-        //[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        // NSDate *messageCreationTime = [dateFormatter dateFromString:@"2013-05-08 23:55:18"]; // ADER Switch these lines
         NSDate *messageCreationTime = [dateFormatter dateFromString:message.creationTime];
         NSTimeInterval elapsedTimeSinceMessageCreation = [messageCreationTime timeIntervalSinceNow];
         message.secondsSinceCreation = elapsedTimeSinceMessageCreation;
@@ -188,6 +163,7 @@
             time = [NSString stringWithFormat:@"%d hours ago",hours];
         }
         [timeLabel setText: time];
+        
         // SCORE - Setup the score label
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
         if(message.score>0){
@@ -211,18 +187,12 @@
         // CELL STYLE
         cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
         // if message is mine the color could be different
-        if([[[SpeakUpManager sharedSpeakUpManager] myMessageIDs] containsObject:message.messageID]){
-            //cell.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
+         if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:message.authorPeerID]){
             cell.backgroundView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
         }else{
-            //cell.backgroundColor = [UIColor whiteColor ];
             cell.backgroundView.backgroundColor = [UIColor whiteColor];
         }
-        // cell.backgroundView.layer.shadowColor =[[UIColor blackColor] CGColor];
         cell.backgroundView.layer.cornerRadius  =2;
-        // cell.backgroundView.layer.shadowRadius=2;
-        //cell.backgroundView.layer.shadowOpacity=.8;
-        // cell.backgroundView.layer.shadowOffset = CGSizeMake(2.0, 2.0);
         return cell;
     }
 }
@@ -252,108 +222,20 @@
 
 
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
-
-
-////press like
-//-(IBAction)rateMessageUp:(id)sender{
-//    @synchronized(self){
-//        NSString* messageID;
-//        BOOL yesRating = NO;
-//        BOOL noRating = NO;
-//        UIButton *aButton = (UIButton *)sender;
-//        UIView *contentView = [aButton superview];
-//        UITableViewCell *cell = (UITableViewCell *)[contentView superview];
-//        NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
-//        NSUInteger section = [indexPath section];
-//        Message* message = [self getMessageForIndex:section];
-//        messageID = message.messageID;
-//        if (messageID) {
-//            
-//            //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
-//            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-//                noRating = NO  ;
-//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-//                yesRating= YES;
-//            }
-//            //else if the message was liked remove it from the list of liked messages
-//            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-//                yesRating=NO;
-//            }
-//            // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
-//            else{
-//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-//                yesRating=YES;
-//            }
-//            [self.tableView reloadData];
-//            // update the message rating on the server
-//            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
-//            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-//        }else{
-//            NSLog(@"the message %@ does not have an id",[message description]);
-//        }
-//    }
-//}
-//
-//-(IBAction)rateMessageDown:(id)sender{
-//    @synchronized(self){
-//        NSString* messageID;
-//        BOOL yesRating = NO;
-//        BOOL noRating = NO;
-//        UIButton *aButton = (UIButton *)sender;
-//        UIView *contentView = [aButton superview];
-//        UITableViewCell *cell = (UITableViewCell *)[contentView superview];
-//        NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
-//        NSUInteger section = [indexPath section];
-//        Message* message = [self getMessageForIndex:section];
-//        messageID = message.messageID;
-//        if (messageID) {
-//            //if the message was disliked, remove the message from the list of disliked messages
-//            if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-//                noRating=NO;
-//            }
-//            //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
-//            else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-//                [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-//                yesRating=NO ;
-//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
-//                noRating= YES ;
-//            }
-//            // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
-//            else{
-//                [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
-//                noRating=YES;
-//            }
-//            [self.tableView reloadData];
-//            // update the message rating on the server
-//            [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID likes:yesRating dislikes:noRating];
-//            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-//        }else{
-//            NSLog(@"the message %@ does not have an id",[message description]);
-//        }
-//    }
+//#pragma mark - Table view delegate
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Navigation logic may go here. Create and push another view controller.
+//    /*
+//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+//     // ...
+//     // Pass the selected object to the new view controller.
+//     [self.navigationController pushViewController:detailViewController animated:YES];
+//     */
 //}
 
 
-//////=====================================
-//////=====================================
-//////=====================================
-//////=====================================
-//press like
+// LIKE
 -(IBAction)rateMessageUp:(id)sender{
     @synchronized(self){
         NSString* messageID;
@@ -384,8 +266,6 @@
             [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
             yesRating=1;
         }
-        //[self sortMessages];
-        //[self.tableView reloadData];
         // update the message rating on the server
         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
@@ -395,6 +275,7 @@
     }
 }
 
+// DISLIKE
 -(IBAction)rateMessageDown:(id)sender{
     @synchronized(self){
         NSString* messageID;
@@ -425,8 +306,6 @@
             [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
             noRating++;
         }
-        //[self sortMessages];
-        //[self.tableView reloadData];
         // update the message rating on the server
         [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
@@ -435,14 +314,9 @@
         }
     }
 }
-//////=====================================
-//////=====================================
-//////=====================================
-//////=====================================
-//////=====================================
 
 
-
+// GO TO INPUT
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"MessagesToSpeak"]) {
@@ -451,15 +325,42 @@
     }
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    Message* message = [self getMessageForIndex:indexPath.section];
-//    if([[[SpeakUpManager sharedSpeakUpManager] myMessageIDs] containsObject:message.messageID]){
-//        return @"Delete";
-//    }
-//    return @"Hide";
-//}
 
+// SLIDE TO DELETE
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Message* message = [self getMessageForIndex:indexPath.section];
+    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:message.authorPeerID]){
+        return @"Delete";
+    }
+    return @"Hide";
+}
+// DELETE
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Message* message = [self getMessageForIndex:indexPath.section];
+        [currentRoom.messages removeObject:message];
+        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
+        [tableView reloadData];
+    }
+}
+
+
+// RECEIVE NEW MESSAGES
+-(void)updateMessagesInRoom:(NSString*) roomID{
+    //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
+    if([roomID isEqual:currentRoom.roomID]){
+        if(!self.editing){
+            [self sortMessages];
+            [self.tableView reloadData];
+        }
+    }
+}
+
+// UTILITIES
+
+// CALCULATE HEIGHT
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     NSUInteger section = [indexPath section];
@@ -472,32 +373,8 @@
     return height + (CELL_CONTENT_MARGIN * 2);
 }
 
-//// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        Message* message = [self getMessageForIndex:indexPath.section];
-//        [currentRoom.messages removeObject:message];
-//        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
-//        [tableView reloadData];
-//
-//    }
-//}
 
-
-// callback from server
--(void)updateMessagesInRoom:(NSString*) roomID{
-    //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
-    if([roomID isEqual:currentRoom.roomID]){
-        if(!self.editing){
-            [self sortMessages];
-            [self.tableView reloadData];
-            //  [self doneLoadingTableViewData]; // EGO finnish loading
-        }
-    }
-}
-
-
+// SORTING
 -(void) sortMessages{
     if (currentRoom.messagesSortedBy==MOST_RECENT) {
         [currentRoom setMessages:  [self sortMessagesByTime:currentRoom.messages]];
@@ -505,8 +382,6 @@
         [currentRoom setMessages: [self sortMessagesByScore:currentRoom.messages]];
     }
 }
-
-
 -(NSMutableArray*) sortMessagesByScore:(NSMutableArray*)messages{
     NSSortDescriptor *sortDescriptor;
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
@@ -514,7 +389,6 @@
     NSArray *sortedArray = [messages sortedArrayUsingDescriptors:sortDescriptors];
     return [sortedArray mutableCopy];
 }
-
 -(NSMutableArray*) sortMessagesByTime:(NSMutableArray*)messages{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
@@ -533,43 +407,3 @@
 
 
 @end
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
