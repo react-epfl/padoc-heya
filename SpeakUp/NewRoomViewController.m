@@ -13,12 +13,12 @@
 #define MAX_ROOMS 3
 #define MAX_LENGTH 40
 #define RANGE 200 // a room has a 200 meter range
-#define LIFETIME 720//message remain 12 hours in the room 
+#define LIFETIME 720//message remain 12 hours in the room
 
 @implementation NewRoomViewController
 
 
-@synthesize createButton, input, mapView;
+@synthesize createButton, input, mapView, noConnectionLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,12 +37,16 @@
     self.mapView.delegate = self;
     self.input.delegate=self;
     [createButton setEnabled:YES];
-    
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
         [input setPlaceholder:@"You are super :)"];
     }
     self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [noConnectionLabel setHidden:[[SpeakUpManager sharedSpeakUpManager] connectionIsOK]];
 }
 
 
@@ -69,28 +73,38 @@
     return NO;
 }
 
+-(void)connectionWasLost{
+    [noConnectionLabel setHidden:NO];
+}
+-(void)connectionHasRecovered{
+    [noConnectionLabel setHidden:YES];
+}
+
 -(IBAction)createRoom:(id)sender{
-    if([self.input.text isEqualToString:@"Waroftheworldviews"]){
-        [[SpeakUpManager sharedSpeakUpManager] setIsSuperUser:YES];
-        NSLog(@"YOU ARE A SUPER USER NOW :)");
-        self.input.text=@"";
-        [self.input setPlaceholder:@"You are super :)"];
-    }else if(self.input.text.length>0){
-        NSLog(@"creating a new room %@ ", input.text);
-        Room* myRoom = [[Room alloc] init];
-        if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-            myRoom.isOfficial=YES;
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        
+        if([self.input.text isEqualToString:@"Waroftheworldviews"]){
+            [[SpeakUpManager sharedSpeakUpManager] setIsSuperUser:YES];
+            NSLog(@"YOU ARE A SUPER USER NOW :)");
+            self.input.text=@"";
+            [self.input setPlaceholder:@"You are super :)"];
+        }else if(self.input.text.length>0){
+            NSLog(@"creating a new room %@ ", input.text);
+            Room* myRoom = [[Room alloc] init];
+            if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
+                myRoom.isOfficial=YES;
+            }
+            myRoom.name = self.input.text;
+            myRoom.latitude=self.mapView.userLocation.coordinate.latitude;
+            myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
+            myRoom.range=RANGE;
+            myRoom.lifetime=LIFETIME;
+            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];
+            self.input.text=@"";
+            [self.navigationController popViewControllerAnimated:YES];
         }
-        myRoom.name = self.input.text;
-        myRoom.latitude=self.mapView.userLocation.coordinate.latitude;
-        myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
-        myRoom.range=RANGE;
-        myRoom.lifetime=LIFETIME;
-        [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];
-        self.input.text=@"";
-        [self.navigationController popViewControllerAnimated:YES];
+        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
-    [[SpeakUpManager sharedSpeakUpManager] savePeerData];
 }
 
 -(IBAction)sendMail{
@@ -149,5 +163,7 @@
     } 
     return NO;
 }
+
+
 
 @end

@@ -7,12 +7,15 @@
 
 #import "SpeakUpManager.h"
 #import "SocketIOPacket.h"
+#import "ConnectionDelegate.h"
+#import "RoomTableViewController.h"
+#import "AppDelegate.h"
 
 
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, range;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -22,9 +25,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         if (sharedSpeakUpManager == nil){
             sharedSpeakUpManager = [[self alloc] init];
             sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
+            sharedSpeakUpManager.connectionDelegate=nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
             sharedSpeakUpManager.connectionIsOK=NO;
             sharedSpeakUpManager.locationIsOK=NO;
+            sharedSpeakUpManager.currentRoom=nil;
             
             // sets up the local location manager, this triggers the didUpdateToLocation callback
             // If Location Services are disabled, restricted or denied.
@@ -57,7 +62,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSDictionary *data = [packet.args objectAtIndex:0];
         peer_id = [data objectForKey:@"peer_id"];
         connectionIsOK=YES;
-        [self getNearbyRooms];
+        [connectionDelegate connectionHasRecovered];
+        // if the current view is nerby rooms, then get new rooms, otherwise get the messages in the current room
+        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
+        if([myNavController.visibleViewController isKindOfClass:[RoomTableViewController class]]){
+            [self getNearbyRooms];
+        }else{
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]];
+        }
+        
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
         self.locationAtLastReset=self.location;
@@ -98,25 +112,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //==============
 -(void)receivedRoom:(NSDictionary*)roomDictionary{
     Room *room = [[Room alloc] initWithDictionary:roomDictionary];
-    // IF room too far, do nothing
-    if([self.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]]]<=RANGE){
-        BOOL roomAlreadyInArray = NO;
-        for(Room *r in roomArray){
-            if ([r.roomID isEqual:room.roomID]) {
-                roomAlreadyInArray= YES;
-            }
+    // when a room is received it is added if it was not already in the list, unless the user has hidden the room before
+    BOOL roomAlreadyInArray = NO;
+    for(Room *r in roomArray){
+        if ([r.roomID isEqual:room.roomID]) {
+            roomAlreadyInArray= YES;
         }
-        if (roomAlreadyInArray && room.deleted) {
-            [roomArray removeObject:room];
-        }
-        if (!roomAlreadyInArray && ![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
-            [roomArray addObject:room];
-            roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-            [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
-        }
-    }else{
-        //NSLog(@"room is too far");
-       // [messageManagerDelegate notifyThatRoomIsTooFar:room];
+    }
+    if (!roomAlreadyInArray && ![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
+        [roomArray addObject:room];
+        roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
+        [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
     }
 }
 //==================
@@ -144,6 +150,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             if (messageToRemove) {
                 [room.messages removeObject:messageToRemove];
             }
+            // add new message unless it has been hidden by the user
             if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
                 [room.messages addObject:message];
             }
@@ -159,7 +166,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     if (peer_id) {
         [myData setValue:self.peer_id forKey:@"peer_id"];
     }
-    [myData setValue:self.range forKey:@"range"];
+    [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
@@ -176,7 +183,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     if (locationIsOK) {
         socketIO = [[SocketIO alloc] initWithDelegate:self];
         [socketIO connectToHost:SERVER_URL onPort:1337];
-    [self startNetworking];
+        [self startNetworking];
     }
 }
 - (void) socketIODidConnect:(SocketIO *)socket{
@@ -186,18 +193,31 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 - (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
     [self stopNetworking];
+    connectionIsOK=NO;
+    [connectionDelegate connectionWasLost];
+    //[self performSelector:@selector(connect:) withObject:nil afterDelay:3.0];
+     [self connect];
+    
+    [self connect];
     NSLog(@"socket did fail with error: %@",[error description]);
 }
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
     [self stopNetworking];
     connectionIsOK=NO;
+    [ connectionDelegate connectionWasLost];
+    //[self performSelector:@selector(connect:) withObject:nil afterDelay:3.0];
+    [self connect];
     NSLog(@"socket did close with error %@ ",[error description]);
 }
+
+
 //========================
 // GET ROOMS SOCKET.IO
 //========================
 -(void)getNearbyRooms{
-    if (connectionIsOK) {
+    if (!connectionIsOK) {
+        [self connect];
+    }else{
         NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
         [myData setValue:self.peer_id forKey:@"peer_id"];
         NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
@@ -205,11 +225,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
         [myData setValue:myLoc forKey:@"loc"];
         [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-        [myData setValue:self.range forKey:@"range"];
+        [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
         [socketIO sendEvent:@"getrooms" withData:myData];
         [self startNetworking];
-    }else if(locationIsOK){
-        [self connect];
     }
 }
 //========================
@@ -281,8 +299,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     self.location = newLocation;
     self.latitude = newLocation.coordinate.latitude;
     self.longitude = newLocation.coordinate.longitude;
-
-    if (!locationIsOK ||!connectionIsOK){
+    
+    if (!locationIsOK){
         locationIsOK=YES;
         [sharedSpeakUpManager connect];
     }
@@ -291,10 +309,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         room.distance = [self.location distanceFromLocation:roomlocation];
     }
     //if location is too far from last refresh, need to reload
-    if (!locationAtLastReset ||  [self.locationAtLastReset distanceFromLocation:self.location] >RANGE*2) {
-        self.locationAtLastReset=self.location;
-        [self getNearbyRooms];
-    }
+    // if (!locationAtLastReset) {
+    //   self.locationAtLastReset=self.location;
+    // [self getNearbyRooms];
+    //}
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
 }
@@ -310,7 +328,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // SAVING DATA
 //========================
 -(void)initPeerData{
-    range=[NSNumber numberWithInt:RANGE];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -390,8 +407,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 //========================
 
-
-
 // DELETE ROOM
 //------------
 -(void) deleteRoom:(Room *) room{
@@ -406,53 +421,4 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     // should inform the server if the message was the peer's message
 }
 
-
-
 @end
-
-// DELIVER EVENTS
-//-(void)retrieveMatchesForSucceededWithResponse{
-//            // NEW RATING RECEIVED
-//        } else if([eventType isEqual:@"messageRating"]){
-//            NSString* roomID = [match.event getStringProperty:@"roomID" ];
-//            NSString* peerStringID = [match.event getStringProperty:@"peerID" ];
-//            NSString* messageID = [match.event getStringProperty:@"messageID" ];
-//            NSNumber* yesRating = [match.event getIntProperty:@"yesRating"];
-//            NSNumber* noRating = [match.event getIntProperty:@"noRating"];
-//            [self assignRatingToMessage:messageID inRoom: roomID byPeer:peerStringID  yesRating: [yesRating intValue] noRating: [noRating intValue]];
-//            NSLog(@"RECEIVED RATING: y %d n %d, FOR MESSAGE %@ IN ROOM %@", [yesRating intValue], [noRating intValue], messageID, roomID);
-//        } else if([eventType isEqual:@"deleteMessage"]){
-//            NSString* messageID = [match.event getStringProperty:@"messageID" ];
-//            NSString* roomID = [match.event getStringProperty:@"roomID" ];
-//            for(Room *room in roomArray){
-//                if ([room.roomID isEqual:roomID]) {
-//                    Message* messageToRemove = nil;
-//                    for (Message* message in room.messages) {
-//                        if([message.messageID isEqual:messageID]){
-//                            messageToRemove=message;
-//                        }
-//                    }
-//                    [room.messages removeObject:messageToRemove];
-//                    NSLog(@"Received notification to delete message %@ %@ ", messageToRemove.content, messageID);
-//                    [messageManagerDelegate updateMessages:room.messages inRoom:room];
-//                }
-//            }
-//        }else if([eventType isEqual:@"deleteRoom"]){
-//
-//            NSString* roomID = [match.event getStringProperty:@"roomID" ];
-//            Room* roomToRemove = nil;
-//            for(Room *room in roomArray){
-//                if ([room.roomID isEqual:roomID]) {
-//                    roomToRemove=room;
-//                }
-//            }
-//            NSMutableArray* rooms = [[NSMutableArray alloc] initWithArray:roomArray];
-//            [rooms removeObject:roomToRemove];
-//            roomArray=rooms;
-//            [messageManagerDelegate notifyThatRoomHasBeenDeleted:roomToRemove];
-//            NSLog(@"Received notification to delete room %@ %@ ", roomToRemove.name, roomID);
-//            [roomManagerDelegate updateRooms:roomArray];
-//            // ADER DO SOETHING TO MAKE SOMEONE LEAVE THE ROOM IF SHE IS INSIDE
-//        }
-//    }
-//}

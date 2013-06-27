@@ -24,15 +24,14 @@
 
 @implementation MessageTableViewController
 
-@synthesize currentRoom, roomNameLabel, segmentedControl ;
+@synthesize roomNameLabel, segmentedControl, noConnectionLabel ;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-
-    }
+            }
     return self;
 }
 
@@ -44,22 +43,25 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
-    [self.roomNameLabel setText:currentRoom.name];
+    [self.roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
+    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    [noConnectionLabel setHidden:[[SpeakUpManager sharedSpeakUpManager] connectionIsOK]];
     [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
 }
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room{
-    if ([room.roomID isEqual:currentRoom.roomID]) {
+    if ([room.roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
-                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", currentRoom.name ]
+                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", [[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]]
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -85,10 +87,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([currentRoom.messages count]==0){
+    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         return 1;
     }
-    return [currentRoom.messages count];
+    return [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
     
 }
 
@@ -103,7 +105,7 @@
     // http://www.cimgf.com/2009/09/23/uitableviewcell-dynamic-height/
     // MessageManager *sharedMessageManager = [MessageManager sharedMessageManager];
     //if there is no room, simply put this no room cell
-    if ([currentRoom.messages count]==0){
+    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         static NSString *CellIdentifier = @"NoMessageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -198,8 +200,8 @@
 }
 
 -(Message*)getMessageForIndex:(NSInteger)index{
-    if ([currentRoom.messages count]>0){
-        return (Message *)[currentRoom.messages objectAtIndex:index];
+    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]>0){
+        return (Message *)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] objectAtIndex:index];
     }
     return nil;
 }
@@ -210,9 +212,9 @@
     NSInteger selectedSegment = seg.selectedSegmentIndex;
     
     if (selectedSegment == 0) {
-        currentRoom.messagesSortedBy=BEST_RATING;
+        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:BEST_RATING];
     }else if(selectedSegment == 1){
-        currentRoom.messagesSortedBy=MOST_RECENT;
+        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:MOST_RECENT];
     }
     
     [self sortMessages];
@@ -221,6 +223,17 @@
 }
 
 
+-(void)connectionWasLost{
+    noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
+    [noConnectionLabel setText: @"CONNECTION LOST"];
+    [noConnectionLabel setHidden:NO];
+}
+-(void)connectionHasRecovered{
+    noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
+    [noConnectionLabel setText: @"CONNECTION ESTABLISHED"];
+    [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
+    [noConnectionLabel setHidden:YES];
+}
 
 //#pragma mark - Table view delegate
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -237,6 +250,7 @@
 
 // LIKE
 -(IBAction)rateMessageUp:(id)sender{
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
     @synchronized(self){
         NSString* messageID;
         int yesRating = 0;
@@ -267,16 +281,19 @@
             yesRating=1;
         }
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
         }else{
             NSLog(@"the message %@ does not have an id",[message description]);
         }
+        [self.tableView reloadData];
+    }
     }
 }
 
 // DISLIKE
 -(IBAction)rateMessageDown:(id)sender{
+     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
     @synchronized(self){
         NSString* messageID;
         int yesRating = 0;
@@ -307,32 +324,34 @@
             noRating++;
         }
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:currentRoom.roomID yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
         }else{
             NSLog(@"the message %@ does not have an id",[message description]);
         }
+       [self.tableView reloadData];
     }
+     }
 }
 
 
 // GO TO INPUT
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"MessagesToSpeak"]) {
-        InputViewController *inputVC  = (InputViewController *)[segue destinationViewController];
-        [inputVC setRoom: currentRoom];
-    }
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if ([[segue identifier] isEqualToString:@"MessagesToSpeak"]) {
+//       // InputViewController *inputVC  = (InputViewController *)[segue destinationViewController];
+//        //[inputVC setRoom: currentRoom];
+//    }
+//}
 
 
 // SLIDE TO DELETE
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Message* message = [self getMessageForIndex:indexPath.section];
-    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:message.authorPeerID]){
-        return @"Delete";
-    }
+//    Message* message = [self getMessageForIndex:indexPath.section];
+//    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:message.authorPeerID]){
+//        return @"Delete";
+//    }
     return @"Hide";
 }
 // DELETE
@@ -340,7 +359,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Message* message = [self getMessageForIndex:indexPath.section];
-        [currentRoom.messages removeObject:message];
+        [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
         [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
         [tableView reloadData];
     }
@@ -350,7 +369,7 @@
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
-    if([roomID isEqual:currentRoom.roomID]){
+    if([roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]){
         if(!self.editing){
             [self sortMessages];
             [self.tableView reloadData];
@@ -376,10 +395,10 @@
 
 // SORTING
 -(void) sortMessages{
-    if (currentRoom.messagesSortedBy==MOST_RECENT) {
-        [currentRoom setMessages:  [self sortMessagesByTime:currentRoom.messages]];
+    if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom]messagesSortedBy]==MOST_RECENT) {
+        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessages:  [self sortMessagesByTime:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]]];
     }else{
-        [currentRoom setMessages: [self sortMessagesByScore:currentRoom.messages]];
+        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessages:  [self sortMessagesByScore:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]]];
     }
 }
 -(NSMutableArray*) sortMessagesByScore:(NSMutableArray*)messages{

@@ -19,7 +19,7 @@
     if(self){
         messages = [NSMutableArray array];
         isOfficial=NO;
-        messagesSortedBy=BEST_RATING;
+        messagesSortedBy=MOST_RECENT;
         deleted=NO;
     }
     return self;
@@ -30,7 +30,7 @@
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
-        messagesSortedBy=BEST_RATING;
+        messagesSortedBy=MOST_RECENT;
         [self setRoomID: [dict objectForKey:@"_id"]];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         NSDictionary* loc = [dict objectForKey:@"loc"];

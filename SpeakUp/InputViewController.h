@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Room.h"
+#import "ConnectionDelegate.h"
 
-@interface InputViewController : UIViewController <UITextViewDelegate>
+@interface InputViewController : UIViewController <UITextViewDelegate,ConnectionDelegate>
 
 
 @property(strong, nonatomic) IBOutlet UIBarButtonItem * sendButton;
 @property(strong, nonatomic) IBOutlet UITextView * input;
 @property(strong, nonatomic) IBOutlet UILabel * characterCounterLabel;
-@property(strong, nonatomic) Room *room;
+@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
 
 -(IBAction)sendInput:(id)sender;
 

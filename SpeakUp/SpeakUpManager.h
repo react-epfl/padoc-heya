@@ -12,6 +12,7 @@
 #import "SpeakUpManagerDelegate.h"
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
+#import "ConnectionDelegate.h"
 // socket rocket removed #import "SRWebSocket.h"
 #import "SocketIO.h"
 
@@ -64,6 +65,9 @@
 // dislikedMessages contains the id (NSNumber)  of the user's disliked messages
 @property (strong, nonatomic) NSMutableArray *dislikedMessages;
 
+
+@property (strong, nonatomic) Room *currentRoom;
+
 // contains the message ids that were deleted
 @property (strong, nonatomic) NSMutableArray *deletedMessageIDs;
 // contains the message ids that were deleted
@@ -79,10 +83,10 @@
 @property (nonatomic)  NSString  *dev_id;//device ID
 @property (nonatomic)  NSString  *peer_id;// peer ID recieved from the server
 
-@property (nonatomic,strong) NSNumber* range;
 
 
 //Delegates
+@property (strong, nonatomic) id<ConnectionDelegate> connectionDelegate;
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
 @property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;

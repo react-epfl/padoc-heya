@@ -16,17 +16,23 @@
 @implementation InputViewController
 
 
-@synthesize input, characterCounterLabel, room, sendButton;
+@synthesize input, characterCounterLabel, sendButton, noConnectionLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
         input.delegate=self;
-        
     }
     return self;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [noConnectionLabel setHidden:[[SpeakUpManager sharedSpeakUpManager] connectionIsOK]];
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,6 +41,13 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void)connectionWasLost{
+    [noConnectionLabel setHidden:NO];
+}
+-(void)connectionHasRecovered{
+    [noConnectionLabel setHidden:YES];
 }
 
 #pragma mark - View lifecycle
@@ -104,26 +117,28 @@
         return YES;
     }
     return NO;
-
+    
 }
 
 
 -(IBAction)sendInput:(id)sender{
-    // should send the message first
-    if(![input.text isEqualToString:@""]){
-        // create a new message
-        Message *newMessage = [[Message alloc] init];
-        newMessage.content= input.text;
-        newMessage.roomID=room.roomID;
-        
-        [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
-        
-        [input setText:@""];
-        // goes back to the messages view
-        [self.navigationController popViewControllerAnimated:YES];
-        //update the input
-        [[SpeakUpManager sharedSpeakUpManager] setInputText:input.text];
-        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        // should send the message first
+        if(![input.text isEqualToString:@""]){
+            // create a new message
+            Message *newMessage = [[Message alloc] init];
+            newMessage.content= input.text;
+            newMessage.roomID=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            
+            [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
+            
+            [input setText:@""];
+            // goes back to the messages view
+            [self.navigationController popViewControllerAnimated:YES];
+            //update the input
+            [[SpeakUpManager sharedSpeakUpManager] setInputText:input.text];
+            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        }
     }
 }
 

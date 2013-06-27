@@ -152,6 +152,7 @@
 		80A6705617381C3C0082275E /* SocketIOTransportWebsocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOTransportWebsocket.m; sourceTree = "<group>"; };
 		80A6705717381C3C0082275E /* SocketIOTransportXHR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTransportXHR.h; sourceTree = "<group>"; };
 		80A6705817381C3C0082275E /* SocketIOTransportXHR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketIOTransportXHR.m; sourceTree = "<group>"; };
+		80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
 		80EEBC5216D3C07C001B87FA /* iPadStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPadStoryboard.storyboard; sourceTree = "<group>"; };
 		80FB4C3C17251EE40004965A /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/base64.c; sourceTree = "<group>"; };
 		80FB4C3D17251EE40004965A /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/base64.h; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 				8090FE6A1664FC6A005A6358 /* SpeakUpManager.h */,
 				8090FE6B1664FC6A005A6358 /* SpeakUpManager.m */,
 				8090FE6C1664FC6A005A6358 /* SpeakUpManagerDelegate.h */,
+				80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */,
 				8096A8E81636E9C60092F049 /* RoomManagerDelegate.h */,
 				8096A8D51636E9C60092F049 /* MessageManagerDelegate.h */,
 				8096A8E11636E9C60092F049 /* PeerManagerDelegate.h */,

@@ -16,7 +16,7 @@
 
 @implementation RoomTableViewController
 
-@synthesize nearbyRooms, plusButton, roomLogo, timer;
+@synthesize nearbyRooms, plusButton, roomLogo;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,12 +28,7 @@
     return self;
 }
 
-//=======
-// TIMER
-//=======
--(void) targetMethod: (NSTimer*) theTimer{
-    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
-}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -52,6 +47,7 @@
     
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     // EGO STUFF
     if (_refreshHeaderView == nil) {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
@@ -70,18 +66,15 @@
     [self.tableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    timer = [NSTimer scheduledTimerWithTimeInterval: 60.0 target:self selector:@selector(targetMethod:) userInfo:nil repeats: YES];
-    [super viewDidDisappear:animated];
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
-    
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [timer invalidate];
     [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     [super viewDidDisappear:animated];
 }
@@ -188,13 +181,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
-        MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
+       // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
-        Room *room = [nearbyRooms objectAtIndex:row];
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom:room.roomID];
-        [messageTVC setCurrentRoom: room];
+        [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[nearbyRooms objectAtIndex:row]];
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]];
+       // [messageTVC setCurrentRoom: room];
     }
 }
 //callback from the server
@@ -211,10 +204,10 @@
 //request sent to the server
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
-    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
-        return @"Delete";
-    }
+//    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
+//    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
+//        return @"Delete";
+//    }
     return @"Hide";
 }
 
@@ -230,9 +223,16 @@
     }
 }
 
-///////////////////////////
-//// EGO STUFF BEGINS
-///////////////////////////
+-(void)connectionWasLost{
+    //[noConnectionLabel setHidden:NO];
+}
+-(void)connectionHasRecovered{
+    //[noConnectionLabel setHidden:YES];
+}
+
+////////////////////////////////////
+//// PULL DOWN LIBRARY (EGO) STUFF BEGINS
+////////////////////////////////////
 #pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
@@ -265,9 +265,9 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
-///////////////////////////
-//// EGO STUFF ENDS
-///////////////////////////
+/////////////////////////////////
+//// PULL DOWN LIBRARY (EGO) STUFF ENDS
+/////////////////////////////////
 
 
 @end

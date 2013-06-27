@@ -10,8 +10,9 @@
 #import "Room.h"
 #import "MessageManagerDelegate.h"
 #import "EGORefreshTableHeaderView.h"
+#import "ConnectionDelegate.h"
 
-@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource>{
+@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,ConnectionDelegate>{
     
     EGORefreshTableHeaderView *_refreshHeaderView;
 	//  Reloading var should really be your tableviews datasource
@@ -26,9 +27,9 @@
 //press thumb up
 -(IBAction)sortBy:(id)sender;
 
-@property(strong, nonatomic) Room *currentRoom;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
+@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
 
 
 
