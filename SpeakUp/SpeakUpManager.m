@@ -195,18 +195,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [self stopNetworking];
     connectionIsOK=NO;
     [connectionDelegate connectionWasLost];
-    //[self performSelector:@selector(connect:) withObject:nil afterDelay:3.0];
-     [self connect];
+    [self performSelector:@selector(connect) withObject:nil afterDelay:arc4random() % 4];
+   // [self connect];
     
-    [self connect];
+    //[self connect];
     NSLog(@"socket did fail with error: %@",[error description]);
 }
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
     [self stopNetworking];
     connectionIsOK=NO;
     [ connectionDelegate connectionWasLost];
-    //[self performSelector:@selector(connect:) withObject:nil afterDelay:3.0];
-    [self connect];
+    [self performSelector:@selector(connect)  withObject:nil afterDelay:arc4random() % 4];
+    //[self connect];
     NSLog(@"socket did close with error %@ ",[error description]);
 }
 

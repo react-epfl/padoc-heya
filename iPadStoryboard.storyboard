@@ -36,13 +36,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.58039218189999997" green="0.85490202900000001" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="25F-b3-py4">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="32"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="53"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RoomName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="IbJ-1c-daM">
-                                    <rect key="frame" x="244" y="0.0" width="280" height="32"/>
+                                    <rect key="frame" x="244" y="11" width="280" height="32"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CONNECTION LOST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VHi-3C-1qI">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="1" green="0.0" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -50,7 +58,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="124" id="SH3-e3-VhT">
-                                <rect key="frame" x="0.0" y="66" width="768" height="125"/>
+                                <rect key="frame" x="0.0" y="87" width="768" height="125"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="45" y="1" width="678" height="123"/>
@@ -133,7 +141,7 @@
                                 </view>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="68" id="kqa-nq-uA0">
-                                <rect key="frame" x="0.0" y="191" width="768" height="69"/>
+                                <rect key="frame" x="0.0" y="212" width="768" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="45" y="0.0" width="678" height="67"/>
@@ -195,6 +203,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <connections>
+                        <outlet property="noConnectionLabel" destination="VHi-3C-1qI" id="XxV-Lg-aqH"/>
                         <outlet property="roomNameLabel" destination="IbJ-1c-daM" id="7Vg-vI-0jV"/>
                         <outlet property="segmentedControl" destination="sQs-3y-RFT" id="5vG-x5-IQc"/>
                     </connections>
@@ -228,6 +237,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CONNECTION LOST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eSf-Dn-vsU">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.58039218189999997" green="0.85490202900000001" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                     </view>
@@ -242,6 +259,7 @@
                     <connections>
                         <outlet property="characterCounterLabel" destination="29R-V6-8Ks" id="R02-Mi-fE7"/>
                         <outlet property="input" destination="14G-gv-nDg" id="zuo-8y-FWQ"/>
+                        <outlet property="noConnectionLabel" destination="eSf-Dn-vsU" id="zVx-6t-RGh"/>
                         <outlet property="sendButton" destination="Nxe-jc-5Pm" id="g5e-dd-mGQ"/>
                     </connections>
                 </viewController>
@@ -346,6 +364,14 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="WMm-xf-pmy">
                                 <rect key="frame" x="6" y="85" width="752" height="595"/>
                             </mapView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CONNECTION LOST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZG9-an-StR">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.63921570780000003" green="0.88306010030000004" blue="0.98431378599999997" alpha="1" colorSpace="deviceRGB"/>
                     </view>
@@ -360,6 +386,7 @@
                     <connections>
                         <outlet property="input" destination="cTI-Rb-k0g" id="8Wb-5F-s0z"/>
                         <outlet property="mapView" destination="WMm-xf-pmy" id="Nmb-zs-0I6"/>
+                        <outlet property="noConnectionLabel" destination="ZG9-an-StR" id="FF1-GN-PKd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kww-Fb-xSp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -378,6 +405,7 @@
                 <relationship kind="action" name="sendInput:"/>
                 <relationship kind="outlet" name="characterCounterLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="input" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="sendButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -387,6 +415,7 @@
                 <relationship kind="action" name="rateMessageDown:"/>
                 <relationship kind="action" name="rateMessageUp:"/>
                 <relationship kind="action" name="sortBy:"/>
+                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="roomNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
             </relationships>
@@ -399,6 +428,7 @@
                 <relationship kind="outlet" name="createButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="input" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="RoomTableViewController" superclassName="UITableViewController">

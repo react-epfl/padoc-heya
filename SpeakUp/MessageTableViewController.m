@@ -232,7 +232,6 @@
     noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
     [noConnectionLabel setText: @"CONNECTION ESTABLISHED"];
     [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
-    [noConnectionLabel setHidden:YES];
 }
 
 //#pragma mark - Table view delegate

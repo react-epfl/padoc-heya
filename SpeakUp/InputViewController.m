@@ -44,10 +44,14 @@
 }
 
 -(void)connectionWasLost{
+    noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
+    [noConnectionLabel setText: @"CONNECTION LOST"];
     [noConnectionLabel setHidden:NO];
 }
 -(void)connectionHasRecovered{
-    [noConnectionLabel setHidden:YES];
+    noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
+    [noConnectionLabel setText: @"CONNECTION ESTABLISHED"];
+    [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
 }
 
 #pragma mark - View lifecycle
