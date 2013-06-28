@@ -71,7 +71,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }else{
             [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]];
         }
-        
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
         self.locationAtLastReset=self.location;
