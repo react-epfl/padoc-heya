@@ -10,12 +10,13 @@
 #import "ConnectionDelegate.h"
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"
+#import "Reply.h"
 
 
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom,inputRoomIDText;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -89,6 +90,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+    }else if ([type isEqual:@"replycreated"]) {
+        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+        [self receivedReply: [dict objectForKey:@"relpy"] roomID:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+    }else if ([type isEqual:@"replyupdate"]) {
+        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+        [self receivedReply: [dict objectForKey:@"reply"] roomID:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     }else{
         NSLog(@"got something else");
     }
@@ -153,6 +162,33 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
                 [room.messages addObject:message];
             }
+        }
+    }
+}
+//=================
+// RECEIVED REPLY
+//=================
+-(void)receivedReply:(NSDictionary*)replyDictionary roomID:(NSString*)roomID{
+    Reply* reply = [[Reply alloc] initWithDictionary:replyDictionary roomID: roomID];
+    for(Room *room in roomArray){
+        if ([room.roomID isEqual:reply.roomID]) {
+            Message* messageToRemove=nil;
+            for(Message *msg in room.messages){
+                if ([msg.messageID isEqual:reply.messageID]) {
+                    // update received, therefore the message must be deleted
+                    messageToRemove=msg;
+                }
+            }
+            
+            //// ADER here the message to which the reply belongs has to be selected
+            
+//            if (messageToRemove) {
+//                [room.messages removeObject:messageToRemove];
+//            }
+//            // add new message unless it has been hidden by the user
+//            if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+//                [room.messages addObject:message];
+//            }
         }
     }
 }
@@ -340,6 +376,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         peer_id= nil;
     }
+    if([defaults objectForKey:@"inputRoomIDText"]){
+        inputRoomIDText= [defaults objectForKey:@"inputRoomIDText"];
+    }else {
+        inputRoomIDText= nil;
+    }
     if([defaults objectForKey:@"likedMessages"]){
         likedMessages= [defaults objectForKey:@"likedMessages"];
     }else {
@@ -377,6 +418,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:dev_id forKey:@"dev_id"];
     [defaults setObject:peer_id forKey:@"peer_id"];
+    [defaults setObject:inputRoomIDText forKey:@"inputRoomIDText"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
     [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];

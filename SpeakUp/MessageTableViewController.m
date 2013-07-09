@@ -129,10 +129,19 @@
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         NSUInteger section = [indexPath section];
         Message* message = [self getMessageForIndex:section];
+        BOOL isReply=NO;
         contentTextView.text = [message content];
         CGRect frame = contentTextView.frame;
         frame.size.height = contentTextView.contentSize.height;
         contentTextView.frame = frame;
+        
+        UIButton *replyButton = (UIButton *)[cell viewWithTag:11];
+        if (isReply) {
+            [replyButton setHidden:YES];
+            
+        }
+       
+        
         
         // THUMBS - Setup the ThumbsUP and down buttons
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];

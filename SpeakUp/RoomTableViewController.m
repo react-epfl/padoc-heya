@@ -16,7 +16,7 @@
 
 @implementation RoomTableViewController
 
-@synthesize nearbyRooms, plusButton, roomLogo;
+@synthesize nearbyRooms, plusButton, roomLogo,roomTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -58,9 +58,25 @@
     //  update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
     
+   
+    //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                               //    initWithTarget:self
+                                 //  action:@selector(dismissKeyboard)];
+    
+    //[self.view addGestureRecognizer:tap];
+    
+    
     [super viewDidLoad];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+-(void)dismissKeyboard {
+    [roomTextField resignFirstResponder];
+}
 
 - (void)updateData{
     [self.tableView reloadData];
@@ -124,7 +140,7 @@
         return cell;
     }else{
         [plusButton setEnabled:YES];
-        self.navigationItem.title=@"Nearby rooms";
+        self.navigationItem.title=@"Rooms";
         //if there is no room, simply put this no room cell
         if ([nearbyRooms count]==0){
             static NSString *CellIdentifier = @"NoRoomCell";
@@ -171,6 +187,16 @@
     
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section==0) {
+        return @"Nearby rooms";
+    }else{
+        return @"Other rooms";
+    }
+    
+}
+
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -178,8 +204,26 @@
     
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    //check if
+    if ([identifier isEqualToString:@"JoinRoomSegue"]) {
+        // if the room id is not ok when the response is received trigger prepareForSegue
+        // return NO;
+    }
+    return YES;
+    
+}
+
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
+       
+       [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]; 
+        
+    }
+    
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
        // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
         UITableViewCell *cell = (UITableViewCell *)sender;
@@ -202,26 +246,26 @@
 }
 
 //request sent to the server
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
 //    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
 //    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
 //        return @"Delete";
 //    }
-    return @"Hide";
-}
+    //return @"Hide";
+//}
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
-        NSLog(@"hiding room %@ ", room.roomID);
-        [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
-        [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
-        [tableView reloadData];
-
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
+//        NSLog(@"hiding room %@ ", room.roomID);
+//        [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
+//        [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
+//        [tableView reloadData];
+//
+//    }
+//}
 
 -(void)connectionWasLost{
     //[noConnectionLabel setHidden:NO];
@@ -265,6 +309,10 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
+
+
+
+
 /////////////////////////////////
 //// PULL DOWN LIBRARY (EGO) STUFF ENDS
 /////////////////////////////////

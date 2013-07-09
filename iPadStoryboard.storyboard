@@ -398,47 +398,6 @@
         <image name="tDown1.png" width="50" height="45"/>
         <image name="tUp1.png" width="50" height="45"/>
     </resources>
-    <classes>
-        <class className="InputViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/InputViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendInput:"/>
-                <relationship kind="outlet" name="characterCounterLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="input" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="sendButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="MessageTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MessageTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="rateMessageDown:"/>
-                <relationship kind="action" name="rateMessageUp:"/>
-                <relationship kind="action" name="sortBy:"/>
-                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="roomNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="NewRoomViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewRoomViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="createRoom:"/>
-                <relationship kind="action" name="sendMail"/>
-                <relationship kind="outlet" name="createButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="input" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="RoomTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RoomTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="plusButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="roomLogo" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

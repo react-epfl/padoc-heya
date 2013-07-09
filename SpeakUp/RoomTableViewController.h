@@ -13,7 +13,7 @@
 #import "ConnectionDelegate.h"
 
 
-@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, SpeakUpManagerDelegate, ConnectionDelegate>{
+@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, UITextFieldDelegate, SpeakUpManagerDelegate, ConnectionDelegate>{
     EGORefreshTableHeaderView *_refreshHeaderView;
 	
 	//  Reloading var should really be your tableviews datasource
@@ -25,6 +25,7 @@
 @property(strong, nonatomic) IBOutlet UIBarButtonItem * plusButton;
 @property(strong, nonatomic) IBOutlet UIImageView * roomLogo;
 @property(strong, nonatomic) NSArray *nearbyRooms;
+@property(strong, nonatomic) IBOutlet UITextField * roomTextField;
 
 
 @end

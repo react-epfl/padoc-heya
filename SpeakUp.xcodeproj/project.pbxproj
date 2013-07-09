@@ -70,6 +70,7 @@
 		80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4617251F460004965A /* CFNetwork.framework */; };
 		80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4817251F540004965A /* libicucore.dylib */; };
 		80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4A17251F5D0004965A /* Security.framework */; };
+		80FC4939178C2C0E00872922 /* Reply.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FC4938178C2C0E00872922 /* Reply.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +165,8 @@
 		80FB4C4617251F460004965A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		80FB4C4817251F540004965A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		80FB4C4A17251F5D0004965A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		80FC4937178C2C0E00872922 /* Reply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reply.h; sourceTree = "<group>"; };
+		80FC4938178C2C0E00872922 /* Reply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reply.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +338,8 @@
 				8096A8D21636E9C60092F049 /* Message.m */,
 				8096A8E41636E9C60092F049 /* Room.h */,
 				8096A8E51636E9C60092F049 /* Room.m */,
+				80FC4937178C2C0E00872922 /* Reply.h */,
+				80FC4938178C2C0E00872922 /* Reply.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 				80A6705B17381C3C0082275E /* SocketIOPacket.m in Sources */,
 				80A6705C17381C3C0082275E /* SocketIOTransportWebsocket.m in Sources */,
 				80A6705D17381C3C0082275E /* SocketIOTransportXHR.m in Sources */,
+				80FC4939178C2C0E00872922 /* Reply.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

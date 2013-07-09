@@ -60,6 +60,7 @@
 @property (nonatomic) BOOL isSuperUser;
 // inputText is the user's unsent message 
 @property (strong, nonatomic) NSString *inputText;
+@property (strong, nonatomic) NSString *inputRoomIDText;
 // likedMessages contains the id (NSNumber)  of the user's liked messages
 @property (strong, nonatomic) NSMutableArray *likedMessages;
 // dislikedMessages contains the id (NSNumber)  of the user's disliked messages

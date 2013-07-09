@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, replies;
 
 - (id)init{
     self = [super init];
@@ -21,6 +21,7 @@
         numberOfYes=0;
         score=0;
         deleted=NO;
+        replies= [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -36,6 +37,7 @@
         [self setContent: [dict objectForKey:@"body"]];
         [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];
+        [self setReplies: [dict objectForKey:@"replies"]];// ADER not sure if this works
         [self setScore:numberOfYes-numberOfNo];
     }
     return self;

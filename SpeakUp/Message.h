@@ -34,7 +34,7 @@
 @property (nonatomic) BOOL  noIsPressed;
 
 
-
+@property (strong, nonatomic) NSMutableArray *replies;
 
 
 
