@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, replies;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, replies, parentMessageID;
 
 - (id)init{
     self = [super init];
@@ -22,6 +22,7 @@
         score=0;
         deleted=NO;
         replies= [[NSMutableArray alloc] init];
+        parentMessageID=nil;
     }
     return self;
 }
@@ -32,6 +33,7 @@
         [self setRoomID:aRoomID];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         [self setMessageID:[dict objectForKey:@"_id"]];
+        [self setParentMessageID:[dict objectForKey:@"_id"]];
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
         [self setContent: [dict objectForKey:@"body"]];

@@ -15,6 +15,7 @@
 - (id)initWithDictionary:(NSDictionary*) dict roomID:(NSString*) roomID;
 
 @property (strong, nonatomic) NSString* messageID;
+@property (strong, nonatomic) NSString* parentMessageID;
 @property (nonatomic)NSString*  authorPeerID;
 @property (strong, nonatomic) NSString* roomID;
 @property (strong, nonatomic) Room  *room;

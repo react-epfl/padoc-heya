@@ -57,7 +57,7 @@
                             <color key="backgroundColor" red="0.58039218189999997" green="0.85490202900000001" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="124" id="SH3-e3-VhT">
+                            <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="124" id="SH3-e3-VhT" customClass="MessageCell">
                                 <rect key="frame" x="0.0" y="87" width="768" height="125"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -140,7 +140,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
-                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="68" id="kqa-nq-uA0">
+                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="68" id="kqa-nq-uA0" customClass="MessageCell">
                                 <rect key="frame" x="0.0" y="212" width="768" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -398,6 +398,50 @@
         <image name="tDown1.png" width="50" height="45"/>
         <image name="tUp1.png" width="50" height="45"/>
     </resources>
+    <classes>
+        <class className="InputViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InputViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendInput:"/>
+                <relationship kind="outlet" name="characterCounterLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="input" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sendButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="MessageCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MessageCell.h"/>
+        </class>
+        <class className="MessageTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MessageTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="rateMessageDown:"/>
+                <relationship kind="action" name="rateMessageUp:"/>
+                <relationship kind="action" name="sortBy:"/>
+                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="roomNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="NewRoomViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewRoomViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendMail"/>
+                <relationship kind="outlet" name="createButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="input" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="noConnectionLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="RoomTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RoomTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="plusButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="roomLogo" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="roomTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

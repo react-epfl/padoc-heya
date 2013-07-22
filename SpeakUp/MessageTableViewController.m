@@ -9,6 +9,7 @@
 #import "InputViewController.h"
 #import "Message.h"
 #import "SpeakUpManager.h"
+#import "MessageCell.h"
 
 #define FONT_SIZE 17.0f
 #define CELL_CONTENT_WIDTH 280.0f
@@ -87,59 +88,68 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
-        return 1;
-    }
-    return [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
+    return 1;
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
+        return 1;
+    }
+    return [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // check this site
     // http://www.cimgf.com/2009/09/23/uitableviewcell-dynamic-height/
-    // MessageManager *sharedMessageManager = [MessageManager sharedMessageManager];
     //if there is no room, simply put this no room cell
+    
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
-        static NSString *CellIdentifier = @"NoMessageCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        //static
+        NSString *CellIdentifier = @"NoMessageCell";
+       
+        
+        MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:2];
         [thumbUpButton setImage:[UIImage imageNamed:@"noMsg.png"] forState:UIControlStateNormal] ;
         cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-        cell.backgroundView.backgroundColor = [UIColor whiteColor];
+        //cell.backgroundView.backgroundColor = [UIColor whiteColor];
         cell.backgroundView.layer.cornerRadius  =1;
+        
         return cell;
     }
     else{
-        static NSString *CellIdentifier = @"MessageCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        Message* message = [self getMessageForIndex:[indexPath row]];
+        
+        NSString *CellIdentifier = @"MessageCell";
+        
+        /////////////// JUST FOR TEST
+        //if(!message.parentMessageID)
+        if(arc4random()%2==0){
+          CellIdentifier = @"ReplyMessageCell";
+       }
+        ///////////////////
+        
+        MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
+        cell.message=message;
         // CONTENT - set up the content
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
-        NSUInteger section = [indexPath section];
-        Message* message = [self getMessageForIndex:section];
-        BOOL isReply=NO;
+        
+       
         contentTextView.text = [message content];
         CGRect frame = contentTextView.frame;
         frame.size.height = contentTextView.contentSize.height;
         contentTextView.frame = frame;
         
-        UIButton *replyButton = (UIButton *)[cell viewWithTag:11];
-        if (isReply) {
-            [replyButton setHidden:YES];
-            
-        }
        
         
         
@@ -175,6 +185,9 @@
         }
         [timeLabel setText: time];
         
+        UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
+        backgroundLabel.backgroundColor=[UIColor whiteColor];
+        
         // SCORE - Setup the score label
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
         if(message.score>0){
@@ -197,11 +210,12 @@
         
         // CELL STYLE
         cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+        //cell.contentView.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:197.0/255.0 blue:248.0/255.0 alpha:1.0];
         // if message is mine the color could be different
          if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:message.authorPeerID]){
-            cell.backgroundView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
+           // cell.backgroundView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
         }else{
-            cell.backgroundView.backgroundColor = [UIColor whiteColor];
+          //  cell.backgroundView.backgroundColor = [UIColor whiteColor];
         }
         cell.backgroundView.layer.cornerRadius  =2;
         return cell;
@@ -267,8 +281,8 @@
         UIView *contentView = [aButton superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
-        NSUInteger section = [indexPath section];
-        Message* message = [self getMessageForIndex:section];
+        NSUInteger row = [indexPath row];
+        Message* message = [self getMessageForIndex:row];
         messageID = message.messageID;
         if (messageID) {
         //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
@@ -310,8 +324,8 @@
         UIView *contentView = [aButton superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
-        NSUInteger section = [indexPath section];
-        Message* message = [self getMessageForIndex:section];
+        NSUInteger row = [indexPath row];
+        Message* message = [self getMessageForIndex:row];
         messageID = message.messageID;
         if (messageID) {
         //if the message was disliked, remove the message from the list of disliked messages
@@ -366,7 +380,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Message* message = [self getMessageForIndex:indexPath.section];
+        Message* message = [self getMessageForIndex:indexPath.row];
         [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
         [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
         [tableView reloadData];
@@ -390,8 +404,8 @@
 // CALCULATE HEIGHT
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSUInteger section = [indexPath section];
-    Message* message = [self getMessageForIndex:section];
+    NSUInteger row = [indexPath row];
+    Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2),CELL_MAX_SIZE);

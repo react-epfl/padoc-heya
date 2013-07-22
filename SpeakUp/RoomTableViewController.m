@@ -220,7 +220,7 @@
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
        
-       [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]; 
+       [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
         
     }
     
@@ -230,7 +230,7 @@
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
         [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[nearbyRooms objectAtIndex:row]];
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]];
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
        // [messageTVC setCurrentRoom: room];
     }
 }

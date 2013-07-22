@@ -10,7 +10,6 @@
 #import "ConnectionDelegate.h"
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"
-#import "Reply.h"
 
 
 
@@ -64,13 +63,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         peer_id = [data objectForKey:@"peer_id"];
         connectionIsOK=YES;
         [connectionDelegate connectionHasRecovered];
-        // if the current view is nerby rooms, then get new rooms, otherwise get the messages in the current room
+        // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
         UIWindow *window = [UIApplication sharedApplication].keyWindow;
         UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
         if([myNavController.visibleViewController isKindOfClass:[RoomTableViewController class]]){
             [self getNearbyRooms];
         }else{
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoom: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]];
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
         }
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
@@ -89,14 +88,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else if ([type isEqual:@"messageupdated"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-    }else if ([type isEqual:@"replycreated"]) {
-        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
-        [self receivedReply: [dict objectForKey:@"relpy"] roomID:[dict objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-    }else if ([type isEqual:@"replyupdate"]) {
-        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
-        [self receivedReply: [dict objectForKey:@"reply"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     }else{
         NSLog(@"got something else");
@@ -165,33 +156,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
 }
-//=================
-// RECEIVED REPLY
-//=================
--(void)receivedReply:(NSDictionary*)replyDictionary roomID:(NSString*)roomID{
-    Reply* reply = [[Reply alloc] initWithDictionary:replyDictionary roomID: roomID];
-    for(Room *room in roomArray){
-        if ([room.roomID isEqual:reply.roomID]) {
-            Message* messageToRemove=nil;
-            for(Message *msg in room.messages){
-                if ([msg.messageID isEqual:reply.messageID]) {
-                    // update received, therefore the message must be deleted
-                    messageToRemove=msg;
-                }
-            }
-            
-            //// ADER here the message to which the reply belongs has to be selected
-            
-//            if (messageToRemove) {
-//                [room.messages removeObject:messageToRemove];
-//            }
-//            // add new message unless it has been hidden by the user
-//            if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
-//                [room.messages addObject:message];
-//            }
-        }
-    }
-}
+
 //========================
 // HANDSHAKE SOCKET.IO
 //========================
@@ -268,10 +233,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 // GET MESSAGES SOCKET.IO
 //========================
--(void)getMessagesInRoom:(NSString*)room_id{
+-(void)getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) hash{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room_id forKey:@"room_id"];
+    [myData setValue:hash forKey:@"hash"];
     
     [socketIO sendEvent:@"getmessages" withData:myData];
     [self startNetworking];
@@ -444,7 +410,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)stopNetworking{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
-
 //========================
 //========================
 
@@ -461,5 +426,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [deletedMessageIDs addObject:message.messageID];
     // should inform the server if the message was the peer's message
 }
+
+// ADD A VIEW ON TOP OF THE EXISTING VIEW TO INDICATE DISCONNECTION
+-(void) showDisconnectionView{
+    UIView* disconnectionView = [[UIView alloc] init];
+    disconnectionView.backgroundColor= [UIColor redColor];
+   // [[UIApplication sharedApplication] windows]
+    
+}
+
 
 @end

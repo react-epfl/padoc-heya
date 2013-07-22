@@ -35,7 +35,7 @@
 // MESSAGE RELATED METHODS
 -(void) deleteMessage:(Message *) message;
 -(void)createMessage:(Message *) message;
-- (void)getMessagesInRoom:(NSString*)roomID;
+- (void)getMessagesInRoomID:(NSString*)roomID orRoomHash:(NSString*) hash;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
 // ROOM RELATED METHODS
 -(void) deleteRoom:(Room *) room;

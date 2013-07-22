@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		803D3D6F17915C7000AC527A /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D3D6E17915C7000AC527A /* MessageCell.m */; };
 		80864DE416FF649700ED1724 /* non-official-room-mine.png in Resources */ = {isa = PBXBuildFile; fileRef = 80864DE216FF649700ED1724 /* non-official-room-mine.png */; };
 		80864DE516FF649700ED1724 /* official-room-notmine.png in Resources */ = {isa = PBXBuildFile; fileRef = 80864DE316FF649700ED1724 /* official-room-notmine.png */; };
 		8089F91B16E4DB0E0081E322 /* speakUPlogoRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = 8089F91A16E4DB0E0081E322 /* speakUPlogoRetina.png */; };
@@ -70,10 +71,11 @@
 		80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4617251F460004965A /* CFNetwork.framework */; };
 		80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4817251F540004965A /* libicucore.dylib */; };
 		80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4A17251F5D0004965A /* Security.framework */; };
-		80FC4939178C2C0E00872922 /* Reply.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FC4938178C2C0E00872922 /* Reply.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		803D3D6D17915C7000AC527A /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		803D3D6E17915C7000AC527A /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		80864DE216FF649700ED1724 /* non-official-room-mine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "non-official-room-mine.png"; sourceTree = "<group>"; };
 		80864DE316FF649700ED1724 /* official-room-notmine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "official-room-notmine.png"; sourceTree = "<group>"; };
 		8089F91A16E4DB0E0081E322 /* speakUPlogoRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speakUPlogoRetina.png; path = ../speakUPlogoRetina.png; sourceTree = "<group>"; };
@@ -165,8 +167,6 @@
 		80FB4C4617251F460004965A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		80FB4C4817251F540004965A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		80FB4C4A17251F5D0004965A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		80FC4937178C2C0E00872922 /* Reply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reply.h; sourceTree = "<group>"; };
-		80FC4938178C2C0E00872922 /* Reply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reply.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +327,8 @@
 				8096A8D71636E9C60092F049 /* MessageTableViewController.m */,
 				8096A8D81636E9C60092F049 /* NewRoomViewController.h */,
 				8096A8D91636E9C60092F049 /* NewRoomViewController.m */,
+				803D3D6D17915C7000AC527A /* MessageCell.h */,
+				803D3D6E17915C7000AC527A /* MessageCell.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -338,8 +340,6 @@
 				8096A8D21636E9C60092F049 /* Message.m */,
 				8096A8E41636E9C60092F049 /* Room.h */,
 				8096A8E51636E9C60092F049 /* Room.m */,
-				80FC4937178C2C0E00872922 /* Reply.h */,
-				80FC4938178C2C0E00872922 /* Reply.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -499,7 +499,7 @@
 				80A6705B17381C3C0082275E /* SocketIOPacket.m in Sources */,
 				80A6705C17381C3C0082275E /* SocketIOTransportWebsocket.m in Sources */,
 				80A6705D17381C3C0082275E /* SocketIOTransportXHR.m in Sources */,
-				80FC4939178C2C0E00872922 /* Reply.m in Sources */,
+				803D3D6F17915C7000AC527A /* MessageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
