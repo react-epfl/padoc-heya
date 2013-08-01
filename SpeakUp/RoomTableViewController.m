@@ -42,8 +42,11 @@
 
 - (void)viewDidLoad
 {
+    
+    
+    
     nearbyRooms=nil;
-    [plusButton setEnabled:NO];
+    
     
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
@@ -65,8 +68,29 @@
     
     //[self.view addGestureRecognizer:tap];
     
+   // self.navigationController.navigationBar.clipsToBounds = NO;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
+    // PLUS BUTTON START
+    plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];
+    
+    [plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateSelected];
+    [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
+    plusButton.frame = CGRectMake(0, 0, 40, 40);
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
+    [plusButton setEnabled:NO];
+    // PLUS BUTTON END
+    
+    
     
     [super viewDidLoad];
+    
+}
+-(void)performAddRoomSegue:(id)sender{
+    [self performSegueWithIdentifier:@"AddRoomSegue" sender:self];
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -167,7 +191,7 @@
             UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
             [distanceLabel setText: [NSString stringWithFormat:@"%.0f m", room.distance]];
             
-            if (room.isOfficial){
+            /*if (room.isOfficial){
                 if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:room.creatorID]){
                     cell.imageView.image = [UIImage imageNamed:@"official-room.png"];
                 }else{
@@ -180,21 +204,21 @@
                 else{
                     cell.imageView.image = [UIImage imageNamed:@"non-official-room.png"];
                 }
-            }
+            }*/
             return cell;
         }
     }
     
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section==0) {
         return @"Nearby rooms";
     }else{
         return @"Other rooms";
     }
     
-}
+}*/
 
 
 #pragma mark - Table view delegate

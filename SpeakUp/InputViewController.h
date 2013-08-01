@@ -13,7 +13,7 @@
 @interface InputViewController : UIViewController <UITextViewDelegate,ConnectionDelegate>
 
 
-@property(strong, nonatomic) IBOutlet UIBarButtonItem * sendButton;
+@property(strong, nonatomic) UIButton * sendButton;
 @property(strong, nonatomic) IBOutlet UITextView * input;
 @property(strong, nonatomic) IBOutlet UILabel * characterCounterLabel;
 @property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;

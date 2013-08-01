@@ -47,6 +47,29 @@
     [self.roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
     
+    // BACK BUTTON START
+    UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateSelected];
+    [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    newBackButton.frame = CGRectMake(5, 5, 30, 30);
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
+    // BACK BUTTON END
+    
+    // COMPOSE BUTTON START
+    UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [composeButton setImage:[UIImage imageNamed: @"button-write1.png"] forState:UIControlStateNormal];
+    [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateSelected];
+    [composeButton addTarget:self action:@selector(performSegueToCompose:) forControlEvents:UIControlEventTouchUpInside];
+    composeButton.frame = CGRectMake(5, 5, 30, 30);
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
+    // COMPOSE BUTTON END
+    
+}
+
+-(void)performSegueToCompose:(id)sender{
+    [self performSegueWithIdentifier:@"MessagesToSpeak" sender:self];
+    
 }
 
 
@@ -115,11 +138,11 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:2];
-        [thumbUpButton setImage:[UIImage imageNamed:@"noMsg.png"] forState:UIControlStateNormal] ;
-        cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+       // UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:2];
+       // [thumbUpButton setImage:[UIImage imageNamed:@"noMsg.png"] forState:UIControlStateNormal] ;
+       // cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
         //cell.backgroundView.backgroundColor = [UIColor whiteColor];
-        cell.backgroundView.layer.cornerRadius  =1;
+        //cell.backgroundView.layer.cornerRadius  =1;
         
         return cell;
     }
@@ -130,9 +153,9 @@
         
         /////////////// JUST FOR TEST
         //if(!message.parentMessageID)
-        if(arc4random()%2==0){
-          CellIdentifier = @"ReplyMessageCell";
-       }
+        //if(arc4random()%2==0){
+          //CellIdentifier = @"ReplyMessageCell";
+       //}
         ///////////////////
         
         MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];

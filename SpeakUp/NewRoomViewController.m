@@ -43,6 +43,24 @@
     }
     self.navigationItem.title=[NSString stringWithFormat:@"Create room"];
     
+    // BACK BUTTON START
+    UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateSelected];
+    [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    newBackButton.frame = CGRectMake(5, 5, 30, 30);
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
+    // BACK BUTTON END
+    
+    // COMPOSE BUTTON START
+    UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [composeButton setImage:[UIImage imageNamed: @"button-write1.png"] forState:UIControlStateNormal];
+    [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateSelected];
+    [composeButton addTarget:self action:@selector(sendMail) forControlEvents:UIControlEventTouchUpInside];
+    composeButton.frame = CGRectMake(5, 5, 30, 30);
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
+    // COMPOSE BUTTON END
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{

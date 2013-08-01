@@ -20,14 +20,16 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+   
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        input.delegate=self;
+
+        
     }
     return self;
 }
+
+
 
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -72,10 +74,7 @@
     input.text = [[SpeakUpManager sharedSpeakUpManager] inputText];
     
     int characterNumber = [[input text] length];
-    [sendButton setEnabled:NO];
-    if(characterNumber>0){
-        [sendButton setEnabled:YES];
-    }
+
     
     [characterCounterLabel setText:[NSString stringWithFormat:@"%d / %d", characterNumber, MAX_LENGTH]];
     input.textInputView.layer.shadowColor =[[UIColor blackColor] CGColor];
@@ -83,6 +82,31 @@
     input.textInputView.layer.cornerRadius=1;
     input.textInputView.layer.shadowOpacity=.5;
     input.textInputView.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+    
+    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    // Custom initialization
+    input.delegate=self;
+    // BACK BUTTON START
+    UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateSelected];
+    [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    newBackButton.frame = CGRectMake(5, 5, 30, 30);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
+    // BACK BUTTON END
+    
+    // SEND BUTTON START
+    sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sendButton setImage:[UIImage imageNamed: @"button-send1.png"] forState:UIControlStateNormal];
+    [sendButton setImage:[UIImage imageNamed: @"button-send2.png"] forState:UIControlStateSelected];
+    [sendButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
+    sendButton.frame = CGRectMake(5, 5, 30, 30);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:sendButton];
+    [sendButton setEnabled:NO];
+    if(characterNumber>0){
+        [sendButton setEnabled:YES];
+    }
+    // SEND BUTTON END
     
 }
 
