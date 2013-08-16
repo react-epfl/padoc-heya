@@ -1,0 +1,65 @@
+/* 
+  Localizable.strings
+  SpeakUp
+
+  Created by Adrian Holzer on 15.08.13.
+  Copyright (c) 2013 Adrian Holzer. All rights reserved.
+*/
+
+
+
+"NO_ROOM"= "Pas de salle à proximité, créez en une!";
+
+"ROOMS" ="speakup";
+
+"NO_LOCATION" = "En attente de localisation...";
+
+"NO_CONNECTION"= "En attente de connection...";
+
+"LOADING" = "chargement...";
+
+"CONNECTION_LOST" = "CONNECTION PERDUE";
+
+"CONNECTION_ESTABLISHED" = "CONNECTION ETABLIE";
+
+"ROOM_CLOSED" = "SALLE FERMEE";
+
+"ROOM_CLOSED_LONG" =  "La salle %@ a été fermée et n'est plus disponible";
+
+"OK" = "OK";
+
+"JUST_NOW" = "maintenant";
+
+"MINUTES_AGO" = "il y a %d min";
+
+"HOURS_AGO"="il y a %d heures";
+
+"VOTE"="(%d vote)";
+
+"VOTES"="(%d votes)";
+
+"FEEDBACK" = "SpeakUp Feedback";
+
+"CREATE_ROOM" = "ajouter salle";
+
+"NO_MAIL" = "Votre téléphone ne peut pas envoyer de mail en ce moment.";
+
+"STATUS" = "Status";
+
+"MESSAGE_CANCELED" = "Message Annulé";
+
+"MESSAGE_SAVED" = "Message Enregistrer";
+
+"MESSAGE_SENT" = "Message Envoyé";
+
+"MESSAGE_FAILED" = "Message Echoué";
+
+"MESSAGE_NOT_SENT" = "Message Pas Envoyé";
+
+"RATING_SORT" = "MEILLEUR";
+
+"RECENT_SORT" = "RECENT";
+
+"COMPOSE" = "composer";
+
+"COMMENT" = "Commenter";

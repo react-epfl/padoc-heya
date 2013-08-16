@@ -57,6 +57,7 @@
   //     [[SpeakUpManager sharedSpeakUpManager] resetPeerID];
    // }
     
+   
     return YES;
 }
 

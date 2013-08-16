@@ -1,0 +1,126 @@
+
+/* Class = "IBUILabel"; text = "17 hours ago"; ObjectID = "1iH-hj-LKt"; */
+"1iH-hj-LKt.text" = "17 hours ago";
+
+/* Class = "IBUILabel"; text = "Room Name"; ObjectID = "1x4-Xs-4a1"; */
+"1x4-Xs-4a1.text" = "Room Name";
+
+/* Class = "IBUINavigationItem"; title = "New room"; ObjectID = "3AO-L8-U0f"; */
+"3AO-L8-U0f.title" = "New room";
+
+/* Class = "IBUILabel"; text = "NO CONNECTION"; ObjectID = "3Ik-N0-XI7"; */
+"3Ik-N0-XI7.text" = "NO CONNECTION";
+
+/* Class = "IBUILabel"; text = "No room around"; ObjectID = "3qN-fN-AzZ"; */
+"3qN-fN-AzZ.text" = "No room around";
+
+/* Class = "IBUILabel"; text = "NO CONNECTION"; ObjectID = "4wf-0z-rnR"; */
+"4wf-0z-rnR.text" = "NO CONNECTION";
+
+/* Class = "IBUILabel"; text = "Waiting for new"; ObjectID = "8HR-Zc-3Eg"; */
+"8HR-Zc-3Eg.text" = "Waiting for new";
+
+/* Class = "IBUILabel"; text = "score"; ObjectID = "8y3-cb-wS2"; */
+"8y3-cb-wS2.text" = "score";
+
+/* Class = "IBUITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "D2G-BE-iEK"; */
+"D2G-BE-iEK.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "IBUILabel"; text = "messages in this room"; ObjectID = "EqV-aQ-wxA"; */
+"EqV-aQ-wxA.text" = "messages in this room";
+
+/* Class = "IBUILabel"; text = "score"; ObjectID = "FaE-B4-WBj"; */
+"FaE-B4-WBj.text" = "score";
+
+/* Class = "IBUITextField"; placeholder = "Enter a room ID"; ObjectID = "JSw-vD-0Kc"; */
+"JSw-vD-0Kc.placeholder" = "Enter a room ID";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "OY7-GL-LQb"; */
+"OY7-GL-LQb.text" = "Label";
+
+/* Class = "IBUISegmentedControl"; PbI-ez-uG9.segmentTitles[0] = "Plus populaire"; ObjectID = "PbI-ez-uG9"; */
+"PbI-ez-uG9.segmentTitles[0]" = "Plus populaire";
+
+/* Class = "IBUISegmentedControl"; PbI-ez-uG9.segmentTitles[1] = "Plus récent"; ObjectID = "PbI-ez-uG9"; */
+"PbI-ez-uG9.segmentTitles[1]" = "Plus récent";
+
+/* Class = "IBUILabel"; text = "(00 votes)"; ObjectID = "Q0K-43-iMm"; */
+"Q0K-43-iMm.text" = "(00 votes)";
+
+/* Class = "IBUITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "RdG-We-HA3"; */
+"RdG-We-HA3.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "IBUILabel"; text = "RoomName"; ObjectID = "TFG-mW-f5s"; */
+"TFG-mW-f5s.text" = "RoomName";
+
+/* Class = "IBUILabel"; text = "NO CONNECTION"; ObjectID = "UjF-hc-34C"; */
+"UjF-hc-34C.text" = "NO CONNECTION";
+
+/* Class = "IBUILabel"; text = "Waiting for new"; ObjectID = "Vux-5y-5ul"; */
+"Vux-5y-5ul.text" = "Waiting for new";
+
+/* Class = "IBUINavigationItem"; title = "SpeakUp"; ObjectID = "XgO-B3-bYd"; */
+"XgO-B3-bYd.title" = "SpeakUp";
+
+/* Class = "IBUILabel"; text = "17 hours ago"; ObjectID = "Xx3-4n-9zc"; */
+"Xx3-4n-9zc.text" = "17 hours ago";
+
+/* Class = "IBUILabel"; text = "NO CONNECTION"; ObjectID = "ZVc-K6-7Wl"; */
+"ZVc-K6-7Wl.text" = "NO CONNECTION";
+
+/* Class = "IBUILabel"; text = "distance"; ObjectID = "Zts-Cf-UaF"; */
+"Zts-Cf-UaF.text" = "distance";
+
+/* Class = "IBUITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "a8U-YX-pnY"; */
+"a8U-YX-pnY.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "IBUITextField"; placeholder = "Enter room name"; ObjectID = "aml-Kf-kxP"; */
+"aml-Kf-kxP.placeholder" = "Enter room name";
+
+/* Class = "IBUIButton"; normalTitle = "10 comments"; ObjectID = "cIM-GC-Inw"; */
+"cIM-GC-Inw.normalTitle" = "10 comments";
+
+/* Class = "IBUITabBarItem"; title = "Community"; ObjectID = "cQQ-Pf-FVK"; */
+"cQQ-Pf-FVK.title" = "Community";
+
+/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "cnl-5u-qsJ"; */
+"cnl-5u-qsJ.title" = "Back";
+
+/* Class = "IBUILabel"; text = "(00 votes)"; ObjectID = "eol-6u-XTN"; */
+"eol-6u-XTN.text" = "(00 votes)";
+
+/* Class = "IBUINavigationItem"; title = "Salles"; ObjectID = "fgf-W7-XVp"; */
+"fgf-W7-XVp.title" = "Salles";
+
+/* Class = "IBUIButton"; normalTitle = "reply"; ObjectID = "fhr-Aj-EsI"; */
+"fhr-Aj-EsI.normalTitle" = "reply";
+
+/* Class = "IBUIBarButtonItem"; title = "Send"; ObjectID = "jTC-EA-W5Q"; */
+"jTC-EA-W5Q.title" = "Send";
+
+/* Class = "IBUISegmentedControl"; jqO-pq-nTr.segmentTitles[0] = "Best rating"; ObjectID = "jqO-pq-nTr"; */
+"jqO-pq-nTr.segmentTitles[0]" = "Meilleur score";
+
+/* Class = "IBUISegmentedControl"; jqO-pq-nTr.segmentTitles[1] = "Most recent"; ObjectID = "jqO-pq-nTr"; */
+"jqO-pq-nTr.segmentTitles[1]" = "Plus récent";
+
+/* Class = "IBUIBarButtonItem"; title = "Leave"; ObjectID = "m6J-3V-HJt"; */
+"m6J-3V-HJt.title" = "Leave";
+
+/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "mOR-JZ-Rgz"; */
+"mOR-JZ-Rgz.title" = "Back";
+
+/* Class = "IBUILabel"; text = "messages in this room"; ObjectID = "qW3-0v-Tv0"; */
+"qW3-0v-Tv0.text" = "messages in this room";
+
+/* Class = "IBUILabel"; text = "score"; ObjectID = "qcS-q1-ROb"; */
+"qcS-q1-ROb.text" = "score";
+
+/* Class = "IBUILabel"; text = "(00 votes)"; ObjectID = "rFs-g6-icw"; */
+"rFs-g6-icw.text" = "(00 votes)";
+
+/* Class = "IBUILabel"; text = "People nearby your current location will see this room"; ObjectID = "z3a-js-h6B"; */
+"z3a-js-h6B.text" = "People nearby your current location will see this room";
+
+/* Class = "IBUILabel"; text = "17 hours ago"; ObjectID = "zGs-1O-znH"; */
+"zGs-1O-znH.text" = "17 hours ago";

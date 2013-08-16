@@ -18,17 +18,6 @@
 
 @synthesize input, characterCounterLabel, sendButton, noConnectionLabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-   
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-        
-    }
-    return self;
-}
-
 
 
 
@@ -47,12 +36,12 @@
 
 -(void)connectionWasLost{
     noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
-    [noConnectionLabel setText: @"CONNECTION LOST"];
+    [noConnectionLabel setText:  NSLocalizedString(@"CONNECTION_LOST", nil) ];
     [noConnectionLabel setHidden:NO];
 }
 -(void)connectionHasRecovered{
     noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
-    [noConnectionLabel setText: @"CONNECTION ESTABLISHED"];
+    [noConnectionLabel setText: NSLocalizedString(@"CONNECTION_ESTABLISHED", nil)];
     [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
 }
 
@@ -89,7 +78,7 @@
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
-    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateSelected];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateHighlighted];
     [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     newBackButton.frame = CGRectMake(5, 5, 30, 30);
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
@@ -98,7 +87,7 @@
     // SEND BUTTON START
     sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendButton setImage:[UIImage imageNamed: @"button-send1.png"] forState:UIControlStateNormal];
-    [sendButton setImage:[UIImage imageNamed: @"button-send2.png"] forState:UIControlStateSelected];
+    [sendButton setImage:[UIImage imageNamed: @"button-send2.png"] forState:UIControlStateHighlighted];
     [sendButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     sendButton.frame = CGRectMake(5, 5, 30, 30);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:sendButton];
@@ -107,6 +96,15 @@
         [sendButton setEnabled:YES];
     }
     // SEND BUTTON END
+    
+    // NAV TITLE
+    UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
+    customLabel.backgroundColor= [UIColor clearColor];
+    customLabel.textAlignment = NSTextAlignmentCenter;
+    [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22]];
+    customLabel.textColor =  [UIColor whiteColor];
+    self.navigationItem.titleView = customLabel;
+    [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"COMPOSE", nil)];
     
 }
 

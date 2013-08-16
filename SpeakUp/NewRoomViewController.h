@@ -17,8 +17,17 @@
 @property(strong, nonatomic) IBOutlet UITextField * input;
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 @property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
+@property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
+
+@property(strong, nonatomic) IBOutlet UITextField * keyTextField;
+@property(strong, nonatomic) IBOutlet UIButton * createRoomButton;
+@property(strong, nonatomic) IBOutlet UIButton * unlockRoomButton;
+@property(strong, nonatomic) IBOutlet UILabel * createRoomLabel;
+
 
 
 -(IBAction)sendMail;
+
+-(IBAction)createOrUnlock:(id)sender;
 
 @end

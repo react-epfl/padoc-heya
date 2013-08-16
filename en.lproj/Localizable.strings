@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  SpeakUp
+
+  Created by Adrian Holzer on 15.08.13.
+  Copyright (c) 2013 Adrian Holzer. All rights reserved.
+*/
+
+
+
+"NO_ROOM"= "No room nearby, create one!";
+
+"ROOMS"="speakup";
+
+"NO_LOCATION" = "Waiting for location...";
+
+"NO_CONNECTION"= "Waiting for connection...";
+
+"LOADING" = "loading...";
+
+"CONNECTION_LOST" = "CONNECTION LOST";
+
+"CONNECTION_ESTABLISHED" = "CONNECTION ESTABLISHED";
+
+"ROOM_CLOSED" = "ROOM CLOSED";
+
+"ROOM_CLOSED_LONG" =  "Room %@ has been closed by its owner and is no longer available";
+
+"OK" = "OK";
+
+"JUST_NOW" = "just now";
+
+"MINUTES_AGO" = "%d min ago";
+
+"HOURS_AGO"="%d hours ago";
+
+"VOTE"="(%d vote)";
+
+"VOTES"="(%d votes)";
+
+"FEEDBACK" = "SpeakUp Feedback";
+
+"CREATE_ROOM" = "add room";
+
+"NO_MAIL" = "Your phone is not currently configured to send mail.";
+
+"STATUS" = "Status";
+
+"MESSAGE_CANCELED" = "Message Canceled";
+
+"MESSAGE_SAVED" = "Message Saved";
+
+"MESSAGE_SENT" = "Message Sent";
+
+"MESSAGE_FAILED" = "Message Failed";
+
+"MESSAGE_NOT_SENT" = "Message Not Sent";
+
+"RATING_SORT" = "BEST";
+
+"RECENT_SORT" = "RECENT";
+
+"COMPOSE" = "compose";
+
+"COMMENT" = "Comment";
+

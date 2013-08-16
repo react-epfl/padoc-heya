@@ -28,13 +28,6 @@
 @synthesize roomNameLabel, segmentedControl, noConnectionLabel ;
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-            }
-    return self;
-}
 
 
 #pragma mark - View lifecycle
@@ -44,13 +37,14 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
-    [self.roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+    //[self.roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
     
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
-    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateSelected];
+    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateHighlighted];
+    
     [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     newBackButton.frame = CGRectMake(5, 5, 30, 30);
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
@@ -59,11 +53,30 @@
     // COMPOSE BUTTON START
     UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [composeButton setImage:[UIImage imageNamed: @"button-write1.png"] forState:UIControlStateNormal];
-    [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateSelected];
+    [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateHighlighted];
     [composeButton addTarget:self action:@selector(performSegueToCompose:) forControlEvents:UIControlEventTouchUpInside];
     composeButton.frame = CGRectMake(5, 5, 30, 30);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
     // COMPOSE BUTTON END
+    
+    [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
+    [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
+    
+    // NAV TITLE
+    UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
+    customLabel.backgroundColor= [UIColor clearColor];
+    customLabel.textAlignment = NSTextAlignmentCenter;
+    [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22]];
+    customLabel.textColor =  [UIColor whiteColor];
+    self.navigationItem.titleView = customLabel;
+    [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+    
+  
+    //SEGMENTED VIEW CONTROL
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
 }
 
@@ -84,10 +97,10 @@
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room{
     if ([room.roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Room Closed"
-                                                        message:[NSString stringWithFormat: @"Room %@ has been closed by its owner and is no longer available", [[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]]
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"ROOM_CLOSED", nil)
+                                                        message:[NSString stringWithFormat: NSLocalizedString(@"ROOM_CLOSED_LONG", nil) , [[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]]
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle: NSLocalizedString(@"OK", nil) 
                                               otherButtonTitles:nil];
         [alert show];
         [self.navigationController popViewControllerAnimated:YES];
@@ -200,16 +213,21 @@
         NSInteger hours = -(message.secondsSinceCreation / 3600);
         NSString* time=@"";
         if(minutes  <1 && hours  <1){
-            time = @"just now";
+            time = NSLocalizedString(@"JUST_NOW", nil);
         }else if(minutes>0 && hours == 0){
-            time = [NSString stringWithFormat:@"%d min ago",minutes];
+            time = [NSString stringWithFormat:  NSLocalizedString(@"MINUTES_AGO", nil),minutes];
         }else {
-            time = [NSString stringWithFormat:@"%d hours ago",hours];
+            time = [NSString stringWithFormat:  NSLocalizedString(@"HOURS_AGO", nil),hours];
         }
         [timeLabel setText: time];
         
         UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
         backgroundLabel.backgroundColor=[UIColor whiteColor];
+        backgroundLabel.layer.cornerRadius  =2;
+        backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
+       
+        
+        //backgroundLabel.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:245.0/255.0 blue:255.0/255.0 alpha:1.0];
         
         // SCORE - Setup the score label
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
@@ -226,13 +244,17 @@
         UILabel *numberofVotesLabel = (UILabel *)[cell viewWithTag:8];
         int numberOfVotes= message.numberOfNo + message.numberOfYes;
         if(numberOfVotes<2){
-            [numberofVotesLabel setText: [NSString stringWithFormat:@"(%d vote)", numberOfVotes]];
+            [numberofVotesLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"VOTE", nil), numberOfVotes]];
         }else{
-            [numberofVotesLabel setText: [NSString stringWithFormat:@"(%d votes)", numberOfVotes]];
+            [numberofVotesLabel setText: [NSString stringWithFormat: NSLocalizedString(@"VOTES", nil) , numberOfVotes]];
         }
         
+        //COMMENTS
+       // UIButton *commentButton = (UIButton *)[cell viewWithTag:11];
+        //[commentButton setTitle:NSLocalizedString(@"COMMENT", nil) forState:UIControlStateNormal ]; // need to add the number of comments
+       // commentButton;
         // CELL STYLE
-        cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+        //cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
         //cell.contentView.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:197.0/255.0 blue:248.0/255.0 alpha:1.0];
         // if message is mine the color could be different
          if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:message.authorPeerID]){
@@ -240,7 +262,7 @@
         }else{
           //  cell.backgroundView.backgroundColor = [UIColor whiteColor];
         }
-        cell.backgroundView.layer.cornerRadius  =2;
+        //cell.backgroundView.layer.cornerRadius  =2;
         return cell;
     }
 }
@@ -271,12 +293,12 @@
 
 -(void)connectionWasLost{
     noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
-    [noConnectionLabel setText: @"CONNECTION LOST"];
+    [noConnectionLabel setText:  NSLocalizedString(@"CONNECTION_LOST", nil)];
     [noConnectionLabel setHidden:NO];
 }
 -(void)connectionHasRecovered{
     noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
-    [noConnectionLabel setText: @"CONNECTION ESTABLISHED"];
+    [noConnectionLabel setText: NSLocalizedString(@"CONNECTION_ESTABLISHED", nil)];
     [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
 }
 

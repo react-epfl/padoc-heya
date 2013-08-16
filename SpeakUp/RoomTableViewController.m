@@ -18,15 +18,17 @@
 
 @synthesize nearbyRooms, plusButton, roomLogo,roomTextField;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
-    self = [super initWithStyle:style];
-    if (self) {
+    if(self = [super initWithCoder:aDecoder])
+    {
+     //   [self.tableView setContentOffset:CGPointMake(0,45) animated:YES];
+        
+        
     }
-    
-    
     return self;
 }
+
 
 
 
@@ -42,12 +44,7 @@
 
 - (void)viewDidLoad
 {
-    
-    
-    
     nearbyRooms=nil;
-    
-    
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
@@ -61,13 +58,6 @@
     //  update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
     
-   
-    //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                               //    initWithTarget:self
-                                 //  action:@selector(dismissKeyboard)];
-    
-    //[self.view addGestureRecognizer:tap];
-    
    // self.navigationController.navigationBar.clipsToBounds = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
     
@@ -76,18 +66,34 @@
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];
     
-    [plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateSelected];
+    [plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateHighlighted];
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
+    
+    self.tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
+    
     [plusButton setEnabled:NO];
     // PLUS BUTTON END
     
-    
-    
     [super viewDidLoad];
+     self.tableView.bounces = YES;
     
+    // NAV TITLE
+    UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
+    customLabel.backgroundColor= [UIColor clearColor];
+    customLabel.textAlignment = NSTextAlignmentCenter;
+    [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22]];
+    customLabel.textColor =  [UIColor whiteColor];
+    self.navigationItem.titleView = customLabel;
+    [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
+
+    
+    
+ 
 }
+
+
 -(void)performAddRoomSegue:(id)sender{
     [self performSegueWithIdentifier:@"AddRoomSegue" sender:self];
     
@@ -103,13 +109,16 @@
 }
 
 - (void)updateData{
+    //[self.tableView setContentOffset:CGPointMake(0,45) animated:YES];
     [self.tableView reloadData];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    //[self.tableView setContentOffset:CGPointMake(0,45) animated:NO];
 }
 
 
@@ -148,7 +157,7 @@
 {
     if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] ||![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
         [plusButton setEnabled:NO];
-        self.navigationItem.title=@"Loading...";
+        [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
         static NSString *CellIdentifier = @"NoRoomCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -157,14 +166,14 @@
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
-            nameLabel.text = @"Waiting for location...";
+            nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
         }else if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-            nameLabel.text = @"Waiting for connection...";
+            nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
         }
         return cell;
     }else{
         [plusButton setEnabled:YES];
-        self.navigationItem.title=@"Rooms";
+        [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
         //if there is no room, simply put this no room cell
         if ([nearbyRooms count]==0){
             static NSString *CellIdentifier = @"NoRoomCell";
@@ -173,7 +182,7 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-            nameLabel.text = @"No room nearby, create one!";
+            nameLabel.text = NSLocalizedString(@"NO_ROOM", nil) ;
             return cell;
         }
         else{
@@ -190,6 +199,20 @@
             
             UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
             [distanceLabel setText: [NSString stringWithFormat:@"%.0f m", room.distance]];
+            
+            //cell.backgroundColor = ;
+            
+            // CELL STYLE
+            /*cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+            
+            // if message is mine the color could be different
+            if(indexPath.row % 2 != 0){
+                cell.contentView.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:245.0/255.0 blue:255.0/255.0 alpha:0.5];
+            }else{
+                cell.contentView.backgroundColor=[UIColor whiteColor];
+             
+            }*/
+            
             
             /*if (room.isOfficial){
                 if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:room.creatorID]){
@@ -208,7 +231,6 @@
             return cell;
         }
     }
-    
 }
 
 /*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -263,6 +285,7 @@
     //NSLog(@"UPDATES DATA");
     if(!self.editing){
         nearbyRooms=updatedRooms;
+        //[self.tableView setContentOffset:CGPointMake(0,45) animated:NO];
         [self.tableView reloadData];
         // EGO finnish loading
         [self doneLoadingTableViewData];
