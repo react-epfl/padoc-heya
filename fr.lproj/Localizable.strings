@@ -63,3 +63,16 @@
 "COMPOSE" = "composer";
 
 "COMMENT" = "Commenter";
+
+
+"UNLOCK" = "DEVERROUILLER";
+
+"CREATE" = "CREER";
+
+"ROOM_NAME" = "nom de la salle";
+
+"ROOM_KEY" = "clé de la salle";
+
+"NEARBY_ROOMS" = "salles proches";
+
+"UNLOCKED_ROOMS" = "salles déverrouillées";

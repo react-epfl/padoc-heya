@@ -36,7 +36,7 @@
         NSDictionary* loc = [dict objectForKey:@"loc"];
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
         [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
-        [self setName: [dict objectForKey:@"name"]];
+        [self setName: [[dict objectForKey:@"name"] lowercaseString]] ; // LOWER CASE
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];

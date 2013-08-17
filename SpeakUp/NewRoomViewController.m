@@ -71,7 +71,8 @@
     self.input.layer.masksToBounds=YES;
     self.input.layer.backgroundColor=[[UIColor whiteColor] CGColor];
     self.input.layer.borderWidth= 0.0f;
-    [self.input setValue:[UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0] forKeyPath:@"_placeholderLabel.textColor"];
+    //[self.input setValue:[UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0] forKeyPath:@"_placeholderLabel.textColor"];
+    self.input.placeholder=NSLocalizedString(@"ROOM_NAME", nil);
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
     self.input.leftView = view;
     self.input.leftViewMode = UITextFieldViewModeAlways;
@@ -82,20 +83,25 @@
     self.keyTextField.layer.masksToBounds=YES;
     self.keyTextField.layer.backgroundColor=[[UIColor whiteColor] CGColor];
     self.keyTextField.layer.borderWidth= 0.0f;
-    [self.keyTextField setValue:[UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0] forKeyPath:@"_placeholderLabel.textColor"];
+    //[self.keyTextField setValue:[UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0] forKeyPath:@"_placeholderLabel.textColor"];
+    self.keyTextField.placeholder=NSLocalizedString(@"ROOM_KEY", nil);
     UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
     self.keyTextField.leftView = view2;
     self.keyTextField.leftViewMode = UITextFieldViewModeAlways;
      [keyTextField setKeyboardType:UIKeyboardTypeNumberPad];
     
-    //SEG CONT
-    //SEGMENTED VIEW CONTROL
+    //SEGMENTED VIEW CONTROL TITLE
+    [segmentedControl setTitle:NSLocalizedString(@"UNLOCK", nil) forSegmentAtIndex:0];
+    [segmentedControl setTitle:NSLocalizedString(@"CREATE", nil) forSegmentAtIndex:1];
+    
+    //SEGMENTED VIEW CONTROL IMAGES
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
     // HIDE CREATION STUFF
+    [unlockRoomButton setTitle:NSLocalizedString(@"UNLOCK", nil) forState:UIControlStateNormal];
     [mapView setHidden:YES];
     [input setHidden:YES];
     [createRoomButton setHidden:YES];
@@ -103,6 +109,11 @@
     [keyTextField setHidden:NO];
     [createRoomLabel setHidden:YES];
     [keyTextField becomeFirstResponder];
+    unlockRoomButton.layer.masksToBounds=YES;
+    unlockRoomButton.layer.cornerRadius=2.0f;
+    [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
+    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
+    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
     
 }
 

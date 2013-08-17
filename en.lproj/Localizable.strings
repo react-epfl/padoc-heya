@@ -64,3 +64,15 @@
 
 "COMMENT" = "Comment";
 
+"UNLOCK" = "UNLOCK";
+
+"CREATE" = "CREATE";
+
+"ROOM_NAME" = "room name";
+
+"ROOM_KEY" = "room key";
+
+"NEARBY_ROOMS" = "nearby rooms";
+
+"UNLOCKED_ROOMS" = "unlocked rooms";
+

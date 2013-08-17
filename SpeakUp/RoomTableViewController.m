@@ -233,14 +233,14 @@
     }
 }
 
-/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section==0) {
-        return @"Nearby rooms";
+        return NSLocalizedString(@"NEARBY_ROOMS", nil);
     }else{
-        return @"Other rooms";
+        return NSLocalizedString(@"UNLOCKED_ROOMS", nil);
     }
     
-}*/
+}
 
 
 #pragma mark - Table view delegate
