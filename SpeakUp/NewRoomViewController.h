@@ -11,6 +11,8 @@
 #import <MessageUI/MessageUI.h>
 #import "ConnectionDelegate.h"
 
+
+
 @interface NewRoomViewController : UIViewController<MKMapViewDelegate,UITextFieldDelegate,MFMailComposeViewControllerDelegate,ConnectionDelegate>
 
 @property(strong, nonatomic) IBOutlet UIBarButtonItem * createButton;

@@ -12,7 +12,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "ConnectionDelegate.h"
 
-@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,ConnectionDelegate>{
+@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,ConnectionDelegate,UITextViewDelegate>{
     
     EGORefreshTableHeaderView *_refreshHeaderView;
 	//  Reloading var should really be your tableviews datasource
@@ -30,6 +30,14 @@
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
 @property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
+
+@property(strong, nonatomic)  UIView * inputView;
+@property(strong, nonatomic)  UIButton * inputButton;
+@property(strong, nonatomic)  UITextView * inputTextView;
+
+@property(nonatomic)  BOOL keyboardIsVisible;
+@property(nonatomic)  BOOL showKey;
+@property(nonatomic) int keyboardHeight;
 
 
 

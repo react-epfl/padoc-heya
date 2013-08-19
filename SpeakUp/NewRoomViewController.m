@@ -100,8 +100,17 @@
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
-    // HIDE CREATION STUFF
+    // UNLOCK BUTTON
     [unlockRoomButton setTitle:NSLocalizedString(@"UNLOCK", nil) forState:UIControlStateNormal];
+    unlockRoomButton.layer.masksToBounds=YES;
+    unlockRoomButton.layer.cornerRadius=2.0f;
+    [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
+    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
+    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
+    
+    
+    
+    // HIDE CREATION STUFF AND SHOW UNLOCK STUFF
     [mapView setHidden:YES];
     [input setHidden:YES];
     [createRoomButton setHidden:YES];
@@ -109,11 +118,7 @@
     [keyTextField setHidden:NO];
     [createRoomLabel setHidden:YES];
     [keyTextField becomeFirstResponder];
-    unlockRoomButton.layer.masksToBounds=YES;
-    unlockRoomButton.layer.cornerRadius=2.0f;
-    [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
-    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
+
     
 }
 

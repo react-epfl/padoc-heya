@@ -76,3 +76,5 @@
 "NEARBY_ROOMS" = "salles proches";
 
 "UNLOCKED_ROOMS" = "salles déverrouillées";
+
+"SEND" = "ENVOYER";

@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID ;
+@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key ;
 
 
 - (id)init{
@@ -37,6 +37,7 @@
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
         [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
         [self setName: [[dict objectForKey:@"name"] lowercaseString]] ; // LOWER CASE
+        [self setKey: @"67849"] ; // TO BE UPDATED
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];

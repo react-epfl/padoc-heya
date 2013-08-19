@@ -36,6 +36,8 @@
         [self setParentMessageID:[dict objectForKey:@"_id"]];
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
+        //NSString* content1= [dict objectForKey:@"body"];
+        //NSString* trimmedcontent = [content1 stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
         [self setContent: [dict objectForKey:@"body"]];
         [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];

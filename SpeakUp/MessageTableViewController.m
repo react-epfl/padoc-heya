@@ -14,18 +14,23 @@
 #define FONT_SIZE 17.0f
 #define CELL_CONTENT_WIDTH 280.0f
 #define CELL_CONTENT_MARGIN 10.0f
-#define CELL_MIN_SIZE 65.0f
-#define CELL_MAX_SIZE 500.0f
+#define CELL_MIN_SIZE 80.0
+#define CELL_MAX_SIZE 9999.0f
 #define YES_NO_LOGO_WIDTH 40
 #define YES_NO_LOGO_HEIGHT 36
 #define YES_LOGO_HORIZONTAL_OFFSET 200
 #define NO_LOGO_HORIZONTAL_OFFSET 250
-#define YES_NO_LOGO_VERTICAL_OFFSET 40
+#define FOOTER_OFFSET 60
+#define HEADER_OFFSET 55
 #define CELL_VERTICAL_OFFSET 65
+#define TEXT_WIDTH 280
+
+
+#define INPUTVIEW_HEIGHT 40
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, noConnectionLabel ;
+@synthesize roomNameLabel, segmentedControl, noConnectionLabel, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey;
 
 
 
@@ -52,9 +57,9 @@
     
     // COMPOSE BUTTON START
     UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [composeButton setImage:[UIImage imageNamed: @"button-write1.png"] forState:UIControlStateNormal];
-    [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateHighlighted];
-    [composeButton addTarget:self action:@selector(performSegueToCompose:) forControlEvents:UIControlEventTouchUpInside];
+    [composeButton setImage:[UIImage imageNamed: @"button-key.png"] forState:UIControlStateNormal];
+    [composeButton setImage:[UIImage imageNamed: @"button-key1.png"] forState:UIControlStateHighlighted];
+    [composeButton addTarget:self action:@selector(keyPressed:) forControlEvents:UIControlEventTouchUpInside];
     composeButton.frame = CGRectMake(5, 5, 30, 30);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
     // COMPOSE BUTTON END
@@ -70,6 +75,7 @@
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+    showKey=NO;
     
   
     //SEGMENTED VIEW CONTROL
@@ -78,12 +84,112 @@
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
+    //KEY
+    
+    
+    
+    /// INPUT VIEW
+    
+    keyboardIsVisible=NO;
+    keyboardHeight=0;
+    
+   inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
+    inputView.backgroundColor = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:0.9];
+    [self.view addSubview:inputView];
+    inputTextView.text=@"";
+    
+    inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    inputButton.layer.masksToBounds=YES;
+    inputButton.layer.cornerRadius=4.0f;
+    [inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
+    [inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
+    [inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
+    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12]];
+    [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
+    [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
+    inputButton.frame = CGRectMake(self.view.frame.size.width-80, 5 , 70, 30);
+
+    [inputView addSubview:inputButton];
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
+    
+    inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 5, 225, 30)];
+    //textView.borderStyle = UITextBorderStyleRoundedRect;
+    inputTextView.font = [UIFont systemFontOfSize:15];
+
+    //textView.placeholder = @"enter text";
+    inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+    inputTextView.keyboardType = UIKeyboardTypeDefault;
+    inputTextView.returnKeyType = UIReturnKeyDone;
+    inputTextView.layer.cornerRadius=4;
+    
+    [inputTextView setDelegate:self];
+    [inputView addSubview:inputTextView];
+
+    
+    // MANAGE KEYBOARD
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    
 }
+
+
+- (void)placeInputView{
+    CGRect newFrame = inputView.frame;
+    newFrame.origin.x = 0;
+    newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT)-keyboardHeight;
+    inputView.frame = newFrame;
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    // need this since view did load does not correctly calculate the size of the screen
+    [self placeInputView];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    //Assign new frame to your view
+    keyboardIsVisible=YES;
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    self.keyboardHeight= keyboardFrameBeginRect.size.height;
+
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
+    }];
+    
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    //Assign new frame to your view
+    keyboardIsVisible=NO;
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    self.keyboardHeight= 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y+keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
+    }];
+}
+
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self placeInputView];
+
+}
+
+
 
 -(void)performSegueToCompose:(id)sender{
     [self performSegueWithIdentifier:@"MessagesToSpeak" sender:self];
     
 }
+
+
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -161,16 +267,7 @@
     }
     else{
         Message* message = [self getMessageForIndex:[indexPath row]];
-        
         NSString *CellIdentifier = @"MessageCell";
-        
-        /////////////// JUST FOR TEST
-        //if(!message.parentMessageID)
-        //if(arc4random()%2==0){
-          //CellIdentifier = @"ReplyMessageCell";
-       //}
-        ///////////////////
-        
         MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -180,14 +277,21 @@
         // CONTENT - set up the content
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         
-       
-        contentTextView.text = [message content];
+       /* contentTextView.text = [message content];
         CGRect frame = contentTextView.frame;
         frame.size.height = contentTextView.contentSize.height;
+         frame.size.width = TEXT_WIDTH;
         contentTextView.frame = frame;
+       */
+        NSString * text = [message content];
+        CGSize textViewConstraint = CGSizeMake(TEXT_WIDTH,CELL_MAX_SIZE);
+        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+
+        [contentTextView setText:text];
+        [contentTextView setFrame:CGRectMake(10, 25, TEXT_WIDTH, size.height+10)];
+
         
        
-        
         
         // THUMBS - Setup the ThumbsUP and down buttons
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];
@@ -323,7 +427,7 @@
         int yesRating = 0;
         int noRating = 0;
         UIButton *aButton = (UIButton *)sender;
-        UIView *contentView = [aButton superview];
+        UIView *contentView = [[aButton superview] superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
@@ -366,7 +470,7 @@
         int yesRating = 0;
         int noRating = 0;
         UIButton *aButton = (UIButton *)sender;
-        UIView *contentView = [aButton superview];
+        UIView *contentView = [[aButton superview]superview];
         UITableViewCell *cell = (UITableViewCell *)[contentView superview];
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
@@ -453,10 +557,13 @@
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
     
-    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2),CELL_MAX_SIZE);
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height + CELL_VERTICAL_OFFSET, CELL_MIN_SIZE);
-    return height + (CELL_CONTENT_MARGIN * 2);
+    //CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2),CELL_MAX_SIZE);
+    CGSize textViewConstraint = CGSizeMake(TEXT_WIDTH,CELL_MAX_SIZE);
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+    //CGFloat height = MAX(size.height , CELL_MIN_SIZE);
+    return size.height +FOOTER_OFFSET + HEADER_OFFSET;
+    
+    
 }
 
 
@@ -490,6 +597,66 @@
     return [sortedArray mutableCopy];
 }
 
+
+
+// INPUT METHODS
+- (void)textViewDidChange:(UITextView *)textView
+{
+    int characterNumber = [[inputTextView text] length];
+    //[characterCounterLabel setText:[NSString stringWithFormat:@"%d / %d", characterNumber, MAX_LENGTH]];
+    // update the input
+    [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
+    [inputButton setEnabled:NO];
+    if(characterNumber>0){
+        [inputButton setEnabled:YES];
+    }
+}
+
+
+// used to limit the number of characters to MAX_LENGTH
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSUInteger newLength = (textView.text.length - range.length) + text.length;
+    if(newLength <= 500)
+    {
+        return YES;
+    }
+    return NO;
+    
+}
+
+
+-(IBAction)sendInput:(id)sender{
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        // should send the message first
+        if(![inputTextView.text isEqualToString:@""]){
+            // create a new message
+            Message *newMessage = [[Message alloc] init];
+            newMessage.content= inputTextView.text;
+            newMessage.roomID=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            
+            [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
+            
+            [inputTextView setText:@""];
+            // goes back to the messages view
+           // [self.navigationController popViewControllerAnimated:YES];
+            //update the input
+            [inputTextView resignFirstResponder];
+            [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
+            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        }
+    }
+}
+
+-(IBAction)keyPressed:(id)sender{
+    if(showKey){
+    [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+    showKey=NO;
+    }else{
+            [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
+            showKey=YES;
+        }
+}
 
 
 @end

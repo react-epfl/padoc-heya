@@ -61,7 +61,7 @@
    // self.navigationController.navigationBar.clipsToBounds = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
     
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
+    //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
     // PLUS BUTTON START
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];

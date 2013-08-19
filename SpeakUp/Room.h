@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString* creatorID;
 @property (nonatomic) float distance;
 @property (strong, nonatomic) NSString  *name;
+@property (strong, nonatomic) NSString* key;
 @property (strong, nonatomic) CLLocation  *location;
 @property (nonatomic) double  latitude;
 @property (nonatomic) double  longitude;
