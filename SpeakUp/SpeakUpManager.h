@@ -17,7 +17,7 @@
 #import "SocketIO.h"
 
 //#define SERVER_URL @"localhost"
-#define SERVER_URL @"reacttest.epfl.ch"
+#define SERVER_URL @"seance.epfl.ch"
 #define RANGE 200 
 #define MOST_RECENT 0
 #define BEST_RATING 1
