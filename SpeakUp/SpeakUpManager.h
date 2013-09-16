@@ -21,8 +21,8 @@
 #define RANGE 200 
 #define MOST_RECENT 0
 #define BEST_RATING 1
-#define UNLOCKED_SECTION 0
-#define NEARBY_SECTION 1
+//#define UNLOCKED_SECTION 0
+//#define NEARBY_SECTION 1
 #define CREATE_TAB 1
 #define UNLOCK_TAB 0
 

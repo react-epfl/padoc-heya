@@ -16,7 +16,7 @@
 
 @implementation RoomTableViewController
 
-@synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms;
+@synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms, NEARBY_SECTION, UNLOCKED_SECTION;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -46,6 +46,8 @@
 {
     nearbyRooms=nil;
     unlockedRooms=nil;
+    NEARBY_SECTION=0;
+    UNLOCKED_SECTION=-1;
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
@@ -131,7 +133,10 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 
-    return 2; // Returns two section // ADER: it should check if there are two section needed
+    if (UNLOCKED_SECTION==0) {
+        return 2;
+    }
+    return 1; 
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -221,14 +226,12 @@
 // CUSTOM SECTION HEADER
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionName = nil;
-    switch (section) {
-        case NEARBY_SECTION:
-            sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
-            break;
-        case UNLOCKED_SECTION:
-            sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
-            break;
+    if (section==NEARBY_SECTION) {
+        sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
+    }else{
+        sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil); 
     }
+
     UIView *sectionHeaderView = [[UIView alloc] init];
     UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
     sectionHeader.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
@@ -278,6 +281,13 @@
     if(!self.editing){
         nearbyRooms=updatedNearbyRooms;
         unlockedRooms=updatedUnlockedRooms;
+        if ([unlockedRooms count]>0) {
+            NEARBY_SECTION=1;
+            UNLOCKED_SECTION=0;
+        }else{
+            NEARBY_SECTION=0;
+            UNLOCKED_SECTION=-1;
+        }
         [self.tableView reloadData];
         // EGO finnish loading
         [self doneLoadingTableViewData];
