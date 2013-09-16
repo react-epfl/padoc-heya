@@ -19,7 +19,7 @@
 @implementation NewRoomViewController
 
 
-@synthesize createButton, input, mapView, noConnectionLabel, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel;
+@synthesize createButton, input, mapView, noConnectionLabel, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch;
 
 
 - (void)viewDidLoad
@@ -108,11 +108,15 @@
     [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
     [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
     
+    //PSEUDO LABEL
+    [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];
     
     
     // HIDE CREATION STUFF AND SHOW UNLOCK STUFF
     [mapView setHidden:YES];
     [input setHidden:YES];
+    [pseudoSwitch setHidden:YES];
+    [pseudoLabel setHidden:YES];
     [createRoomButton setHidden:YES];
     [unlockRoomButton setHidden:NO];
     [keyTextField setHidden:NO];
@@ -180,6 +184,7 @@
             myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
             myRoom.range=RANGE;
             myRoom.lifetime=LIFETIME;
+            myRoom.usesPseudonyms= pseudoSwitch.on;
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];
             self.input.text=@"";
             [self.navigationController popViewControllerAnimated:YES];
@@ -249,15 +254,19 @@
     UISegmentedControl *seg = (UISegmentedControl *) sender;
     NSInteger selectedSegment = seg.selectedSegmentIndex;
     
-    if (selectedSegment == 1) {
+    if (selectedSegment == CREATE_TAB) {
         [mapView setHidden:NO];
         [input setHidden:NO];
         [createRoomButton setHidden:NO];
         [unlockRoomButton setHidden:YES];
         [keyTextField setHidden:YES];
         [createRoomLabel setHidden:NO];
+        [pseudoSwitch setHidden:NO];
+        [pseudoLabel setHidden:NO];
         [input becomeFirstResponder];
-    }else if(selectedSegment == 0){
+    }else if(selectedSegment == UNLOCK_TAB){
+        [pseudoSwitch setHidden:YES];
+        [pseudoLabel setHidden:YES];
       [mapView setHidden:YES];
         [input setHidden:YES];
         [createRoomButton setHidden:YES];
@@ -268,6 +277,13 @@
     }
     
     
+}
+
+- (IBAction)flip:(id)sender {
+    if (pseudoSwitch.on){
+       NSLog(@"Should use pseudo"); 
+    }
+    else  NSLog(@"Should not use pseudo");
 }
 
 

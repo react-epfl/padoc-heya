@@ -26,6 +26,9 @@
 @property(strong, nonatomic) IBOutlet UIButton * unlockRoomButton;
 @property(strong, nonatomic) IBOutlet UILabel * createRoomLabel;
 
+@property(strong, nonatomic) IBOutlet UISwitch * pseudoSwitch;
+@property(strong, nonatomic) IBOutlet UILabel * pseudoLabel;
+
 
 
 -(IBAction)sendMail;
