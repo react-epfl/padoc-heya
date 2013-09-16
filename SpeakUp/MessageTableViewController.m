@@ -112,7 +112,7 @@
     [inputView addSubview:inputButton];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
     
-    inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 5, 225, 30)];
+    inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 5, self.view.frame.size.width-100, 30)];
     //textView.borderStyle = UITextBorderStyleRoundedRect;
     inputTextView.font = [UIFont systemFontOfSize:15];
 
@@ -183,14 +183,10 @@
 }
 
 
-
--(void)performSegueToCompose:(id)sender{
+/*-(void)performSegueToCompose:(id)sender{
     [self performSegueWithIdentifier:@"MessagesToSpeak" sender:self];
     
-}
-
-
-
+}*/
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -278,17 +274,19 @@
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         
        /* contentTextView.text = [message content];
-        CGRect frame = contentTextView.frame;
+        
         frame.size.height = contentTextView.contentSize.height;
          frame.size.width = TEXT_WIDTH;
         contentTextView.frame = frame;
        */
+
         NSString * text = [message content];
-        CGSize textViewConstraint = CGSizeMake(TEXT_WIDTH,CELL_MAX_SIZE);
-        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize textViewConstraint = CGSizeMake(contentTextView.frame.size.width,CELL_MAX_SIZE);
+        // CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [text sizeWithFont:contentTextView.font constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
 
         [contentTextView setText:text];
-        [contentTextView setFrame:CGRectMake(10, 25, TEXT_WIDTH, size.height+10)];
+        [contentTextView setFrame:CGRectMake(10, 25, contentTextView.frame.size.width, size.height+10)];
 
         
        
