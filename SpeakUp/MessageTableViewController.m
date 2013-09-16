@@ -353,6 +353,9 @@
             [numberofVotesLabel setText: [NSString stringWithFormat: NSLocalizedString(@"VOTES", nil) , numberOfVotes]];
         }
         
+        UILabel *pseudoLabel = (UILabel *)[cell viewWithTag:11];
+        [pseudoLabel setText: message.pseudo];
+        
         //COMMENTS
        // UIButton *commentButton = (UIButton *)[cell viewWithTag:11];
         //[commentButton setTitle:NSLocalizedString(@"COMMENT", nil) forState:UIControlStateNormal ]; // need to add the number of comments

@@ -21,6 +21,8 @@
 #define RANGE 200 
 #define MOST_RECENT 0
 #define BEST_RATING 1
+#define UNLOCKED_SECTION 0
+#define NEARBY_SECTION 1
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
 @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>

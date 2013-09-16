@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, replies, parentMessageID;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo;
 
 - (id)init{
     self = [super init];
@@ -21,8 +21,9 @@
         numberOfYes=0;
         score=0;
         deleted=NO;
-        replies= [[NSMutableArray alloc] init];
+        //replies= [[NSMutableArray alloc] init];
         parentMessageID=nil;
+        pseudo=@"";
     }
     return self;
 }
@@ -38,10 +39,11 @@
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
         //NSString* content1= [dict objectForKey:@"body"];
         //NSString* trimmedcontent = [content1 stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+        [self setPseudo:[dict objectForKey:@"pseudo"]];
         [self setContent: [dict objectForKey:@"body"]];
         [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];
-        [self setReplies: [dict objectForKey:@"replies"]];// ADER not sure if this works
+        //[self setReplies: [dict objectForKey:@"replies"]];// ADER not sure if this works
         [self setScore:numberOfYes-numberOfNo];
     }
     return self;

@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) NSString* messageID;
 @property (strong, nonatomic) NSString* parentMessageID;
+@property (strong, nonatomic) NSString* pseudo;
 @property (nonatomic)NSString*  authorPeerID;
 @property (strong, nonatomic) NSString* roomID;
 @property (strong, nonatomic) Room  *room;
@@ -35,7 +36,7 @@
 @property (nonatomic) BOOL  noIsPressed;
 
 
-@property (strong, nonatomic) NSMutableArray *replies;
+//@property (strong, nonatomic) NSMutableArray *replies;
 
 
 

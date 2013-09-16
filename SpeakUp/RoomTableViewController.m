@@ -22,7 +22,7 @@
 {
     if(self = [super initWithCoder:aDecoder])
     {
-     //   [self.tableView setContentOffset:CGPointMake(0,45) animated:YES];
+        //   [self.tableView setContentOffset:CGPointMake(0,45) animated:YES];
         
         
     }
@@ -58,7 +58,7 @@
     //  update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
     
-   // self.navigationController.navigationBar.clipsToBounds = NO;
+    // self.navigationController.navigationBar.clipsToBounds = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
     
     //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
@@ -77,7 +77,7 @@
     // PLUS BUTTON END
     
     [super viewDidLoad];
-     self.tableView.bounces = YES;
+    self.tableView.bounces = YES;
     
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
@@ -87,10 +87,10 @@
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
-
     
     
- 
+    
+    
 }
 
 
@@ -139,7 +139,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Returns one section
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -147,9 +147,13 @@
     if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] ||![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
         return 1; // returns one when there is no room (the cell will contain an instruction)
     }
-    if ([nearbyRooms count]>0){
+    if (section==NEARBY_SECTION && [nearbyRooms count]>0){
         return[nearbyRooms count];
     }
+    if (section==UNLOCKED_SECTION ){
+        return 2;
+    }
+    
     return 1;
 }
 
@@ -175,72 +179,96 @@
         [plusButton setEnabled:YES];
         [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
         //if there is no room, simply put this no room cell
-        if ([nearbyRooms count]==0){
-            static NSString *CellIdentifier = @"NoRoomCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        if (indexPath.section==NEARBY_SECTION) {
+            if ([nearbyRooms count]==0){
+                static NSString *CellIdentifier = @"NoRoomCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+                nameLabel.text = NSLocalizedString(@"NO_ROOM", nil) ;
+                return cell;
             }
-            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-            nameLabel.text = NSLocalizedString(@"NO_ROOM", nil) ;
-            return cell;
-        }
-        else{
-            static NSString *CellIdentifier = @"CommunityCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            else{
+                static NSString *CellIdentifier = @"CommunityCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                // Populate Community Cells
+                NSUInteger row = [indexPath row];
+                
+                
+                Room *room = (Room *)[nearbyRooms objectAtIndex:row];
+                UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+                nameLabel.text = [room name];
+                
+                UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
+                [distanceLabel setText: [NSString stringWithFormat:@"%.0f m", room.distance]];
+                return cell;
             }
-            // Populate Community Cells
-            NSUInteger row = [indexPath row];
-            Room *room = (Room *)[nearbyRooms objectAtIndex:row];
-            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-            nameLabel.text = [room name];
-            
-            UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
-            [distanceLabel setText: [NSString stringWithFormat:@"%.0f m", room.distance]];
-            
-            //cell.backgroundColor = ;
-            
-            // CELL STYLE
-            /*cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-            
-            // if message is mine the color could be different
-            if(indexPath.row % 2 != 0){
-                cell.contentView.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:245.0/255.0 blue:255.0/255.0 alpha:0.5];
-            }else{
-                cell.contentView.backgroundColor=[UIColor whiteColor];
-             
-            }*/
-            
-            
-            /*if (room.isOfficial){
-                if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:room.creatorID]){
-                    cell.imageView.image = [UIImage imageNamed:@"official-room.png"];
-                }else{
-                    cell.imageView.image = [UIImage imageNamed:@"official-room-notmine.png"];
-                }
-            }else{
-                 if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:room.creatorID]){
-                    cell.imageView.image = [UIImage imageNamed:@"non-official-room-mine.png"];
-                }
-                else{
-                    cell.imageView.image = [UIImage imageNamed:@"non-official-room.png"];
-                }
-            }*/
-            return cell;
         }
+        else { // IF WE ARE IN THE UNLOCK SECTION
+            
+                static NSString *CellIdentifier = @"CommunityCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                // Populate Community Cells
+                //NSUInteger row = [indexPath row];
+                
+                
+               // Room *room = (Room *)[nearbyRooms objectAtIndex:row];
+                UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+                nameLabel.text = @"unlocked room";
+                
+                UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
+                [distanceLabel setText: @""];
+                return cell;
+            }
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section==0) {
-        return NSLocalizedString(@"NEARBY_ROOMS", nil);
-    }else{
-        return NSLocalizedString(@"UNLOCKED_ROOMS", nil);
-    }
+/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+ if (section==0) {
+ return NSLocalizedString(@"NEARBY_ROOMS", nil);
+ }else{
+ return NSLocalizedString(@"UNLOCKED_ROOMS", nil);
+ }
+ 
+ }*/
+
+
+// CUSTOM SECTION HEADER
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
+    NSString *sectionName = nil;
+    
+    switch (section) {
+        case NEARBY_SECTION:
+            sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
+            break;
+        case UNLOCKED_SECTION:
+            sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
+            break;
+            
+    }
+    UIView *sectionHeaderView = [[UIView alloc] init];
+    UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
+    sectionHeader.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
+    sectionHeaderView.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
+    sectionHeader.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
+    sectionHeader.textColor = [UIColor grayColor];
+    sectionHeader.text = sectionName;
+    
+    [sectionHeaderView addSubview:sectionHeader];
+    
+    return sectionHeaderView;
 }
+
 
 
 #pragma mark - Table view delegate
@@ -257,7 +285,6 @@
         // return NO;
     }
     return YES;
-    
 }
 
 
@@ -265,19 +292,18 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
-       
-       [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
         
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
     }
     
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
-       // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
+        // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
         [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[nearbyRooms objectAtIndex:row]];
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
-       // [messageTVC setCurrentRoom: room];
+        // [messageTVC setCurrentRoom: room];
     }
 }
 //callback from the server
@@ -299,7 +325,7 @@
 //    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
 //        return @"Delete";
 //    }
-    //return @"Hide";
+//return @"Hide";
 //}
 
 // Override to support editing the table view.
@@ -356,13 +382,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
-
-
-
-
 /////////////////////////////////
 //// PULL DOWN LIBRARY (EGO) STUFF ENDS
 /////////////////////////////////
-
-
 @end
