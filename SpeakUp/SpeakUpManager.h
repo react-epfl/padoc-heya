@@ -80,7 +80,8 @@
 
 
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
-@property (strong, nonatomic) NSMutableArray *roomArray;
+@property (strong, nonatomic) NSMutableArray *roomArray;//nearbyRooms
+@property (strong, nonatomic) NSMutableArray *unlockedRoomArray; // contains all unlocked rooms
 
 
 

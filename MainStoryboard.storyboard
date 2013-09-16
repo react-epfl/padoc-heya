@@ -344,6 +344,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="unlock:" destination="cLR-yy-Rnq" eventType="touchUpInside" id="4rP-FW-5k3"/>
+                                </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="nLH-ec-wPj">
                                 <rect key="frame" x="225" y="38" width="79" height="27"/>
@@ -407,8 +410,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NewRoomViewController.h"/>
             <relationships>
                 <relationship kind="action" name="createOrUnlock:"/>
-                <relationship kind="action" name="createRoom:"/>
-                <relationship kind="action" name="flip:"/>
                 <relationship kind="action" name="sendMail"/>
                 <relationship kind="outlet" name="createButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="createRoomButton" candidateClass="UIButton"/>

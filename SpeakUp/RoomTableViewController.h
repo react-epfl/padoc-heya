@@ -25,6 +25,7 @@
 @property(strong, nonatomic) IBOutlet UIButton * plusButton;
 @property(strong, nonatomic) IBOutlet UIImageView * roomLogo;
 @property(strong, nonatomic) NSArray *nearbyRooms;
+@property(strong, nonatomic) NSArray *unlockedRooms;
 @property(strong, nonatomic) IBOutlet UITextField * roomTextField;
 
 

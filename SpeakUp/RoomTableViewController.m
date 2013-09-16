@@ -16,7 +16,7 @@
 
 @implementation RoomTableViewController
 
-@synthesize nearbyRooms, plusButton, roomLogo,roomTextField;
+@synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -45,6 +45,7 @@
 - (void)viewDidLoad
 {
     nearbyRooms=nil;
+    unlockedRooms=nil;
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
@@ -65,7 +66,6 @@
     // PLUS BUTTON START
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];
-    
     [plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateHighlighted];
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
@@ -87,16 +87,11 @@
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
-    
-    
-    
-    
 }
 
 
 -(void)performAddRoomSegue:(id)sender{
     [self performSegueWithIdentifier:@"AddRoomSegue" sender:self];
-    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -109,7 +104,6 @@
 }
 
 - (void)updateData{
-    //[self.tableView setContentOffset:CGPointMake(0,45) animated:YES];
     [self.tableView reloadData];
     
 }
@@ -118,7 +112,6 @@
 {
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-    //[self.tableView setContentOffset:CGPointMake(0,45) animated:NO];
 }
 
 
@@ -130,31 +123,30 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait); // Return YES for supported orientations
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Returns one section
-    return 2;
+
+    return 2; // Returns two section // ADER: it should check if there are two section needed
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] ||![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
+    if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] ||![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) && section==NEARBY_SECTION){
         return 1; // returns one when there is no room (the cell will contain an instruction)
     }
     if (section==NEARBY_SECTION && [nearbyRooms count]>0){
         return[nearbyRooms count];
     }
-    if (section==UNLOCKED_SECTION ){
-        return 2;
+    if (section==UNLOCKED_SECTION && [unlockedRooms count]>0 ){
+        return[unlockedRooms count];
+        //return 2;
     }
-    
-    return 1;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,7 +171,7 @@
         [plusButton setEnabled:YES];
         [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
         //if there is no room, simply put this no room cell
-        
+        NSUInteger row = [indexPath row];
         if (indexPath.section==NEARBY_SECTION) {
             if ([nearbyRooms count]==0){
                 static NSString *CellIdentifier = @"NoRoomCell";
@@ -197,9 +189,6 @@
                 if (cell == nil) {
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 }
-                // Populate Community Cells
-                NSUInteger row = [indexPath row];
-                
                 
                 Room *room = (Room *)[nearbyRooms objectAtIndex:row];
                 UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
@@ -211,7 +200,6 @@
             }
         }
         else { // IF WE ARE IN THE UNLOCK SECTION
-            
                 static NSString *CellIdentifier = @"CommunityCell";
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
                 if (cell == nil) {
@@ -219,11 +207,9 @@
                 }
                 // Populate Community Cells
                 //NSUInteger row = [indexPath row];
-                
-                
-               // Room *room = (Room *)[nearbyRooms objectAtIndex:row];
+                Room *room = (Room *)[unlockedRooms objectAtIndex:row];
                 UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-                nameLabel.text = @"unlocked room";
+                nameLabel.text =  [room name];
                 
                 UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
                 [distanceLabel setText: @""];
@@ -232,21 +218,9 @@
     }
 }
 
-/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
- if (section==0) {
- return NSLocalizedString(@"NEARBY_ROOMS", nil);
- }else{
- return NSLocalizedString(@"UNLOCKED_ROOMS", nil);
- }
- 
- }*/
-
-
 // CUSTOM SECTION HEADER
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
     NSString *sectionName = nil;
-    
     switch (section) {
         case NEARBY_SECTION:
             sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
@@ -254,7 +228,6 @@
         case UNLOCKED_SECTION:
             sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
             break;
-            
     }
     UIView *sectionHeaderView = [[UIView alloc] init];
     UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
@@ -263,20 +236,12 @@
     sectionHeader.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
     sectionHeader.textColor = [UIColor grayColor];
     sectionHeader.text = sectionName;
-    
     [sectionHeaderView addSubview:sectionHeader];
-    
     return sectionHeaderView;
 }
 
-
-
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{}
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
     //check if
@@ -287,58 +252,37 @@
     return YES;
 }
 
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
-        
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
     }
-    
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
         // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
-        [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[nearbyRooms objectAtIndex:row]];
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
-        // [messageTVC setCurrentRoom: room];
+        
+        if (indexPath.section== NEARBY_SECTION) {        
+            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[nearbyRooms objectAtIndex:row]];
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
+        }else{
+            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[unlockedRooms objectAtIndex:row]];
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
+        }
     }
 }
 //callback from the server
--(void)updateRooms:(NSArray*)updatedRooms{
+-(void)updateRooms:(NSArray*)updatedNearbyRooms unlockedRooms: (NSArray*)updatedUnlockedRooms{
     //NSLog(@"UPDATES DATA");
     if(!self.editing){
-        nearbyRooms=updatedRooms;
-        //[self.tableView setContentOffset:CGPointMake(0,45) animated:NO];
+        nearbyRooms=updatedNearbyRooms;
+        unlockedRooms=updatedUnlockedRooms;
         [self.tableView reloadData];
         // EGO finnish loading
         [self doneLoadingTableViewData];
     }
 }
-
-//request sent to the server
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
-//    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
-//        return @"Delete";
-//    }
-//return @"Hide";
-//}
-
-// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
-//        NSLog(@"hiding room %@ ", room.roomID);
-//        [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
-//        [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
-//        [tableView reloadData];
-//
-//    }
-//}
 
 -(void)connectionWasLost{
     //[noConnectionLabel setHidden:NO];
@@ -385,4 +329,25 @@
 /////////////////////////////////
 //// PULL DOWN LIBRARY (EGO) STUFF ENDS
 /////////////////////////////////
+
 @end
+
+//request sent to the server
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
+//    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
+//        return @"Delete";
+//    }
+//return @"Hide";
+//}
+// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
+//        NSLog(@"hiding room %@ ", room.roomID);
+//        [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
+//        [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
+//        [tableView reloadData];
+//    }
+//}

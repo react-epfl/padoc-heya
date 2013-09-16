@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, usesPseudonyms ;
+@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, usesPseudonyms, isUnlocked ;
 
 
 - (id)init{
@@ -21,6 +21,7 @@
         isOfficial=NO;
         messagesSortedBy=MOST_RECENT;
         deleted=NO;
+        isUnlocked=NO;
     }
     return self;
 }
@@ -41,6 +42,7 @@
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setUsesPseudonyms:[[dict objectForKey:@"pseudo"] boolValue]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
+        [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [peerlocation distanceFromLocation:roomlocation];

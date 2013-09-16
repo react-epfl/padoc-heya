@@ -279,6 +279,14 @@
     
 }
 
+- (IBAction)unlock:(id)sender {
+    // check if the label is ok, then pop the view
+    NSLog(@"Should send %@ to server in a getRooms message", keyTextField.text);
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+
 - (IBAction)flip:(id)sender {
     if (pseudoSwitch.on){
        NSLog(@"Should use pseudo"); 

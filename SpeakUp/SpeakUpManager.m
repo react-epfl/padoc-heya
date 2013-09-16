@@ -15,7 +15,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom,inputRoomIDText;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom,inputRoomIDText,unlockedRoomArray;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -25,6 +25,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         if (sharedSpeakUpManager == nil){
             sharedSpeakUpManager = [[self alloc] init];
             sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
+            sharedSpeakUpManager.unlockedRoomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
             sharedSpeakUpManager.connectionDelegate=nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
             sharedSpeakUpManager.connectionIsOK=NO;
@@ -100,6 +101,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //================
 -(void)receivedRooms:(NSArray*)roomDictionaries{
     [roomArray removeAllObjects];
+    [unlockedRoomArray removeAllObjects];
     self.locationAtLastReset=self.location;
     NSLog(@"ALL OBJECT ARE REMOVED FROM NEARBY ROOMS");
     for (NSDictionary *roomDictionary in roomDictionaries) {
@@ -118,10 +120,19 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             roomAlreadyInArray= YES;
         }
     }
+    for(Room *r in unlockedRoomArray){
+        if ([r.roomID isEqual:room.roomID]) {
+            roomAlreadyInArray= YES;
+        }
+    }
     if (!roomAlreadyInArray && ![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
-        [roomArray addObject:room];
+        if (room.isUnlocked) {
+            [unlockedRoomArray addObject:room];
+        }else{
+            [roomArray addObject:room];
+        }
         roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-        [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
+        [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
     }
 }
 //==================
@@ -138,23 +149,31 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
     Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
     for(Room *room in roomArray){
-        if ([room.roomID isEqual:message.roomID]) {
-            Message* messageToRemove=nil;
-            for(Message *msg in room.messages){
-                if ([msg.messageID isEqual:message.messageID]) {
-                    // update received, therefore the message must be deleted
-                    messageToRemove=msg;
-                }
-            }
-            if (messageToRemove) {
-                [room.messages removeObject:messageToRemove];
-            }
-            // add new message unless it has been hidden by the user
-            if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
-                [room.messages addObject:message];
+       [self addMessage:message toRoom:room];
+    }
+    for(Room *room in unlockedRoomArray){
+        [self addMessage:message toRoom:room];
+    }
+}
+
+-(void)addMessage:(Message*) message toRoom:(Room*) room{
+    if ([room.roomID isEqual:message.roomID]) {
+        Message* messageToRemove=nil;
+        for(Message *msg in room.messages){
+            if ([msg.messageID isEqual:message.messageID]) {
+                // update received, therefore the message must be deleted
+                messageToRemove=msg;
             }
         }
+        if (messageToRemove) {
+            [room.messages removeObject:messageToRemove];
+        }
+        // add new message unless it has been hidden by the user
+        if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+            [room.messages addObject:message];
+        }
     }
+    
 }
 
 //========================
@@ -316,7 +335,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     // [self getNearbyRooms];
     //}
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-    [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray]];
+    [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];// no need to change u
 }
 //========================
 // LOCATION FAILED

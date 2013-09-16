@@ -24,6 +24,7 @@
 @property (nonatomic) int  lifetime;
 @property (nonatomic) int  range;
 @property (nonatomic) BOOL  isOfficial;
+@property (nonatomic) BOOL  isUnlocked;
 @property (nonatomic) BOOL usesPseudonyms;
 @property ( nonatomic) BOOL deleted;
 @property ( nonatomic) int messagesSortedBy;
