@@ -80,3 +80,5 @@
 
 "PSEUDO" = "pseudonym";
 
+"NO_MESSAGE" = "There is no message in this room. Create one !";
+

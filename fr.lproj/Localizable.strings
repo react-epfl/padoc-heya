@@ -80,3 +80,5 @@
 "SEND" = "ENVOYER";
 
 "PSEUDO" = "pseudonyme";
+
+"NO_MESSAGE" = "Il n'y pas encore de message dans cette salle, créez en un!";

@@ -124,7 +124,6 @@
     
     [inputTextView setDelegate:self];
     [inputView addSubview:inputTextView];
-
     
     // MANAGE KEYBOARD
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -253,11 +252,8 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-       // UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:2];
-       // [thumbUpButton setImage:[UIImage imageNamed:@"noMsg.png"] forState:UIControlStateNormal] ;
-       // cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-        //cell.backgroundView.backgroundColor = [UIColor whiteColor];
-        //cell.backgroundView.layer.cornerRadius  =1;
+       UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
+        [noMessageView setText:NSLocalizedString(@"NO_MESSAGE", nil)];
         
         return cell;
     }
@@ -268,6 +264,7 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
+        
         
         cell.message=message;
         // CONTENT - set up the content
