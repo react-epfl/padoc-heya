@@ -15,7 +15,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom,inputRoomIDText,unlockedRoomArray;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom,inputRoomIDText,unlockedRoomArray;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -31,7 +31,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.connectionIsOK=NO;
             sharedSpeakUpManager.locationIsOK=NO;
             sharedSpeakUpManager.currentRoom=nil;
-            
             // sets up the local location manager, this triggers the didUpdateToLocation callback
             // If Location Services are disabled, restricted or denied.
             if ((![CLLocationManager locationServicesEnabled])
@@ -46,7 +45,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
             [sharedSpeakUpManager.locationManager startUpdatingLocation];
-            
         }
     }
     return sharedSpeakUpManager;
@@ -57,7 +55,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet{
     [self stopNetworking];
     NSLog(@"webSocket received a message: %@", packet.args );
-    
     NSString* type = packet.name;
     if ([type isEqual:@"peer_welcome"]) {
         NSDictionary *data = [packet.args objectAtIndex:0];
@@ -173,9 +170,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [room.messages addObject:message];
         }
     }
-    
 }
-
 //========================
 // HANDSHAKE SOCKET.IO
 //========================
@@ -199,11 +194,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // SOCKET CONNECT
 //========================
 - (void)connect{
-    if (locationIsOK) {
+    //if (locationIsOK) {
         socketIO = [[SocketIO alloc] initWithDelegate:self];
-        [socketIO connectToHost:SERVER_URL onPort:1337];
+        [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
         [self startNetworking];
-    }
+    //}
 }
 - (void) socketIODidConnect:(SocketIO *)socket{
     [self stopNetworking];
@@ -215,9 +210,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     connectionIsOK=NO;
     [connectionDelegate connectionWasLost];
     [self performSelector:@selector(connect) withObject:nil afterDelay:arc4random() % 4];
-   // [self connect];
-    
-    //[self connect];
     NSLog(@"socket did fail with error: %@",[error description]);
 }
 - (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
@@ -245,6 +237,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [myData setValue:myLoc forKey:@"loc"];
         [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
         [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
+        [myData setValue:self.unlockedRoomKeyArray forKey:@"unlocked"];// UNLOCKED KEYS
         [socketIO sendEvent:@"getrooms" withData:myData];
         [self startNetworking];
     }
@@ -271,10 +264,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
     [messageData setValue:message.content forKey:@"body"];
     [myData setValue:messageData forKey:@"message"];
-    
     [socketIO sendEvent:@"createmessage" withData:myData];
     [self startNetworking];
-    
 }
 //========================
 // CREATE ROOM SOCKET.IO
@@ -290,10 +281,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
-    
     [socketIO sendEvent:@"createroom" withData:myData];
     [self startNetworking];
-    
     [self savePeerData];
 }
 //==============
@@ -308,7 +297,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
     [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];
-    
     [socketIO sendEvent:@"updatemessage" withData:myData];
     [self startNetworking];
     [self savePeerData];
@@ -323,17 +311,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     if (!locationIsOK){
         locationIsOK=YES;
-        [sharedSpeakUpManager connect];
+        [sharedSpeakUpManager getNearbyRooms];
     }
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.location distanceFromLocation:roomlocation];
     }
-    //if location is too far from last refresh, need to reload
-    // if (!locationAtLastReset) {
-    //   self.locationAtLastReset=self.location;
-    // [self getNearbyRooms];
-    //}
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];// no need to change u
 }
@@ -387,6 +370,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         deletedRoomIDs= [[NSMutableArray alloc] init];
     }
+    if([defaults objectForKey:@"unlockedRoomKeyArray"]){
+        unlockedRoomKeyArray= [defaults objectForKey:@"unlockedRoomKeyArray"];
+    }else {
+        unlockedRoomKeyArray= [[NSMutableArray alloc] init];
+    }
     if([defaults objectForKey:@"isSuperUser"]){
         NSNumber* booleanNumber;
         booleanNumber = [defaults objectForKey:@"isSuperUser"] ;
@@ -406,6 +394,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [defaults setObject:peer_id forKey:@"peer_id"];
     [defaults setObject:inputRoomIDText forKey:@"inputRoomIDText"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
+    [defaults setObject:unlockedRoomKeyArray forKey:@"unlockedRoomKeyArray"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
     [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];
     [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];

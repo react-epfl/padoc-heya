@@ -18,6 +18,7 @@
 
 //#define SERVER_URL @"localhost"
 #define SERVER_URL @"seance.epfl.ch"
+#define SERVER_PORT 1337
 #define RANGE 200 
 #define MOST_RECENT 0
 #define BEST_RATING 1
@@ -82,6 +83,8 @@
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
 @property (strong, nonatomic) NSMutableArray *roomArray;//nearbyRooms
 @property (strong, nonatomic) NSMutableArray *unlockedRoomArray; // contains all unlocked rooms
+
+@property (strong, nonatomic) NSMutableArray *unlockedRoomKeyArray; // contains all unlocked rooms
 
 
 
