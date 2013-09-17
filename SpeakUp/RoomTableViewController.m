@@ -156,7 +156,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] ||![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
+    if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         [plusButton setEnabled:NO];
         [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
         static NSString *CellIdentifier = @"NoRoomCell";
@@ -166,9 +166,10 @@
         }
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-        if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
-            nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
-        }else if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        //if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
+          //  nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
+        //}else
+        if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
         }
         return cell;

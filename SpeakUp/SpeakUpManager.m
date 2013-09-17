@@ -33,18 +33,19 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.currentRoom=nil;
             // sets up the local location manager, this triggers the didUpdateToLocation callback
             // If Location Services are disabled, restricted or denied.
-            if ((![CLLocationManager locationServicesEnabled])
+           /* if ((![CLLocationManager locationServicesEnabled])
                 || ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted)
                 || ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))
             {
                 // Send the user to the location settings preferences
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"prefs:root=LOCATION_SERVICES"]];
-            }
+            }*/
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
             [sharedSpeakUpManager.locationManager startUpdatingLocation];
+            [sharedSpeakUpManager connect];
         }
     }
     return sharedSpeakUpManager;
