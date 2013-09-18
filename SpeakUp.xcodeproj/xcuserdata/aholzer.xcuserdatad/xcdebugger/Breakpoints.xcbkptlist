@@ -260,8 +260,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "40"
          endingLineNumber = "40"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
+         landmarkName = "@implementation MessageTableViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -508,19 +508,6 @@
          startingLineNumber = "25"
          endingLineNumber = "25"
          landmarkName = "+sharedSpeakUpManager"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "401057721.423222"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "113"
-         endingLineNumber = "113"
-         landmarkName = "-viewWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1040,8 +1027,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "388"
          endingLineNumber = "388"
-         landmarkName = "-sortBy:"
-         landmarkType = "5">
+         landmarkName = "@implementation MessageTableViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1067,19 +1054,6 @@
          startingLineNumber = "416"
          endingLineNumber = "416"
          landmarkName = "-rateMessageUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SpeakUp/RoomTableViewController.m"
-         timestampString = "401203576.379877"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "285"
-         endingLineNumber = "285"
-         landmarkName = "-updateRooms:unlockedRooms:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

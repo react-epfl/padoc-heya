@@ -36,7 +36,9 @@
 
 
 #pragma mark - View lifecycle
-
+//=========================
+// LOAD VIEW
+//=========================
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -76,7 +78,6 @@
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     showKey=NO;
-    
   
     //SEGMENTED VIEW CONTROL
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -84,12 +85,7 @@
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
-    //KEY
-    
-    
-    
     /// INPUT VIEW
-    
     keyboardIsVisible=NO;
     keyboardHeight=0;
     
@@ -223,7 +219,9 @@
     return 1;
     
 }
-
+//=========================
+// HANDLES SECTIONS AND ROWS
+//=========================
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
@@ -232,6 +230,9 @@
     return [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
 }
 
+//=========================
+// LOADS DATA
+//=========================
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // check this site
@@ -241,8 +242,6 @@
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         //static
         NSString *CellIdentifier = @"NoMessageCell";
-       
-        
         MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];

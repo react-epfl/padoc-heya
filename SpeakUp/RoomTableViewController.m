@@ -18,30 +18,12 @@
 
 @synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms, NEARBY_SECTION, UNLOCKED_SECTION;
 
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-    if(self = [super initWithCoder:aDecoder])
-    {
-        //   [self.tableView setContentOffset:CGPointMake(0,45) animated:YES];
-        
-        
-    }
-    return self;
-}
 
-
-
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
-
+//=========================
+// LOAD VIEW
+//=========================
 - (void)viewDidLoad
 {
     nearbyRooms=nil;
@@ -60,10 +42,8 @@
     }
     //  update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
-    
     // self.navigationController.navigationBar.clipsToBounds = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
-    
     //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
     // PLUS BUTTON START
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -72,15 +52,11 @@
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
-    
     self.tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
-    
     [plusButton setEnabled:NO];
     // PLUS BUTTON END
-    
     [super viewDidLoad];
     self.tableView.bounces = YES;
-    
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
@@ -90,55 +66,31 @@
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
 }
-
-
--(void)performAddRoomSegue:(id)sender{
-    [self performSegueWithIdentifier:@"AddRoomSegue" sender:self];
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
-}
-
--(void)dismissKeyboard {
-    [roomTextField resignFirstResponder];
-}
-
-- (void)updateData{
-    [self.tableView reloadData];
-    
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
 }
-
-
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     [super viewDidDisappear:animated];
 }
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait); // Return YES for supported orientations
 }
-
 #pragma mark - Table view data source
-
+//=========================
+// HANDLE ROW AND SECTIONS
+//=========================
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
     if (UNLOCKED_SECTION==0) {
         return 2;
     }
     return 1; 
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if((![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) && section==NEARBY_SECTION){
@@ -155,7 +107,9 @@
     }
     return 0;
 }
-
+//==============
+// LOAD DATA
+//==============
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] || ![[SpeakUpManager sharedSpeakUpManager] locationIsOK])  && indexPath.section==NEARBY_SECTION){
@@ -227,8 +181,9 @@
             }
     }
 }
-
+//=======================
 // CUSTOM SECTION HEADER
+//======================
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionName = nil;
     if (section==NEARBY_SECTION) {
@@ -247,10 +202,12 @@
     [sectionHeaderView addSubview:sectionHeader];
     return sectionHeaderView;
 }
-
-#pragma mark - Table view delegate
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{}
-
+//===========
+// SEGUES
+//===========
+-(void)performAddRoomSegue:(id)sender{
+    [self performSegueWithIdentifier:@"AddRoomSegue" sender:self];
+}
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
     //check if
     if ([identifier isEqualToString:@"JoinRoomSegue"]) {
@@ -259,7 +216,6 @@
     }
     return YES;
 }
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
@@ -280,9 +236,10 @@
         }
     }
 }
-//callback from the server
+//==================
+// SERVER CALLBACKS
+//==================
 -(void)updateRooms:(NSArray*)updatedNearbyRooms unlockedRooms: (NSArray*)updatedUnlockedRooms{
-    //NSLog(@"UPDATES DATA");
     if(!self.editing){
         nearbyRooms=updatedNearbyRooms;
         unlockedRooms=updatedUnlockedRooms;
@@ -298,17 +255,15 @@
         [self doneLoadingTableViewData];
     }
 }
-
 -(void)connectionWasLost{
     //[noConnectionLabel setHidden:NO];
 }
 -(void)connectionHasRecovered{
     //[noConnectionLabel setHidden:YES];
 }
-
-////////////////////////////////////
-//// PULL DOWN LIBRARY (EGO) STUFF BEGINS
-////////////////////////////////////
+//=====================================
+// PULL DOWN LIBRARY (EGO) STUFF BEGINS
+//=====================================
 #pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
@@ -338,13 +293,26 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
 }
+//===========
+// UTILITIES
+//===========
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
-/////////////////////////////////
-//// PULL DOWN LIBRARY (EGO) STUFF ENDS
-/////////////////////////////////
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+-(void)dismissKeyboard {
+    [roomTextField resignFirstResponder];
+}
+- (void)updateData{
+    [self.tableView reloadData];
+}
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
 @end
 
 //request sent to the server
