@@ -244,16 +244,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self startNetworking];
     }
 }
-//========================
-// GET MESSAGES SOCKET.IO
-//========================
--(void)getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) hash{
+//============================================
+// GET MESSAGES SOCKET.IO NOW CALLED GET ROOM
+//============================================
+-(void)getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room_id forKey:@"room_id"];
-    [myData setValue:hash forKey:@"hash"];
-    
-    [socketIO sendEvent:@"getmessages" withData:myData];
+    [myData setValue:key forKey:@"key"];
+    [socketIO sendEvent:@"getroom" withData:myData];
     [self startNetworking];
 }
 //========================

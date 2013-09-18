@@ -298,7 +298,8 @@
 
 - (IBAction)unlock:(id)sender {
     // check if the label is ok, then pop the view
-    NSLog(@"Should send %@ to server in a getRooms message", keyTextField.text);
+    [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text];
+    // could wait for response and then enter the lobby
     [self.navigationController popViewControllerAnimated:YES];
 
 }
