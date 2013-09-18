@@ -63,19 +63,19 @@
                             <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="116" id="DJG-EU-iPg" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="55" width="768" height="116"/>
+                            <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="148" id="DJG-EU-iPg" customClass="MessageCell">
+                                <rect key="frame" x="0.0" y="55" width="768" height="148"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="115"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="147"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="w1W-9Q-59p">
-                                            <rect key="frame" x="10" y="10" width="738" height="105"/>
+                                            <rect key="frame" x="10" y="10" width="738" height="137"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="add-rW-gIT" userLabel="ThumbUp">
-                                                    <rect key="frame" x="600" y="61" width="40" height="40"/>
+                                                    <rect key="frame" x="600" y="93" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tUp1.png">
@@ -90,7 +90,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Nxo-jD-Cce" userLabel="ThumbDown">
-                                                    <rect key="frame" x="681" y="61" width="40" height="40"/>
+                                                    <rect key="frame" x="681" y="93" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tDown1.png">
@@ -105,47 +105,44 @@
                                                     </connections>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="kDL-85-TUF">
-                                                    <rect key="frame" x="8" y="24" width="710" height="36"/>
+                                                    <rect key="frame" x="14" y="49" width="710" height="68"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                                 </textView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="11" contentMode="left" text="Pseudnym" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JJ1-tg-SOA">
-                                                    <rect key="frame" x="8" y="3" width="308" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" text="score" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Wfb-8M-jWr">
-                                                    <rect key="frame" x="600" y="4" width="65" height="21"/>
+                                                    <rect key="frame" x="600" y="12" width="65" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                                     <color key="textColor" red="0.56483525820000002" green="0.56483525820000002" blue="0.56483525820000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="DRc-04-03b">
-                                                    <rect key="frame" x="664" y="6" width="57" height="21"/>
+                                                    <rect key="frame" x="664" y="14" width="57" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleToFill" id="2FF-Zt-b9F">
+                                                    <rect key="frame" x="14" y="3" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="Qdy-fw-MAe">
+                                                    <rect key="frame" x="14" y="107" width="96" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                    <color key="textColor" red="0.57422264769999998" green="0.60791331130000004" blue="0.62285580839999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="14e-hh-hgN">
-                                            <rect key="frame" x="149" y="85" width="31" height="21"/>
+                                            <rect key="frame" x="149" y="114" width="31" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.4889393682" green="0.4889393682" blue="0.4889393682" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="Qdy-fw-MAe">
-                                            <rect key="frame" x="20" y="91" width="96" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                            <color key="textColor" red="0.57422264769999998" green="0.60791331130000004" blue="0.62285580839999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -154,7 +151,7 @@
                                 <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="101" id="UZQ-KP-o9y" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="171" width="768" height="101"/>
+                                <rect key="frame" x="0.0" y="203" width="768" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="100"/>

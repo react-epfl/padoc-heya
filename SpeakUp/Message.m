@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo,avatarURL;
 
 - (id)init{
     self = [super init];
@@ -40,6 +40,8 @@
         //NSString* content1= [dict objectForKey:@"body"];
         //NSString* trimmedcontent = [content1 stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
         [self setPseudo:[dict objectForKey:@"pseudo"]];
+        //[self setAvatarURL:[dict objectForKey:@"avatar"]];
+        [self setAvatarURL:@"https://identicons.github.com/jasonlong.png"]; // ADER TO REMOVE
         [self setContent: [dict objectForKey:@"body"]];
         [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];

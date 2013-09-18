@@ -141,11 +141,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] ||![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) && section==NEARBY_SECTION){
+    if((![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) && section==NEARBY_SECTION){
         return 1; // returns one when there is no room (the cell will contain an instruction)
     }
     if (section==NEARBY_SECTION && [nearbyRooms count]>0){
         return[nearbyRooms count];
+    }else if(section==NEARBY_SECTION && [nearbyRooms count]==0){
+        return 1;
     }
     if (section==UNLOCKED_SECTION && [unlockedRooms count]>0 ){
         return[unlockedRooms count];
@@ -156,9 +158,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+    if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] || ![[SpeakUpManager sharedSpeakUpManager] locationIsOK])  && indexPath.section==NEARBY_SECTION){
         [plusButton setEnabled:NO];
-        [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
+       // [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
         static NSString *CellIdentifier = @"NoRoomCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -166,12 +168,14 @@
         }
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-        //if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
-          //  nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
-        //}else
+
+        if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
+            nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
+        }
         if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
         }
+
         return cell;
     }else{
         [plusButton setEnabled:YES];

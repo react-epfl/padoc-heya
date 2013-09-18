@@ -8,13 +8,13 @@
 
 
 
-"NO_ROOM"= "No room nearby, create one!";
+"NO_ROOM"= "no room nearby, create one!";
 
 "ROOMS"="speakup";
 
-"NO_LOCATION" = "Waiting for location...";
+"NO_LOCATION" = "cannot get location right now";
 
-"NO_CONNECTION"= "Waiting for connection...";
+"NO_CONNECTION"= "cannot connect right now";
 
 "LOADING" = "loading...";
 

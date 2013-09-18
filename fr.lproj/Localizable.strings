@@ -8,15 +8,15 @@
 
 
 
-"NO_ROOM"= "Pas de salle à proximité, créez en une!";
+"NO_ROOM"= "pas de salle à proximité, créez en une!";
 
 "ROOMS" ="speakup";
 
-"NO_LOCATION" = "En attente de localisation...";
+"NO_LOCATION" = "localisation inaccessible pour le moment";
 
-"NO_CONNECTION"= "En attente de connection...";
+"NO_CONNECTION"= "pas de connection pour le moment...";
 
-"LOADING" = "chargement...";
+"LOADING" = "charge...";
 
 "CONNECTION_LOST" = "CONNECTION PERDUE";
 

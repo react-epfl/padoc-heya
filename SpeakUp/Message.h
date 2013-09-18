@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSString* roomID;
 @property (strong, nonatomic) Room  *room;
 
+@property (strong, nonatomic) NSString  *avatarURL;
 @property (strong, nonatomic) NSString  *content;
 @property (strong, nonatomic) NSString  *creationTime;
 @property (strong, nonatomic) NSString  *lastModified;

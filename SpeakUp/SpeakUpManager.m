@@ -125,7 +125,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
      [unlockedRoomArray removeObjectsInArray:roomsToRemove];
     if (![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
-        if (room.isUnlocked) {
+        if ([unlockedRoomKeyArray containsObject:room.key]) {
             [unlockedRoomArray addObject:room];
         }else{
             [roomArray addObject:room];

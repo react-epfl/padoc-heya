@@ -62,19 +62,19 @@
                             <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="116" id="0CD-7e-2WF" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="55" width="320" height="116"/>
+                            <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="130" id="0CD-7e-2WF" customClass="MessageCell">
+                                <rect key="frame" x="0.0" y="55" width="320" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="115"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="fql-U6-JTL">
-                                            <rect key="frame" x="10" y="10" width="300" height="105"/>
+                                            <rect key="frame" x="10" y="10" width="300" height="119"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UVf-8f-UQX" userLabel="ThumbUp">
-                                                    <rect key="frame" x="187" y="61" width="40" height="40"/>
+                                                    <rect key="frame" x="187" y="75" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tUp1.png">
@@ -89,7 +89,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Mlp-gI-b7F" userLabel="ThumbDown">
-                                                    <rect key="frame" x="243" y="61" width="40" height="40"/>
+                                                    <rect key="frame" x="243" y="75" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tDown1.png">
@@ -104,44 +104,41 @@
                                                     </connections>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="RdG-We-HA3">
-                                                    <rect key="frame" x="8" y="24" width="280" height="36"/>
+                                                    <rect key="frame" x="8" y="39" width="280" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                                 </textView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="11" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KKU-Vr-Kue">
-                                                    <rect key="frame" x="8" y="3" width="149" height="21"/>
+                                                <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleToFill" id="FA1-bw-3YQ">
+                                                    <rect key="frame" x="6" y="5" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="1VE-t1-CBq">
-                                            <rect key="frame" x="149" y="85" width="31" height="21"/>
+                                            <rect key="frame" x="149" y="97" width="31" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.4889393682" green="0.4889393682" blue="0.4889393682" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="Xx3-4n-9zc">
-                                            <rect key="frame" x="20" y="91" width="96" height="20"/>
+                                            <rect key="frame" x="20" y="101" width="96" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                             <color key="textColor" red="0.57422264769999998" green="0.60791331130000004" blue="0.62285580839999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" text="score" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="qcS-q1-ROb">
-                                            <rect key="frame" x="172" y="15" width="65" height="21"/>
+                                            <rect key="frame" x="172" y="19" width="65" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                             <color key="textColor" red="0.56483525820000002" green="0.56483525820000002" blue="0.56483525820000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="rFs-g6-icw">
-                                            <rect key="frame" x="238" y="17" width="57" height="21"/>
+                                            <rect key="frame" x="238" y="21" width="57" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -153,7 +150,7 @@
                                 <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="101" id="bGw-Ay-tMv" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="171" width="320" height="101"/>
+                                <rect key="frame" x="0.0" y="185" width="320" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
@@ -253,8 +250,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="no room around" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3qN-fN-AzZ">
-                                            <rect key="frame" x="11" y="3" width="300" height="34"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="no room around" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" id="3qN-fN-AzZ">
+                                            <rect key="frame" x="20" y="3" width="280" height="34"/>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
