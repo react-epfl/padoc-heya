@@ -359,6 +359,13 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Turn location on" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="ZDc-VH-XcI">
+                                <rect key="frame" x="10" y="38" width="292" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -378,6 +385,7 @@
                         <outlet property="pseudoSwitch" destination="nLH-ec-wPj" id="kLP-mu-biC"/>
                         <outlet property="segmentedControl" destination="FmC-2P-lkf" id="yY3-dE-hgW"/>
                         <outlet property="unlockRoomButton" destination="ALA-NR-a8v" id="iye-SJ-BXH"/>
+                        <outlet property="warningLabel" destination="ZDc-VH-XcI" id="cXK-FX-gh4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Mi-Er-7yK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -410,7 +418,10 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NewRoomViewController.h"/>
             <relationships>
                 <relationship kind="action" name="createOrUnlock:"/>
+                <relationship kind="action" name="createRoom:"/>
+                <relationship kind="action" name="flip:"/>
                 <relationship kind="action" name="sendMail"/>
+                <relationship kind="action" name="unlock:"/>
                 <relationship kind="outlet" name="createButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="createRoomButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="createRoomLabel" candidateClass="UILabel"/>
@@ -422,6 +433,7 @@
                 <relationship kind="outlet" name="pseudoSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="unlockRoomButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="warningLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="RoomTableViewController" superclassName="UITableViewController">

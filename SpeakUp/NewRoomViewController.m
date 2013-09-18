@@ -19,7 +19,7 @@
 @implementation NewRoomViewController
 
 
-@synthesize createButton, input, mapView, noConnectionLabel, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch;
+@synthesize createButton, input, mapView, noConnectionLabel, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel;
 
 
 - (void)viewDidLoad
@@ -111,6 +111,9 @@
     //PSEUDO LABEL
     [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];
     
+    //WARNING LABEL
+    [warningLabel setText:NSLocalizedString(@"TURN_LOCATION_ON", nil)];
+    
     
     // HIDE CREATION STUFF AND SHOW UNLOCK STUFF
     [mapView setHidden:YES];
@@ -121,6 +124,7 @@
     [unlockRoomButton setHidden:NO];
     [keyTextField setHidden:NO];
     [createRoomLabel setHidden:YES];
+    [warningLabel setHidden:YES];
     [keyTextField becomeFirstResponder];
 
     
@@ -255,16 +259,29 @@
     NSInteger selectedSegment = seg.selectedSegmentIndex;
     
     if (selectedSegment == CREATE_TAB) {
+        [unlockRoomButton setHidden:YES];
+        [keyTextField setHidden:YES];
+        
+        if ([[SpeakUpManager sharedSpeakUpManager] locationIsOK]) {
+        [warningLabel setHidden:YES];
         [mapView setHidden:NO];
         [input setHidden:NO];
         [createRoomButton setHidden:NO];
-        [unlockRoomButton setHidden:YES];
-        [keyTextField setHidden:YES];
         [createRoomLabel setHidden:NO];
         [pseudoSwitch setHidden:NO];
         [pseudoLabel setHidden:NO];
         [input becomeFirstResponder];
+        }else{
+            [warningLabel setHidden:NO];
+            [pseudoSwitch setHidden:YES];
+            [pseudoLabel setHidden:YES];
+            [mapView setHidden:YES];
+            [input setHidden:YES];
+            [createRoomButton setHidden:YES];
+            [createRoomLabel setHidden:YES];
+            }
     }else if(selectedSegment == UNLOCK_TAB){
+        [warningLabel setHidden:YES];
         [pseudoSwitch setHidden:YES];
         [pseudoLabel setHidden:YES];
       [mapView setHidden:YES];

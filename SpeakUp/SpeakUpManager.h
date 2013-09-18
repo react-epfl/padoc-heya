@@ -18,7 +18,7 @@
 
 //#define SERVER_URL @"localhost"
 #define SERVER_URL @"seance.epfl.ch"
-#define SERVER_PORT 1337
+#define SERVER_PORT 1347
 #define RANGE 200 
 #define MOST_RECENT 0
 #define BEST_RATING 1

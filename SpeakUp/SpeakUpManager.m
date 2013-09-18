@@ -40,6 +40,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                 // Send the user to the location settings preferences
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"prefs:root=LOCATION_SERVICES"]];
             }*/
+            sharedSpeakUpManager.location=nil;
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
@@ -183,8 +184,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     
@@ -233,8 +234,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
         [myData setValue:self.peer_id forKey:@"peer_id"];
         NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-        [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-        [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+        [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.latitude] forKey:@"lat"];
+        [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.longitude] forKey:@"lng"];
         [myData setValue:myLoc forKey:@"loc"];
         [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
         [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
@@ -278,8 +279,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:[NSNumber numberWithBool:room.usesPseudonyms] forKey:@"pseudo"];
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.longitude] forKey:@"lng"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
     [socketIO sendEvent:@"createroom" withData:myData];
@@ -307,8 +308,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //============================
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.location = newLocation;
-    self.latitude = newLocation.coordinate.latitude;
-    self.longitude = newLocation.coordinate.longitude;
+    //self.latitude = newLocation.coordinate.latitude;
+    //self.longitude = newLocation.coordinate.longitude;
     
     if (!locationIsOK){
         locationIsOK=YES;
@@ -325,8 +326,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // LOCATION FAILED
 //========================
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    self.latitude=-1;
-    self.longitude=-1;
+    //self.latitude=-1;
+    //self.longitude=-1;
     NSLog(@"location FAILED %@", [error description]);
 }
 //========================
@@ -386,8 +387,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     inputText=@"";
     sharedSpeakUpManager.locationAtLastReset = nil;
     sharedSpeakUpManager.location = nil;
-    sharedSpeakUpManager.latitude = -1;
-    sharedSpeakUpManager.longitude =-1;
+    //sharedSpeakUpManager.latitude = -1;
+    //sharedSpeakUpManager.longitude =-1;
 }
 -(void)savePeerData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

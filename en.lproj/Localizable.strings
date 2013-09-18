@@ -82,3 +82,5 @@
 
 "NO_MESSAGE" = "There is no message in this room. Create one !";
 
+"TURN_LOCATION_ON" = "Turn location on to create a new room";
+
