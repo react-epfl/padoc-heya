@@ -182,11 +182,6 @@
 }
 
 
-/*-(void)performSegueToCompose:(id)sender{
-    [self performSegueWithIdentifier:@"MessagesToSpeak" sender:self];
-    
-}*/
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
@@ -450,7 +445,7 @@
             yesRating=1;
         }
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
         }else{
             NSLog(@"the message %@ does not have an id",[message description]);
@@ -493,7 +488,7 @@
             noRating++;
         }
         // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] yesRating:yesRating noRating:noRating];
+        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
         }else{
             NSLog(@"the message %@ does not have an id",[message description]);
@@ -538,7 +533,7 @@
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
-    if([roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]){
+    if([roomID isEqual:[[SpeakUpManager sharedSpeakUpManager] currentRoomID]]){
         if(!self.editing){
             [self sortMessages];
             [self.tableView reloadData];

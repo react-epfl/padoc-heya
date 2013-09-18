@@ -15,7 +15,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoom,inputRoomIDText,unlockedRoomArray;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -30,16 +30,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
             sharedSpeakUpManager.connectionIsOK=NO;
             sharedSpeakUpManager.locationIsOK=NO;
-            sharedSpeakUpManager.currentRoom=nil;
+            sharedSpeakUpManager.currentRoomID=nil;
             // sets up the local location manager, this triggers the didUpdateToLocation callback
-            // If Location Services are disabled, restricted or denied.
-           /* if ((![CLLocationManager locationServicesEnabled])
-                || ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted)
-                || ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))
-            {
-                // Send the user to the location settings preferences
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"prefs:root=LOCATION_SERVICES"]];
-            }*/
             sharedSpeakUpManager.location=nil;
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
@@ -69,12 +61,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         if([myNavController.visibleViewController isKindOfClass:[RoomTableViewController class]]){
             [self getNearbyRooms];
         }else{
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
         }
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
         self.locationAtLastReset=self.location;
-    } else if ([type isEqual:@"roomcreated"]) {
+    } else if ([type isEqual:@"room"]) {
+        NSString* roomID=[self receivedRoom: [packet.args objectAtIndex:0]];
+        [messageManagerDelegate updateMessagesInRoom:roomID];
+    }else if ([type isEqual:@"roomcreated"]) {
         [self receivedRoom: [packet.args objectAtIndex:0]];
     } else if ([type isEqual:@"roommessages"]) {
         NSArray *argsArray = packet.args;
@@ -110,21 +105,26 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //==============
 // RECEIVED ROOM
 //==============
--(void)receivedRoom:(NSDictionary*)roomDictionary{
+-(NSString*)receivedRoom:(NSDictionary*)roomDictionary{
     Room *room = [[Room alloc] initWithDictionary:roomDictionary];
     // when a room is received it is added if it was not already in the list, unless the user has hidden the room before
-    BOOL roomAlreadyInArray = NO;
+    NSMutableArray* roomsToRemove = [NSMutableArray array];
+    //BOOL roomAlreadyInArray = NO;
     for(Room *r in roomArray){
         if ([r.roomID isEqual:room.roomID]) {
-            roomAlreadyInArray= YES;
+            //roomAlreadyInArray= YES;
+            [roomsToRemove addObject:r];
         }
     }
+    [roomArray removeObjectsInArray:roomsToRemove];
+    [roomsToRemove removeAllObjects];
     for(Room *r in unlockedRoomArray){
         if ([r.roomID isEqual:room.roomID]) {
-            roomAlreadyInArray= YES;
+            [roomsToRemove addObject:r];
         }
     }
-    if (!roomAlreadyInArray && ![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
+     [unlockedRoomArray removeObjectsInArray:roomsToRemove];
+    if (![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
         if (room.isUnlocked) {
             [unlockedRoomArray addObject:room];
         }else{
@@ -133,6 +133,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
         [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
     }
+    return room.roomID;
 }
 //==================
 // RECEIVED MESSAGES
@@ -222,8 +223,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     //[self connect];
     NSLog(@"socket did close with error %@ ",[error description]);
 }
-
-
 //========================
 // GET ROOMS SOCKET.IO
 //========================
@@ -443,6 +442,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     disconnectionView.backgroundColor= [UIColor redColor];
    // [[UIApplication sharedApplication] windows]
     
+}
+
+-(Room*) currentRoom{
+    for(Room *room in roomArray){
+        if([room.roomID isEqual:self.currentRoomID]){
+            return room;
+        }
+    }
+    for(Room *room in unlockedRoomArray){
+        if([room.roomID isEqual:self.currentRoomID]){
+            return room;
+        }
+    }
+    return nil;
 }
 
 

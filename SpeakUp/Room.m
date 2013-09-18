@@ -38,7 +38,7 @@
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
         [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
         [self setName: [[dict objectForKey:@"name"] lowercaseString]] ; // LOWER CASE
-        [self setKey: @"67849"] ; // TO BE UPDATED
+        [self setKey: [dict objectForKey:@"key"]];
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setUsesPseudonyms:[[dict objectForKey:@"pseudo"] boolValue]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
@@ -46,8 +46,14 @@
         CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [peerlocation distanceFromLocation:roomlocation];
+        // MESSAGES
         self.messages = [NSMutableArray array];
-    }
+        for (NSDictionary *messageDictionary in [dict objectForKey:@"messages"]) {
+                Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
+                [self.messages addObject:message];
+            }
+        }
+        
     return self;
 }
 

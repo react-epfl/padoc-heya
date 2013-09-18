@@ -72,7 +72,8 @@
 @property (strong, nonatomic) NSMutableArray *dislikedMessages;
 
 
-@property (strong, nonatomic) Room *currentRoom;
+@property (strong, nonatomic) NSString *currentRoomID;
+@property (strong, nonatomic) Room *currentRoom;//returns the room matching the currentRoomID
 
 // contains the message ids that were deleted
 @property (strong, nonatomic) NSMutableArray *deletedMessageIDs;

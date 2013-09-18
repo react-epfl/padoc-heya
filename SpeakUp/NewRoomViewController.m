@@ -208,10 +208,8 @@
         [self presentViewController:mfViewController animated:YES completion:nil];
     }else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"STATUS", nil)  message:NSLocalizedString(@"NO_MAIL", nil)  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)  otherButtonTitles:nil];
-        
         [alert show];
     }
-    
 }
 
 #pragma mark -

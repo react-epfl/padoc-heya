@@ -259,7 +259,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
     }
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
         // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
@@ -268,11 +268,11 @@
         NSUInteger row = [indexPath row];
         
         if (indexPath.section== NEARBY_SECTION) {        
-            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[nearbyRooms objectAtIndex:row]];
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
+            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID: [((Room*)[nearbyRooms objectAtIndex:row])roomID] ];
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
         }else{
-            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:[unlockedRooms objectAtIndex:row]];
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID] orRoomHash:nil];
+            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID:[((Room*)[unlockedRooms objectAtIndex:row])roomID] ];
+            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
         }
     }
 }

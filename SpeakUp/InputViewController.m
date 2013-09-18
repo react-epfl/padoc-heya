@@ -154,7 +154,7 @@
             // create a new message
             Message *newMessage = [[Message alloc] init];
             newMessage.content= input.text;
-            newMessage.roomID=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            newMessage.roomID=[[SpeakUpManager sharedSpeakUpManager] currentRoomID];
             
             [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
             
