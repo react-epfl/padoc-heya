@@ -78,7 +78,7 @@
 
 "SEND" = "SEND";
 
-"PSEUDO" = "pseudonym";
+"PSEUDO" = "avatar";
 
 "NO_MESSAGE" = "There is no message in this room. Create one !";
 

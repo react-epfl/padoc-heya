@@ -32,7 +32,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationIsOK=NO;
             sharedSpeakUpManager.currentRoomID=nil;
             // sets up the local location manager, this triggers the didUpdateToLocation callback
-            sharedSpeakUpManager.location=nil;
+            sharedSpeakUpManager.peerLocation=nil;
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
@@ -65,7 +65,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
-        self.locationAtLastReset=self.location;
+        self.locationAtLastReset=self.peerLocation;
     } else if ([type isEqual:@"room"]) {
         NSString* roomID=[self receivedRoom: [packet.args objectAtIndex:0]];
         [messageManagerDelegate updateMessagesInRoom:roomID];
@@ -96,7 +96,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)receivedRooms:(NSArray*)roomDictionaries{
     [roomArray removeAllObjects];
     [unlockedRoomArray removeAllObjects];
-    self.locationAtLastReset=self.location;
+    self.locationAtLastReset=self.peerLocation;
     NSLog(@"ALL OBJECT ARE REMOVED FROM NEARBY ROOMS");
     for (NSDictionary *roomDictionary in roomDictionaries) {
         [self receivedRoom:roomDictionary];
@@ -185,10 +185,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.longitude] forKey:@"lng"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
-    [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
+    [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
     
     [socketIO sendEvent:@"peer" withData:myData];
     [self startNetworking];
@@ -233,12 +233,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
         [myData setValue:self.peer_id forKey:@"peer_id"];
         NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-        [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.latitude] forKey:@"lat"];
-        [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.longitude] forKey:@"lng"];
+        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
+        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
         [myData setValue:myLoc forKey:@"loc"];
-        [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
+        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
         [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
-        [myData setValue:self.unlockedRoomKeyArray forKey:@"unlocked"];// UNLOCKED KEYS
+        [myData setValue:self.unlockedRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS
         [socketIO sendEvent:@"getrooms" withData:myData];
         [self startNetworking];
     }
@@ -277,10 +277,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:[NSNumber numberWithBool:room.usesPseudonyms] forKey:@"pseudo"];
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.location.coordinate.longitude] forKey:@"lng"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
+    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
-    [myData setValue:[NSNumber numberWithDouble:self.location.horizontalAccuracy] forKey:@"accu"];
+    [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
     [socketIO sendEvent:@"createroom" withData:myData];
     [self startNetworking];
     [self savePeerData];
@@ -305,7 +305,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // LOCATION MANAGER CALLBACK
 //============================
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    self.location = newLocation;
+    self.peerLocation = newLocation;
     //self.latitude = newLocation.coordinate.latitude;
     //self.longitude = newLocation.coordinate.longitude;
     
@@ -315,7 +315,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
-        room.distance = [self.location distanceFromLocation:roomlocation];
+        room.distance = [self.peerLocation distanceFromLocation:roomlocation];
     }
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];// no need to change u
@@ -384,7 +384,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     inputText=@"";
     sharedSpeakUpManager.locationAtLastReset = nil;
-    sharedSpeakUpManager.location = nil;
+    sharedSpeakUpManager.peerLocation = nil;
     //sharedSpeakUpManager.latitude = -1;
     //sharedSpeakUpManager.longitude =-1;
 }

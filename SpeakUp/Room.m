@@ -43,9 +43,9 @@
         [self setUsesPseudonyms:[[dict objectForKey:@"pseudo"] boolValue]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
-        CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
+        //CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
-        self.distance = [peerlocation distanceFromLocation:roomlocation];
+        self.distance = [[[SpeakUpManager sharedSpeakUpManager] peerLocation] distanceFromLocation:roomlocation];
         // MESSAGES
         self.messages = [NSMutableArray array];
         for (NSDictionary *messageDictionary in [dict objectForKey:@"messages"]) {

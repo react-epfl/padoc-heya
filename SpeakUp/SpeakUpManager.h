@@ -57,7 +57,7 @@
 // Peer fields
 @property (strong, nonatomic)  CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation* locationAtLastReset;
-@property (strong, nonatomic) CLLocation* location;
+@property (strong, nonatomic) CLLocation* peerLocation;
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
 // a superUser can create an unlimited number of official rooms
