@@ -95,18 +95,20 @@
     [segmentedControl setTitle:NSLocalizedString(@"CREATE", nil) forSegmentAtIndex:1];
     
     //SEGMENTED VIEW CONTROL IMAGES
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected2.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+  
     
     // UNLOCK BUTTON
     [unlockRoomButton setTitle:NSLocalizedString(@"UNLOCK", nil) forState:UIControlStateNormal];
     unlockRoomButton.layer.masksToBounds=YES;
     unlockRoomButton.layer.cornerRadius=2.0f;
     [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
-    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
+    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal];
+    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected2.png"] forState:UIControlStateSelected];
     
     //PSEUDO LABEL
     [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];

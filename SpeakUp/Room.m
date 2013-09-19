@@ -32,7 +32,7 @@
     self = [super init];
     if(self){
         messagesSortedBy=MOST_RECENT;
-        [self setRoomID: [dict objectForKey:@"_id"]];
+        [self setRoomID: [dict objectForKey:@"room_id"]];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         NSDictionary* loc = [dict objectForKey:@"loc"];
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];

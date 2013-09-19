@@ -53,7 +53,7 @@
     plusButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
     self.tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
-    [plusButton setEnabled:NO];
+    //[plusButton setEnabled:NO];
     // PLUS BUTTON END
     [super viewDidLoad];
     self.tableView.bounces = YES;
@@ -113,7 +113,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] || ![[SpeakUpManager sharedSpeakUpManager] locationIsOK])  && indexPath.section==NEARBY_SECTION){
-        [plusButton setEnabled:NO];
+        //[plusButton setEnabled:NO];
        // [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
         static NSString *CellIdentifier = @"NoRoomCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -132,7 +132,7 @@
 
         return cell;
     }else{
-        [plusButton setEnabled:YES];
+        //[plusButton setEnabled:YES];
         [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
         //if there is no room, simply put this no room cell
         NSUInteger row = [indexPath row];

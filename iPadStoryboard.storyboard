@@ -43,11 +43,12 @@
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="MEq-7C-kL4">
                                     <rect key="frame" x="-3" y="0.0" width="777" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <segments>
                                         <segment title="BEST"/>
                                         <segment title="RECENT"/>
                                     </segments>
-                                    <color key="tintColor" red="0.36470589040000001" green="0.67450982329999998" blue="0.8980392814" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="tintColor" red="0.22352942819999999" green="0.29803922770000002" blue="0.5176470876" alpha="1" colorSpace="deviceRGB"/>
                                     <connections>
                                         <action selector="sortBy:" destination="EjU-5T-sQU" eventType="valueChanged" id="xk7-k5-bmW"/>
                                     </connections>
@@ -293,18 +294,19 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Dh1-BC-jLn">
                                 <rect key="frame" x="-6" y="0.0" width="781" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 <segments>
                                     <segment title="UNLOCK"/>
                                     <segment title="CREATE"/>
                                 </segments>
-                                <color key="tintColor" red="0.36470589040000001" green="0.67450982329999998" blue="0.8980392814" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="tintColor" red="0.22352942819999999" green="0.29803922770000002" blue="0.5176470876" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <action selector="createOrUnlock:" destination="Dh3-72-ia2" eventType="valueChanged" id="tpK-6s-3rO"/>
                                 </connections>
                             </segmentedControl>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="room name" minimumFontSize="17" clearButtonMode="whileEditing" id="uss-2z-vTF">
-                                <rect key="frame" x="95" y="79" width="476" height="48"/>
+                                <rect key="frame" x="63" y="74" width="642" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
@@ -313,7 +315,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="go"/>
                             </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="CI7-6G-NVf">
-                                <rect key="frame" x="0.0" y="134" width="768" height="571"/>
+                                <rect key="frame" x="0.0" y="175" width="768" height="492"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </mapView>
@@ -355,15 +357,15 @@
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="J9L-pc-N77">
-                                <rect key="frame" x="579" y="79" width="79" height="27"/>
+                                <rect key="frame" x="628" y="140" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="pseudonyms" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5PX-Vo-Tc4">
-                                <rect key="frame" x="566" y="111" width="102" height="16"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="pseudonyms" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" id="5PX-Vo-Tc4">
+                                <rect key="frame" x="63" y="146" width="552" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>

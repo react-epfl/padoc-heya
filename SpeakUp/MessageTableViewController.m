@@ -69,6 +69,7 @@
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
     
+    
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
@@ -80,10 +81,11 @@
     showKey=NO;
   
     //SEGMENTED VIEW CONTROL
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div1.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div2.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected2.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     /// INPUT VIEW
     keyboardIsVisible=NO;
