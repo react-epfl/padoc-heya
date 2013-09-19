@@ -16,7 +16,7 @@
 
 @implementation RoomTableViewController
 
-@synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms, NEARBY_SECTION, UNLOCKED_SECTION;
+@synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms, NEARBY_SECTION, UNLOCKED_SECTION,refreshButton;
 
 
 
@@ -34,14 +34,14 @@
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     // EGO STUFF
-    if (_refreshHeaderView == nil) {
+    /*if (_refreshHeaderView == nil) {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
         view.delegate = self;
         [self.tableView addSubview:view];
         _refreshHeaderView = view;
     }
     //  update the last update date
-    [_refreshHeaderView refreshLastUpdatedDate];
+    [_refreshHeaderView refreshLastUpdatedDate];*/
     // self.navigationController.navigationBar.clipsToBounds = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
     //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
@@ -52,9 +52,22 @@
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
+    // PLUS BUTTON END
+    
     self.tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
     //[plusButton setEnabled:NO];
+    
+    
+    // REFRESH BUTTON START
+    refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [refreshButton setImage:[UIImage imageNamed: @"button-refresh.png"] forState:UIControlStateNormal];
+    [refreshButton setImage:[UIImage imageNamed: @"button-refresh1.png"] forState:UIControlStateHighlighted];
+    [refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+    refreshButton.frame = CGRectMake(0, 0, 40, 40);
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
     // PLUS BUTTON END
+    
+    
     [super viewDidLoad];
     self.tableView.bounces = YES;
     // NAV TITLE
@@ -252,7 +265,7 @@
         }
         [self.tableView reloadData];
         // EGO finnish loading
-        [self doneLoadingTableViewData];
+        //[self doneLoadingTableViewData];
     }
 }
 -(void)connectionWasLost{
@@ -264,7 +277,7 @@
 //=====================================
 // PULL DOWN LIBRARY (EGO) STUFF BEGINS
 //=====================================
-#pragma mark -
+/*#pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
 	[self reloadTableViewDataSource];
@@ -292,13 +305,13 @@
 #pragma mark UIScrollViewDelegate Methods
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-}
+}*/
 //===========
 // UTILITIES
 //===========
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+/*- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}
+}*/
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
@@ -312,6 +325,11 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+-(IBAction)refresh:(id)sender{
+   [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    
 }
 @end
 

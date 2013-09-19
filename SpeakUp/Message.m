@@ -34,7 +34,7 @@
         [self setRoomID:aRoomID];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         [self setMessageID:[dict objectForKey:@"_id"]];
-        [self setParentMessageID:[dict objectForKey:@"_id"]];
+        //[self setParentMessageID:[dict objectForKey:@"_id"]];
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
         //NSString* content1= [dict objectForKey:@"body"];

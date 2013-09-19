@@ -13,15 +13,18 @@
 #import "ConnectionDelegate.h"
 
 
-@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, UITextFieldDelegate, SpeakUpManagerDelegate, ConnectionDelegate>{
-    EGORefreshTableHeaderView *_refreshHeaderView;
+@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SpeakUpManagerDelegate, ConnectionDelegate>{
+  //  EGORefreshTableHeaderView *_refreshHeaderView;
 	
 	//  Reloading var should really be your tableviews datasource
 	//  Putting it here for demo purposes
-	BOOL _reloading;
-    BOOL _roomsReady;
+	//BOOL _reloading;
+   // BOOL _roomsReady;
 }
 
+-(IBAction)refresh:(id)sender;
+
+@property(strong, nonatomic) IBOutlet UIButton * refreshButton;
 @property(strong, nonatomic) IBOutlet UIButton * plusButton;
 @property(strong, nonatomic) IBOutlet UIImageView * roomLogo;
 @property(strong, nonatomic) NSArray *nearbyRooms;

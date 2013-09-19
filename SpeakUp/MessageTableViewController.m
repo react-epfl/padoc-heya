@@ -24,6 +24,7 @@
 #define HEADER_OFFSET 55
 #define CELL_VERTICAL_OFFSET 65
 #define TEXT_WIDTH 280
+#define SIDES 40
 
 
 #define INPUTVIEW_HEIGHT 40
@@ -261,43 +262,39 @@
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        
+        //=========================
+        // CONTENT
+        //=========================
         cell.message=message;
         // CONTENT - set up the content
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
-        
-       /* contentTextView.text = [message content];
-        
-        frame.size.height = contentTextView.contentSize.height;
-         frame.size.width = TEXT_WIDTH;
-        contentTextView.frame = frame;
-       */
-
         NSString * text = [message content];
         CGSize textViewConstraint = CGSizeMake(contentTextView.frame.size.width,CELL_MAX_SIZE);
-        // CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
         CGSize size = [text sizeWithFont:contentTextView.font constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
-
         [contentTextView setText:text];
-        [contentTextView setFrame:CGRectMake(10, 25, contentTextView.frame.size.width, size.height+10)];
+        [contentTextView setFrame:CGRectMake(10, 25, contentTextView.frame.size.width, size.height+1000)];// ADER this size is there to avoid cut off text if someone type one line and an empty line....
 
-        
-       
-        
-        // THUMBS - Setup the ThumbsUP and down buttons
+        //=========================
+        // THUMBS
+        //=========================
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];
+        NSString* rowInString = [NSString stringWithFormat:@"%d",indexPath.row];
+        [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
             [thumbUpButton setImage:[UIImage imageNamed:@"tUpP1.png"] forState:UIControlStateNormal] ;
         }else{
             [thumbUpButton setImage:[UIImage imageNamed:@"tUp1.png"] forState:UIControlStateNormal] ;
         }
         UIButton *thumbDownButton = (UIButton *)[cell viewWithTag:5];
+        [thumbDownButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
             [thumbDownButton setImage:[UIImage imageNamed:@"tDownP1.png"] forState:UIControlStateNormal] ;
         }else {
             [thumbDownButton setImage:[UIImage imageNamed:@"tDown1.png"] forState:UIControlStateNormal] ;
         }
-        // TIME - Setup the time label
+        //=========================
+        // TIME
+        //=========================
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
@@ -315,16 +312,16 @@
             time = [NSString stringWithFormat:  NSLocalizedString(@"HOURS_AGO", nil),hours];
         }
         [timeLabel setText: time];
-        
+        //=========================
+        // MESSAGE LABEL
+        //=========================
         UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
         backgroundLabel.backgroundColor=[UIColor whiteColor];
         backgroundLabel.layer.cornerRadius  =2;
         backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
-       
-        
-        //backgroundLabel.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:245.0/255.0 blue:255.0/255.0 alpha:1.0];
-        
-        // SCORE - Setup the score label
+        //=========================
+        // SCORE
+        //=========================
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
         if(message.score>0){
             scoreLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
@@ -343,24 +340,13 @@
         }else{
             [numberofVotesLabel setText: [NSString stringWithFormat: NSLocalizedString(@"VOTES", nil) , numberOfVotes]];
         }
-        
+        //=========================
+        // AVATAR
+        //=========================
         UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
         [avatarView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]]];
-        avatarView.layer.cornerRadius  =2;
-        //COMMENTS
-       // UIButton *commentButton = (UIButton *)[cell viewWithTag:11];
-        //[commentButton setTitle:NSLocalizedString(@"COMMENT", nil) forState:UIControlStateNormal ]; // need to add the number of comments
-       // commentButton;
-        // CELL STYLE
-        //cell.backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-        //cell.contentView.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:197.0/255.0 blue:248.0/255.0 alpha:1.0];
-        // if message is mine the color could be different
-         if([[[SpeakUpManager sharedSpeakUpManager] peer_id]isEqual:message.authorPeerID]){
-           // cell.backgroundView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
-        }else{
-          //  cell.backgroundView.backgroundColor = [UIColor whiteColor];
-        }
-        //cell.backgroundView.layer.cornerRadius  =2;
+        avatarView.layer.cornerRadius  =5;
+
         return cell;
     }
 }
@@ -372,23 +358,24 @@
     return nil;
 }
 
-
+//=========================
+// SORT
+//=========================
 -(IBAction)sortBy:(id)sender{
     UISegmentedControl *seg = (UISegmentedControl *) sender;
     NSInteger selectedSegment = seg.selectedSegmentIndex;
-    
     if (selectedSegment == 0) {
         [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:BEST_RATING];
     }else if(selectedSegment == 1){
         [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:MOST_RECENT];
     }
-    
     [self sortMessages];
     [self.tableView reloadData];
-    
 }
 
-
+//=========================
+// CONNECTION HANDLING
+//=========================
 -(void)connectionWasLost{
     noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
     [noConnectionLabel setText:  NSLocalizedString(@"CONNECTION_LOST", nil)];
@@ -413,7 +400,9 @@
 //}
 
 
-// LIKE
+//=========================
+// RATING UP
+//=========================
 -(IBAction)rateMessageUp:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
     @synchronized(self){
@@ -421,10 +410,8 @@
         int yesRating = 0;
         int noRating = 0;
         UIButton *aButton = (UIButton *)sender;
-        UIView *contentView = [[aButton superview] superview];
-        UITableViewCell *cell = (UITableViewCell *)[contentView superview];
-        NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
-        NSUInteger row = [indexPath row];
+        NSString* rowInString = [aButton titleForState:UIControlStateNormal];
+        NSUInteger row = [rowInString integerValue];
         Message* message = [self getMessageForIndex:row];
         messageID = message.messageID;
         if (messageID) {
@@ -455,8 +442,9 @@
     }
     }
 }
-
-// DISLIKE
+//=========================
+// RATING DOWN
+//=========================
 -(IBAction)rateMessageDown:(id)sender{
      if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
     @synchronized(self){
@@ -464,10 +452,8 @@
         int yesRating = 0;
         int noRating = 0;
         UIButton *aButton = (UIButton *)sender;
-        UIView *contentView = [[aButton superview]superview];
-        UITableViewCell *cell = (UITableViewCell *)[contentView superview];
-        NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
-        NSUInteger row = [indexPath row];
+        NSString* rowInString = [aButton titleForState:UIControlStateNormal];
+        NSUInteger row = [rowInString integerValue];
         Message* message = [self getMessageForIndex:row];
         messageID = message.messageID;
         if (messageID) {
@@ -530,7 +516,6 @@
     }
 }
 
-
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
@@ -544,19 +529,17 @@
 
 // UTILITIES
 
-// CALCULATE HEIGHT
+//=========================
+// GET HEIGHT FOR ROW
+//=========================
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
-    
-    //CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2),CELL_MAX_SIZE);
-    CGSize textViewConstraint = CGSizeMake(TEXT_WIDTH,CELL_MAX_SIZE);
-    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
-    //CGFloat height = MAX(size.height , CELL_MIN_SIZE);
+    CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-SIDES,CELL_MAX_SIZE);
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
-    
     
 }
 
