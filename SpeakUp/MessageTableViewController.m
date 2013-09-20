@@ -128,6 +128,19 @@
     // MANAGE KEYBOARD
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // LISTEN TO TOUCH EVENT
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    tgr.delegate = self;
+    [self.tableView addGestureRecognizer:tgr]; // or [self.view addGestureRecognizer:tgr];
+
+    
+}
+- (void)viewTapped:(UITapGestureRecognizer *)tgr
+{
+    NSLog(@"view tapped");
+    [inputTextView resignFirstResponder ];
+    // remove keyboard
 }
 
 

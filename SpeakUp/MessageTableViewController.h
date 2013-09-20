@@ -12,7 +12,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "ConnectionDelegate.h"
 
-@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,ConnectionDelegate,UITextViewDelegate>{
+@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,ConnectionDelegate,UITextViewDelegate>{
     
     EGORefreshTableHeaderView *_refreshHeaderView;
 	//  Reloading var should really be your tableviews datasource

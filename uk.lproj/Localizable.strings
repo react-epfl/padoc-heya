@@ -1,0 +1,69 @@
+/*
+ Localizable.strings
+ SpeakUp
+ 
+ Created by Andrii Vozniuk on 20.09.13.
+ Copyright (c) 2013 Andrii Vozniuk. All rights reserved.
+ */
+
+
+
+"NO_ROOM"= "кімнати поблизу відсутні, створіть нову!";
+
+"ROOMS"="SpeakUp";
+
+"NO_LOCATION" = "не вдається отримати розташування";
+
+"NO_CONNECTION"= "не вдається з'єднатись із сервером";
+
+"LOADING" = "завантажую...";
+
+"CONNECTION_LOST" = "З'ЄДНАННЯ ВТРАЧЕНО";
+
+"CONNECTION_ESTABLISHED" = "З'ЄДНАННЯ ВСТАНОВЛЕНО";
+
+"ROOM_CLOSED" = "КІМНАТА ЗАКРИТА";
+
+"ROOM_CLOSED_LONG" =  "Кімната %@ була закрита її власником і більше недоступна";
+
+"OK" = "OK";
+
+"JUST_NOW" = "щойно";
+
+"MINUTES_AGO" = "%d хв тому";
+
+"HOURS_AGO"="%d годин тому";
+
+"VOTE"="(%d голос)";
+
+"VOTES"="(%d голосів)";
+
+"CREATE_ROOM" = "Створити Кімнату";
+
+"RATING_SORT" = "НАЙКРАЩІ";
+
+"RECENT_SORT" = "НОВІ";
+
+"COMPOSE" = "написати";
+
+"COMMENT" = "Коментар";
+
+"UNLOCK" = "ВІДІМКНУТИ";
+
+"CREATE" = "СТВОРИТИ";
+
+"ROOM_NAME" = "назва кімнати";
+
+"ROOM_KEY" = "ключ до кімнати";
+
+"NEARBY_ROOMS" = "кімнати поблизу";
+
+"UNLOCKED_ROOMS" = "відімкнені кімнати";
+
+"SEND" = "ВІДПРАВИТИ";
+
+"PSEUDO" = "Показувати аватари для людей в цій кімнати";
+
+"NO_MESSAGE" = "У цій кімнаті відстуні повідомлення. Створіть нове!";
+
+"TURN_LOCATION_ON" = "Увімкніть сервіс розташування щоб створити нову кімнату";

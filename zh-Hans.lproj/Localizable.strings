@@ -1,0 +1,69 @@
+/*
+ Localizable.strings
+ SpeakUp
+ 
+ Created by Na Li on 20.09.13.
+ Copyright (c) 2013 Na Li. All rights reserved.
+ */
+
+
+
+"NO_ROOM"= "附近没有房间，新建一个房间吧！";
+
+"ROOMS"="SpeakUp";
+
+"NO_LOCATION" = "暂时无法获得地点信息";
+
+"NO_CONNECTION"= "暂时无法连接网络";
+
+"LOADING" = "加载中...";
+
+"CONNECTION_LOST" = "连接中断";
+
+"CONNECTION_ESTABLISHED" = "已建立连接";
+
+"ROOM_CLOSED" = "房间已关闭";
+
+"ROOM_CLOSED_LONG" =  "房间 %@ 已被其主人关闭，目前不可用";
+
+"OK" = "确定";
+
+"JUST_NOW" = "刚刚";
+
+"MINUTES_AGO" = "%d 分钟前";
+
+"HOURS_AGO"="%d 小时前";
+
+"VOTE"="(%d 人支持)";
+
+"VOTES"="(%d 人支持)";
+
+"CREATE_ROOM" = "新建房间";
+
+"RATING_SORT" = "评分排序";
+
+"RECENT_SORT" = "时间排序";
+
+"COMPOSE" = "写消息";
+
+"COMMENT" = "评论";
+
+"UNLOCK" = "解锁";
+
+"CREATE" = "新建";
+
+"ROOM_NAME" = "房间名称";
+
+"ROOM_KEY" = "房间钥匙";
+
+"NEARBY_ROOMS" = "附近的房间";
+
+"UNLOCKED_ROOMS" = "已解锁的房间";
+
+"SEND" = "发送";
+
+"PSEUDO" = "显示房间里所有人的头像";
+
+"NO_MESSAGE" = "房间里还没有消息，创建一条消息吧！";
+
+"TURN_LOCATION_ON" = "新建房间之前请先开启定位服务";
