@@ -8,63 +8,63 @@
 
 
 
-"NO_ROOM"= "no room nearby, create one!";
+"NO_ROOM"= "Kein Chatroom ist in der nähe! Schaffen Sie einen mit dem "+"-Knopf oben!";
 
 "ROOMS"="SpeakUp";
 
-"NO_LOCATION" = "cannot get location right now";
+"NO_LOCATION" = "Lokalisierung is nicht verfügbar";
 
-"NO_CONNECTION"= "cannot connect right now";
+"NO_CONNECTION"= "Verbindung nicht hergestellt";
 
 "LOADING" = "loading...";
 
-"CONNECTION_LOST" = "CONNECTION LOST";
+"CONNECTION_LOST" = "VERBINDUNG VERLOREN";
 
-"CONNECTION_ESTABLISHED" = "CONNECTION ESTABLISHED";
+"CONNECTION_ESTABLISHED" = "VERBINDUNG WIEDERHERGESTELLT";
 
-"ROOM_CLOSED" = "ROOM CLOSED";
+"ROOM_CLOSED" = ;
 
-"ROOM_CLOSED_LONG" =  "Room %@ has been closed by its owner and is no longer available";
+"ROOM_CLOSED_LONG" = ;
 
 "OK" = "OK";
 
-"JUST_NOW" = "just now";
+"JUST_NOW" = "jetzt";
 
-"MINUTES_AGO" = "%d min ago";
+"MINUTES_AGO" = "vor %d Minuten";
 
-"HOURS_AGO"="%d hours ago";
+"HOURS_AGO"="vor %d Stunden";
 
-"VOTE"="(%d vote)";
+"VOTE"="(%d Stimme)";
 
-"VOTES"="(%d votes)";
+"VOTES"="(%d Stimmen)";
 
-"CREATE_ROOM" = "Add Room";
+"CREATE_ROOM" = "Neuer Chatroom";
 
-"RATING_SORT" = "BEST";
+"RATING_SORT" = "BESTE";
 
-"RECENT_SORT" = "RECENT";
+"RECENT_SORT" = "NEUESTE";
 
-"COMPOSE" = "compose";
+"COMPOSE" = ;
 
-"COMMENT" = "Comment";
+"COMMENT" = ;
 
 "UNLOCK" = "UNLOCK";
 
-"CREATE" = "CREATE";
+"CREATE" = "SCHAFFEN";
 
-"ROOM_NAME" = "room name";
+"ROOM_NAME" = "Chatroom Namen";
 
-"ROOM_KEY" = "room key";
+"ROOM_KEY" = "Chatroom Schlüssel";
 
-"NEARBY_ROOMS" = "nearby rooms";
+"NEARBY_ROOMS" = "Nahe Chatrooms";
 
-"UNLOCKED_ROOMS" = "unlocked rooms";
+"UNLOCKED_ROOMS" = "Geöffnete Chatrooms";
 
-"SEND" = "SEND";
+"SEND" = "SENDEN";
 
-"PSEUDO" = "Show user avatars in this room";
+"PSEUDO" = "Avatars werden in diesem Chatroom gezeigt";
 
-"NO_MESSAGE" = "There is no message in this room. Create one !";
+"NO_MESSAGE" = "Es gibt keine Meldungen in diesem Chatroom. Schaffen Sie eine !";
 
-"TURN_LOCATION_ON" = "Turn location on to create a new room";
+"TURN_LOCATION_ON" = "Lokalisierung muss eingeschalten sein um neue Chatrooms schaffen zu können.";
 
