@@ -274,7 +274,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
-    [myData setValue:[NSNumber numberWithBool:room.usesPseudonyms] forKey:@"pseudo"];
+    [myData setValue:[NSNumber numberWithBool:room.usesPseudonyms] forKey:@"avatar"];
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
     NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
     [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];

@@ -70,7 +70,6 @@
     }
 
     // KEY BUTTON END
-    
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
     
@@ -99,7 +98,7 @@
     inputView.backgroundColor = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:0.9];
     [self.view addSubview:inputView];
     inputTextView.text=@"";
-    
+
     inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
     inputButton.layer.masksToBounds=YES;
     inputButton.layer.cornerRadius=4.0f;
@@ -177,9 +176,7 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self placeInputView];
-
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -348,10 +345,11 @@
         //=========================
         // AVATAR
         //=========================
-        UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
-        [avatarView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]]];
-        avatarView.layer.cornerRadius  =5;
-
+        if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] usesPseudonyms]) {
+            UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
+            [avatarView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]]];
+            //avatarView.layer.cornerRadius = 5;
+        }
         return cell;
     }
 }

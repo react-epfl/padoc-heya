@@ -40,7 +40,7 @@
         [self setName: [[dict objectForKey:@"name"] lowercaseString]] ; // LOWER CASE
         [self setKey: [dict objectForKey:@"key"]];
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
-        [self setUsesPseudonyms:[[dict objectForKey:@"pseudo"] boolValue]];
+        [self setUsesPseudonyms:[[dict objectForKey:@"avatar"] boolValue]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
         //CLLocation * peerlocation = [[SpeakUpManager sharedSpeakUpManager] location];
