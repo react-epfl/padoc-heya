@@ -38,23 +38,7 @@
 
 "VOTES"="(%d votes)";
 
-"FEEDBACK" = "SpeakUp Feedback";
-
 "CREATE_ROOM" = "add room";
-
-"NO_MAIL" = "Your phone is not currently configured to send mail.";
-
-"STATUS" = "Status";
-
-"MESSAGE_CANCELED" = "Message Canceled";
-
-"MESSAGE_SAVED" = "Message Saved";
-
-"MESSAGE_SENT" = "Message Sent";
-
-"MESSAGE_FAILED" = "Message Failed";
-
-"MESSAGE_NOT_SENT" = "Message Not Sent";
 
 "RATING_SORT" = "BEST";
 

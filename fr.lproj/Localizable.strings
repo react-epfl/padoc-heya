@@ -38,23 +38,7 @@
 
 "VOTES"="(%d votes)";
 
-"FEEDBACK" = "SpeakUp Feedback";
-
 "CREATE_ROOM" = "ajouter salle";
-
-"NO_MAIL" = "Votre téléphone ne peut pas envoyer de mail en ce moment.";
-
-"STATUS" = "Status";
-
-"MESSAGE_CANCELED" = "Message Annulé";
-
-"MESSAGE_SAVED" = "Message Enregistrer";
-
-"MESSAGE_SENT" = "Message Envoyé";
-
-"MESSAGE_FAILED" = "Message Echoué";
-
-"MESSAGE_NOT_SENT" = "Message Pas Envoyé";
 
 "RATING_SORT" = "MEILLEUR";
 
@@ -63,7 +47,6 @@
 "COMPOSE" = "composer";
 
 "COMMENT" = "Commenter";
-
 
 "UNLOCK" = "DEVERROUILLER";
 
