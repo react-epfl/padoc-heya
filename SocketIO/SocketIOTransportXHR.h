@@ -1,6 +1,6 @@
 //
-//  SocketIOTransportWebsocket.h
-//  v0.3.3 ARC
+//  SocketIOTransportXHR.h
+//  v0.4 ARC
 //
 //  based on
 //  socketio-cocoa https://github.com/fpotter/socketio-cocoa
@@ -23,12 +23,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SRWebSocket.h"
 #import "SocketIOTransport.h"
 
-@interface SocketIOTransportWebsocket : NSObject <SocketIOTransport, SRWebSocketDelegate>
+@interface SocketIOTransportXHR : NSObject <SocketIOTransport, NSURLConnectionDelegate>
 {
-    SRWebSocket *_webSocket;
+    NSString *_url;
+    NSMutableData *_data;
+    NSMutableDictionary *_polls;
 }
 
 @property (nonatomic, unsafe_unretained) id <SocketIOTransportDelegate> delegate;

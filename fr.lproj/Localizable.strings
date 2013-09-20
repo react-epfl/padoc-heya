@@ -10,7 +10,7 @@
 
 "NO_ROOM"= "pas de salle à proximité, créez en une!";
 
-"ROOMS" ="speakup";
+"ROOMS" ="SpeakUp";
 
 "NO_LOCATION" = "localisation inaccessible pour le moment";
 
@@ -38,7 +38,7 @@
 
 "VOTES"="(%d votes)";
 
-"CREATE_ROOM" = "ajouter salle";
+"CREATE_ROOM" = "Ajouter Salle";
 
 "RATING_SORT" = "MEILLEUR";
 

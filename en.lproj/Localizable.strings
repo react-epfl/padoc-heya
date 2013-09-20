@@ -10,7 +10,7 @@
 
 "NO_ROOM"= "no room nearby, create one!";
 
-"ROOMS"="speakup";
+"ROOMS"="SpeakUp";
 
 "NO_LOCATION" = "cannot get location right now";
 
@@ -38,7 +38,7 @@
 
 "VOTES"="(%d votes)";
 
-"CREATE_ROOM" = "add room";
+"CREATE_ROOM" = "Add Room";
 
 "RATING_SORT" = "BEST";
 
