@@ -28,6 +28,7 @@
 @property (nonatomic) BOOL usesPseudonyms;
 @property ( nonatomic) BOOL deleted;
 @property ( nonatomic) int messagesSortedBy;
+@property (strong, nonatomic) NSCache* avatarCacheByPeerID;
 
 @property (strong, nonatomic) NSMutableArray  *messages;
 

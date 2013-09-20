@@ -360,7 +360,13 @@
         //=========================
         if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] usesPseudonyms]) {
             UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
-            [avatarView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]]];
+   
+            UIImage* avatarImage = [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] objectForKey:message.authorPeerID];
+            if (!avatarImage) {
+                avatarImage= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]];
+                [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] setObject:avatarImage forKey:message.authorPeerID];
+            }
+            [avatarView setImage:avatarImage];
             //avatarView.layer.cornerRadius = 5;
         }
         return cell;

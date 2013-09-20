@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, usesPseudonyms, isUnlocked ;
+@synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, usesPseudonyms, isUnlocked ;
 
 
 - (id)init{
@@ -31,6 +31,7 @@
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
+        avatarCacheByPeerID = [[NSCache alloc] init];
         messagesSortedBy=MOST_RECENT;
         [self setRoomID: [dict objectForKey:@"room_id"]];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
