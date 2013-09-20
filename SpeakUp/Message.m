@@ -34,18 +34,14 @@
         [self setRoomID:aRoomID];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         [self setMessageID:[dict objectForKey:@"_id"]];
-        //[self setParentMessageID:[dict objectForKey:@"_id"]];
         [self setAuthorPeerID: [dict objectForKey:@"creator_id"]];
         [self setCreationTime: [dict objectForKey:@"creation_time"]];
-        //NSString* content1= [dict objectForKey:@"body"];
-        //NSString* trimmedcontent = [content1 stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
         [self setPseudo:[dict objectForKey:@"pseudo"]];
-        //[self setAvatarURL:[dict objectForKey:@"avatar"]];
-        [self setAvatarURL:@"https://identicons.github.com/jasonlong.png"]; // ADER TO REMOVE
+        NSString* URL = [NSString stringWithFormat:@"https://secure.gravatar.com/avatar/%@?s=64&r=any&default=identicon&forcedefault=1",self.authorPeerID ];
+        [self setAvatarURL:URL];
         [self setContent: [dict objectForKey:@"body"]];
         [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];
-        //[self setReplies: [dict objectForKey:@"replies"]];// ADER not sure if this works
         [self setScore:numberOfYes-numberOfNo];
     }
     return self;
