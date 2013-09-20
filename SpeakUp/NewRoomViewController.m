@@ -47,13 +47,13 @@
     // BACK BUTTON END
     
     // COMPOSE BUTTON START
-    UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+   /* UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [composeButton setImage:[UIImage imageNamed: @"button-write1.png"] forState:UIControlStateNormal];
     [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateHighlighted];
     [composeButton addTarget:self action:@selector(sendMail) forControlEvents:UIControlEventTouchUpInside];
     composeButton.frame = CGRectMake(5, 5, 30, 30);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
-    // COMPOSE BUTTON END
+    // COMPOSE BUTTON END*/
     
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
@@ -199,7 +199,7 @@
     }
 }
 
--(IBAction)sendMail{
+/*-(IBAction)sendMail{
     if ([MFMailComposeViewController canSendMail]) {
         MFMailComposeViewController *mfViewController = [[MFMailComposeViewController alloc] init];
         mfViewController.mailComposeDelegate = self;
@@ -212,9 +212,9 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"STATUS", nil)  message:NSLocalizedString(@"NO_MAIL", nil)  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)  otherButtonTitles:nil];
         [alert show];
     }
-}
+}*/
 
-#pragma mark -
+/*#pragma mark -
 #pragma mark MFMailComposeViewControllerDelegate Methods
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
@@ -239,7 +239,7 @@
     }
     [self dismissViewControllerAnimated:YES completion:nil];
     [alert show];
-}
+}*/
 
 // used to limit the number of characters to MAX_LENGTH
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{

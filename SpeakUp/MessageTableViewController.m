@@ -58,18 +58,21 @@
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
     // BACK BUTTON END
     
-    // COMPOSE BUTTON START
+    // KEY BUTTON START ONLY IF THE KEY EXISTS
     UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [composeButton setImage:[UIImage imageNamed: @"button-key.png"] forState:UIControlStateNormal];
     [composeButton setImage:[UIImage imageNamed: @"button-key1.png"] forState:UIControlStateHighlighted];
     [composeButton addTarget:self action:@selector(keyPressed:) forControlEvents:UIControlEventTouchUpInside];
     composeButton.frame = CGRectMake(5, 5, 30, 30);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
-    // COMPOSE BUTTON END
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
+    if (![[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]) {
+        self.navigationItem.rightBarButtonItem=nil;
+    }
+
+    // KEY BUTTON END
     
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
-    
     
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
@@ -109,8 +112,7 @@
     inputButton.frame = CGRectMake(self.view.frame.size.width-80, 5 , 70, 30);
 
     [inputView addSubview:inputButton];
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
-    
+
     inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 5, self.view.frame.size.width-100, 30)];
     //textView.borderStyle = UITextBorderStyleRoundedRect;
     inputTextView.font = [UIFont systemFontOfSize:15];
@@ -127,8 +129,6 @@
     // MANAGE KEYBOARD
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    
 }
 
 
@@ -249,9 +249,15 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-       UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
+        UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
         [noMessageView setText:NSLocalizedString(@"NO_MESSAGE", nil)];
-        
+        //=========================
+        // MESSAGE LABEL
+        //=========================
+        UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
+        backgroundLabel.backgroundColor=[UIColor whiteColor];
+        backgroundLabel.layer.cornerRadius  =2;
+        backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
         return cell;
     }
     else{
@@ -261,7 +267,6 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        
         //=========================
         // CONTENT
         //=========================
@@ -350,14 +355,15 @@
         return cell;
     }
 }
-
+//=========================
+// GET MESSAGE FOR INDEX
+//=========================
 -(Message*)getMessageForIndex:(NSInteger)index{
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]>0){
         return (Message *)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] objectAtIndex:index];
     }
     return nil;
 }
-
 //=========================
 // SORT
 //=========================
@@ -372,7 +378,6 @@
     [self sortMessages];
     [self.tableView reloadData];
 }
-
 //=========================
 // CONNECTION HANDLING
 //=========================
@@ -386,20 +391,6 @@
     [noConnectionLabel setText: NSLocalizedString(@"CONNECTION_ESTABLISHED", nil)];
     [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
 }
-
-//#pragma mark - Table view delegate
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Navigation logic may go here. Create and push another view controller.
-//    /*
-//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-//     // ...
-//     // Pass the selected object to the new view controller.
-//     [self.navigationController pushViewController:detailViewController animated:YES];
-//     */
-//}
-
-
 //=========================
 // RATING UP
 //=========================
@@ -484,19 +475,9 @@
     }
      }
 }
-
-
-// GO TO INPUT
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    if ([[segue identifier] isEqualToString:@"MessagesToSpeak"]) {
-//       // InputViewController *inputVC  = (InputViewController *)[segue destinationViewController];
-//        //[inputVC setRoom: currentRoom];
-//    }
-//}
-
-
+//=========================
 // SLIDE TO DELETE
+//=========================
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    Message* message = [self getMessageForIndex:indexPath.section];
@@ -515,8 +496,9 @@
         [tableView reloadData];
     }
 }
-
+//=========================
 // RECEIVE NEW MESSAGES
+//=========================
 -(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
     if([roomID isEqual:[[SpeakUpManager sharedSpeakUpManager] currentRoomID]]){
@@ -526,9 +508,6 @@
         }
     }
 }
-
-// UTILITIES
-
 //=========================
 // GET HEIGHT FOR ROW
 //=========================

@@ -393,13 +393,7 @@
                         <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New room" id="85m-nE-l1s">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="lor-fb-FWw">
-                            <connections>
-                                <action selector="sendMail" destination="Dh3-72-ia2" id="Cwt-vK-pGz"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="New room" id="85m-nE-l1s"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="input" destination="uss-2z-vTF" id="55p-mS-BaX"/>

@@ -13,7 +13,7 @@
 
 
 
-@interface NewRoomViewController : UIViewController<MKMapViewDelegate,UITextFieldDelegate,MFMailComposeViewControllerDelegate,ConnectionDelegate>
+@interface NewRoomViewController : UIViewController<MKMapViewDelegate,UITextFieldDelegate,ConnectionDelegate>
 
 @property(strong, nonatomic) IBOutlet UIBarButtonItem * createButton;
 @property(strong, nonatomic) IBOutlet UITextField * input;
@@ -33,7 +33,7 @@
 
 
 
--(IBAction)sendMail;
+//-(IBAction)sendMail;
 
 -(IBAction)createOrUnlock:(id)sender;
 
