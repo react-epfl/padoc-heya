@@ -28,7 +28,7 @@
 #define UNLOCK_TAB 0
 
 #define ANONYMOUS @"anon" 
-#define AVATAR @"anon"
+#define AVATAR @"avatar"
 
 
 
