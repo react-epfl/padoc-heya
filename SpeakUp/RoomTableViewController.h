@@ -8,7 +8,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "RoomManagerDelegate.h"
 #import <UIKit/UIKit.h>
-#import "EGORefreshTableHeaderView.h"
 #import "SpeakUpManagerDelegate.h"
 #import "ConnectionDelegate.h"
 

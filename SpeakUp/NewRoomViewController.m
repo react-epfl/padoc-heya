@@ -190,7 +190,12 @@
             myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
             myRoom.range=RANGE;
             myRoom.lifetime=LIFETIME;
-            myRoom.usesPseudonyms= pseudoSwitch.on;
+            
+            if (pseudoSwitch.on) {
+                myRoom.id_type= AVATAR;
+            }else{
+                myRoom.id_type = ANONYMOUS;
+            }
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];
             self.input.text=@"";
             [self.navigationController popViewControllerAnimated:YES];

@@ -9,15 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Room.h"
 #import "MessageManagerDelegate.h"
-#import "EGORefreshTableHeaderView.h"
 #import "ConnectionDelegate.h"
 
 @interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,ConnectionDelegate,UITextViewDelegate>{
     
-    EGORefreshTableHeaderView *_refreshHeaderView;
+   // EGORefreshTableHeaderView *_refreshHeaderView;
 	//  Reloading var should really be your tableviews datasource
 	//  Putting it here for demo purposes
-	BOOL _reloading;
+	//BOOL _reloading;
 }
 
 //press thumb up
