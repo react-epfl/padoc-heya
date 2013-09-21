@@ -129,7 +129,6 @@
 		803EB68E17EC768900E053EA /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		803EB68F17EC769A00E053EA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		803EB69017EC769A00E053EA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		803EB69117EC76FF00E053EA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8054CB3817AA9C2800FA4B20 /* button-back1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back1@2x.png"; sourceTree = "<group>"; };
 		8054CB3917AA9C2800FA4B20 /* button-back2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back2@2x.png"; sourceTree = "<group>"; };
 		8054CB3A17AA9C2800FA4B20 /* button-send1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-send1.png"; sourceTree = "<group>"; };
@@ -636,7 +635,6 @@
 				803165D517BCD550003C4E77 /* fr */,
 				803EB68D17EC768900E053EA /* uk */,
 				803EB68F17EC769A00E053EA /* zh-Hans */,
-				803EB69117EC76FF00E053EA /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

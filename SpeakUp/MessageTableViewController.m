@@ -358,7 +358,7 @@
         //=========================
         // AVATAR
         //=========================
-        if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] usesPseudonyms]) {
+        //if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] usesPseudonyms]) {
             UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
    
             UIImage* avatarImage = [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] objectForKey:message.authorPeerID];
@@ -368,7 +368,7 @@
             }
             [avatarView setImage:avatarImage];
             //avatarView.layer.cornerRadius = 5;
-        }
+        //}
         return cell;
     }
 }
