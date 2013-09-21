@@ -27,6 +27,9 @@
 #define CREATE_TAB 1
 #define UNLOCK_TAB 0
 
+#define ANONYMOUS @"anon" 
+#define AVATAR @"anon"
+
 
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>

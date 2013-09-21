@@ -8,6 +8,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 
+#define ANON 
+
 @interface Room : NSObject
 
 
@@ -25,7 +27,7 @@
 @property (nonatomic) int  range;
 @property (nonatomic) BOOL  isOfficial;
 @property (nonatomic) BOOL  isUnlocked;
-@property (nonatomic) BOOL usesPseudonyms;
+@property (nonatomic, strong) NSString* id_type;// "ANONYMOUS" or "AVATAR"
 @property ( nonatomic) BOOL deleted;
 @property ( nonatomic) int messagesSortedBy;
 @property (strong, nonatomic) NSCache* avatarCacheByPeerID;
