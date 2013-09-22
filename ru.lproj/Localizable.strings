@@ -1,0 +1,69 @@
+/*
+ Localizable.strings
+ SpeakUp
+ 
+ Created by Andrii Vozniuk on 20.09.13.
+ Copyright (c) 2013 Andrii Vozniuk. All rights reserved.
+ */
+
+
+
+"NO_ROOM"= "отсутствуют комнаты вблизи, создайте новую!";
+
+"ROOMS"="SpeakUp";
+
+"NO_LOCATION" = "не удается определить местоположение";
+
+"NO_CONNECTION"= "не удается соединится с сервером";
+
+"LOADING" = "загружаю...";
+
+"CONNECTION_LOST" = "СОЕДИНЕНИЕ УТРАЧЕНО";
+
+"CONNECTION_ESTABLISHED" = "СОЕДИНЕНИЕ УСТАНОВЛЕНО";
+
+"ROOM_CLOSED" = "КОМНАТА ЗАКРЫТА";
+
+"ROOM_CLOSED_LONG" =  "Комната %@ была закрыта ее собственником и больше недоступна";
+
+"OK" = "OK";
+
+"JUST_NOW" = "только что";
+
+"MINUTES_AGO" = "%d минут назад";
+
+"HOURS_AGO"="%d часов назад";
+
+"VOTE"="(%d голос)";
+
+"VOTES"="(%d голосов)";
+
+"CREATE_ROOM" = "Создать Комнату";
+
+"RATING_SORT" = "ЛУЧШИЕ";
+
+"RECENT_SORT" = "НОВЫЕ";
+
+"COMPOSE" = "написать";
+
+"COMMENT" = "Комментарий";
+
+"UNLOCK" = "ОТКРЫТЬ";
+
+"CREATE" = "СОЗДАТЬ";
+
+"ROOM_NAME" = "название комнаты";
+
+"ROOM_KEY" = "ключ от комнаты";
+
+"NEARBY_ROOMS" = "комнаты вблизи";
+
+"UNLOCKED_ROOMS" = "открытые комнаты";
+
+"SEND" = "ОТПРАВИТЬ";
+
+"PSEUDO" = "Показывать аватары для людей в этой комнате";
+
+"NO_MESSAGE" = "В этой комнате отсутствуют сообщения. Создайте новое!";
+
+"TURN_LOCATION_ON" = "Включите сервис определения местоположения чтобы создать новую комнату";
