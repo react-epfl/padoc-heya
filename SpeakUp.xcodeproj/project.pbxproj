@@ -22,6 +22,7 @@
 		803EB68A17EC61FE00E053EA /* SocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 803EB68217EC61FE00E053EA /* SocketIOPacket.m */; };
 		803EB68B17EC61FE00E053EA /* SocketIOTransportWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 803EB68517EC61FE00E053EA /* SocketIOTransportWebsocket.m */; };
 		803EB68C17EC61FE00E053EA /* SocketIOTransportXHR.m in Sources */ = {isa = PBXBuildFile; fileRef = 803EB68717EC61FE00E053EA /* SocketIOTransportXHR.m */; };
+		803EB69517EDF75100E053EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803EB69417EDF75100E053EA /* Images.xcassets */; };
 		8054CB3E17AA9C2800FA4B20 /* button-back1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8054CB3817AA9C2800FA4B20 /* button-back1@2x.png */; };
 		8054CB3F17AA9C2800FA4B20 /* button-back2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8054CB3917AA9C2800FA4B20 /* button-back2@2x.png */; };
 		8054CB4017AA9C2800FA4B20 /* button-send1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8054CB3A17AA9C2800FA4B20 /* button-send1.png */; };
@@ -121,6 +122,7 @@
 		803EB68F17EC769A00E053EA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		803EB69017EC769A00E053EA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		803EB69317EDED7700E053EA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		803EB69417EDF75100E053EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8054CB3817AA9C2800FA4B20 /* button-back1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back1@2x.png"; sourceTree = "<group>"; };
 		8054CB3917AA9C2800FA4B20 /* button-back2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back2@2x.png"; sourceTree = "<group>"; };
 		8054CB3A17AA9C2800FA4B20 /* button-send1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-send1.png"; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				8096A9211636EA750092F049 /* Model */,
 				8096A9201636EA260092F049 /* ViewControllers */,
 				8096A91F1636E9E40092F049 /* Images */,
+				803EB69417EDF75100E053EA /* Images.xcassets */,
 				8096A8B21636E80C0092F049 /* Supporting Files */,
 			);
 			path = SpeakUp;
@@ -512,6 +515,7 @@
 				8089F92D16E4E06F0081E322 /* Default-Landscape~ipad.png in Resources */,
 				8089F92F16E4E0860081E322 /* Default-Landscape@2x~ipad.png in Resources */,
 				80864DE416FF649700ED1724 /* non-official-room-mine.png in Resources */,
+				803EB69517EDF75100E053EA /* Images.xcassets in Resources */,
 				80864DE516FF649700ED1724 /* official-room-notmine.png in Resources */,
 				8054CB3E17AA9C2800FA4B20 /* button-back1@2x.png in Resources */,
 				803EB67617EB340100E053EA /* seg-div3.png in Resources */,
@@ -653,6 +657,8 @@
 		8096A8C61636E80C0092F049 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -676,6 +682,8 @@
 		8096A8C71636E80C0092F049 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: University of Lausanne, DopLab (2Y732Q5T2P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: University of Lausanne, DopLab (2Y732Q5T2P)";
 				FRAMEWORK_SEARCH_PATHS = (
