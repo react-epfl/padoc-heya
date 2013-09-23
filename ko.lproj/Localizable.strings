@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  SpeakUp
+
+  Created by Adrian Holzer on 15.08.13.
+  Copyright (c) 2013 Adrian Holzer. All rights reserved.
+*/
+
+"NO_ROOM"= "근처에 대화방이 없습니다. 개설하세요.";
+
+"ROOMS"="스피크업";
+
+"NO_LOCATION" = "지금은 위치를 알 수 없습니다.";
+
+"NO_CONNECTION"= "지금은 연결이 되지 않습니다.";
+
+"LOADING" = "로딩중…";
+
+"CONNECTION_LOST" = "연결이 끊겼습니다.";
+
+"CONNECTION_ESTABLISHED" = "연결 되었습니다.";
+
+"ROOM_CLOSED" = "대화방이 닫혔습니다.";
+
+"ROOM_CLOSED_LONG" =  "대화장이 주인장에 의해 닫혔습니다. 이 방은 더이상 이용이 불가 합니다.";
+
+"OK" = "오케이";
+
+"JUST_NOW" = "지금";
+
+"MINUTES_AGO" = "몇 분전에";
+
+"HOURS_AGO"="몇 시간 전에";
+
+"VOTE"="(%d 투표)";
+
+"VOTES"="(%d 투표)";
+
+"CREATE_ROOM" = "대화방을 추가 합니다.";
+
+"RATING_SORT" = "최고";
+
+"RECENT_SORT" = "최근";
+
+"COMPOSE" = "구성";
+
+"COMMENT" = "코멘트";
+
+"UNLOCK" = "잠금이 해제되어 있습니다.";
+
+"CREATE" = "개설";
+
+"ROOM_NAME" = "대화방 이름";
+
+"ROOM_KEY" = "대화방 키";
+
+"NEARBY_ROOMS" = "근처 대화방";
+
+"UNLOCKED_ROOMS" = "잠금이 해제된 방.";
+
+"SEND" = "보내기";
+
+"PSEUDO" = "이대화방에 있는 아바타를 보여주세요.";
+
+"NO_MESSAGE" = "이 방에 메세지가 없습니다.";
+
+"TURN_LOCATION_ON" = "방을 개설하기 위해 새 위치를 알리세요.";

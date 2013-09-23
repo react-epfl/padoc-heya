@@ -129,6 +129,8 @@
 		803EB69717EEEC3300E053EA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		803EB69817F05AD600E053EA /* button-key2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-key2.png"; sourceTree = "<group>"; };
 		803EB69917F05AD600E053EA /* button-key3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-key3.png"; sourceTree = "<group>"; };
+		803EB69C17F091C200E053EA /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		803EB69D17F091C200E053EA /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8054CB3817AA9C2800FA4B20 /* button-back1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back1@2x.png"; sourceTree = "<group>"; };
 		8054CB3917AA9C2800FA4B20 /* button-back2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back2@2x.png"; sourceTree = "<group>"; };
 		8054CB3A17AA9C2800FA4B20 /* button-send1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-send1.png"; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 				uk,
 				"zh-Hans",
 				ru,
+				ko,
 			);
 			mainGroup = 8096A89C1636E80B0092F049;
 			productRefGroup = 8096A8A81636E80C0092F049 /* Products */;
@@ -599,6 +602,7 @@
 				803EB68F17EC769A00E053EA /* zh-Hans */,
 				803EB69317EDED7700E053EA /* de */,
 				803EB69617EEEC3300E053EA /* ru */,
+				803EB69C17F091C200E053EA /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -610,6 +614,7 @@
 				803EB68E17EC768900E053EA /* uk */,
 				803EB69017EC769A00E053EA /* zh-Hans */,
 				803EB69717EEEC3300E053EA /* ru */,
+				803EB69D17F091C200E053EA /* ko */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
