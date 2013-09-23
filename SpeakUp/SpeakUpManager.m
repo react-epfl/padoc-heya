@@ -15,7 +15,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -23,6 +23,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 +(id) sharedSpeakUpManager{
     @synchronized(self) {
         if (sharedSpeakUpManager == nil){
+            sharedSpeakUpManager.avatarCacheByPeerID = [[NSCache alloc] init];
             sharedSpeakUpManager = [[self alloc] init];
             sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
             sharedSpeakUpManager.unlockedRoomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
@@ -306,20 +307,23 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //============================
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.peerLocation = newLocation;
-    //self.latitude = newLocation.coordinate.latitude;
-    //self.longitude = newLocation.coordinate.longitude;
     
     if (!locationIsOK){
         locationIsOK=YES;
         [sharedSpeakUpManager getNearbyRooms];
     }
+}
+
+-(void)updateRoomLocations{
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
         room.distance = [self.peerLocation distanceFromLocation:roomlocation];
     }
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-    [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];// no need to change u
+    [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
 }
+
+
 //========================
 // LOCATION FAILED
 //========================

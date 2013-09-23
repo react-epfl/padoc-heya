@@ -8,15 +8,15 @@
 
 
 
-"NO_ROOM"= "Kein Chatroom ist in der nähe! Schaffen Sie einen !";
+"NO_ROOM"= "Kein Chatraum in der Nähe! Erstelle einen!";
 
 "ROOMS"="SpeakUp";
 
-"NO_LOCATION" = "Lokalisierung is nicht verfügbar";
+"NO_LOCATION" = "Ortungsdienste nicht verfügbar";
 
-"NO_CONNECTION"= "Verbindung nicht hergestellt";
+"NO_CONNECTION"= "Verbindung kann nicht hergestellt werden";
 
-"LOADING" = "loading...";
+"LOADING" = "lädt...";
 
 "CONNECTION_LOST" = "VERBINDUNG VERLOREN";
 
@@ -38,33 +38,33 @@
 
 "VOTES"="(%d Stimmen)";
 
-"CREATE_ROOM" = "Neuer Chatroom";
+"CREATE_ROOM" = "Neuer Chatraum";
 
-"RATING_SORT" = "BESTE";
+"RATING_SORT" = "BEWERTUNG";
 
-"RECENT_SORT" = "NEUESTE";
+"RECENT_SORT" = "ZEIT";
 
 "COMPOSE" = "";
 
 "COMMENT" = "";
 
-"UNLOCK" = "ENSPERREN";
+"UNLOCK" = "ÖFFNEN";
 
-"CREATE" = "SCHAFFEN";
+"CREATE" = "ERSTELLEN";
 
-"ROOM_NAME" = "Chatroom Namen";
+"ROOM_NAME" = "Namen";
 
-"ROOM_KEY" = "Chatroom Schlüssel";
+"ROOM_KEY" = "Schlüssel";
 
-"NEARBY_ROOMS" = "Nahe Chatrooms";
+"NEARBY_ROOMS" = "Chaträume in der Nähe";
 
-"UNLOCKED_ROOMS" = "Geöffnete Chatrooms";
+"UNLOCKED_ROOMS" = "Geöffnete Chaträume";
 
 "SEND" = "SENDEN";
 
-"PSEUDO" = "Avatars werden in diesem Chatroom gezeigt";
+"PSEUDO" = "Avatare werden in diesem Chatraum gezeigt";
 
-"NO_MESSAGE" = "Es gibt keine Meldungen in diesem Chatroom. Schaffen Sie eine !";
+"NO_MESSAGE" = "Es gibt keine Meldungen in diesem Chatraum. Schreibe eine!";
 
-"TURN_LOCATION_ON" = "Lokalisierung muss eingeschalten sein um neue Chatrooms schaffen zu können.";
+"TURN_LOCATION_ON" = "Ortungsdienste müssen eingeschaltet sein, um neue Chaträume erstellen zu können.";
 

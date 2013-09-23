@@ -92,7 +92,7 @@
 
 @property (strong, nonatomic) NSMutableArray *unlockedRoomKeyArray; // contains all unlocked rooms
 
-
+@property (strong, nonatomic) NSCache* avatarCacheByPeerID;
 
 // Fields used to communicate with the middleware
 @property (nonatomic)  NSString  *dev_id;//device ID

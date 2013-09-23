@@ -60,8 +60,8 @@
     
     // KEY BUTTON START ONLY IF THE KEY EXISTS
     UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [composeButton setImage:[UIImage imageNamed: @"button-key.png"] forState:UIControlStateNormal];
-    [composeButton setImage:[UIImage imageNamed: @"button-key1.png"] forState:UIControlStateHighlighted];
+    [composeButton setImage:[UIImage imageNamed: @"button-key2.png"] forState:UIControlStateNormal];
+    [composeButton setImage:[UIImage imageNamed: @"button-key3.png"] forState:UIControlStateHighlighted];
     [composeButton addTarget:self action:@selector(keyPressed:) forControlEvents:UIControlEventTouchUpInside];
     composeButton.frame = CGRectMake(5, 5, 30, 30);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];

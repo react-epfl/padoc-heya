@@ -62,7 +62,7 @@
 
 "SEND" = "SEND";
 
-"PSEUDO" = "Show user avatars in this room";
+"PSEUDO" = "Show avatars to identify people";
 
 "NO_MESSAGE" = "There is no message in this room. Create one !";
 
