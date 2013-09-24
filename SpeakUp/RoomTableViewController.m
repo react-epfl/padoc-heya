@@ -33,16 +33,7 @@
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-    // EGO STUFF
-    /*if (_refreshHeaderView == nil) {
-        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-        view.delegate = self;
-        [self.tableView addSubview:view];
-        _refreshHeaderView = view;
-    }
-    //  update the last update date
-    [_refreshHeaderView refreshLastUpdatedDate];*/
-    // self.navigationController.navigationBar.clipsToBounds = NO;
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
     //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
     // PLUS BUTTON START
@@ -56,7 +47,6 @@
     
     self.tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
     //[plusButton setEnabled:NO];
-    
     
     // REFRESH BUTTON START
     refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -102,7 +92,7 @@
     if (UNLOCKED_SECTION==0) {
         return 2;
     }
-    return 1; 
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -127,7 +117,7 @@
 {
     if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] || ![[SpeakUpManager sharedSpeakUpManager] locationIsOK])  && indexPath.section==NEARBY_SECTION){
         //[plusButton setEnabled:NO];
-       // [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
+        // [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
         static NSString *CellIdentifier = @"NoRoomCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -135,14 +125,14 @@
         }
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-
+        
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
             nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
         }
         if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
         }
-
+        
         return cell;
     }else{
         //[plusButton setEnabled:YES];
@@ -177,21 +167,21 @@
             }
         }
         else { // IF WE ARE IN THE UNLOCK SECTION
-                static NSString *CellIdentifier = @"CommunityCell";
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-                if (cell == nil) {
-                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                }
-                // Populate Community Cells
-                //NSUInteger row = [indexPath row];
-                Room *room = (Room *)[unlockedRooms objectAtIndex:row];
-                UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-                nameLabel.text =  [room name];
-                
-                UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
-                [distanceLabel setText: @""];
-                return cell;
+            static NSString *CellIdentifier = @"CommunityCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
+            // Populate Community Cells
+            //NSUInteger row = [indexPath row];
+            Room *room = (Room *)[unlockedRooms objectAtIndex:row];
+            UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+            nameLabel.text =  [room name];
+            
+            UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
+            [distanceLabel setText: @""];
+            return cell;
+        }
     }
 }
 //=======================
@@ -202,9 +192,9 @@
     if (section==NEARBY_SECTION) {
         sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
     }else{
-        sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil); 
+        sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
     }
-
+    
     UIView *sectionHeaderView = [[UIView alloc] init];
     UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
     sectionHeader.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
@@ -240,7 +230,7 @@
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
         
-        if (indexPath.section== NEARBY_SECTION) {        
+        if (indexPath.section== NEARBY_SECTION) {
             [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID: [((Room*)[nearbyRooms objectAtIndex:row])roomID] ];
             [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
         }else{
@@ -252,7 +242,7 @@
 //==================
 // SERVER CALLBACKS
 //==================
--(void)updateRooms:(NSArray*)updatedNearbyRooms unlockedRooms: (NSArray*)updatedUnlockedRooms{
+-(void)updateRooms:(NSMutableArray*)updatedNearbyRooms unlockedRooms: (NSMutableArray*)updatedUnlockedRooms{
     if(!self.editing){
         nearbyRooms=updatedNearbyRooms;
         unlockedRooms=updatedUnlockedRooms;
@@ -278,40 +268,40 @@
 // PULL DOWN LIBRARY (EGO) STUFF BEGINS
 //=====================================
 /*#pragma mark -
-#pragma mark EGORefreshTableHeaderDelegate Methods
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-	[self reloadTableViewDataSource];
-	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
-}
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-	return _reloading; // should return if data source model is reloading
-}
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-	return [NSDate date]; // should return date data source was last changed
-}
-#pragma mark -
-#pragma mark Data Source Loading / Reloading Methods
-- (void)reloadTableViewDataSource{
-    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
-	//  should be calling your tableviews data source model to reload
-	_reloading = YES;
-}
-- (void)doneLoadingTableViewData{
-	//  model should call this when its done loading
-	_reloading = NO;
-	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-}
-#pragma mark -
-#pragma mark UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-}*/
+ #pragma mark EGORefreshTableHeaderDelegate Methods
+ - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+ [self reloadTableViewDataSource];
+ [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+ }
+ - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+ return _reloading; // should return if data source model is reloading
+ }
+ - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+ return [NSDate date]; // should return date data source was last changed
+ }
+ #pragma mark -
+ #pragma mark Data Source Loading / Reloading Methods
+ - (void)reloadTableViewDataSource{
+ [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+ //  should be calling your tableviews data source model to reload
+ _reloading = YES;
+ }
+ - (void)doneLoadingTableViewData{
+ //  model should call this when its done loading
+ _reloading = NO;
+ [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+ }
+ #pragma mark -
+ #pragma mark UIScrollViewDelegate Methods
+ - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+ [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+ }*/
 //===========
 // UTILITIES
 //===========
 /*- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}*/
+ [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+ }*/
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
@@ -328,27 +318,36 @@
 }
 
 -(IBAction)refresh:(id)sender{
-   [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
     
 }
+
+//=======================
+// DELETE UNLOCKED ROOMS
+//=======================
+//request sent to the server
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == UNLOCKED_SECTION){
+        return @"Delete";
+    }
+    return @"Hide";
+}
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (indexPath.section == UNLOCKED_SECTION) {
+            Room* room = [unlockedRooms objectAtIndex:indexPath.row];
+            [unlockedRooms removeObject:room];
+            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] removeObject:room.key];
+            [tableView reloadData];
+        }else{
+            Room* room = [nearbyRooms objectAtIndex:indexPath.row];
+            [nearbyRooms removeObject:room];
+            [tableView reloadData];
+        }
+    }
+}
+
 @end
 
-//request sent to the server
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    Room* room  = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
-//    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:room.creatorID]){
-//        return @"Delete";
-//    }
-//return @"Hide";
-//}
-// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        Room* room = [nearbyRooms objectAtIndex:indexPath.row];
-//        NSLog(@"hiding room %@ ", room.roomID);
-//        [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
-//        [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
-//        [tableView reloadData];
-//    }
-//}

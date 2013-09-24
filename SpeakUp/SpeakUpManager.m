@@ -132,7 +132,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [roomArray addObject:room];
         }
         roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-        [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+        [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
     }
     return room.roomID;
 }
@@ -320,7 +320,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         room.distance = [self.peerLocation distanceFromLocation:roomlocation];
     }
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-    [roomManagerDelegate updateRooms:[NSArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+    [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
 }
 
 

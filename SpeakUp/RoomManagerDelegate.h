@@ -10,7 +10,7 @@
 
 @protocol RoomManagerDelegate <NSObject>
 
--(void)updateRooms:(NSArray*)updatedNearbyRooms unlockedRooms: (NSArray*)updatedUnlockedRooms;
+-(void)updateRooms:(NSMutableArray*)updatedNearbyRooms unlockedRooms: (NSMutableArray*)updatedUnlockedRooms;
 
 
 
