@@ -1,0 +1,69 @@
+/*
+ Localizable.strings
+ SpeakUp
+ 
+ Created by Yiwei Cao on 24.09.13.
+ Copyright (c) 2013 Yiwei Cao. All rights reserved.
+ */
+
+
+
+"NO_ROOM"= "附近沒有聊天室，新建一個聊天室吧！";
+
+"ROOMS"="SpeakUp";
+
+"NO_LOCATION" = "暫時無法獲取地點信息";
+
+"NO_CONNECTION"= "暫時無法連接網絡";
+
+"LOADING" = "加載中...";
+
+"CONNECTION_LOST" = "連接中斷";
+
+"CONNECTION_ESTABLISHED" = "已建立連接";
+
+"ROOM_CLOSED" = "聊天室已關閉";
+
+"ROOM_CLOSED_LONG" =  "聊天室 %@ 已被其主人關閉，目前不可用";
+
+"OK" = "確定";
+
+"JUST_NOW" = "剛剛";
+
+"MINUTES_AGO" = "%d 分鐘前";
+
+"HOURS_AGO"="%d 小時前";
+
+"VOTE"="(%d 人支持)";
+
+"VOTES"="(%d 人支持)";
+
+"CREATE_ROOM" = "創建聊天室";
+
+"RATING_SORT" = "評分排序";
+
+"RECENT_SORT" = "時間排序";
+
+"COMPOSE" = "寫消息";
+
+"COMMENT" = "評論";
+
+"UNLOCK" = "開鎖";
+
+"CREATE" = "創建";
+
+"ROOM_NAME" = "聊天室名稱";
+
+"ROOM_KEY" = "聊天室鑰匙";
+
+"NEARBY_ROOMS" = "附近的聊天室";
+
+"UNLOCKED_ROOMS" = "已開鎖的聊天室";
+
+"SEND" = "發送";
+
+"PSEUDO" = "顯示聊天室裡所有人的頭像";
+
+"NO_MESSAGE" = "聊天室裡還沒有消息，創建一條消息吧！";
+
+"TURN_LOCATION_ON" = "創建聊天室之前請先開啟定位服務";
