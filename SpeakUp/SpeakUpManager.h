@@ -27,6 +27,8 @@
 #define CREATE_TAB 1
 #define UNLOCK_TAB 0
 
+#define API_VERSION @"1"
+
 #define ANONYMOUS @"anon" 
 #define AVATAR @"avatar"
 

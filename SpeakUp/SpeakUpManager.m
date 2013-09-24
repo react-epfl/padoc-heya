@@ -56,6 +56,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         peer_id = [data objectForKey:@"peer_id"];
         connectionIsOK=YES;
         [connectionDelegate connectionHasRecovered];
+        // VERSION CHECKING
+        NSNumber* minVersion = [data objectForKey:@"min_v"];
+        NSNumber* maxVersion = [data objectForKey:@"max_v"];
+        if(minVersion && maxVersion){
+            if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
+                NSLog(@"Problem the API does not match, display message to go to the app store");
+            }
+            
+        }
+        
         // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
         UIWindow *window = [UIApplication sharedApplication].keyWindow;
         UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
@@ -180,6 +190,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 - (void)handshake{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.dev_id forKey:@"dev_id"];
     if (peer_id) {
         [myData setValue:self.peer_id forKey:@"peer_id"];
@@ -232,6 +243,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self connect];
     }else{
         NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+        [myData setValue:API_VERSION forKey:@"api_v"];
         [myData setValue:self.peer_id forKey:@"peer_id"];
         NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
         [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
@@ -249,6 +261,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //============================================
 -(void)getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room_id forKey:@"room_id"];
     [myData setValue:key forKey:@"key"];
@@ -260,6 +273,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 -(void) createMessage:(Message *) message{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
@@ -273,6 +287,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 - (void)createRoom:(Room *)room{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
     [myData setValue:room.id_type forKey:@"id_type"];
@@ -291,6 +306,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //==============
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:roomID forKey:@"room_id"];
     NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
