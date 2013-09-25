@@ -245,7 +245,6 @@
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="distance" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="Zts-Cf-UaF">
                                             <rect key="frame" x="171" y="11" width="129" height="21"/>
-                                            <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                             <color key="textColor" red="0.45098042488098145" green="0.45098042488098145" blue="0.45098042488098145" alpha="1" colorSpace="deviceRGB"/>
                                             <nil key="highlightedColor"/>
@@ -331,7 +330,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="go"/>
                             </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="RAw-BP-lEh">
-                                <rect key="frame" x="-5" y="105" width="332" height="123"/>
+                                <rect key="frame" x="-5" y="105" width="332" height="96"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </mapView>

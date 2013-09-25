@@ -12,6 +12,11 @@
 
 "ROOMS"="SpeakUp";
 
+"UPDATE"="UPDATE";
+
+"UPDATE_SPEAKUP"="A new update of SpeakUp is available";
+
+
 "NO_LOCATION" = "cannot get location right now";
 
 "NO_CONNECTION"= "cannot connect right now";
