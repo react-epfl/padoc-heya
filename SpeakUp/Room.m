@@ -44,6 +44,9 @@
         [self setId_type:[dict objectForKey:@"id_type"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
+        if (self.isUnlocked && ![[[SpeakUpManager sharedSpeakUpManager]unlockedRoomKeyArray] containsObject:self.key]) {
+            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] addObject:self.key];
+        }
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [[[SpeakUpManager sharedSpeakUpManager] peerLocation] distanceFromLocation:roomlocation];
         // MESSAGES

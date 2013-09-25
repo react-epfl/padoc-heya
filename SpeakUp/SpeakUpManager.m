@@ -39,6 +39,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
             [sharedSpeakUpManager.locationManager startUpdatingLocation];
+            //sharedSpeakUpManager.unlockedRoomKeyArray= [[NSMutableArray alloc] init];
             [sharedSpeakUpManager connect];
         }
     }
