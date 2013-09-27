@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  SpeakUp
+
+  Created by Adrian Holzer on 15.08.13.
+  Copyright (c) 2013 Adrian Holzer. All rights reserved.
+*/
+
+
+
+"NO_ROOM"="周辺にチャットルームなし、一つを作成しよ";
+
+"ROOMS"="SpeakUp";
+
+
+"NO_LOCATION"="位置認識なし";
+
+"NO_CONNECTION"="接続できない";
+
+
+"LOADING"="ローディング中";
+"CONNECTION LOST"="接続失敗";
+"CONNECTION ESTABLISHED"="接続成功";
+
+
+"ROOM_CLOSED"="チャットルーム閉鎖";
+"ROOM_CLOSED_LONG"="チャットルーム％＠はオーナーによる永久閉鎖";
+"OK"="確定";
+
+
+"JUST_NOW"="今現在";
+"MINUTES_AGO"="％＠分前";
+"HOURS_AGO"="％＠時間前";
+"VOTE"="（単数）投票者";
+
+
+"VOTES"="（複数）投票者";
+"CREAT ROOM"="チャットルームを添加";
+"RATING_SORT"="評価番付";
+"RECETNT_SORT"="最近の評価番付";
+"COMPOSE"="メッセージ作成する";
+
+
+"COMMENT"="コメント";
+"UNLOCK"="ロックを解除";
+"ROOM_NAME"="チャットルーム名";
+
+
+"ROOM-KEY"="チャットルームコード";
+"NEARBY_ROOMS"="周辺のチャットルーム";
+"UNLOCKED_ROOMS"="アンロックされたチャットルーム";
+"SEND"="送信";
+"PSEUDO"="チャットルームにいる人の画像";
+
+
+"NO_MESSAGE"="チャットルームメッセージなし、メッセージを作成";
+
+
+
+"TURN_LOCATION_ON"="チャットルームを作成し、位置認識をONに設置、";

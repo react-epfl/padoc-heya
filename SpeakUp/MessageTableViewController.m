@@ -237,6 +237,9 @@
 //=========================
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]==nil){
+        return 0;
+    }
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         return 1;
     }
@@ -589,6 +592,11 @@
 // used to limit the number of characters to MAX_LENGTH
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if([text isEqualToString:@"\n"])
+    {
+        [inputTextView resignFirstResponder];
+        return NO;
+    }
     NSUInteger newLength = (textView.text.length - range.length) + text.length;
     if(newLength <= 500)
     {
@@ -599,6 +607,8 @@
 }
 
 
+    
+    
 -(IBAction)sendInput:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         // should send the message first
