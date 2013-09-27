@@ -108,6 +108,11 @@
     [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12]];
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
+    
+    inputButton.titleLabel.numberOfLines = 1;
+    inputButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+
+    
     inputButton.frame = CGRectMake(self.view.frame.size.width-80, 5 , 70, 30);
 
     [inputView addSubview:inputButton];

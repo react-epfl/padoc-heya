@@ -29,26 +29,27 @@
 
 
 "JUST_NOW"="今現在";
-"MINUTES_AGO"="％＠分前";
-"HOURS_AGO"="％＠時間前";
-"VOTE"="（単数）投票者";
+"MINUTES_AGO"="%d 分前";
+"HOURS_AGO"="%d 時間前";
+"VOTE"=" (%d 投票者)";
 
 
-"VOTES"="（複数）投票者";
-"CREAT ROOM"="チャットルームを添加";
+"VOTES"="（%d 投票者)";
+"CREATE_ROOM"="チャットルームを添加";
 "RATING_SORT"="評価番付";
-"RECETNT_SORT"="最近の評価番付";
+"RECENT_SORT"="最近の評価番付";
 "COMPOSE"="メッセージ作成する";
 
+"CREATE"="作れ";
 
 "COMMENT"="コメント";
 "UNLOCK"="ロックを解除";
 "ROOM_NAME"="チャットルーム名";
 
 
-"ROOM-KEY"="チャットルームコード";
+"ROOM_KEY"="チャットルームコード";
 "NEARBY_ROOMS"="周辺のチャットルーム";
-"UNLOCKED_ROOMS"="アンロックされたチャットルーム";
+"UNLOCKED_ROOMS"="アンロックされた";
 "SEND"="送信";
 "PSEUDO"="チャットルームにいる人の画像";
 
