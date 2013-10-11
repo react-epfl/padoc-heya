@@ -147,6 +147,8 @@
 		8054CB4E17AAC2DD00FA4B20 /* shadow-nav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shadow-nav.png"; sourceTree = "<group>"; };
 		8054CB5017AAC45D00FA4B20 /* background-nav2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-nav2.png"; sourceTree = "<group>"; };
 		8054CB5217ACD72100FA4B20 /* button-back3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back3.png"; sourceTree = "<group>"; };
+		806F490D1808448900BFBC91 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		806F490E1808448900BFBC91 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		80864DE216FF649700ED1724 /* non-official-room-mine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "non-official-room-mine.png"; sourceTree = "<group>"; };
 		80864DE316FF649700ED1724 /* official-room-notmine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "official-room-notmine.png"; sourceTree = "<group>"; };
 		8089F91A16E4DB0E0081E322 /* speakUPlogoRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speakUPlogoRetina.png; path = ../speakUPlogoRetina.png; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				ko,
 				"zh-Hant",
 				ja,
+				es,
 			);
 			mainGroup = 8096A89C1636E80B0092F049;
 			productRefGroup = 8096A8A81636E80C0092F049 /* Products */;
@@ -616,6 +619,7 @@
 				803EB69C17F091C200E053EA /* ko */,
 				809A5D6417F16C8B004B996C /* zh-Hant */,
 				802F98AD17F4D828003AB861 /* ja */,
+				806F490D1808448900BFBC91 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -630,6 +634,7 @@
 				803EB69D17F091C200E053EA /* ko */,
 				809A5D6517F16C8B004B996C /* zh-Hant */,
 				802F98AE17F4D828003AB861 /* ja */,
+				806F490E1808448900BFBC91 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

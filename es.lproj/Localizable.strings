@@ -1,0 +1,69 @@
+/* 
+  Localizable.strings
+  SpeakUp
+
+  Created by Adrian Holzer on 15.08.13.
+  Copyright (c) 2013 Adrian Holzer. All rights reserved.
+*/
+
+
+
+"NO_ROOM" = "no hay salas disponibles, ¡crea una!";
+
+"ROOMS" = "SpeakUp";
+
+"NO_LOCATION" = "No se puede conseguir un lugar";
+
+"NO_CONNECTION" = "No se puede conectar en este momento";
+
+"LOADING" = "Cargando...";
+
+"CONNECTION_LOST" = "La conexión se ha perdido";
+
+"CONNECTION_ESTABLISHED" = "Conexión restablecida";
+
+"ROOM_CLOSED" = "Sala cerrada";
+
+"ROOM_CLOSED_LONG" = "La sala %@ ha sido cerrada por su dueño y ya no está disponible";
+
+"OK" = "OK";
+
+"JUST_NOW" = "En este momento";
+
+"MINUTES_AGO" = "%d hace unos minutos";
+
+"HOURS_AGO" = "%d hace algunas horas";
+
+"VOTE" = "(%d Vota)";
+
+"VOTES" = "(%d Votos)";
+
+"CREATE_ROOM" = "Agrega una sala";
+
+"RATING_SORT" = "El mejor";
+
+"RECENT_SORT" = "Reciente";
+
+"COMPOSE" = "Componer";
+
+"COMMENT" = "Comentario";
+
+"UNLOCK" = "Desbloquear";
+
+"CREATE" = "Crear";
+
+"ROOM_NAME" = "Nombre de la sala";
+
+"ROOM_KEY" = "Clave de la sala";
+
+"NEARBY_ROOMS" = "Salas cercanas";
+
+"UNLOCKED_ROOMS" = "Salas desbloqueadas";
+
+"SEND" = "Enviar";
+
+"PSEUDO" = "Muestra los avatars de las personas en esta sala";
+
+"NO_MESSAGE" = "No hay mensajes en esta sala. ¡Crea uno!";
+
+"TURN_LOCATION_ON" = "Enciende la ubicación para crear una nueva sala";
