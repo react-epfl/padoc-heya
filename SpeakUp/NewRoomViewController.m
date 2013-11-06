@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define MAX_ROOMS 3
-#define MAX_LENGTH 40
+#define MAX_LENGTH 30
 #define RANGE 200 // a room has a 200 meter range
 #define LIFETIME 720//message remain 12 hours in the room
 
@@ -91,12 +91,32 @@
      [keyTextField setKeyboardType:UIKeyboardTypeNumberPad];
     
     //SEGMENTED VIEW CONTROL TITLE
+    UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
+    UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
+    
     [segmentedControl setTitle:NSLocalizedString(@"UNLOCK", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"CREATE", nil) forSegmentAtIndex:1];
     
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
+                                liteBlue, UITextAttributeTextColor,
+                                nil];
+    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:darkBlue forKey:UITextAttributeTextColor];
+    [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
+    
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: darkBlue forKey:UITextAttributeTextColor];
+    [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+    
+    
+    
+    
+    
     //SEGMENTED VIEW CONTROL IMAGES
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected2.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
      [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -108,7 +128,7 @@
     unlockRoomButton.layer.cornerRadius=2.0f;
     [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
     [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal];
-    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected2.png"] forState:UIControlStateSelected];
+   // [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected];
     
     //PSEUDO LABEL
     [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];
@@ -174,12 +194,14 @@
 -(IBAction)createRoom:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         
-        if([self.input.text isEqualToString:@"Waroftheworldviews"]){
+        /*if([self.input.text isEqualToString:@"Waroftheworldviews"]){
             [[SpeakUpManager sharedSpeakUpManager] setIsSuperUser:YES];
             NSLog(@"YOU ARE A SUPER USER NOW :)");
             self.input.text=@"";
             [self.input setPlaceholder:@"You are super :)"];
-        }else if(self.input.text.length>0){
+        }else*/
+        NSString *trimmedString = [input.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if(self.input.text.length>0 && trimmedString.length >0){
             NSLog(@"creating a new room %@ ", input.text);
             Room* myRoom = [[Room alloc] init];
             if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
@@ -248,9 +270,12 @@
 
 // used to limit the number of characters to MAX_LENGTH
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if(textField.text.length==0){
-        [createButton setEnabled:NO];
-    }
+    
+
+    
+    //if(textField.text.length==0 ){
+      //  [createButton setEnabled:NO];
+    //}
     NSUInteger newLength = (textField.text.length - range.length) + string.length;
     if(newLength <= MAX_LENGTH){
         [createButton setEnabled:YES];

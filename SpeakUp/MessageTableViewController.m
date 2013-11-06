@@ -6,7 +6,6 @@
 //
 
 #import "MessageTableViewController.h"
-#import "InputViewController.h"
 #import "Message.h"
 #import "SpeakUpManager.h"
 #import "MessageCell.h"
@@ -70,8 +69,28 @@
     }
 
     // KEY BUTTON END
+    UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
+    UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
+    
+    
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
+    
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
+                                liteBlue, UITextAttributeTextColor,
+                                nil];
+    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:darkBlue forKey:UITextAttributeTextColor];
+    [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
+    
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: darkBlue forKey:UITextAttributeTextColor];
+    [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+
+    
+    
     
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
@@ -85,9 +104,10 @@
   
     //SEGMENTED VIEW CONTROL
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected2.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    //[segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //[segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     /// INPUT VIEW

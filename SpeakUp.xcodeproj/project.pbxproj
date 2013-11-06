@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		801325D1182AA8C900C0C378 /* seg-selected4.png in Resources */ = {isa = PBXBuildFile; fileRef = 801325D0182AA8C900C0C378 /* seg-selected4.png */; };
 		803165A917BCC8CC003C4E77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 803165AB17BCC8CC003C4E77 /* Localizable.strings */; };
 		803165CE17BCD44D003C4E77 /* iPadStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 803165CC17BCD44D003C4E77 /* iPadStoryboard.storyboard */; };
 		803165DC17BD0E6F003C4E77 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */; };
@@ -68,7 +69,6 @@
 		8096A8B81636E80C0092F049 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8B71636E80C0092F049 /* main.m */; };
 		8096A8BC1636E80C0092F049 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8BB1636E80C0092F049 /* AppDelegate.m */; };
 		8096A8F11636E9C60092F049 /* CopyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8C91636E9C60092F049 /* CopyLabel.m */; };
-		8096A8F31636E9C60092F049 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8CD1636E9C60092F049 /* InputViewController.m */; };
 		8096A8F61636E9C60092F049 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8D21636E9C60092F049 /* Message.m */; };
 		8096A8F81636E9C60092F049 /* MessageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8D71636E9C60092F049 /* MessageTableViewController.m */; };
 		8096A8F91636E9C60092F049 /* NewRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8D91636E9C60092F049 /* NewRoomViewController.m */; };
@@ -96,6 +96,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		801325D0182AA8C900C0C378 /* seg-selected4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seg-selected4.png"; sourceTree = "<group>"; };
 		802F98AD17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		802F98AE17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		803165AA17BCC8CC003C4E77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -185,8 +186,6 @@
 		8096A8BB1636E80C0092F049 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8096A8C81636E9C60092F049 /* CopyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CopyLabel.h; sourceTree = "<group>"; };
 		8096A8C91636E9C60092F049 /* CopyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyLabel.m; sourceTree = "<group>"; };
-		8096A8CC1636E9C60092F049 /* InputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputViewController.h; sourceTree = "<group>"; };
-		8096A8CD1636E9C60092F049 /* InputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputViewController.m; sourceTree = "<group>"; };
 		8096A8D11636E9C60092F049 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		8096A8D21636E9C60092F049 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		8096A8D51636E9C60092F049 /* MessageManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageManagerDelegate.h; sourceTree = "<group>"; };
@@ -323,6 +322,7 @@
 		8096A91F1636E9E40092F049 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				801325D0182AA8C900C0C378 /* seg-selected4.png */,
 				803EB69817F05AD600E053EA /* button-key2.png */,
 				803EB69917F05AD600E053EA /* button-key3.png */,
 				803EB67917EB50EA00E053EA /* button-refresh@2x.png */,
@@ -385,8 +385,6 @@
 				8096A9301636F9D30092F049 /* CopyPaste */,
 				8096A8E91636E9C60092F049 /* RoomTableViewController.h */,
 				8096A8EA1636E9C60092F049 /* RoomTableViewController.m */,
-				8096A8CC1636E9C60092F049 /* InputViewController.h */,
-				8096A8CD1636E9C60092F049 /* InputViewController.m */,
 				8096A8D61636E9C60092F049 /* MessageTableViewController.h */,
 				8096A8D71636E9C60092F049 /* MessageTableViewController.m */,
 				8096A8D81636E9C60092F049 /* NewRoomViewController.h */,
@@ -536,6 +534,7 @@
 				8089F92316E4DDAC0081E322 /* Default.png in Resources */,
 				8089F92516E4DDBD0081E322 /* Default-Portrait~ipad.png in Resources */,
 				8089F92716E4DE330081E322 /* Default@2x.png in Resources */,
+				801325D1182AA8C900C0C378 /* seg-selected4.png in Resources */,
 				8089F92916E4DED00081E322 /* Default-568h@2x.png in Resources */,
 				8089F92B16E4DFE80081E322 /* Default-Portrait@2x~ipad.png in Resources */,
 				803EB67B17EB50EA00E053EA /* button-refresh@2x.png in Resources */,
@@ -585,7 +584,6 @@
 				8096A8B81636E80C0092F049 /* main.m in Sources */,
 				8096A8BC1636E80C0092F049 /* AppDelegate.m in Sources */,
 				8096A8F11636E9C60092F049 /* CopyLabel.m in Sources */,
-				8096A8F31636E9C60092F049 /* InputViewController.m in Sources */,
 				8096A8F61636E9C60092F049 /* Message.m in Sources */,
 				8096A8F81636E9C60092F049 /* MessageTableViewController.m in Sources */,
 				803EB68817EC61FE00E053EA /* SocketIO.m in Sources */,

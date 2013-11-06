@@ -53,17 +53,17 @@
 
 "COMMENT" = "Comment";
 
-"UNLOCK" = "UNLOCK";
+"UNLOCK" = "JOIN";
 
 "CREATE" = "CREATE";
 
 "ROOM_NAME" = "room name";
 
-"ROOM_KEY" = "room key";
+"ROOM_KEY" = "room number";
 
 "NEARBY_ROOMS" = "nearby rooms";
 
-"UNLOCKED_ROOMS" = "unlocked rooms";
+"UNLOCKED_ROOMS" = "joined rooms";
 
 "SEND" = "SEND";
 
