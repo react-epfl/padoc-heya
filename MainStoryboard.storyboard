@@ -32,13 +32,13 @@
             <objects>
                 <tableViewController id="J7I-vu-jbi" customClass="MessageTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="20" sectionFooterHeight="22" id="ewd-Sy-59w">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ipY-Yv-fvW">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="PbI-ez-uG9">
                                     <rect key="frame" x="-3" y="0.0" width="327" height="29"/>
@@ -52,26 +52,22 @@
                                         <action selector="sortBy:" destination="J7I-vu-jbi" eventType="valueChanged" id="ErD-gJ-jCB"/>
                                     </connections>
                                 </segmentedControl>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="NO CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UjF-hc-34C">
-                                    <rect key="frame" x="0.0" y="0.0" width="327" height="12"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="ZpJ-gv-kg6">
+                                    <rect key="frame" x="150" y="36" width="20" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
-                            <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ibe-SA-dm9">
-                            <rect key="frame" x="0.0" y="286" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="304" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="TopLeft" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="130" id="0CD-7e-2WF" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="55" width="320" height="130"/>
+                                <rect key="frame" x="0.0" y="73" width="320" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0CD-7e-2WF" id="f77-QY-2TS">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
@@ -159,7 +155,7 @@
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="101" id="bGw-Ay-tMv" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="185" width="320" height="101"/>
+                                <rect key="frame" x="0.0" y="203" width="320" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bGw-Ay-tMv" id="PJb-eN-vh4">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
@@ -183,7 +179,7 @@
                                                     <rect key="frame" x="14" y="9" width="277" height="74"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
@@ -210,7 +206,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="noConnectionLabel" destination="UjF-hc-34C" id="jif-Rf-mvf"/>
+                        <outlet property="connectionLostSpinner" destination="ZpJ-gv-kg6" id="EsZ-o1-817"/>
                         <outlet property="segmentedControl" destination="PbI-ez-uG9" id="0oq-hR-QZe"/>
                     </connections>
                 </tableViewController>
@@ -223,7 +219,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="HOME" id="fFE-SA-aDU" customClass="RoomTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="OqZ-hj-5IE">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
@@ -302,26 +298,26 @@
             <objects>
                 <viewController id="cLR-yy-Rnq" customClass="NewRoomViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="is7-Nb-Ape">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FmC-2P-lkf">
                                 <rect key="frame" x="-5" y="0.0" width="331" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 <segments>
                                     <segment title="UNLOCK"/>
                                     <segment title="CREATE"/>
                                 </segments>
-                                <color key="tintColor" red="0.22352942824363708" green="0.29803922772407532" blue="0.51764708757400513" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="createOrUnlock:" destination="cLR-yy-Rnq" eventType="valueChanged" id="cVy-YA-CNT"/>
                                 </connections>
                             </segmentedControl>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="room name" minimumFontSize="17" clearButtonMode="whileEditing" id="aml-Kf-kxP">
-                                <rect key="frame" x="20" y="45" width="283" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <rect key="frame" x="20" y="64" width="283" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -329,21 +325,12 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="go"/>
                             </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="RAw-BP-lEh">
-                                <rect key="frame" x="-3" y="123" width="332" height="90"/>
+                                <rect key="frame" x="-5" y="140" width="332" height="148"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </mapView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="NO CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZVc-K6-7Wl">
-                                <rect key="frame" x="-2" y="26" width="327" height="12"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
-                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="room key" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="AH0-4a-SN3">
-                                <rect key="frame" x="20" y="98" width="283" height="44"/>
+                                <rect key="frame" x="20" y="105" width="283" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
@@ -372,36 +359,42 @@
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="nLH-ec-wPj">
-                                <rect key="frame" x="226" y="79" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="226" y="100" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show the avatars of people in this room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" id="G0h-lx-yyf">
-                                <rect key="frame" x="20" y="82" width="206" height="21"/>
+                                <rect key="frame" x="20" y="103" width="206" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.23921570180000001" green="0.40784317260000003" blue="0.69803923369999998" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Turn location on" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="ZDc-VH-XcI">
-                                <rect key="frame" x="8" y="46" width="305" height="21"/>
+                                <rect key="frame" x="20" y="78" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.23921570180000001" green="0.40784317260000003" blue="0.69803923369999998" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="f9m-HA-YWo">
+                                <rect key="frame" x="151" y="39" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.689679563" green="0.85098445420000002" blue="0.97437024120000004" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                     </view>
                     <navigationItem key="navigationItem" title="New room" id="3AO-L8-U0f"/>
                     <connections>
+                        <outlet property="connectionLostSpinner" destination="f9m-HA-YWo" id="FNY-ur-dXi"/>
                         <outlet property="input" destination="aml-Kf-kxP" id="nyI-Il-y2s"/>
                         <outlet property="keyTextField" destination="AH0-4a-SN3" id="xXW-gb-b00"/>
                         <outlet property="mapView" destination="RAw-BP-lEh" id="oaT-Op-kxg"/>
-                        <outlet property="noConnectionLabel" destination="ZVc-K6-7Wl" id="DIZ-vg-Gc9"/>
                         <outlet property="pseudoLabel" destination="G0h-lx-yyf" id="uua-og-26r"/>
                         <outlet property="pseudoSwitch" destination="nLH-ec-wPj" id="kLP-mu-biC"/>
                         <outlet property="segmentedControl" destination="FmC-2P-lkf" id="yY3-dE-hgW"/>
@@ -421,6 +414,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>

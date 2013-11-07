@@ -68,3 +68,5 @@
 
 "TURN_LOCATION_ON" = "Ortungsdienste müssen eingeschaltet sein, um neue Chaträume erstellen zu können.";
 
+"JOIN_ROOM_INFO" = " ";
+

@@ -67,3 +67,5 @@
 "NO_MESSAGE" = "No hay mensajes en esta sala. ¡Crea uno!";
 
 "TURN_LOCATION_ON" = "Enciende la ubicación para crear una nueva sala";
+
+"JOIN_ROOM_INFO" = " ";

@@ -48,7 +48,7 @@
 
 "COMMENT" = "Commenter";
 
-"UNLOCK" = "DEVERROUILLER";
+"UNLOCK" = "REJOINDRE";
 
 "CREATE" = "CREER";
 
@@ -58,7 +58,7 @@
 
 "NEARBY_ROOMS" = "salles proches";
 
-"UNLOCKED_ROOMS" = "salles déverrouillées";
+"UNLOCKED_ROOMS" = "salles rejointes";
 
 "SEND" = "ENVOYER";
 
@@ -67,3 +67,5 @@
 "NO_MESSAGE" = "Il n'y pas encore de message dans cette salle, créez en un!";
 
 "TURN_LOCATION_ON" = "Enclenchez la localisation pour créer une nouvelle salle";
+
+"JOIN_ROOM_INFO" = "Entrer le numéro d'une salle existante pour la rejoindre";

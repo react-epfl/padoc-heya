@@ -30,7 +30,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, noConnectionLabel, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey;
 
 
 
@@ -68,30 +68,23 @@
         self.navigationItem.rightBarButtonItem=nil;
     }
 
-    // KEY BUTTON END
+    // SEGMENTED CONTROLS BEST / RECENT
     UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
     UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
     
-    
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
-    
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
                                 liteBlue, UITextAttributeTextColor,
                                 nil];
     [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:darkBlue forKey:UITextAttributeTextColor];
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
-    
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: darkBlue forKey:UITextAttributeTextColor];
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
 
-    
-    
-    
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
@@ -106,8 +99,6 @@
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    //[segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    //[segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     /// INPUT VIEW
@@ -195,7 +186,6 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
     }];
-    
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
@@ -219,7 +209,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-    [noConnectionLabel setHidden:[[SpeakUpManager sharedSpeakUpManager] connectionIsOK]];
+        if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+            [connectionLostSpinner stopAnimating];
+        }else{
+            [connectionLostSpinner startAnimating];
+        }
     [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
@@ -263,8 +257,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]==nil){
+        [connectionLostSpinner startAnimating];
         return 0;
     }
+    [connectionLostSpinner stopAnimating];
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         return 1;
     }
@@ -427,14 +423,10 @@
 // CONNECTION HANDLING
 //=========================
 -(void)connectionWasLost{
-    noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
-    [noConnectionLabel setText:  NSLocalizedString(@"CONNECTION_LOST", nil)];
-    [noConnectionLabel setHidden:NO];
+    [connectionLostSpinner startAnimating];
 }
 -(void)connectionHasRecovered{
-    noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
-    [noConnectionLabel setText: NSLocalizedString(@"CONNECTION_ESTABLISHED", nil)];
-    [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
+    [connectionLostSpinner stopAnimating];
 }
 //=========================
 // RATING UP
@@ -525,10 +517,6 @@
 //=========================
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    Message* message = [self getMessageForIndex:indexPath.section];
-//    if([[[SpeakUpManager sharedSpeakUpManager] peer_id] isEqual:message.authorPeerID]){
-//        return @"Delete";
-//    }
     return @"Hide";
 }
 // DELETE
@@ -628,11 +616,7 @@
         return YES;
     }
     return NO;
-    
 }
-
-
-    
     
 -(IBAction)sendInput:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
@@ -642,12 +626,8 @@
             Message *newMessage = [[Message alloc] init];
             newMessage.content= inputTextView.text;
             newMessage.roomID=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
-            
             [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
-            
             [inputTextView setText:@""];
-            // goes back to the messages view
-           // [self.navigationController popViewControllerAnimated:YES];
             //update the input
             [inputTextView resignFirstResponder];
             [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];

@@ -18,7 +18,7 @@
 @property(strong, nonatomic) IBOutlet UIBarButtonItem * createButton;
 @property(strong, nonatomic) IBOutlet UITextField * input;
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
-@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
+//@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
 
 @property(strong, nonatomic) IBOutlet UITextField * keyTextField;
@@ -31,7 +31,7 @@
 @property(strong, nonatomic) IBOutlet UISwitch * pseudoSwitch;
 @property(strong, nonatomic) IBOutlet UILabel * pseudoLabel;
 
-
+@property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
 
 //-(IBAction)sendMail;
 

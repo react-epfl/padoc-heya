@@ -65,3 +65,5 @@
 "NO_MESSAGE" = "이 방에 메세지가 없습니다.";
 
 "TURN_LOCATION_ON" = "방을 개설하기 위해 새 위치를 알리세요.";
+
+"JOIN_ROOM_INFO" = " ";

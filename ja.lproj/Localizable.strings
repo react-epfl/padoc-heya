@@ -59,3 +59,5 @@
 
 
 "TURN_LOCATION_ON"="チャットルームを作成し、位置認識をONに設置、";
+
+"JOIN_ROOM_INFO" = " ";

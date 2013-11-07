@@ -19,7 +19,7 @@
 @implementation NewRoomViewController
 
 
-@synthesize createButton, input, mapView, noConnectionLabel, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel;
+@synthesize createButton, input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel;
 
 
 - (void)viewDidLoad
@@ -45,15 +45,7 @@
     newBackButton.frame = CGRectMake(5, 5, 30, 30);
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
     // BACK BUTTON END
-    
-    // COMPOSE BUTTON START
-   /* UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [composeButton setImage:[UIImage imageNamed: @"button-write1.png"] forState:UIControlStateNormal];
-    [composeButton setImage:[UIImage imageNamed: @"button-write2.png"] forState:UIControlStateHighlighted];
-    [composeButton addTarget:self action:@selector(sendMail) forControlEvents:UIControlEventTouchUpInside];
-    composeButton.frame = CGRectMake(5, 5, 30, 30);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
-    // COMPOSE BUTTON END*/
+
     
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
@@ -108,10 +100,7 @@
     
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: darkBlue forKey:UITextAttributeTextColor];
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
-    
-    
-    
-    
+
     
     //SEGMENTED VIEW CONTROL IMAGES
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -134,8 +123,8 @@
     [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];
     
     //WARNING LABEL
-    [warningLabel setText:NSLocalizedString(@"TURN_LOCATION_ON", nil)];
-    
+    //[warningLabel setText:NSLocalizedString(@"TURN_LOCATION_ON", nil)];
+    [warningLabel setText:NSLocalizedString(@"JOIN_ROOM_INFO", nil)];
     
     // HIDE CREATION STUFF AND SHOW UNLOCK STUFF
     [mapView setHidden:YES];
@@ -146,14 +135,20 @@
     [unlockRoomButton setHidden:NO];
     [keyTextField setHidden:NO];
     [createRoomLabel setHidden:YES];
-    [warningLabel setHidden:YES];
+    [warningLabel setHidden:NO];
     [keyTextField becomeFirstResponder];
+
 
     
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [noConnectionLabel setHidden:[[SpeakUpManager sharedSpeakUpManager] connectionIsOK]];
+    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        [connectionLostSpinner stopAnimating];
+    }else{
+        [connectionLostSpinner startAnimating];
+    }
+
 }
 
 
@@ -181,14 +176,10 @@
 }
 
 -(void)connectionWasLost{
-    noConnectionLabel.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
-    [noConnectionLabel setText:  NSLocalizedString(@"CONNECTION_LOST", nil)];
-    [noConnectionLabel setHidden:NO];
+    [connectionLostSpinner startAnimating];
 }
 -(void)connectionHasRecovered{
-    noConnectionLabel.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
-    [noConnectionLabel setText: NSLocalizedString(@"CONNECTION_ESTABLISHED", nil)];
-    [noConnectionLabel performSelector:@selector(setHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:3.0];
+    [connectionLostSpinner stopAnimating];
 }
 
 -(IBAction)createRoom:(id)sender{
@@ -226,47 +217,8 @@
     }
 }
 
-/*-(IBAction)sendMail{
-    if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *mfViewController = [[MFMailComposeViewController alloc] init];
-        mfViewController.mailComposeDelegate = self;
-        NSArray *toRecipients = [NSArray arrayWithObject:@"adrian.holzer@me.com"];
-        [mfViewController setToRecipients:toRecipients];
-        [mfViewController setSubject: NSLocalizedString(@"FEEDBACK", nil) ];
-        
-        [self presentViewController:mfViewController animated:YES completion:nil];
-    }else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"STATUS", nil)  message:NSLocalizedString(@"NO_MAIL", nil)  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)  otherButtonTitles:nil];
-        [alert show];
-    }
-}*/
 
-/*#pragma mark -
-#pragma mark MFMailComposeViewControllerDelegate Methods
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"STATUS", nil) message:@"" delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-    
-    switch (result) {
-        case MFMailComposeResultCancelled:
-            alert.message = NSLocalizedString(@"MESSAGE_CANCELED", nil);
-            break;
-        case MFMailComposeResultSaved:
-            alert.message = NSLocalizedString(@"MESSAGE_SAVED", nil);
-            break;
-        case MFMailComposeResultSent:
-            alert.message = NSLocalizedString(@"MESSAGE_SENT", nil);
-            break;
-        case MFMailComposeResultFailed:
-            alert.message = NSLocalizedString(@"MESSAGE_FAILED", nil);
-            break;
-        default:
-            alert.message = NSLocalizedString(@"MESSAGE_NOT_SENT", nil);
-            break;
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [alert show];
-}*/
 
 // used to limit the number of characters to MAX_LENGTH
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
@@ -287,7 +239,7 @@
 -(IBAction)createOrUnlock:(id)sender{
     UISegmentedControl *seg = (UISegmentedControl *) sender;
     NSInteger selectedSegment = seg.selectedSegmentIndex;
-    
+     [warningLabel setText:NSLocalizedString(@"TURN_LOCATION_ON", nil)];
     if (selectedSegment == CREATE_TAB) {
         [unlockRoomButton setHidden:YES];
         [keyTextField setHidden:YES];
@@ -311,7 +263,7 @@
             [createRoomLabel setHidden:YES];
             }
     }else if(selectedSegment == UNLOCK_TAB){
-        [warningLabel setHidden:YES];
+        [warningLabel setHidden:NO];
         [pseudoSwitch setHidden:YES];
         [pseudoLabel setHidden:YES];
       [mapView setHidden:YES];
@@ -321,16 +273,19 @@
         [keyTextField setHidden:NO];
          [createRoomLabel setHidden:YES];
         [keyTextField becomeFirstResponder];
+        [warningLabel setText:NSLocalizedString(@"JOIN_ROOM_INFO", nil)];
     }
     
     
 }
 
 - (IBAction)unlock:(id)sender {
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
     // check if the label is ok, then pop the view
     [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text];
     // could wait for response and then enter the lobby
     [self.navigationController popViewControllerAnimated:YES];
+    }
 
 }
 

@@ -67,3 +67,5 @@
 "NO_MESSAGE" = "聊天室裡還沒有消息，創建一條消息吧！";
 
 "TURN_LOCATION_ON" = "創建聊天室之前請先開啟定位服務";
+
+"JOIN_ROOM_INFO" = " ";

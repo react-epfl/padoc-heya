@@ -28,7 +28,7 @@
 
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
-@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
+//@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
 
 @property(strong, nonatomic)  UIView * inputView;
 @property(strong, nonatomic)  UIButton * inputButton;
@@ -37,6 +37,9 @@
 @property(nonatomic)  BOOL keyboardIsVisible;
 @property(nonatomic)  BOOL showKey;
 @property(nonatomic) int keyboardHeight;
+
+@property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
+
 
 
 

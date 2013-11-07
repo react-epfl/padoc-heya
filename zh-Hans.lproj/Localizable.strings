@@ -67,3 +67,5 @@
 "NO_MESSAGE" = "房间里还没有消息，创建一条消息吧！";
 
 "TURN_LOCATION_ON" = "新建房间之前请先开启定位服务";
+
+"JOIN_ROOM_INFO" = " ";
