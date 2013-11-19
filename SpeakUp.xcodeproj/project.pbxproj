@@ -87,6 +87,7 @@
 		8096A9261636F39C0092F049 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9251636F39B0092F049 /* CoreLocation.framework */; };
 		8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9271636F3FD0092F049 /* MessageUI.framework */; };
 		8096A92E1636F7E60092F049 /* chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 8096A92D1636F7E60092F049 /* chevron.png */; };
+		80B5C8C6183BD6020024E946 /* iPad3Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */; };
 		80FB4C4317251EE40004965A /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3C17251EE40004965A /* base64.c */; };
 		80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */; };
 		80FB4C4517251EE40004965A /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C4217251EE40004965A /* SRWebSocket.m */; };
@@ -214,6 +215,7 @@
 		8096A92D1636F7E60092F049 /* chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chevron.png; sourceTree = "<group>"; };
 		809A5D6417F16C8B004B996C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		809A5D6517F16C8B004B996C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad3Storyboard.storyboard; sourceTree = "<group>"; };
 		80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
 		80FB4C3C17251EE40004965A /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/base64.c; sourceTree = "<group>"; };
 		80FB4C3D17251EE40004965A /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/base64.h; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		8096A89C1636E80B0092F049 = {
 			isa = PBXGroup;
 			children = (
+				80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */,
 				803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */,
 				803165CC17BCD44D003C4E77 /* iPadStoryboard.storyboard */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
@@ -514,6 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8096A8B61636E80C0092F049 /* InfoPlist.strings in Resources */,
+				80B5C8C6183BD6020024E946 /* iPad3Storyboard.storyboard in Resources */,
 				8096A8FA1636E9C60092F049 /* noMsg.png in Resources */,
 				8096A8FB1636E9C60092F049 /* non-official-room.png in Resources */,
 				8096A8FC1636E9C60092F049 /* noroom.png in Resources */,

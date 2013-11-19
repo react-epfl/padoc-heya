@@ -116,7 +116,7 @@
     unlockRoomButton.layer.masksToBounds=YES;
     unlockRoomButton.layer.cornerRadius=2.0f;
     [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal];
+    //[unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal];
    // [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected];
     
     //PSEUDO LABEL
