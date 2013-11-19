@@ -64,12 +64,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
                 NSLog(@"Problem the API does not match, display message to go to the app store");
                 /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"UPDATE", nil)
-                                                                message: NSLocalizedString(@"UPDATE_SPEAKUP", nil)
-                                                               delegate:nil
-                                                      cancelButtonTitle: NSLocalizedString(@"OK", nil)
-                                                      otherButtonTitles:nil];*/
-               // [alert show];
-           }
+                 message: NSLocalizedString(@"UPDATE_SPEAKUP", nil)
+                 delegate:nil
+                 cancelButtonTitle: NSLocalizedString(@"OK", nil)
+                 otherButtonTitles:nil];*/
+                // [alert show];
+            }
             
         }
         
@@ -113,7 +113,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //================
 -(void)receivedRooms:(NSArray*)roomDictionaries{
     [roomArray removeAllObjects];
-    [unlockedRoomArray removeAllObjects];
+    //[unlockedRoomArray removeAllObjects];
     self.locationAtLastReset=self.peerLocation;
     NSLog(@"ALL OBJECT ARE REMOVED FROM NEARBY ROOMS");
     for (NSDictionary *roomDictionary in roomDictionaries) {
@@ -141,16 +141,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [roomsToRemove addObject:r];
         }
     }
-     [unlockedRoomArray removeObjectsInArray:roomsToRemove];
-    if (![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
-        if ([unlockedRoomKeyArray containsObject:room.key]) {
-            [unlockedRoomArray addObject:room];
-        }else{
-            [roomArray addObject:room];
-        }
-        roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-        [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+    [unlockedRoomArray removeObjectsInArray:roomsToRemove];
+    //if (![deletedRoomIDs containsObject:room.roomID] && !room.deleted) {
+    if ([unlockedRoomKeyArray containsObject:room.key]) {
+        [unlockedRoomArray addObject:room];
+    }else{
+        [roomArray addObject:room];
     }
+    roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
+    [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+    //}
     return room.roomID;
 }
 //==================
@@ -167,7 +167,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
     Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
     for(Room *room in roomArray){
-       [self addMessage:message toRoom:room];
+        [self addMessage:message toRoom:room];
     }
     for(Room *room in unlockedRoomArray){
         [self addMessage:message toRoom:room];
@@ -217,9 +217,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //========================
 - (void)connect{
     //if (locationIsOK) {
-        socketIO = [[SocketIO alloc] initWithDelegate:self];
-        [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
-        [self startNetworking];
+    socketIO = [[SocketIO alloc] initWithDelegate:self];
+    [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
+    [self startNetworking];
     //}
 }
 - (void) socketIODidConnect:(SocketIO *)socket{
@@ -467,7 +467,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void) showDisconnectionView{
     UIView* disconnectionView = [[UIView alloc] init];
     disconnectionView.backgroundColor= [UIColor redColor];
-   // [[UIApplication sharedApplication] windows]
+    // [[UIApplication sharedApplication] windows]
     
 }
 
