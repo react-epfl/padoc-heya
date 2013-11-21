@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		801325D1182AA8C900C0C378 /* seg-selected4.png in Resources */ = {isa = PBXBuildFile; fileRef = 801325D0182AA8C900C0C378 /* seg-selected4.png */; };
 		803165A917BCC8CC003C4E77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 803165AB17BCC8CC003C4E77 /* Localizable.strings */; };
-		803165CE17BCD44D003C4E77 /* iPadStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 803165CC17BCD44D003C4E77 /* iPadStoryboard.storyboard */; };
 		803165DC17BD0E6F003C4E77 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */; };
 		803D3D6F17915C7000AC527A /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D3D6E17915C7000AC527A /* MessageCell.m */; };
 		803EB67317EB323100E053EA /* seg-selected2.png in Resources */ = {isa = PBXBuildFile; fileRef = 803EB67117EB323100E053EA /* seg-selected2.png */; };
@@ -87,6 +86,10 @@
 		8096A9261636F39C0092F049 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9251636F39B0092F049 /* CoreLocation.framework */; };
 		8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9271636F3FD0092F049 /* MessageUI.framework */; };
 		8096A92E1636F7E60092F049 /* chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 8096A92D1636F7E60092F049 /* chevron.png */; };
+		80AB3D87183E72FB0005C603 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */; };
+		80AB3D89183E73150005C603 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D88183E73150005C603 /* CoreData.framework */; };
+		80AB3D8B183E73340005C603 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D8A183E73340005C603 /* SystemConfiguration.framework */; };
+		80AB3D8D183E73490005C603 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D8C183E73490005C603 /* libz.dylib */; };
 		80B5C8C6183BD6020024E946 /* iPad3Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */; };
 		80FB4C4317251EE40004965A /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3C17251EE40004965A /* base64.c */; };
 		80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */; };
@@ -101,7 +104,6 @@
 		802F98AD17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		802F98AE17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		803165AA17BCC8CC003C4E77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		803165CC17BCD44D003C4E77 /* iPadStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPadStoryboard.storyboard; sourceTree = "<group>"; };
 		803165D517BCD550003C4E77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		803D3D6D17915C7000AC527A /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
@@ -215,6 +217,16 @@
 		8096A92D1636F7E60092F049 /* chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chevron.png; sourceTree = "<group>"; };
 		809A5D6417F16C8B004B996C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		809A5D6517F16C8B004B996C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		80AB3D7E183E72A80005C603 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = Library/GAI.h; sourceTree = "<group>"; };
+		80AB3D7F183E72A80005C603 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = Library/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		80AB3D80183E72A80005C603 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = Library/GAIFields.h; sourceTree = "<group>"; };
+		80AB3D81183E72A80005C603 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = Library/GAILogger.h; sourceTree = "<group>"; };
+		80AB3D82183E72A80005C603 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = Library/GAITrackedViewController.h; sourceTree = "<group>"; };
+		80AB3D83183E72A80005C603 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = Library/GAITracker.h; sourceTree = "<group>"; };
+		80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = Library/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		80AB3D88183E73150005C603 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		80AB3D8A183E73340005C603 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		80AB3D8C183E73490005C603 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad3Storyboard.storyboard; sourceTree = "<group>"; };
 		80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
 		80FB4C3C17251EE40004965A /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/base64.c; sourceTree = "<group>"; };
@@ -234,6 +246,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80AB3D8D183E73490005C603 /* libz.dylib in Frameworks */,
+				80AB3D8B183E73340005C603 /* SystemConfiguration.framework in Frameworks */,
+				80AB3D89183E73150005C603 /* CoreData.framework in Frameworks */,
 				80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */,
 				80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */,
 				80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */,
@@ -244,6 +259,7 @@
 				8096A8AC1636E80C0092F049 /* UIKit.framework in Frameworks */,
 				8096A8AE1636E80C0092F049 /* Foundation.framework in Frameworks */,
 				8096A8B01636E80C0092F049 /* CoreGraphics.framework in Frameworks */,
+				80AB3D87183E72FB0005C603 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,9 +269,9 @@
 		8096A89C1636E80B0092F049 = {
 			isa = PBXGroup;
 			children = (
+				80AB3D7C183E727B0005C603 /* Google analytics */,
 				80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */,
 				803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */,
-				803165CC17BCD44D003C4E77 /* iPadStoryboard.storyboard */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
 				80A6704D17381C150082275E /* Socket.io */,
 				80FB4C3B17251E950004965A /* SocketRocket */,
@@ -276,6 +292,9 @@
 		8096A8AA1636E80C0092F049 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80AB3D8C183E73490005C603 /* libz.dylib */,
+				80AB3D8A183E73340005C603 /* SystemConfiguration.framework */,
+				80AB3D88183E73150005C603 /* CoreData.framework */,
 				80FB4C4817251F540004965A /* libicucore.dylib */,
 				80FB4C4A17251F5D0004965A /* Security.framework */,
 				80FB4C4617251F460004965A /* CFNetwork.framework */,
@@ -436,6 +455,20 @@
 			name = Socket.io;
 			sourceTree = "<group>";
 		};
+		80AB3D7C183E727B0005C603 /* Google analytics */ = {
+			isa = PBXGroup;
+			children = (
+				80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */,
+				80AB3D7E183E72A80005C603 /* GAI.h */,
+				80AB3D7F183E72A80005C603 /* GAIDictionaryBuilder.h */,
+				80AB3D80183E72A80005C603 /* GAIFields.h */,
+				80AB3D81183E72A80005C603 /* GAILogger.h */,
+				80AB3D82183E72A80005C603 /* GAITrackedViewController.h */,
+				80AB3D83183E72A80005C603 /* GAITracker.h */,
+			);
+			name = "Google analytics";
+			sourceTree = "<group>";
+		};
 		80FB4C3B17251E950004965A /* SocketRocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,7 +598,6 @@
 				8054CB5117AAC45D00FA4B20 /* background-nav2.png in Resources */,
 				8054CB5317ACD72100FA4B20 /* button-back3.png in Resources */,
 				803165A917BCC8CC003C4E77 /* Localizable.strings in Resources */,
-				803165CE17BCD44D003C4E77 /* iPadStoryboard.storyboard in Resources */,
 				803165DC17BD0E6F003C4E77 /* MainStoryboard.storyboard in Resources */,
 				808B535F17BE72F00070B451 /* seg-selected.png in Resources */,
 				808B536017BE72F00070B451 /* seg-selected1.png in Resources */,
@@ -713,6 +745,10 @@
 				GCC_PREFIX_HEADER = "SpeakUp/SpeakUp-Prefix.pch";
 				INFOPLIST_FILE = "SpeakUp/SpeakUp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/aholzer/Documents/3-Development/REACT/SpeakUp-iOS/Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -738,6 +774,10 @@
 				GCC_PREFIX_HEADER = "SpeakUp/SpeakUp-Prefix.pch";
 				INFOPLIST_FILE = "SpeakUp/SpeakUp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/aholzer/Documents/3-Development/REACT/SpeakUp-iOS/Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

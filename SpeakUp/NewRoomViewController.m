@@ -10,6 +10,9 @@
 #import "Room.h"
 #import "SpeakUpManager.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 
 #define MAX_ROOMS 3
 #define MAX_LENGTH 30
@@ -19,7 +22,7 @@
 @implementation NewRoomViewController
 
 
-@synthesize createButton, input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel;
+@synthesize input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel;
 
 
 - (void)viewDidLoad
@@ -31,7 +34,7 @@
     
     
     
-    [createButton setEnabled:YES];
+    //[createButton setEnabled:YES];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
         [input setPlaceholder:@"You are super :)"];
@@ -53,8 +56,8 @@
     customLabel.textAlignment = NSTextAlignmentCenter;
     [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:20]];
     customLabel.textColor =  [UIColor whiteColor];
-    self.navigationItem.titleView = customLabel;
-    [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"CREATE_ROOM", nil)];
+   // self.navigationItem.titleView = customLabel;
+    //[((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"CREATE_ROOM", nil)];
     
     // INPUT
     self.input.delegate=self;
@@ -84,40 +87,39 @@
     
     //SEGMENTED VIEW CONTROL TITLE
     UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
-    UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
+   // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
     
     [segmentedControl setTitle:NSLocalizedString(@"UNLOCK", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"CREATE", nil) forSegmentAtIndex:1];
     
+    
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
-                                liteBlue, UITextAttributeTextColor,
+                                segmentedControl.tintColor, UITextAttributeTextColor,
                                 nil];
     [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    
-    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:darkBlue forKey:UITextAttributeTextColor];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
-    
-    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: darkBlue forKey:UITextAttributeTextColor];
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: [UIColor whiteColor] forKey:UITextAttributeTextColor];
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
 
-    
-    //SEGMENTED VIEW CONTROL IMAGES
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateSelected  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-     [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+ 
   
     
     // UNLOCK BUTTON
-    [unlockRoomButton setTitle:NSLocalizedString(@"UNLOCK", nil) forState:UIControlStateNormal];
+    [unlockRoomButton setTitle:NSLocalizedString(@"JOIN_ROOM", nil) forState:UIControlStateNormal];
     unlockRoomButton.layer.masksToBounds=YES;
     unlockRoomButton.layer.cornerRadius=2.0f;
     [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    //[unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal];
-   // [unlockRoomButton setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected];
+    [unlockRoomButton setBackgroundColor:segmentedControl.tintColor];
+    
+    // CREATE BUTTON
+    [createRoomButton setTitle:NSLocalizedString(@"CREATE_ROOM", nil) forState:UIControlStateNormal];
+    createRoomButton.layer.masksToBounds=YES;
+    createRoomButton.layer.cornerRadius=2.0f;
+    [createRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
+    [createRoomButton setBackgroundColor:segmentedControl.tintColor];
+    
     
     //PSEUDO LABEL
     [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];
@@ -133,12 +135,28 @@
     [pseudoLabel setHidden:YES];
     [createRoomButton setHidden:YES];
     [unlockRoomButton setHidden:NO];
+    [createRoomButton setHidden:YES];
     [keyTextField setHidden:NO];
     [createRoomLabel setHidden:YES];
     [warningLabel setHidden:NO];
     [keyTextField becomeFirstResponder];
 
+////
+   /* if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){// CHECKS IF IPAD
+        
+        CGRect frame= segmentedControl.frame;
+        [segmentedControl setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 60)];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIFont fontWithName:@"HelveticaNeue-Medium" size:30], UITextAttributeFont,
+                                    liteBlue, UITextAttributeTextColor,
+                                    nil];
+        [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    }else{
+ 
+    }*/
 
+    
+   
     
 }
 
@@ -148,6 +166,10 @@
     }else{
         [connectionLostSpinner startAnimating];
     }
+    //GOOGLE TRACKER
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"NewRoom Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
 }
 
@@ -212,6 +234,12 @@
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];
             self.input.text=@"";
             [self.navigationController popViewControllerAnimated:YES];
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            // GOOGLE ANALYTICS
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                                  action:@"button_press"  // Event action (required)
+                                                                   label:@"create_room"          // Event label
+                                                                   value:nil] build]];    // Event value
         }
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
@@ -222,15 +250,9 @@
 
 // used to limit the number of characters to MAX_LENGTH
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
-
-    
-    //if(textField.text.length==0 ){
-      //  [createButton setEnabled:NO];
-    //}
     NSUInteger newLength = (textField.text.length - range.length) + string.length;
     if(newLength <= MAX_LENGTH){
-        [createButton setEnabled:YES];
+        //[createButton setEnabled:YES];
         return YES;
     } 
     return NO;
@@ -241,6 +263,7 @@
     NSInteger selectedSegment = seg.selectedSegmentIndex;
      [warningLabel setText:NSLocalizedString(@"TURN_LOCATION_ON", nil)];
     if (selectedSegment == CREATE_TAB) {
+
         [unlockRoomButton setHidden:YES];
         [keyTextField setHidden:YES];
         
@@ -285,7 +308,14 @@
     [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text];
     // could wait for response and then enter the lobby
     [self.navigationController popViewControllerAnimated:YES];
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                              action:@"button_press"  // Event action (required)
+                                                               label:@"join_room"          // Event label
+                                                               value:nil] build]];    // Event value
     }
+
 
 }
 

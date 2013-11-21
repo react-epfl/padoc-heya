@@ -35,7 +35,7 @@
 
 
 "VOTES"="（%d 投票者)";
-"CREATE_ROOM"="チャットルームを添加";
+"CREATE_ROOM"="作れ";
 "RATING_SORT"="評価番付";
 "RECENT_SORT"="最近の評価番付";
 "COMPOSE"="メッセージ作成する";
@@ -44,6 +44,8 @@
 
 "COMMENT"="コメント";
 "UNLOCK"="ロックを解除";
+"JOIN_ROOM" = "ロックを解除";
+
 "ROOM_NAME"="チャットルーム名";
 
 

@@ -15,7 +15,7 @@
 
 @interface NewRoomViewController : UIViewController<MKMapViewDelegate,UITextFieldDelegate,ConnectionDelegate>
 
-@property(strong, nonatomic) IBOutlet UIBarButtonItem * createButton;
+//@property(strong, nonatomic) IBOutlet UIBarButtonItem * createButton;
 @property(strong, nonatomic) IBOutlet UITextField * input;
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 //@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;

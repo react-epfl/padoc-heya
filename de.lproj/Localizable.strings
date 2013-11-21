@@ -38,7 +38,7 @@
 
 "VOTES"="(%d Stimmen)";
 
-"CREATE_ROOM" = "Neuer Chatraum";
+"CREATE_ROOM" = "ERSTELLEN";
 
 "RATING_SORT" = "BEWERTUNG";
 
@@ -49,6 +49,8 @@
 "COMMENT" = "";
 
 "UNLOCK" = "ÖFFNEN";
+
+"JOIN_ROOM" = "ÖFFNEN";
 
 "CREATE" = "ERSTELLEN";
 

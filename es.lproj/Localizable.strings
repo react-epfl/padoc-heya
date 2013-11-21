@@ -38,7 +38,7 @@
 
 "VOTES" = "(%d Votos)";
 
-"CREATE_ROOM" = "Agrega una sala";
+"CREATE_ROOM" = "Crear";
 
 "RATING_SORT" = "El mejor";
 
@@ -49,6 +49,8 @@
 "COMMENT" = "Comentario";
 
 "UNLOCK" = "Desbloquear";
+
+"JOIN_ROOM" = "Desbloquear";
 
 "CREATE" = "Crear";
 

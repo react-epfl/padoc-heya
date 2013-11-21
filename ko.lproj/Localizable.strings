@@ -36,7 +36,7 @@
 
 "VOTES"="(%d 투표)";
 
-"CREATE_ROOM" = "대화방을 추가 합니다.";
+"CREATE_ROOM" = "개설";
 
 "RATING_SORT" = "최고";
 
@@ -47,6 +47,8 @@
 "COMMENT" = "코멘트";
 
 "UNLOCK" = "잠금이 해제되어 있습니다.";
+
+"JOIN_ROOM" = "잠금이 해제되어 있습니다.";
 
 "CREATE" = "개설";
 

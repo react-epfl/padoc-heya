@@ -9,6 +9,9 @@
 #import "Message.h"
 #import "SpeakUpManager.h"
 #import "MessageCell.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 
 #define FONT_SIZE 17.0f
 #define CELL_CONTENT_WIDTH 280.0f
@@ -30,7 +33,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel;
 
 
 
@@ -41,7 +44,12 @@
 //=========================
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
+    
+   // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
+    UIColor *mediumBlue = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:1.0];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
     //[self.roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
@@ -58,7 +66,7 @@
     // BACK BUTTON END
     
     // KEY BUTTON START ONLY IF THE KEY EXISTS
-    UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    /*UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [composeButton setImage:[UIImage imageNamed: @"button-key2.png"] forState:UIControlStateNormal];
     [composeButton setImage:[UIImage imageNamed: @"button-key3.png"] forState:UIControlStateHighlighted];
     [composeButton addTarget:self action:@selector(keyPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -67,46 +75,38 @@
     if (![[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]) {
         self.navigationItem.rightBarButtonItem=nil;
     }
+     */
 
     // SEGMENTED CONTROLS BEST / RECENT
-    UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
-    UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
+    //UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
+   // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
     
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
+    [segmentedControl setSelectedSegmentIndex:0];// a small routine to avoid a weird color bug
+    [segmentedControl setSelectedSegmentIndex:1];
     
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+    
+   NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
-                                liteBlue, UITextAttributeTextColor,
+                                segmentedControl.tintColor, UITextAttributeTextColor,
                                 nil];
-    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:darkBlue forKey:UITextAttributeTextColor];
+   [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
-    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: darkBlue forKey:UITextAttributeTextColor];
-    [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: [UIColor whiteColor] forKey:UITextAttributeTextColor];
+[segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
 
-    // NAV TITLE
-    UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
-    customLabel.backgroundColor= [UIColor clearColor];
-    customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22]];
-    customLabel.textColor =  [UIColor whiteColor];
-    self.navigationItem.titleView = customLabel;
-    [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
-    showKey=NO;
-  
-    //SEGMENTED VIEW CONTROL
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected3.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"seg-selected4.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [segmentedControl setDividerImage:[UIImage imageNamed:@"seg-div3.png"] forLeftSegmentState:UIControlStateNormal  rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+    [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
     
     /// INPUT VIEW
     keyboardIsVisible=NO;
     keyboardHeight=0;
     
    inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
-    inputView.backgroundColor = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:0.9];
+    
+    inputView.backgroundColor = mediumBlue;
     [self.view addSubview:inputView];
     inputTextView.text=@"";
 
@@ -114,9 +114,14 @@
     inputButton.layer.masksToBounds=YES;
     inputButton.layer.cornerRadius=4.0f;
     [inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
-    [inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
-    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12]];
+    // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
+    [inputButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
+    //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
+    //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
+    
+    [inputButton setBackgroundColor:segmentedControl.tintColor];
+    
+    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:15]];
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     
@@ -165,6 +170,8 @@
     newFrame.origin.x = 0;
     newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT)-keyboardHeight;
     inputView.frame = newFrame;
+    
+
     
 }
 
@@ -217,6 +224,11 @@
     [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
+    //GOOGLE TRACKER
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Message Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    
 }
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room{
@@ -411,13 +423,26 @@
 -(IBAction)sortBy:(id)sender{
     UISegmentedControl *seg = (UISegmentedControl *) sender;
     NSInteger selectedSegment = seg.selectedSegmentIndex;
+    NSString* eventName;
+    
     if (selectedSegment == 0) {
         [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:BEST_RATING];
+        eventName=@"score_message_ordering_tab";
     }else if(selectedSegment == 1){
         [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:MOST_RECENT];
+        eventName=@"time_message_ordering_tab";
     }
     [self sortMessages];
     [self.tableView reloadData];
+    NSIndexPath *myIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView selectRowAtIndexPath:myIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
+    
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"tab_change"  // Event action (required)
+                                                           label:eventName          // Event label
+                                                           value:nil] build]];    // Event value
 }
 //=========================
 // CONNECTION HANDLING
@@ -636,7 +661,7 @@
     }
 }
 
--(IBAction)keyPressed:(id)sender{
+/*-(IBAction)keyPressed:(id)sender{
     if(showKey){
     [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     showKey=NO;
@@ -644,7 +669,7 @@
             [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
             showKey=YES;
         }
-}
+}*/
 
 
 @end

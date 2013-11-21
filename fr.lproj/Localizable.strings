@@ -38,7 +38,7 @@
 
 "VOTES"="(%d votes)";
 
-"CREATE_ROOM" = "Ajouter Une Salle";
+"CREATE_ROOM" = "CREER UNE SALLE";
 
 "RATING_SORT" = "MEILLEUR";
 
@@ -49,6 +49,8 @@
 "COMMENT" = "Commenter";
 
 "UNLOCK" = "REJOINDRE";
+
+"JOIN_ROOM" = "REJOINDRE UNE SALLE";
 
 "CREATE" = "CREER";
 

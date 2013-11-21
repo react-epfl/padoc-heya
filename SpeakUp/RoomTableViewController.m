@@ -11,6 +11,9 @@
 #import "SpeakUpManager.h"
 #import "Message.h"
 #import "MessageTableViewController.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 
 #define DISTANCE 1500
 
@@ -45,7 +48,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
     // PLUS BUTTON END
     
-    self.tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
+    self.tableView.separatorColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:255.0/255.0 alpha:0.8];// LITE GREY
     //[plusButton setEnabled:NO];
     
     // REFRESH BUTTON START
@@ -73,6 +76,11 @@
 {
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    
+    //GOOGLE TRACKER
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Room Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -199,8 +207,16 @@
     UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
     sectionHeader.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
     sectionHeaderView.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
-    sectionHeader.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
     sectionHeader.textColor = [UIColor grayColor];
+    
+    UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
+    sectionHeader.backgroundColor = darkBlue;
+    sectionHeaderView.backgroundColor = darkBlue;
+    
+    sectionHeader.textColor = [UIColor whiteColor];
+    
+    sectionHeader.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
+    
     sectionHeader.text = sectionName;
     [sectionHeaderView addSubview:sectionHeader];
     return sectionHeaderView;

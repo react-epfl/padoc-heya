@@ -26,6 +26,7 @@
 //press thumb up
 -(IBAction)sortBy:(id)sender;
 
+@property(strong, nonatomic) IBOutlet UILabel* roomNumberLabel;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
 //@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;

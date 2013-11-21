@@ -14,7 +14,7 @@
 
 "UPDATE"="UPDATE";
 
-"UPDATE_SPEAKUP"="A new update of SpeakUp is available";
+"UPDATE_SPEAKUP"="a new update of SpeakUp is available";
 
 
 "NO_LOCATION" = "cannot get location right now";
@@ -29,7 +29,7 @@
 
 "ROOM_CLOSED" = "ROOM CLOSED";
 
-"ROOM_CLOSED_LONG" =  "Room %@ has been closed by its owner and is no longer available";
+"ROOM_CLOSED_LONG" =  "room %@ has been closed by its owner and is no longer available";
 
 "OK" = "OK";
 
@@ -43,7 +43,7 @@
 
 "VOTES"="(%d votes)";
 
-"CREATE_ROOM" = "Add Room";
+"CREATE_ROOM" = "CREATE ROOM";
 
 "RATING_SORT" = "BEST";
 
@@ -51,11 +51,14 @@
 
 "COMPOSE" = "compose";
 
-"COMMENT" = "Comment";
+"COMMENT" = "comment";
 
 "UNLOCK" = "JOIN";
 
+"JOIN_ROOM" = "JOIN ROOM";
+
 "CREATE" = "CREATE";
+
 
 "ROOM_NAME" = "room name";
 
@@ -67,11 +70,11 @@
 
 "SEND" = "SEND";
 
-"PSEUDO" = "Show avatars to identify people";
+"PSEUDO" = "show avatars to identify people";
 
-"NO_MESSAGE" = "There is no message in this room. Create one !";
+"NO_MESSAGE" = "there is no message in this room. Create one !";
 
-"TURN_LOCATION_ON" = "Turn location on to create a new room";
+"TURN_LOCATION_ON" = "turn location on to create a new room";
 
-"JOIN_ROOM_INFO" = "Enter room number to join an existing room";
+"JOIN_ROOM_INFO" = "enter a room number to join an existing room";
 

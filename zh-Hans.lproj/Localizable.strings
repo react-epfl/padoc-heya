@@ -38,7 +38,7 @@
 
 "VOTES"="(%d 人支持)";
 
-"CREATE_ROOM" = "新建房间";
+"CREATE_ROOM" = "新建";
 
 "RATING_SORT" = "评分排序";
 
@@ -49,6 +49,8 @@
 "COMMENT" = "评论";
 
 "UNLOCK" = "解锁";
+
+"JOIN_ROOM" = "解锁";
 
 "CREATE" = "新建";
 

@@ -38,7 +38,7 @@
 
 "VOTES"="(%d 人支持)";
 
-"CREATE_ROOM" = "創建聊天室";
+"CREATE_ROOM" = "創建";
 
 "RATING_SORT" = "評分排序";
 
@@ -49,6 +49,8 @@
 "COMMENT" = "評論";
 
 "UNLOCK" = "開鎖";
+
+"JOIN_ROOM" = "開鎖";
 
 "CREATE" = "創建";
 
