@@ -41,7 +41,7 @@
 
 @property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
 
-
+-(IBAction)goToWebSite:(id)sender;
 
 
 @end

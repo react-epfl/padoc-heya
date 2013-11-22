@@ -113,15 +113,17 @@
     inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
     inputButton.layer.masksToBounds=YES;
     inputButton.layer.cornerRadius=4.0f;
-    [inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
+    
     // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
-    [inputButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
+    
     //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
     //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
     
-    [inputButton setBackgroundColor:segmentedControl.tintColor];
+    //[inputButton setBackgroundColor:segmentedControl.tintColor];
+    [inputButton setTitleColor: segmentedControl.tintColor forState:UIControlStateNormal];
+    [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateHighlighted];
     
-    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:15]];
+    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     
@@ -228,6 +230,8 @@
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Message Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    
+    [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
     
 }
 
@@ -679,15 +683,15 @@
     }
 }
 
-/*-(IBAction)keyPressed:(id)sender{
-    if(showKey){
-    [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
-    showKey=NO;
-    }else{
-            [((UILabel *)self.navigationItem.titleView) setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
-            showKey=YES;
-        }
-}*/
+-(IBAction)goToWebSite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:@"info_from_room"          // Event label
+                                                           value:nil] build]];    // Event value
+}
 
 
 @end

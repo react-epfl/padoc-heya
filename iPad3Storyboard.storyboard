@@ -80,11 +80,11 @@
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleToFill" id="ASA-yn-n60">
-                                                    <rect key="frame" x="30" y="68" width="40" height="40"/>
+                                                    <rect key="frame" x="15" y="68" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                 </imageView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="e0H-49-tOM">
-                                                    <rect key="frame" x="30" y="28" width="600" height="49"/>
+                                                    <rect key="frame" x="25" y="28" width="605" height="49"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                                     <color key="textColor" red="0.23921570180000001" green="0.40784317260000003" blue="0.69803923369999998" alpha="1" colorSpace="deviceRGB"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
@@ -92,7 +92,7 @@
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                                 </textView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="3mT-R3-D93">
-                                                    <rect key="frame" x="35" y="5" width="96" height="20"/>
+                                                    <rect key="frame" x="15" y="5" width="150" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.57422264769999998" green="0.60791331130000004" blue="0.62285580839999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -204,6 +204,20 @@
                                 <action selector="sortBy:" destination="Rsu-SA-4Bh" eventType="valueChanged" id="dSk-fA-bFO"/>
                             </connections>
                         </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="g5I-vk-2vd">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Zey-36-ZsU">
+                                <rect key="frame" x="730" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToWebSite:" destination="Rsu-SA-4Bh" eventType="touchUpInside" id="aLX-YE-kmU"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="connectionLostSpinner" destination="Fpd-EZ-YYJ" id="Glf-ot-Pfa"/>
