@@ -297,6 +297,12 @@
 
 -(IBAction)refresh:(id)sender{
     [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:@"reload"          // Event label
+                                                           value:nil] build]];    // Event value
     
 }
 

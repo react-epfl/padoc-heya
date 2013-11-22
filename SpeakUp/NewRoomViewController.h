@@ -36,5 +36,6 @@
 //-(IBAction)sendMail;
 
 -(IBAction)createOrUnlock:(id)sender;
+-(IBAction)goToWebSite:(id)sender;
 
 @end

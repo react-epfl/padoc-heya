@@ -86,7 +86,7 @@
      [keyTextField setKeyboardType:UIKeyboardTypeNumberPad];
     
     //SEGMENTED VIEW CONTROL TITLE
-    UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
+    //UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
    // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];// LITE GREY
     
     [segmentedControl setTitle:NSLocalizedString(@"UNLOCK", nil) forSegmentAtIndex:0];
@@ -327,6 +327,10 @@
     else  NSLog(@"Should not use pseudo");
 }
 
+
+-(IBAction)goToWebSite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
+}
 
 
 @end

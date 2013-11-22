@@ -492,6 +492,12 @@
             NSLog(@"the message %@ does not have an id",[message description]);
         }
         [self.tableView reloadData];
+        // GOOGLE ANALYTICS
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                              action:@"button_press"  // Event action (required)
+                                                               label:@"thumb_up"          // Event label
+                                                               value:nil] build]];    // Event value
     }
     }
 }
@@ -534,6 +540,12 @@
             NSLog(@"the message %@ does not have an id",[message description]);
         }
        [self.tableView reloadData];
+        // GOOGLE ANALYTICS
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                              action:@"button_press"  // Event action (required)
+                                                               label:@"thumb_down"          // Event label
+                                                               value:nil] build]];    // Event value
     }
      }
 }
@@ -657,6 +669,12 @@
             [inputTextView resignFirstResponder];
             [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
             [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+            // GOOGLE ANALYTICS
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                                  action:@"button_press"  // Event action (required)
+                                                                   label:@"send"          // Event label
+                                                                   value:nil] build]];    // Event value
         }
     }
 }
