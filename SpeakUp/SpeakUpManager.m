@@ -119,6 +119,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     for (NSDictionary *roomDictionary in roomDictionaries) {
         [self receivedRoom:roomDictionary];
     }
+    // needs to refresh view if there was no room in the list
+    [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
 }
 //==============
 // RECEIVED ROOM

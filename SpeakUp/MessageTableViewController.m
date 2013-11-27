@@ -123,7 +123,7 @@
     [inputButton setTitleColor: segmentedControl.tintColor forState:UIControlStateNormal];
     [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateHighlighted];
     
-    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16]];
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     
