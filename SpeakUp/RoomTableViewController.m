@@ -36,13 +36,13 @@
     [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.translucent = NO;
+    //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
     //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
     // PLUS BUTTON START
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];
-    [plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateHighlighted];
+    //[plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateHighlighted];
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
@@ -54,7 +54,7 @@
     // REFRESH BUTTON START
     refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [refreshButton setImage:[UIImage imageNamed: @"button-refresh.png"] forState:UIControlStateNormal];
-    [refreshButton setImage:[UIImage imageNamed: @"button-refresh1.png"] forState:UIControlStateHighlighted];
+    //[refreshButton setImage:[UIImage imageNamed: @"button-refresh1.png"] forState:UIControlStateHighlighted];
     [refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
     refreshButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
@@ -67,7 +67,7 @@
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
     customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22]];
+    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:15]];
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
@@ -205,17 +205,18 @@
     
     UIView *sectionHeaderView = [[UIView alloc] init];
     UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
-    sectionHeader.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
-    sectionHeaderView.backgroundColor =  [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];// LITE GREY
-    sectionHeader.textColor = [UIColor grayColor];
     
-    UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
-    sectionHeader.backgroundColor = darkBlue;
-    sectionHeaderView.backgroundColor = darkBlue;
+    sectionHeader.backgroundColor =  myGrey;
+    sectionHeaderView.backgroundColor =  myGrey;
+    sectionHeader.textColor = [UIColor blackColor];
     
-    sectionHeader.textColor = [UIColor whiteColor];
+    //UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
+   // sectionHeader.backgroundColor = darkBlue;
+    //sectionHeaderView.backgroundColor = darkBlue;
     
-    sectionHeader.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
+    //sectionHeader.textColor = [UIColor grayColor];
+    
+    sectionHeader.font = [UIFont fontWithName:@"Helvetica-Light" size:10];
     
     sectionHeader.text = sectionName;
     [sectionHeaderView addSubview:sectionHeader];

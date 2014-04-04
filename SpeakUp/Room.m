@@ -38,7 +38,7 @@
         NSDictionary* loc = [dict objectForKey:@"loc"];
         [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
         [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
-        [self setName: [[dict objectForKey:@"name"] lowercaseString]] ; // LOWER CASE
+        [self setName: [dict objectForKey:@"name"] ] ; // LOWER CASE
         [self setKey: [dict objectForKey:@"key"]];
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setId_type:[dict objectForKey:@"id_type"]];

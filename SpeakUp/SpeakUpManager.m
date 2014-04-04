@@ -467,8 +467,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // ADD A VIEW ON TOP OF THE EXISTING VIEW TO INDICATE DISCONNECTION
 -(void) showDisconnectionView{
-    UIView* disconnectionView = [[UIView alloc] init];
-    disconnectionView.backgroundColor= [UIColor redColor];
+    //UIView* disconnectionView = [[UIView alloc] init];
+   // disconnectionView.backgroundColor= [UIColor redColor];
     // [[UIApplication sharedApplication] windows]
     
 }

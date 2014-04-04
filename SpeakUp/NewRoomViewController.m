@@ -43,7 +43,7 @@
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
-    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateHighlighted];
+    //[newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateHighlighted];
     [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     newBackButton.frame = CGRectMake(5, 5, 30, 30);
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
@@ -54,7 +54,7 @@
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
     customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:20]];
+    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:20]];
     customLabel.textColor =  [UIColor whiteColor];
    // self.navigationItem.titleView = customLabel;
     //[((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"CREATE_ROOM", nil)];
@@ -62,7 +62,7 @@
     // INPUT
     self.input.delegate=self;
     
-    self.input.layer.cornerRadius=2.0f;
+    //self.input.layer.cornerRadius=2.0f;
     self.input.layer.masksToBounds=YES;
     self.input.layer.backgroundColor=[[UIColor whiteColor] CGColor];
     self.input.layer.borderWidth= 0.0f;
@@ -74,7 +74,7 @@
     [keyTextField setKeyboardType:UIKeyboardTypeDefault];
     
     // UNLOCK INPUT
-    self.keyTextField.layer.cornerRadius=2.0f;
+    //self.keyTextField.layer.cornerRadius=2.0f;
     self.keyTextField.layer.masksToBounds=YES;
     self.keyTextField.layer.backgroundColor=[[UIColor whiteColor] CGColor];
     self.keyTextField.layer.borderWidth= 0.0f;
@@ -94,13 +94,23 @@
     
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
-                                segmentedControl.tintColor, UITextAttributeTextColor,
-                                nil];
+                                [UIFont fontWithName:@"Helvetica-Light" size:15], UITextAttributeFont,
+                                [UIColor whiteColor], UITextAttributeTextColor, nil  ];
+    
+    
     [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           myGrey, UITextAttributeTextColor, nil  ];
+    
+    
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
-    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: [UIColor whiteColor] forKey:UITextAttributeTextColor];
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIColor whiteColor], UITextAttributeTextColor,
+                                        [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
+    
+    
+    
+    
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
 
  
@@ -109,16 +119,16 @@
     // UNLOCK BUTTON
     [unlockRoomButton setTitle:NSLocalizedString(@"JOIN_ROOM", nil) forState:UIControlStateNormal];
     unlockRoomButton.layer.masksToBounds=YES;
-    unlockRoomButton.layer.cornerRadius=2.0f;
+    //unlockRoomButton.layer.cornerRadius=2.0f;
     [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [unlockRoomButton setBackgroundColor:segmentedControl.tintColor];
+    [unlockRoomButton setBackgroundColor:myGreen];
     
     // CREATE BUTTON
     [createRoomButton setTitle:NSLocalizedString(@"CREATE_ROOM", nil) forState:UIControlStateNormal];
     createRoomButton.layer.masksToBounds=YES;
-    createRoomButton.layer.cornerRadius=2.0f;
+    //createRoomButton.layer.cornerRadius=2.0f;
     [createRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [createRoomButton setBackgroundColor:segmentedControl.tintColor];
+    [createRoomButton setBackgroundColor:myGreen];
     
     
     //PSEUDO LABEL

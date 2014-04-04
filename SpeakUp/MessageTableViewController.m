@@ -48,7 +48,7 @@
     [super viewDidLoad];
     
    // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
-    UIColor *mediumBlue = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:1.0];
+   // UIColor *mediumBlue = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:1.0];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
@@ -58,7 +58,6 @@
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
-    [newBackButton setImage:[UIImage imageNamed: @"button-back2.png"] forState:UIControlStateHighlighted];
     
     [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     newBackButton.frame = CGRectMake(5, 5, 30, 30);
@@ -87,15 +86,25 @@
     [segmentedControl setSelectedSegmentIndex:1];
     
     
-   NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"HelveticaNeue-Medium" size:16], UITextAttributeFont,
-                                segmentedControl.tintColor, UITextAttributeTextColor,
-                                nil];
-   [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont fontWithName:@"Helvetica-Light" size:15], UITextAttributeFont,
+                                [UIColor whiteColor], UITextAttributeTextColor, nil  ];
+    
+    
+    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           myGrey, UITextAttributeTextColor, nil  ];
+    
+    
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
-    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject: [UIColor whiteColor] forKey:UITextAttributeTextColor];
-[segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIColor whiteColor], UITextAttributeTextColor,
+                                        [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
+    
+    
+    
+    
+    [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
 
     [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
@@ -106,7 +115,7 @@
     
    inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
     
-    inputView.backgroundColor = mediumBlue;
+    inputView.backgroundColor = myPurple;
     [self.view addSubview:inputView];
     inputTextView.text=@"";
 
@@ -120,10 +129,10 @@
     //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
     
     //[inputButton setBackgroundColor:segmentedControl.tintColor];
-    [inputButton setTitleColor: segmentedControl.tintColor forState:UIControlStateNormal];
-    [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateHighlighted];
+    [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
+    [inputButton setTitleColor: myGrey forState:UIControlStateHighlighted];
     
-    [inputButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16]];
+    [inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:15]];
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     
@@ -143,7 +152,7 @@
     inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     inputTextView.keyboardType = UIKeyboardTypeDefault;
     inputTextView.returnKeyType = UIReturnKeyDone;
-    inputTextView.layer.cornerRadius=4;
+    inputTextView.layer.cornerRadius=0;
     
     [inputTextView setDelegate:self];
     [inputView addSubview:inputTextView];
@@ -378,14 +387,16 @@
         // SCORE
         //=========================
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
+         scoreLabel.textColor= [UIColor blackColor];
         if(message.score>0){
-            scoreLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
+            //scoreLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
+           
             [scoreLabel setText: [NSString stringWithFormat:@"+%d", message.score]];
         }else if(message.score<0){
-            scoreLabel.textColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
+            //scoreLabel.textColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
             [scoreLabel setText: [NSString stringWithFormat:@"%d", message.score]];
         }else{
-            scoreLabel.textColor = [UIColor grayColor];
+           // scoreLabel.textColor = [UIColor grayColor];
             [scoreLabel setText: @"0"];
         }
         UILabel *numberofVotesLabel = (UILabel *)[cell viewWithTag:8];
@@ -591,7 +602,7 @@
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
     CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-SIDES,CELL_MAX_SIZE);
-    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:17] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];// ADER get font from cell
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:20] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
     
 }
