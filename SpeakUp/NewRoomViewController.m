@@ -22,7 +22,7 @@
 @implementation NewRoomViewController
 
 
-@synthesize input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel;
+@synthesize input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel,avatarLabel;
 
 
 - (void)viewDidLoad
@@ -54,7 +54,7 @@
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
     customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:20]];
+    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
     customLabel.textColor =  [UIColor whiteColor];
    // self.navigationItem.titleView = customLabel;
     //[((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"CREATE_ROOM", nil)];
@@ -94,7 +94,7 @@
     
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"Helvetica-Light" size:15], UITextAttributeFont,
+                                [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize], UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor, nil  ];
     
     
@@ -133,22 +133,24 @@
     
     //PSEUDO LABEL
     [pseudoLabel setText:NSLocalizedString(@"PSEUDO", nil)];
+    [avatarLabel setText:NSLocalizedString(@"Avatars", nil)];
     
     //WARNING LABEL
     //[warningLabel setText:NSLocalizedString(@"TURN_LOCATION_ON", nil)];
-    [warningLabel setText:NSLocalizedString(@"JOIN_ROOM_INFO", nil)];
+    //[warningLabel setText:NSLocalizedString(@"JOIN_ROOM_INFO", nil)];
     
     // HIDE CREATION STUFF AND SHOW UNLOCK STUFF
     [mapView setHidden:YES];
     [input setHidden:YES];
     [pseudoSwitch setHidden:YES];
     [pseudoLabel setHidden:YES];
+          [avatarLabel setHidden:YES];
     [createRoomButton setHidden:YES];
     [unlockRoomButton setHidden:NO];
     [createRoomButton setHidden:YES];
     [keyTextField setHidden:NO];
     [createRoomLabel setHidden:YES];
-    [warningLabel setHidden:NO];
+    [warningLabel setHidden:YES];
     [keyTextField becomeFirstResponder];
 
 ////
@@ -285,20 +287,23 @@
         [createRoomLabel setHidden:NO];
         [pseudoSwitch setHidden:NO];
         [pseudoLabel setHidden:NO];
+            [avatarLabel setHidden:NO];
         [input becomeFirstResponder];
         }else{
             [warningLabel setHidden:NO];
             [pseudoSwitch setHidden:YES];
             [pseudoLabel setHidden:YES];
+                  [avatarLabel setHidden:YES];
             [mapView setHidden:YES];
             [input setHidden:YES];
             [createRoomButton setHidden:YES];
             [createRoomLabel setHidden:YES];
             }
     }else if(selectedSegment == UNLOCK_TAB){
-        [warningLabel setHidden:NO];
+        [warningLabel setHidden:YES];
         [pseudoSwitch setHidden:YES];
         [pseudoLabel setHidden:YES];
+              [avatarLabel setHidden:YES];
       [mapView setHidden:YES];
         [input setHidden:YES];
         [createRoomButton setHidden:YES];
@@ -306,7 +311,7 @@
         [keyTextField setHidden:NO];
          [createRoomLabel setHidden:YES];
         [keyTextField becomeFirstResponder];
-        [warningLabel setText:NSLocalizedString(@"JOIN_ROOM_INFO", nil)];
+        //[warningLabel setText:NSLocalizedString(@"JOIN_ROOM_INFO", nil)];
     }
     
     

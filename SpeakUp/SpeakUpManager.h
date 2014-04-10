@@ -33,6 +33,10 @@
 #define myPurple [UIColor colorWithRed:80.0/255.0 green:80.0/255.0 blue:210.0/255.0 alpha:1.0]
 #define myGreen [UIColor colorWithRed:0.0/255.0 green:217.0/255.0 blue:0.0/255.0 alpha:1.0]
 #define myGrey [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]
+#define NormalFontSize 22
+#define MediumFontSize 18
+#define SmallFontSize 12
+
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
 @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>

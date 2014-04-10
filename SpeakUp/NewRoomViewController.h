@@ -27,6 +27,7 @@
 @property(strong, nonatomic) IBOutlet UILabel * createRoomLabel;
 
 @property(strong, nonatomic) IBOutlet UILabel * warningLabel;
+@property(strong, nonatomic) IBOutlet UILabel * avatarLabel;
 
 @property(strong, nonatomic) IBOutlet UISwitch * pseudoSwitch;
 @property(strong, nonatomic) IBOutlet UILabel * pseudoLabel;

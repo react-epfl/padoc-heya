@@ -67,10 +67,10 @@
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
     customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:15]];
+    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
-    [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
+  [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -81,7 +81,11 @@
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Room Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+   
+    
 }
+
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[SpeakUpManager sharedSpeakUpManager] savePeerData];
@@ -135,7 +139,8 @@
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
         
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
-            nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
+          nameLabel.text = @"";
+          nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
         }
         if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
@@ -198,7 +203,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionName = nil;
     if (section==NEARBY_SECTION) {
-        sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
+       sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
     }else{
         sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
     }
@@ -216,7 +221,7 @@
     
     //sectionHeader.textColor = [UIColor grayColor];
     
-    sectionHeader.font = [UIFont fontWithName:@"Helvetica-Light" size:10];
+    sectionHeader.font = [UIFont fontWithName:@"Helvetica-Light" size:SmallFontSize];
     
     sectionHeader.text = sectionName;
     [sectionHeaderView addSubview:sectionHeader];

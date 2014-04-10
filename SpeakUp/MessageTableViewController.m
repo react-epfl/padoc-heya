@@ -13,7 +13,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 
-#define FONT_SIZE 17.0f
+
 #define CELL_CONTENT_WIDTH 280.0f
 #define CELL_CONTENT_MARGIN 10.0f
 #define CELL_MIN_SIZE 80.0
@@ -22,9 +22,9 @@
 #define YES_NO_LOGO_HEIGHT 36
 #define YES_LOGO_HORIZONTAL_OFFSET 200
 #define NO_LOGO_HORIZONTAL_OFFSET 250
-#define FOOTER_OFFSET 60
-#define HEADER_OFFSET 55
-#define CELL_VERTICAL_OFFSET 65
+#define FOOTER_OFFSET 60 // space below the text
+#define HEADER_OFFSET 45 // not used
+#define CELL_VERTICAL_OFFSET 65 // not used
 #define TEXT_WIDTH 280
 #define SIDES 40
 
@@ -87,7 +87,7 @@
     
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"Helvetica-Light" size:15], UITextAttributeFont,
+                                [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize], UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor, nil  ];
     
     
@@ -132,7 +132,7 @@
     [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
     [inputButton setTitleColor: myGrey forState:UIControlStateHighlighted];
     
-    [inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:15]];
+    [inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     
@@ -146,7 +146,7 @@
 
     inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 5, self.view.frame.size.width-100, 30)];
     //textView.borderStyle = UITextBorderStyleRoundedRect;
-    inputTextView.font = [UIFont systemFontOfSize:15];
+    inputTextView.font = [UIFont systemFontOfSize:MediumFontSize];
 
     //textView.placeholder = @"enter text";
     inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -336,7 +336,7 @@
         CGSize textViewConstraint = CGSizeMake(contentTextView.frame.size.width,CELL_MAX_SIZE);
         CGSize size = [text sizeWithFont:contentTextView.font constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
         [contentTextView setText:text];
-        [contentTextView setFrame:CGRectMake(10, 25, contentTextView.frame.size.width, size.height+1000)];// ADER this size is there to avoid cut off text if someone type one line and an empty line....
+        [contentTextView setFrame:CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y, contentTextView.frame.size.width, size.height+1000)];// ADER this size is there to avoid cut off text if someone type one line and an empty line....
 
         //=========================
         // THUMBS
@@ -602,7 +602,7 @@
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
     CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-SIDES,CELL_MAX_SIZE);
-    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:20] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];// ADER get font from cell
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
     
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		800A704B18578A8000E0B822 /* HarryPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 800A704A18578A8000E0B822 /* HarryPhone.storyboard */; };
 		801325D1182AA8C900C0C378 /* seg-selected4.png in Resources */ = {isa = PBXBuildFile; fileRef = 801325D0182AA8C900C0C378 /* seg-selected4.png */; };
 		803165A917BCC8CC003C4E77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 803165AB17BCC8CC003C4E77 /* Localizable.strings */; };
 		803165DC17BD0E6F003C4E77 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */; };
@@ -102,7 +101,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		800A704A18578A8000E0B822 /* HarryPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HarryPhone.storyboard; sourceTree = "<group>"; };
 		801325D0182AA8C900C0C378 /* seg-selected4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seg-selected4.png"; sourceTree = "<group>"; };
 		802F98AD17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		802F98AE17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 				80AB3D7C183E727B0005C603 /* Google analytics */,
 				80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */,
 				803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */,
-				800A704A18578A8000E0B822 /* HarryPhone.storyboard */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
 				80A6704D17381C150082275E /* Socket.io */,
 				80FB4C3B17251E950004965A /* SocketRocket */,
@@ -593,7 +590,6 @@
 				8054CB3F17AA9C2800FA4B20 /* button-back2@2x.png in Resources */,
 				8054CB4017AA9C2800FA4B20 /* button-send1.png in Resources */,
 				8054CB4117AA9C2800FA4B20 /* button-send2.png in Resources */,
-				800A704B18578A8000E0B822 /* HarryPhone.storyboard in Resources */,
 				8054CB4217AA9C2800FA4B20 /* button-write1.png in Resources */,
 				8054CB4317AA9C2800FA4B20 /* button-write2.png in Resources */,
 				8054CB4617AA9C9000FA4B20 /* button-add1@2x.png in Resources */,
