@@ -27,13 +27,14 @@
 #define CELL_VERTICAL_OFFSET 65 // not used
 #define TEXT_WIDTH 280
 #define SIDES 40
+#define EXPIRATION_DURATION_IN_HOURS 24
 
 
 #define INPUTVIEW_HEIGHT 40
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel;
 
 
 
@@ -64,21 +65,6 @@
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
     // BACK BUTTON END
     
-    // KEY BUTTON START ONLY IF THE KEY EXISTS
-    /*UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [composeButton setImage:[UIImage imageNamed: @"button-key2.png"] forState:UIControlStateNormal];
-    [composeButton setImage:[UIImage imageNamed: @"button-key3.png"] forState:UIControlStateHighlighted];
-    [composeButton addTarget:self action:@selector(keyPressed:) forControlEvents:UIControlEventTouchUpInside];
-    composeButton.frame = CGRectMake(5, 5, 30, 30);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:composeButton];
-    if (![[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]) {
-        self.navigationItem.rightBarButtonItem=nil;
-    }
-     */
-
-    // SEGMENTED CONTROLS BEST / RECENT
-    //UIColor *liteBlue = [UIColor colorWithRed:181.0/255.0 green:216.0/255.0 blue:248.0/255.0 alpha:1.0];// LITE BLUE
-   // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
     
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
@@ -123,12 +109,6 @@
     inputButton.layer.masksToBounds=YES;
     inputButton.layer.cornerRadius=4.0f;
     
-    // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
-    
-    //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected.png"] forState:UIControlStateNormal];
-    //[inputButton setBackgroundImage:[UIImage imageNamed:@"seg-selected1.png"] forState:UIControlStateSelected];
-    
-    //[inputButton setBackgroundColor:segmentedControl.tintColor];
     [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
     [inputButton setTitleColor: myGrey forState:UIControlStateHighlighted];
     
@@ -181,9 +161,6 @@
     newFrame.origin.x = 0;
     newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT)-keyboardHeight;
     inputView.frame = newFrame;
-    
-
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -226,12 +203,39 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+     isFirstMessageUpdate=YES;
+    roomInfoLabel.text=@"";
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
         if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             [connectionLostSpinner stopAnimating];
         }else{
             [connectionLostSpinner startAnimating];
         }
+    
+    
+    //============================================
+    // EXPIRATION TIME 24 hours since last change
+    //============================================
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    NSDate *lastUpdateTime = [dateFormatter dateFromString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]lastUpdateTime]];
+    NSTimeInterval elapsedTimeSinceUpdate = [lastUpdateTime timeIntervalSinceNow];
+    //24*3600-elapsedTimeSinceUpdate= time remaining in seconds,
+    NSInteger timeToExpirationInSeconds = EXPIRATION_DURATION_IN_HOURS*3600 + (int)elapsedTimeSinceUpdate;
+    NSInteger minutes = (timeToExpirationInSeconds / 60) % 60;
+    NSInteger hours = (timeToExpirationInSeconds / 3600);
+    NSString* time=@"";
+    if(minutes  <1 && hours  <1){
+        time = NSLocalizedString(@"ABOUT_TO_CLOSE", nil);
+    }else if(minutes>0 && hours == 0){
+        time = [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_MINUTES", nil),minutes];
+    }else {
+        time = [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),hours];
+    }
+    [expirationLabel setText: time];
+    
+    
+    
     [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
@@ -243,6 +247,12 @@
     [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
     
 }
+
+-(void)resetTimer{
+   [expirationLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),EXPIRATION_DURATION_IN_HOURS]];
+}
+
+
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room{
     if ([room.roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
@@ -300,6 +310,8 @@
     // check this site
     // http://www.cimgf.com/2009/09/23/uitableviewcell-dynamic-height/
     //if there is no room, simply put this no room cell
+
+    
     
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         //static
@@ -590,8 +602,37 @@
         if(!self.editing){
             [self sortMessages];
             [self.tableView reloadData];
+            [self setRoomInfo];
+            if (isFirstMessageUpdate) {
+                isFirstMessageUpdate=NO;
+            }else{
+                [self resetTimer];// puts timer back to 24 hours but only if its not the first time
+            }
+
         }
+       
     }
+}
+
+-(void)setRoomInfo{
+    int numberofmessages = (int)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
+    int numberofvotes=0;
+    for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+        numberofvotes+=message.numberOfNo + message.numberOfYes;
+    }
+    if (numberofmessages <2 && numberofvotes<2) {
+       roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_11", nil),numberofmessages,numberofvotes];
+    }else if (numberofmessages <2 && numberofvotes>=2)  {
+        roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_12", nil),numberofmessages,numberofvotes];
+    }else if (numberofmessages >=2 && numberofvotes<2)  {
+        roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_21", nil),numberofmessages,numberofvotes];
+    }else{
+        roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_22", nil),numberofmessages,numberofvotes];
+    }
+    
+    
+    //roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO", nil),numberofmessages,numberofvotes];
+    
 }
 //=========================
 // GET HEIGHT FOR ROW
@@ -694,15 +735,6 @@
     }
 }
 
--(IBAction)goToWebSite:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"button_press"  // Event action (required)
-                                                           label:@"info_from_room"          // Event label
-                                                           value:nil] build]];    // Event value
-}
 
 
 @end

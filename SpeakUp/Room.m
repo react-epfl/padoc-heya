@@ -11,7 +11,7 @@
 
 @implementation Room
     
-    @synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, id_type, isUnlocked ;
+    @synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, id_type, isUnlocked, lastUpdateTime ;
     
     
 - (id)init{
@@ -41,6 +41,7 @@
         [self setName: [dict objectForKey:@"name"] ] ; // LOWER CASE
         [self setKey: [dict objectForKey:@"key"]];
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
+        [self setLastUpdateTime: [dict objectForKey:@"update_time"]];
         [self setId_type:[dict objectForKey:@"id_type"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
