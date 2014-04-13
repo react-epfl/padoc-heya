@@ -246,6 +246,8 @@
     
     [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
     
+     [self placeInputView];
+    
 }
 
 -(void)resetTimer{
@@ -325,10 +327,10 @@
         //=========================
         // MESSAGE LABEL
         //=========================
-        UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
-        backgroundLabel.backgroundColor=[UIColor whiteColor];
-        backgroundLabel.layer.cornerRadius  =2;
-        backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
+        //UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
+        //backgroundLabel.backgroundColor=[UIColor whiteColor];
+        //backgroundLabel.layer.cornerRadius  =2;
+        //backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
         return cell;
     }
     else{
@@ -620,7 +622,9 @@
     for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
         numberofvotes+=message.numberOfNo + message.numberOfYes;
     }
-    if (numberofmessages <2 && numberofvotes<2) {
+    if (numberofmessages ==0){
+       roomInfoLabel.text= @"";
+    }else if (numberofmessages <2 && numberofvotes<2) {
        roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_11", nil),numberofmessages,numberofvotes];
     }else if (numberofmessages <2 && numberofvotes>=2)  {
         roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_12", nil),numberofmessages,numberofvotes];
@@ -639,6 +643,10 @@
 //=========================
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
+    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0) {
+        return self.view.frame.size.height - 145;//big enough to put the expiration at the bottom
+    }
+    
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
