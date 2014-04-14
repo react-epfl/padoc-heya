@@ -31,4 +31,6 @@
 @property(strong, nonatomic) IBOutlet UITextField * roomTextField;
 @property( nonatomic)  int UNLOCKED_SECTION;
 @property( nonatomic)  int NEARBY_SECTION;
+
+
 @end

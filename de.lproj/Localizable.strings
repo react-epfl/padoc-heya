@@ -10,9 +10,9 @@
 
 "NO_ROOM"= "Kein Chatraum in der Nähe! Erstelle einen!";
 
-"ROOMS"="SpeakUp";
+"ROOMS"="Chaträume";
 
-"NO_LOCATION" = "Ortungsdienste nicht verfügbar";
+//"NO_LOCATION" = "Ortungsdienste nicht verfügbar";
 
 "NO_CONNECTION"= "Verbindung kann nicht hergestellt werden";
 
@@ -71,4 +71,5 @@
 "TURN_LOCATION_ON" = "Ortungsdienste müssen eingeschaltet sein, um neue Chaträume erstellen zu können.";
 
 "JOIN_ROOM_INFO" = " ";
+"NO_NEARBY_ROOMS" = " ";
 

@@ -7,32 +7,22 @@
 */
 
 
-
-"NO_ROOM"= "Press '+' to join an existing room or to create a new one!";
+///////////////////////
+// ROOM VIEW
+///////////////////////
+"NO_ROOM"= "Press '+' to add a room";
 
 "ROOMS"="Rooms";
 
-"UPDATE"="UPDATE";
+"NEARBY_ROOMS" = "Nearby rooms";
 
-"UPDATE_SPEAKUP"="A new update of SpeakUp is available";
+"NO_NEARBY_ROOMS" = "No rooms nearby";
 
+"UNLOCKED_ROOMS" = "Joined rooms";
 
-"NO_LOCATION" = "No location, press '+' to join an existing room";
-
-"NO_CONNECTION"= "Cannot connect right now";
-
-"LOADING" = "Loading...";
-
-"CONNECTION_LOST" = "CONNECTION LOST";
-
-"CONNECTION_ESTABLISHED" = "CONNECTION ESTABLISHED";
-
-"ROOM_CLOSED" = "ROOM CLOSED";
-
-"ROOM_CLOSED_LONG" =  "Room %@ has been closed by its owner and is no longer available";
-
-"OK" = "OK";
-
+///////////////////////
+// MESSAGE VIEW
+///////////////////////
 "JUST_NOW" = "Just now";
 
 "MINUTES_AGO" = "%d min ago";
@@ -43,15 +33,32 @@
 
 "VOTES"="(%d votes)";
 
-"CREATE_ROOM" = "Create new room";
-
 "RATING_SORT" = "Best";
 
 "RECENT_SORT" = "Recent";
 
-"COMPOSE" = "compose";
+"SEND" = "Send";
 
-"COMMENT" = "comment";
+"NO_MESSAGE" = "There is no message in this room. Post one now!";
+
+"ABOUT_TO_CLOSE" = "About to close";
+
+"CLOSES_IN_MINUTES"="Room closes in %d minutes";
+
+"CLOSES_IN_HOURS"="Room closes in %d hours";
+
+"ROOM_INFO_22"="%d messages, %d votes";
+
+"ROOM_INFO_12"="%d message, %d votes";
+
+"ROOM_INFO_21"="%d messages, %d vote";
+
+"ROOM_INFO_11"="%d message, %d vote";
+
+///////////////////////
+// NEW ROOM VIEW
+///////////////////////
+"CREATE_ROOM" = "Create new room";
 
 "UNLOCK" = "Join";
 
@@ -59,33 +66,8 @@
 
 "CREATE" = "Create";
 
-
 "ROOM_NAME" = "Room name";
 
 "ROOM_KEY" = "Room number";
 
-"NEARBY_ROOMS" = "Nearby rooms";
-
-"UNLOCKED_ROOMS" = "Joined rooms";
-
-"SEND" = "Send";
-
-"PSEUDO" = "Show avatars to identify people";
-
-"NO_MESSAGE" = "There is no message in this room. Create one !";
-
 "TURN_LOCATION_ON" = "Turn location on to create a new room";
-
-"JOIN_ROOM_INFO" = "Enter a room number to join an existing room";
-
-
-"ABOUT_TO_CLOSE" = "About to close";
-"CLOSES_IN_MINUTES"="Room closes in %d minutes";
-"CLOSES_IN_HOURS"="Room closes in %d hours";
-"ROOM_INFO_22"="%d messages, %d votes";
-"ROOM_INFO_12"="%d message, %d votes";
-"ROOM_INFO_21"="%d messages, %d vote";
-"ROOM_INFO_11"="%d message, %d vote";
-
-
-

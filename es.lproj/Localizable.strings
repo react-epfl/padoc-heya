@@ -12,7 +12,7 @@
 
 "ROOMS" = "SpeakUp";
 
-"NO_LOCATION" = "No se puede conseguir un lugar";
+//"NO_LOCATION" = "No se puede conseguir un lugar";
 
 "NO_CONNECTION" = "No se puede conectar en este momento";
 
@@ -71,3 +71,4 @@
 "TURN_LOCATION_ON" = "Enciende la ubicación para crear una nueva sala";
 
 "JOIN_ROOM_INFO" = " ";
+"NO_NEARBY_ROOMS" = " ";

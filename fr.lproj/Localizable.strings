@@ -8,21 +8,21 @@
 
 
 
-"NO_ROOM"= "pas de salle à proximité, créez en une!";
+"NO_ROOM"= "Ajouter une salle avec '+'";
 
-"ROOMS" ="SpeakUp";
+"ROOMS" ="Salles";
 
-"NO_LOCATION" = "localisation inaccessible pour le moment";
+//"NO_LOCATION" = "Localisation inaccessible pour le moment";
 
-"NO_CONNECTION"= "pas de connection pour le moment...";
+"NO_CONNECTION"= "Pas de connection pour le moment...";
 
-"LOADING" = "charge...";
+//"LOADING" = "charge...";
 
-"CONNECTION_LOST" = "CONNECTION PERDUE";
+//"CONNECTION_LOST" = "CONNECTION PERDUE";
 
-"CONNECTION_ESTABLISHED" = "CONNECTION ETABLIE";
+//"CONNECTION_ESTABLISHED" = "CONNECTION ETABLIE";
 
-"ROOM_CLOSED" = "SALLE FERMEE";
+//"ROOM_CLOSED" = "SALLE FERMEE";
 
 "ROOM_CLOSED_LONG" =  "La salle %@ a été fermée et n'est plus disponible";
 
@@ -38,36 +38,45 @@
 
 "VOTES"="(%d votes)";
 
-"CREATE_ROOM" = "CREER UNE SALLE";
+"CREATE_ROOM" = "Créer une nouvelle salle";
 
-"RATING_SORT" = "MEILLEUR";
+"RATING_SORT" = "Meilleur";
 
-"RECENT_SORT" = "RECENT";
+"RECENT_SORT" = "Récent";
 
 "COMPOSE" = "composer";
 
 "COMMENT" = "Commenter";
 
-"UNLOCK" = "REJOINDRE";
+"UNLOCK" = "Rejoindre";
 
-"JOIN_ROOM" = "REJOINDRE LA SALLE";
+"JOIN_ROOM" = "Rejoindre une salle";
 
-"CREATE" = "CREER";
+"CREATE" = "Créer";
 
-"ROOM_NAME" = "nom de la salle";
+"ROOM_NAME" = "Nom de la salle";
 
-"ROOM_KEY" = "clé de la salle";
+"ROOM_KEY" = "Numéro de la salle";
 
-"NEARBY_ROOMS" = "salles proches";
+"NEARBY_ROOMS" = "Salles proches";
+"NO_NEARBY_ROOMS" = "Pas de salle à proximité";
+"UNLOCKED_ROOMS" = "Salles rejointes";
 
-"UNLOCKED_ROOMS" = "salles rejointes";
-
-"SEND" = "ENVOYER";
+"SEND" = "Envoyer";
 
 "PSEUDO" = "Afficher les avatars";
 
 "NO_MESSAGE" = "Il n'y pas encore de message dans cette salle, créez en un!";
 
-"TURN_LOCATION_ON" = "Enclenchez la localisation pour créer une nouvelle salle";
+"TURN_LOCATION_ON" = "Enclencher la localisation pour créer une nouvelle salle";
 
 "JOIN_ROOM_INFO" = "Entrer le numéro d'une salle existante pour la rejoindre";
+
+"ABOUT_TO_CLOSE" = "Cette salle va fermer dans quelques instants";
+"CLOSES_IN_MINUTES"="Cette salle ferme dans %d minutes";
+"CLOSES_IN_HOURS"="Cette salle ferme dans %d heures";
+"ROOM_INFO_22"="%d messages, %d votes";
+"ROOM_INFO_12"="%d message, %d votes";
+"ROOM_INFO_21"="%d messages, %d vote";
+"ROOM_INFO_11"="%d message, %d vote";
+

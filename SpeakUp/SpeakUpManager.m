@@ -63,16 +63,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         if(minVersion && maxVersion){
             if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
                 NSLog(@"Problem the API does not match, display message to go to the app store");
-                /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"UPDATE", nil)
-                 message: NSLocalizedString(@"UPDATE_SPEAKUP", nil)
-                 delegate:nil
-                 cancelButtonTitle: NSLocalizedString(@"OK", nil)
-                 otherButtonTitles:nil];*/
-                // [alert show];
+
             }
             
         }
-        
         // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
         UIWindow *window = [UIApplication sharedApplication].keyWindow;
         UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;

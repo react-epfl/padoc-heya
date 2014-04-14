@@ -12,7 +12,7 @@
 
 "ROOMS"="SpeakUp";
 
-"NO_LOCATION" = "暂时无法获得地点信息";
+//"NO_LOCATION" = "暂时无法获得地点信息";
 
 "NO_CONNECTION"= "暂时无法连接网络";
 
@@ -71,3 +71,5 @@
 "TURN_LOCATION_ON" = "新建房间之前请先开启定位服务";
 
 "JOIN_ROOM_INFO" = " ";
+
+"NO_NEARBY_ROOMS" = " ";

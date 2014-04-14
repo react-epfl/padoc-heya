@@ -12,7 +12,7 @@
 
 "ROOMS"="SpeakUp";
 
-"NO_LOCATION" = "暫時無法獲取地點信息";
+//"NO_LOCATION" = "暫時無法獲取地點信息";
 
 "NO_CONNECTION"= "暫時無法連接網絡";
 
@@ -71,3 +71,4 @@
 "TURN_LOCATION_ON" = "創建聊天室之前請先開啟定位服務";
 
 "JOIN_ROOM_INFO" = " ";
+"NO_NEARBY_ROOMS" = " ";

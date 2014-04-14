@@ -13,7 +13,7 @@
 "ROOMS"="SpeakUp";
 
 
-"NO_LOCATION"="位置認識なし";
+//"NO_LOCATION"="位置認識なし";
 
 "NO_CONNECTION"="接続できない";
 
@@ -63,3 +63,4 @@
 "TURN_LOCATION_ON"="チャットルームを作成し、位置認識をONに設置、";
 
 "JOIN_ROOM_INFO" = " ";
+"NO_NEARBY_ROOMS" = " ";

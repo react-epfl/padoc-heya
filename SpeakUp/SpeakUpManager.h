@@ -35,7 +35,7 @@
 #define myGrey [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]
 #define NormalFontSize 22
 #define MediumFontSize 18
-#define SmallFontSize 12
+#define SmallFontSize 13
 
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>

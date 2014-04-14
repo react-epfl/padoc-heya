@@ -37,12 +37,10 @@
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     self.navigationController.navigationBar.translucent = NO;
-    //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"background-nav.png"] forBarMetrics:UIBarMetricsDefault];
-    //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed: @"shadow-nav.png"]];
+
     // PLUS BUTTON START
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];
-    //[plusButton setImage:[UIImage imageNamed: @"button-add2.png"] forState:UIControlStateHighlighted];
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
@@ -54,7 +52,6 @@
     // REFRESH BUTTON START
     refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [refreshButton setImage:[UIImage imageNamed: @"button-refresh.png"] forState:UIControlStateNormal];
-    //[refreshButton setImage:[UIImage imageNamed: @"button-refresh1.png"] forState:UIControlStateHighlighted];
     [refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
     refreshButton.frame = CGRectMake(0, 0, 40, 40);
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
@@ -137,13 +134,18 @@
         }
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+        UIActivityIndicatorView *connectionLostSpinner = (UIActivityIndicatorView *)[cell viewWithTag:2];
         
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
           nameLabel.text = @"";
-          nameLabel.text =  NSLocalizedString(@"NO_LOCATION", nil);
+          nameLabel.text =  NSLocalizedString(@"NO_ROOM", nil);
+            [connectionLostSpinner stopAnimating];
+            
         }
         if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-            nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
+            //nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
+            nameLabel.text=@"";
+            [connectionLostSpinner startAnimating];
         }
         
         return cell;
@@ -203,7 +205,11 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionName = nil;
     if (section==NEARBY_SECTION) {
+        if ([nearbyRooms count]==0) {
+            sectionName = NSLocalizedString(@"NO_NEARBY_ROOMS", nil);
+        }else{
        sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
+        }
     }else{
         sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
     }

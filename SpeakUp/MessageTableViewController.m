@@ -20,14 +20,21 @@
 #define CELL_MAX_SIZE 9999.0f
 #define YES_NO_LOGO_WIDTH 40
 #define YES_NO_LOGO_HEIGHT 36
-#define YES_LOGO_HORIZONTAL_OFFSET 200
-#define NO_LOGO_HORIZONTAL_OFFSET 250
+//#define YES_LOGO_HORIZONTAL_OFFSET 200
+//#define NO_LOGO_HORIZONTAL_OFFSET 250
 #define FOOTER_OFFSET 60 // space below the text
 #define HEADER_OFFSET 45 // not used
 #define CELL_VERTICAL_OFFSET 65 // not used
-#define TEXT_WIDTH 280
-#define SIDES 40
+//#define TEXT_WIDTH 280
+#define SIDES 30
 #define EXPIRATION_DURATION_IN_HOURS 24
+
+#define INPUT_LEFT_PADDING 10
+#define INPUT_TOP_PADDING 5
+#define INPUT_HEIGHT 30
+#define SEND_BUTTON_WIDTH 80
+#define SEND_BUTTON_PADDING 5
+
 
 
 #define INPUTVIEW_HEIGHT 40
@@ -45,15 +52,9 @@
 //=========================
 - (void)viewDidLoad
 {
-
     [super viewDidLoad];
-    
-   // UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
-   // UIColor *mediumBlue = [UIColor colorWithRed:110.0/255.0 green:195.0/255.0 blue:245.0/255.0 alpha:1.0];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
-    //[self.roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
     
     // BACK BUTTON START
@@ -79,19 +80,16 @@
     
     [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           myGrey, UITextAttributeTextColor, nil  ];
+                                           [UIColor lightGrayColor], UITextAttributeTextColor, nil  ];
     
     
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [UIColor whiteColor], UITextAttributeTextColor,
                                         [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
-    
-    
-    
-    
+   
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
-
+    
     [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
     
@@ -99,53 +97,46 @@
     keyboardIsVisible=NO;
     keyboardHeight=0;
     
-   inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
+    inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
     
     inputView.backgroundColor = myPurple;
     [self.view addSubview:inputView];
     inputTextView.text=@"";
-
     inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
     inputButton.layer.masksToBounds=YES;
     inputButton.layer.cornerRadius=4.0f;
-    
     [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
-    [inputButton setTitleColor: myGrey forState:UIControlStateHighlighted];
-    
+    [inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
     [inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    
+    
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
-    
     inputButton.titleLabel.numberOfLines = 1;
     inputButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-
-    
-    inputButton.frame = CGRectMake(self.view.frame.size.width-80, 5 , 70, 30);
-
+    inputButton.frame = CGRectMake((self.view.frame.size.width-SEND_BUTTON_WIDTH)+SEND_BUTTON_PADDING, INPUT_TOP_PADDING , SEND_BUTTON_WIDTH-SEND_BUTTON_PADDING*2, INPUT_HEIGHT);
+    inputButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [inputView addSubview:inputButton];
-
-    inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 5, self.view.frame.size.width-100, 30)];
-    //textView.borderStyle = UITextBorderStyleRoundedRect;
-    inputTextView.font = [UIFont systemFontOfSize:MediumFontSize];
-
-    //textView.placeholder = @"enter text";
+    
+    inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(INPUT_LEFT_PADDING, INPUT_TOP_PADDING, self.view.frame.size.width-(SEND_BUTTON_WIDTH+INPUT_LEFT_PADDING), INPUT_HEIGHT)];
+    [inputTextView setFont: [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
     inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     inputTextView.keyboardType = UIKeyboardTypeDefault;
     inputTextView.returnKeyType = UIReturnKeyDone;
-    inputTextView.layer.cornerRadius=0;
-    
+    //inputTextView.layer.cornerRadius=0;
     [inputTextView setDelegate:self];
     [inputView addSubview:inputTextView];
     
     // MANAGE KEYBOARD
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(keyPressed:) name: UITextViewTextDidChangeNotification object: nil];
     
     // LISTEN TO TOUCH EVENT
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
     tgr.delegate = self;
     [self.tableView addGestureRecognizer:tgr]; // or [self.view addGestureRecognizer:tgr];
-
+    
     
 }
 - (void)viewTapped:(UITapGestureRecognizer *)tgr
@@ -159,7 +150,7 @@
 - (void)placeInputView{
     CGRect newFrame = inputView.frame;
     newFrame.origin.x = 0;
-    newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT)-keyboardHeight;
+    newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height-inputView.frame.size.height)-keyboardHeight;
     inputView.frame = newFrame;
 }
 
@@ -177,10 +168,11 @@
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     self.keyboardHeight= keyboardFrameBeginRect.size.height;
-
-    [UIView animateWithDuration:0.3 animations:^{
+    
+    [UIView animateWithDuration:0.3f animations:^{
         [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
     }];
+    
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
@@ -198,19 +190,19 @@
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self placeInputView];
+     [self placeInputView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-     isFirstMessageUpdate=YES;
+    isFirstMessageUpdate=YES;
     roomInfoLabel.text=@"";
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-        if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-            [connectionLostSpinner stopAnimating];
-        }else{
-            [connectionLostSpinner startAnimating];
-        }
+    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        [connectionLostSpinner stopAnimating];
+    }else{
+        [connectionLostSpinner startAnimating];
+    }
     
     
     //============================================
@@ -246,12 +238,12 @@
     
     [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
     
-     [self placeInputView];
+    [self placeInputView];
     
 }
 
 -(void)resetTimer{
-   [expirationLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),EXPIRATION_DURATION_IN_HOURS]];
+    [expirationLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),EXPIRATION_DURATION_IN_HOURS]];
 }
 
 
@@ -261,7 +253,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"ROOM_CLOSED", nil)
                                                         message:[NSString stringWithFormat: NSLocalizedString(@"ROOM_CLOSED_LONG", nil) , [[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]]
                                                        delegate:nil
-                                              cancelButtonTitle: NSLocalizedString(@"OK", nil) 
+                                              cancelButtonTitle: NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];
         [alert show];
         [self.navigationController popViewControllerAnimated:YES];
@@ -312,8 +304,6 @@
     // check this site
     // http://www.cimgf.com/2009/09/23/uitableviewcell-dynamic-height/
     //if there is no room, simply put this no room cell
-
-    
     
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
         //static
@@ -324,13 +314,6 @@
         }
         UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
         [noMessageView setText:NSLocalizedString(@"NO_MESSAGE", nil)];
-        //=========================
-        // MESSAGE LABEL
-        //=========================
-        //UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
-        //backgroundLabel.backgroundColor=[UIColor whiteColor];
-        //backgroundLabel.layer.cornerRadius  =2;
-        //backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
         return cell;
     }
     else{
@@ -348,10 +331,10 @@
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         NSString * text = [message content];
         CGSize textViewConstraint = CGSizeMake(contentTextView.frame.size.width,CELL_MAX_SIZE);
-        CGSize size = [text sizeWithFont:contentTextView.font constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [text sizeWithFont:contentTextView.font constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];
         [contentTextView setText:text];
         [contentTextView setFrame:CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y, contentTextView.frame.size.width, size.height+1000)];// ADER this size is there to avoid cut off text if someone type one line and an empty line....
-
+        
         //=========================
         // THUMBS
         //=========================
@@ -360,15 +343,19 @@
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
             [thumbUpButton setImage:[UIImage imageNamed:@"tUpP1.png"] forState:UIControlStateNormal] ;
+            [thumbUpButton setImage:[UIImage imageNamed:@"tUp1.png"] forState:UIControlStateHighlighted] ;
         }else{
             [thumbUpButton setImage:[UIImage imageNamed:@"tUp1.png"] forState:UIControlStateNormal] ;
+            [thumbUpButton setImage:[UIImage imageNamed:@"tUpP1.png"] forState:UIControlStateHighlighted] ;
         }
         UIButton *thumbDownButton = (UIButton *)[cell viewWithTag:5];
         [thumbDownButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
             [thumbDownButton setImage:[UIImage imageNamed:@"tDownP1.png"] forState:UIControlStateNormal] ;
+            [thumbDownButton setImage:[UIImage imageNamed:@"tDown1.png"] forState:UIControlStateHighlighted] ;
         }else {
             [thumbDownButton setImage:[UIImage imageNamed:@"tDown1.png"] forState:UIControlStateNormal] ;
+            [thumbDownButton setImage:[UIImage imageNamed:@"tDownP1.png"] forState:UIControlStateHighlighted] ;
         }
         //=========================
         // TIME
@@ -395,22 +382,22 @@
         //=========================
         UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
         backgroundLabel.backgroundColor=[UIColor whiteColor];
-        backgroundLabel.layer.cornerRadius  =2;
+        //backgroundLabel.layer.cornerRadius  =2;
         backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
         //=========================
         // SCORE
         //=========================
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
-         scoreLabel.textColor= [UIColor blackColor];
+        scoreLabel.textColor= [UIColor blackColor];
         if(message.score>0){
             //scoreLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
-           
+            
             [scoreLabel setText: [NSString stringWithFormat:@"+%d", message.score]];
         }else if(message.score<0){
             //scoreLabel.textColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
             [scoreLabel setText: [NSString stringWithFormat:@"%d", message.score]];
         }else{
-           // scoreLabel.textColor = [UIColor grayColor];
+            // scoreLabel.textColor = [UIColor grayColor];
             [scoreLabel setText: @"0"];
         }
         UILabel *numberofVotesLabel = (UILabel *)[cell viewWithTag:8];
@@ -425,7 +412,7 @@
         //=========================
         if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] id_type] isEqualToString:AVATAR]) {
             UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
-   
+            
             UIImage* avatarImage = [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] objectForKey:message.authorPeerID];
             if (!avatarImage) {
                 avatarImage= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]];
@@ -487,96 +474,96 @@
 //=========================
 -(IBAction)rateMessageUp:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-    @synchronized(self){
-        NSString* messageID;
-        int yesRating = 0;
-        int noRating = 0;
-        UIButton *aButton = (UIButton *)sender;
-        NSString* rowInString = [aButton titleForState:UIControlStateNormal];
-        NSUInteger row = [rowInString integerValue];
-        Message* message = [self getMessageForIndex:row];
-        messageID = message.messageID;
-        if (messageID) {
-        //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
-        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-            noRating = -1;
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-            yesRating=1;
+        @synchronized(self){
+            NSString* messageID;
+            int yesRating = 0;
+            int noRating = 0;
+            UIButton *aButton = (UIButton *)sender;
+            NSString* rowInString = [aButton titleForState:UIControlStateNormal];
+            NSUInteger row = [rowInString integerValue];
+            Message* message = [self getMessageForIndex:row];
+            messageID = message.messageID;
+            if (messageID) {
+                //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
+                if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+                    noRating = -1;
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+                    yesRating=1;
+                }
+                //else if the message was liked remove it from the list of liked messages
+                else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+                    yesRating=-1;
+                }
+                // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
+                else{
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
+                    yesRating=1;
+                }
+                // update the message rating on the server
+                [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
+                [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+            }else{
+                NSLog(@"the message %@ does not have an id",[message description]);
+            }
+            [self.tableView reloadData];
+            // GOOGLE ANALYTICS
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                                  action:@"button_press"  // Event action (required)
+                                                                   label:@"thumb_up"          // Event label
+                                                                   value:nil] build]];    // Event value
         }
-        //else if the message was liked remove it from the list of liked messages
-        else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-            yesRating=-1;
-        }
-        // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
-        else{
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-            yesRating=1;
-        }
-        // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
-        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-        }else{
-            NSLog(@"the message %@ does not have an id",[message description]);
-        }
-        [self.tableView reloadData];
-        // GOOGLE ANALYTICS
-        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                              action:@"button_press"  // Event action (required)
-                                                               label:@"thumb_up"          // Event label
-                                                               value:nil] build]];    // Event value
-    }
     }
 }
 //=========================
 // RATING DOWN
 //=========================
 -(IBAction)rateMessageDown:(id)sender{
-     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-    @synchronized(self){
-        NSString* messageID;
-        int yesRating = 0;
-        int noRating = 0;
-        UIButton *aButton = (UIButton *)sender;
-        NSString* rowInString = [aButton titleForState:UIControlStateNormal];
-        NSUInteger row = [rowInString integerValue];
-        Message* message = [self getMessageForIndex:row];
-        messageID = message.messageID;
-        if (messageID) {
-        //if the message was disliked, remove the message from the list of disliked messages
-        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
-            noRating--;
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        @synchronized(self){
+            NSString* messageID;
+            int yesRating = 0;
+            int noRating = 0;
+            UIButton *aButton = (UIButton *)sender;
+            NSString* rowInString = [aButton titleForState:UIControlStateNormal];
+            NSUInteger row = [rowInString integerValue];
+            Message* message = [self getMessageForIndex:row];
+            messageID = message.messageID;
+            if (messageID) {
+                //if the message was disliked, remove the message from the list of disliked messages
+                if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+                    noRating--;
+                }
+                //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
+                else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+                    yesRating--;
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
+                    noRating++;
+                }
+                // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
+                else{
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+                    noRating++;
+                }
+                // update the message rating on the server
+                [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
+                [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+            }else{
+                NSLog(@"the message %@ does not have an id",[message description]);
+            }
+            [self.tableView reloadData];
+            // GOOGLE ANALYTICS
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                                  action:@"button_press"  // Event action (required)
+                                                                   label:@"thumb_down"          // Event label
+                                                                   value:nil] build]];    // Event value
         }
-        //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
-        else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-            yesRating--;
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
-            noRating++;
-        }
-        // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
-        else{
-            [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
-            noRating++;
-        }
-        // update the message rating on the server
-        [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
-        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-        }else{
-            NSLog(@"the message %@ does not have an id",[message description]);
-        }
-       [self.tableView reloadData];
-        // GOOGLE ANALYTICS
-        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                              action:@"button_press"  // Event action (required)
-                                                               label:@"thumb_down"          // Event label
-                                                               value:nil] build]];    // Event value
     }
-     }
 }
 //=========================
 // SLIDE TO DELETE
@@ -610,9 +597,9 @@
             }else{
                 [self resetTimer];// puts timer back to 24 hours but only if its not the first time
             }
-
+            
         }
-       
+        
     }
 }
 
@@ -623,9 +610,9 @@
         numberofvotes+=message.numberOfNo + message.numberOfYes;
     }
     if (numberofmessages ==0){
-       roomInfoLabel.text= @"";
+        roomInfoLabel.text= @"";
     }else if (numberofmessages <2 && numberofvotes<2) {
-       roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_11", nil),numberofmessages,numberofvotes];
+        roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_11", nil),numberofmessages,numberofvotes];
     }else if (numberofmessages <2 && numberofvotes>=2)  {
         roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_12", nil),numberofmessages,numberofvotes];
     }else if (numberofmessages >=2 && numberofvotes<2)  {
@@ -644,14 +631,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0) {
-        return self.view.frame.size.height - 145;//big enough to put the expiration at the bottom
+        return self.view.frame.size.height - 160;//big enough to put the expiration at the bottom
     }
     
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
-    CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-SIDES,CELL_MAX_SIZE);
-    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];// ADER get font from cell
+    CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-(SIDES+18),CELL_MAX_SIZE);
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
     
 }
@@ -718,7 +705,7 @@
     }
     return NO;
 }
-    
+
 -(IBAction)sendInput:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         // should send the message first
@@ -739,8 +726,47 @@
                                                                   action:@"button_press"  // Event action (required)
                                                                    label:@"send"          // Event label
                                                                    value:nil] build]];    // Event value
+            [self resizeInputBox];
         }
     }
+}
+
+-(void)resizeInputBox{
+    CGSize textViewConstraint = CGSizeMake(self.inputTextView.frame.size.width-10,9999);
+    CGSize newSize = [self.inputTextView.text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+    
+    NSInteger newSizeH = newSize.height;
+    // below 90 we can set the height
+    if (newSizeH < 20)
+    {
+        newSizeH=INPUT_HEIGHT-INPUT_TOP_PADDING*2;
+        
+    }
+    if (newSizeH > 90)
+    {
+        self.inputTextView.scrollEnabled = YES;
+    }else{
+        [self.inputTextView scrollRectToVisible:CGRectMake(0,0,1,1) animated:NO];
+        // input text view
+        CGRect chatBoxFrame = self.inputTextView.frame;
+        chatBoxFrame.size.height = newSizeH+INPUT_TOP_PADDING*2;
+        self.inputTextView.frame = chatBoxFrame;
+        
+        // input view
+        CGRect formFrame = self.inputView.frame;
+        if(chatBoxFrame.size.height<INPUT_HEIGHT){
+            formFrame.size.height = INPUT_HEIGHT;
+        }else{
+            formFrame.size.height = chatBoxFrame.size.height+INPUT_TOP_PADDING*2;
+        }
+        formFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height-formFrame.size.height)-keyboardHeight;
+        self.inputView.frame = formFrame;
+    }
+}
+
+
+-(void) keyPressed: (NSNotification*) notification{
+    [self resizeInputBox];
 }
 
 
