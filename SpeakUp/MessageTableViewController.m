@@ -172,7 +172,6 @@
     [UIView animateWithDuration:0.3f animations:^{
         [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
     }];
-    
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
@@ -211,12 +210,44 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
     NSDate *lastUpdateTime = [dateFormatter dateFromString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]lastUpdateTime]];
+    NSTimeInterval expirationTimeInSeconds = EXPIRATION_DURATION_IN_HOURS * 60 * 60;
+    NSDate *expirationDate = [lastUpdateTime dateByAddingTimeInterval:expirationTimeInSeconds];
+    
+    NSDateFormatter *dateFormatterHourMinutes = [[NSDateFormatter alloc]init];
+    [dateFormatterHourMinutes setDateFormat:@"HH:mm"];
+    NSString *stringExpirationHourMinutes = [dateFormatterHourMinutes stringFromDate:expirationDate];
+    
+    NSDateFormatter *dateFormatterMonthDay = [[NSDateFormatter alloc]init];
+    [dateFormatterMonthDay setDateFormat:@"MM-dd"];
+    NSString *stringExpirationMonthDay = [dateFormatterMonthDay stringFromDate:expirationDate];
+    
+    
+    //check if date is today
+    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:expirationDate];
+    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+    
+    NSString* expirationTime=@"";
+    if([today day] == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year] && [today era] == [otherDay era]) {
+        expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TODAY", nil), stringExpirationHourMinutes];
+    }else  if([today day]+1 == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year] && [today era] == [otherDay era]) {
+       expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TOMORROW", nil), stringExpirationHourMinutes];
+    }else{
+        expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_ANOTHER_DAY", nil), stringExpirationMonthDay, stringExpirationHourMinutes];
+    }
+    [expirationLabel setText: expirationTime];
+    
+    
+    
+    
+    
+    /*
+    NSString* time=@"";
     NSTimeInterval elapsedTimeSinceUpdate = [lastUpdateTime timeIntervalSinceNow];
     //24*3600-elapsedTimeSinceUpdate= time remaining in seconds,
     NSInteger timeToExpirationInSeconds = EXPIRATION_DURATION_IN_HOURS*3600 + (int)elapsedTimeSinceUpdate;
     NSInteger minutes = (timeToExpirationInSeconds / 60) % 60;
     NSInteger hours = (timeToExpirationInSeconds / 3600);
-    NSString* time=@"";
+    
     if(minutes  <1 && hours  <1){
         time = NSLocalizedString(@"ABOUT_TO_CLOSE", nil);
     }else if(minutes>0 && hours == 0){
@@ -225,7 +256,7 @@
         time = [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),hours];
     }
     [expirationLabel setText: time];
-    
+    */
     
     
     [self sortMessages];
@@ -243,7 +274,14 @@
 }
 
 -(void)resetTimer{
-    [expirationLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),EXPIRATION_DURATION_IN_HOURS]];
+    //for now, when the time is reset, the date is set to tomorrow same time since the expiration date is 24hours
+    
+    NSDateFormatter *dateFormatterHourMinutes = [[NSDateFormatter alloc]init];
+    [dateFormatterHourMinutes setDateFormat:@"HH:mm"];
+    NSString *tomorrowSameTime = [dateFormatterHourMinutes stringFromDate:[NSDate date]];
+    [expirationLabel setText: [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TOMORROW", nil), tomorrowSameTime]];
+    
+    //[expirationLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),EXPIRATION_DURATION_IN_HOURS]];
 }
 
 
@@ -278,7 +316,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
-    
 }
 //=========================
 // HANDLES SECTIONS AND ROWS
@@ -382,7 +419,6 @@
         //=========================
         UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
         backgroundLabel.backgroundColor=[UIColor whiteColor];
-        //backgroundLabel.layer.cornerRadius  =2;
         backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
         //=========================
         // SCORE
@@ -390,14 +426,10 @@
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
         scoreLabel.textColor= [UIColor blackColor];
         if(message.score>0){
-            //scoreLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:173.0/255.0 blue:121.0/255.0 alpha:1.0];//dark green color
-            
             [scoreLabel setText: [NSString stringWithFormat:@"+%d", message.score]];
         }else if(message.score<0){
-            //scoreLabel.textColor = [UIColor colorWithRed:238.0/255.0 green:0.0/255.0 blue:58.0/255.0 alpha:1.0];//dark red color
             [scoreLabel setText: [NSString stringWithFormat:@"%d", message.score]];
         }else{
-            // scoreLabel.textColor = [UIColor grayColor];
             [scoreLabel setText: @"0"];
         }
         UILabel *numberofVotesLabel = (UILabel *)[cell viewWithTag:8];
@@ -410,7 +442,7 @@
         //=========================
         // AVATAR
         //=========================
-        if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] id_type] isEqualToString:AVATAR]) {
+        /*if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] id_type] isEqualToString:AVATAR]) {
             UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
             
             UIImage* avatarImage = [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] objectForKey:message.authorPeerID];
@@ -420,7 +452,7 @@
             }
             [avatarView setImage:avatarImage];
             //avatarView.layer.cornerRadius = 5;
-        }
+        }*/
         return cell;
     }
 }
@@ -597,12 +629,12 @@
             }else{
                 [self resetTimer];// puts timer back to 24 hours but only if its not the first time
             }
-            
         }
-        
     }
 }
-
+//=========================
+// Number of messages and votes in the room
+//=========================
 -(void)setRoomInfo{
     int numberofmessages = (int)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
     int numberofvotes=0;
@@ -620,10 +652,6 @@
     }else{
         roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_22", nil),numberofmessages,numberofvotes];
     }
-    
-    
-    //roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO", nil),numberofmessages,numberofvotes];
-    
 }
 //=========================
 // GET HEIGHT FOR ROW
@@ -631,13 +659,19 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0) {
-        return self.view.frame.size.height - 160;//big enough to put the expiration at the bottom
+        return self.view.frame.size.height - 150;//big enough to put the expiration at the bottom
     }
     
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
-    CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-(SIDES+18),CELL_MAX_SIZE);
+    int widthCorrection;
+    if(IS_OS_7_OR_LATER){
+        widthCorrection=18;
+    }else{
+       widthCorrection=65;
+    }
+    CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-(SIDES+widthCorrection),CELL_MAX_SIZE);
     CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
     

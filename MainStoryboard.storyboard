@@ -66,7 +66,7 @@
                             <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ibe-SA-dm9">
-                            <rect key="frame" x="0.0" y="333" width="320" height="85"/>
+                            <rect key="frame" x="0.0" y="397" width="320" height="85"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expires" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9xe-55-7JG">
@@ -165,15 +165,15 @@
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </tableViewCell>
-                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="105" id="bGw-Ay-tMv" customClass="MessageCell">
-                                <rect key="frame" x="0.0" y="228" width="320" height="105"/>
+                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="169" id="bGw-Ay-tMv" customClass="MessageCell">
+                                <rect key="frame" x="0.0" y="228" width="320" height="169"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bGw-Ay-tMv" id="PJb-eN-vh4">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="104"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="168"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="yqN-ne-pie">
-                                            <rect key="frame" x="0.0" y="0.0" width="321" height="79"/>
+                                            <rect key="frame" x="0.0" y="59" width="321" height="100"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="No Message in this room for now" textAlignment="center" id="a4g-wp-jhY">

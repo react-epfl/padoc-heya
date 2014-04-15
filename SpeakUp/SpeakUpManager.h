@@ -37,6 +37,8 @@
 #define MediumFontSize 18
 #define SmallFontSize 13
 
+#define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+
 
 // socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
 @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>

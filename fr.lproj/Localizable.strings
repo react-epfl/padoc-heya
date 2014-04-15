@@ -80,3 +80,9 @@
 "ROOM_INFO_21"="%d messages, %d vote";
 "ROOM_INFO_11"="%d message, %d vote";
 
+"EXPIRES_TODAY"= "Cette salle ferme à %@";
+
+"EXPIRES_TOMORROW"= "Cette salle ferme demain à %@";
+
+"EXPIRES_ANOTHER_DAY" = "Cette salle ferme le %@ à %@";
+
