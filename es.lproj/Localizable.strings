@@ -8,9 +8,9 @@
 
 
 
-"NO_ROOM" = "no hay salas disponibles, ¡crea una!";
 
-"ROOMS" = "SpeakUp";
+
+//"ROOMS" = "SpeakUp";
 
 //"NO_LOCATION" = "No se puede conseguir un lugar";
 
@@ -71,4 +71,16 @@
 "TURN_LOCATION_ON" = "Enciende la ubicación para crear una nueva sala";
 
 "JOIN_ROOM_INFO" = " ";
-"NO_NEARBY_ROOMS" = " ";
+
+
+"NO_ROOM" = "no hay salas disponibles, ¡crea una!";
+
+"ROOMS" ="Salas";
+"ROOM_INFO_22"="%d mensajes, %d votos";
+"ROOM_INFO_12"="%d mensaje, %d votos";
+"ROOM_INFO_21"="%d mensajes, %d vota";
+"ROOM_INFO_11"="%d mensaje, %d vota";
+"EXPIRES_TODAY"= "Esta sala cerrará a %@";
+"EXPIRES_TOMORROW"= "Esta sala cerrará mañana a %@";
+"EXPIRES_ANOTHER_DAY" = "Esta sala cerrará %@ a %@";
+"NO_NEARBY_ROOMS" = "No salas cercanas";

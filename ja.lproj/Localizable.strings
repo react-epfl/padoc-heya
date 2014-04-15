@@ -63,4 +63,16 @@
 "TURN_LOCATION_ON"="チャットルームを作成し、位置認識をONに設置、";
 
 "JOIN_ROOM_INFO" = " ";
-"NO_NEARBY_ROOMS" = " ";
+
+
+"NO_ROOM"= "'+'を押し、ルームを追加";
+"ROOMS" ="ルーム";
+"ROOM_INFO_22"="%d メッセージ, %d 投票者";
+"ROOM_INFO_12"="%d メッセージ, %d 投票者";
+"ROOM_INFO_21"="%d メッセージ, %d 投票者";
+"ROOM_INFO_11"="%d メッセージ, %d 投票者";
+"EXPIRES_TODAY"= "%@にこのルームはクローズ";//meaning today at a certain time
+"EXPIRES_TOMORROW"= "明日の%@にこのルームはクローズ";
+"EXPIRES_ANOTHER_DAY" = "%@の%@にこのルームはクローズ";// meaning on a certain date at a certain time
+"NO_NEARBY_ROOMS" = "近くにルームなし";
+

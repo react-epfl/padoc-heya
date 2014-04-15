@@ -8,9 +8,9 @@
 
 
 
-"NO_ROOM"= "附近沒有聊天室，新建一個聊天室吧！";
+//"NO_ROOM"= "附近沒有聊天室，新建一個聊天室吧！";
 
-"ROOMS"="SpeakUp";
+//"ROOMS"="SpeakUp";
 
 //"NO_LOCATION" = "暫時無法獲取地點信息";
 
@@ -71,4 +71,13 @@
 "TURN_LOCATION_ON" = "創建聊天室之前請先開啟定位服務";
 
 "JOIN_ROOM_INFO" = " ";
-"NO_NEARBY_ROOMS" = " ";
+"NO_ROOM"= "按`+´添加聊天室";
+"ROOMS" ="聊天室";
+"ROOM_INFO_22"="%d 消息, %d 投票";
+"ROOM_INFO_12"="%d 消息, %d 投票";
+"ROOM_INFO_21"="%d 消息, %d 投票";
+"ROOM_INFO_11"="%d 消息, %d 投票";
+"EXPIRES_TODAY"= "這個聊天室%@關閉";//meaning today at a certain time
+"EXPIRES_TOMORROW"= "這個聊天室明天 %@關閉";
+"EXPIRES_ANOTHER_DAY" = "這個聊天室%@  %@關閉";// meaning on a certain date at a certain time
+"NO_NEARBY_ROOMS" = "附近沒有聊天室";

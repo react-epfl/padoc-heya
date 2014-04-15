@@ -6,9 +6,9 @@
   Copyright (c) 2013 Adrian Holzer. All rights reserved.
 */
 
-"NO_ROOM"= "근처에 대화방이 없습니다. 개설하세요.";
+//"NO_ROOM"= "근처에 대화방이 없습니다. 개설하세요.";
 
-"ROOMS"="SpeakUp";
+//"ROOMS"="SpeakUp";
 
 //"NO_LOCATION" = "지금은 위치를 알 수 없습니다.";
 
@@ -46,9 +46,9 @@
 
 "COMMENT" = "코멘트";
 
-"UNLOCK" = "잠금이 해제되어 있습니다.";
+"UNLOCK" = "잠금 해제";
 
-"JOIN_ROOM" = "잠금이 해제되어 있습니다.";
+"JOIN_ROOM" = "현재 방 잠금 해제";
 
 "CREATE" = "개설";
 
@@ -69,4 +69,14 @@
 "TURN_LOCATION_ON" = "방을 개설하기 위해 새 위치를 알리세요.";
 
 "JOIN_ROOM_INFO" = " ";
-"NO_NEARBY_ROOMS" = " ";
+
+"NO_ROOM"= "'+' 버튼을 누르고 방을 만드세요.";
+"ROOMS" ="방들";
+"ROOM_INFO_22"="%d 메세지들, %d 투표들";
+"ROOM_INFO_12"="%d 메세지, %d 투표";
+"ROOM_INFO_21"="%d 메세지, %d 투표";
+"ROOM_INFO_11"="%d 메세지, %d 투표";
+"EXPIRES_TODAY"= "이방은 %@ 에 닫혔습니다.";//meaning today at a certain time
+"EXPIRES_TOMORROW"= "이방은 내일 %@'에 닫힙니다.";
+"EXPIRES_ANOTHER_DAY" = "이방은 %@ 날 %@에 닫힙니다.";// meaning on a certain date at a certain time
+"NO_NEARBY_ROOMS" = "근처에 방이 없습니다.";

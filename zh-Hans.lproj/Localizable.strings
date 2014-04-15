@@ -8,9 +8,9 @@
 
 
 
-"NO_ROOM"= "附近没有房间，新建一个房间吧！";
+//"NO_ROOM"= "附近没有房间，新建一个房间吧！";
 
-"ROOMS"="SpeakUp";
+//"ROOMS"="SpeakUp";
 
 //"NO_LOCATION" = "暂时无法获得地点信息";
 
@@ -72,4 +72,17 @@
 
 "JOIN_ROOM_INFO" = " ";
 
-"NO_NEARBY_ROOMS" = " ";
+
+"NO_ROOM"= "按`+´添加聊天室";
+"ROOMS" ="聊天室";
+"ROOM_INFO_22"="%d 消息, %d 投票";
+"ROOM_INFO_12"="%d 消息, %d 投票";
+"ROOM_INFO_21"="%d 消息, %d 投票";
+"ROOM_INFO_11"="%d 消息, %d 投票";
+"EXPIRES_TODAY"= "这个聊天室%@关闭";//meaning today at a certain time
+"EXPIRES_TOMORROW"= "这个聊天室明天 %@关闭";
+"EXPIRES_ANOTHER_DAY" = "这个聊天室%@  %@关闭";// meaning on a certain date at a certain time
+"NO_NEARBY_ROOMS" = "附近没有聊天室";
+
+
+

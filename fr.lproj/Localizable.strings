@@ -8,13 +8,9 @@
 
 
 
-"NO_ROOM"= "Ajouter une salle avec '+'";
-
-"ROOMS" ="Salles";
-
 //"NO_LOCATION" = "Localisation inaccessible pour le moment";
 
-"NO_CONNECTION"= "Pas de connection pour le moment...";
+//"NO_CONNECTION"= "Pas de connection pour le moment...";
 
 //"LOADING" = "charge...";
 
@@ -24,9 +20,9 @@
 
 //"ROOM_CLOSED" = "SALLE FERMEE";
 
-"ROOM_CLOSED_LONG" =  "La salle %@ a été fermée et n'est plus disponible";
+//"ROOM_CLOSED_LONG" =  "La salle %@ a été fermée et n'est plus disponible";
 
-"OK" = "OK";
+//"OK" = "OK";
 
 "JUST_NOW" = "maintenant";
 
@@ -44,7 +40,7 @@
 
 "RECENT_SORT" = "Récent";
 
-"COMPOSE" = "composer";
+//"COMPOSE" = "composer";
 
 "COMMENT" = "Commenter";
 
@@ -59,7 +55,7 @@
 "ROOM_KEY" = "Numéro de la salle";
 
 "NEARBY_ROOMS" = "Salles proches";
-"NO_NEARBY_ROOMS" = "Pas de salle à proximité";
+
 "UNLOCKED_ROOMS" = "Salles rejointes";
 
 "SEND" = "Envoyer";
@@ -72,17 +68,20 @@
 
 "JOIN_ROOM_INFO" = "Entrer le numéro d'une salle existante pour la rejoindre";
 
-"ABOUT_TO_CLOSE" = "Cette salle va fermer dans quelques instants";
-"CLOSES_IN_MINUTES"="Cette salle ferme dans %d minutes";
-"CLOSES_IN_HOURS"="Cette salle ferme dans %d heures";
+
+
+"NO_ROOM"= "Ajouter une salle avec '+'";
+"ROOMS" ="Salles";
 "ROOM_INFO_22"="%d messages, %d votes";
 "ROOM_INFO_12"="%d message, %d votes";
 "ROOM_INFO_21"="%d messages, %d vote";
 "ROOM_INFO_11"="%d message, %d vote";
-
 "EXPIRES_TODAY"= "Cette salle ferme à %@";
-
 "EXPIRES_TOMORROW"= "Cette salle ferme demain à %@";
-
 "EXPIRES_ANOTHER_DAY" = "Cette salle ferme le %@ à %@";
+"NO_NEARBY_ROOMS" = "Pas de salle à proximité";
+
+
+
+
 

@@ -8,7 +8,7 @@
 
 
 
-"NO_ROOM"= "Kein Chatraum in der Nähe! Erstelle einen!";
+"NO_ROOM"= "Erstelle einen!";
 
 "ROOMS"="Chaträume";
 
@@ -38,31 +38,31 @@
 
 "VOTES"="(%d Stimmen)";
 
-"CREATE_ROOM" = "ERSTELLEN";
+"CREATE_ROOM" = "Erstellen";
 
-"RATING_SORT" = "BEWERTUNG";
+"RATING_SORT" = "Bewertung";
 
-"RECENT_SORT" = "ZEIT";
+"RECENT_SORT" = "Zeit";
 
 "COMPOSE" = "";
 
 "COMMENT" = "";
 
-"UNLOCK" = "ÖFFNEN";
+"UNLOCK" = "Öffnen";
 
-"JOIN_ROOM" = "ÖFFNEN";
+"JOIN_ROOM" = "Öffnen";
 
-"CREATE" = "ERSTELLEN";
+"CREATE" = "Erstellen";
 
 "ROOM_NAME" = "Namen";
 
-"ROOM_KEY" = "Schlüssel";
+"ROOM_KEY" = "Nummer";
 
 "NEARBY_ROOMS" = "Chaträume in der Nähe";
 
 "UNLOCKED_ROOMS" = "Geöffnete Chaträume";
 
-"SEND" = "SENDEN";
+"SEND" = "Senden";
 
 "PSEUDO" = "Avatare werden in diesem Chatraum gezeigt";
 
@@ -71,5 +71,15 @@
 "TURN_LOCATION_ON" = "Ortungsdienste müssen eingeschaltet sein, um neue Chaträume erstellen zu können.";
 
 "JOIN_ROOM_INFO" = " ";
-"NO_NEARBY_ROOMS" = " ";
+
+
+"ROOM_INFO_22"="%d Meldungen, %d Stimmen";
+"ROOM_INFO_12"="%d Meldung, %d Stimmen";
+"ROOM_INFO_21"="%d Meldungen, %d Stimme";
+"ROOM_INFO_11"="%d Meldunge, %d Stimme";
+"EXPIRES_TODAY"= "Dieser Chatraum schliesst um %@";
+"EXPIRES_TOMORROW"= "Dieser Chatraum schliesst morgen um %@";
+"EXPIRES_ANOTHER_DAY" = "Dieser Chatraum schliesst am %@ um %@";
+"NO_NEARBY_ROOMS" = "Kein Chatraum in der Nähe";
+
 
