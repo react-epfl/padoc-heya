@@ -669,9 +669,11 @@
     if(IS_OS_7_OR_LATER){
         widthCorrection=18;
     }else{
-       widthCorrection=65;
+       widthCorrection=80;
     }
     CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-(SIDES+widthCorrection),CELL_MAX_SIZE);
+    
+
     CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
     
@@ -803,6 +805,15 @@
     [self resizeInputBox];
 }
 
+-(IBAction)goToWebSite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:@"info_from_add"          // Event label
+                                                           value:nil] build]];    // Event value
+}
 
 
 @end

@@ -26,6 +26,7 @@
 //press thumb up
 -(IBAction)sortBy:(id)sender;
 
+-(IBAction)goToWebSite:(id)sender;
 @property(strong, nonatomic) IBOutlet UILabel* roomNumberLabel;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 
@@ -45,6 +46,7 @@
 @property(nonatomic)  BOOL isFirstMessageUpdate;
 
 @property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
+
 
 
 

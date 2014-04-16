@@ -121,14 +121,14 @@
     unlockRoomButton.layer.masksToBounds=YES;
     //unlockRoomButton.layer.cornerRadius=2.0f;
     [unlockRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [unlockRoomButton setBackgroundColor:myGreen];
+    [unlockRoomButton setBackgroundColor:myPurple];
     
     // CREATE BUTTON
     [createRoomButton setTitle:NSLocalizedString(@"CREATE_ROOM", nil) forState:UIControlStateNormal];
     createRoomButton.layer.masksToBounds=YES;
     //createRoomButton.layer.cornerRadius=2.0f;
     [createRoomButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [createRoomButton setBackgroundColor:myGreen];
+    [createRoomButton setBackgroundColor:myPurple];
     
     
     //PSEUDO LABEL
@@ -166,10 +166,6 @@
     }else{
  
     }*/
-
-    
-   
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
