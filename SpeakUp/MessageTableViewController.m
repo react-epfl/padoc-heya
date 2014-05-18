@@ -376,7 +376,7 @@
         // THUMBS
         //=========================
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];
-        NSString* rowInString = [NSString stringWithFormat:@"%d",indexPath.row];
+        NSString* rowInString = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
             [thumbUpButton setImage:[UIImage imageNamed:@"tUpP1.png"] forState:UIControlStateNormal] ;
@@ -715,7 +715,7 @@
 // INPUT METHODS
 - (void)textViewDidChange:(UITextView *)textView
 {
-    int characterNumber = [[inputTextView text] length];
+    int characterNumber = (int)[[inputTextView text] length];
     //[characterCounterLabel setText:[NSString stringWithFormat:@"%d / %d", characterNumber, MAX_LENGTH]];
     // update the input
     [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];

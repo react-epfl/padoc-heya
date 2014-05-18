@@ -191,10 +191,19 @@
 {
     MKCoordinateRegion mapRegion;
     mapRegion.center = self.mapView.userLocation.coordinate;
-    //mapRegion.span.latitudeDelta = 0.25;
-    mapRegion.span.longitudeDelta = 0.008;
-    [self.mapView setRegion:mapRegion animated: YES];
-    [self.mapView regionThatFits:mapRegion];
+
+    // set sane span values
+    mapRegion.span.latitudeDelta = 0.0f;
+    mapRegion.span.longitudeDelta = 0.0f;
+    // check for sane center values
+    if (mapRegion.center.latitude > 90.0f || mapRegion.center.latitude < -90.0f ||
+        mapRegion.center.longitude > 360.0f || mapRegion.center.longitude < -180.0f
+        ) {
+        //Bad Lat or Long don't do anything
+    }else{
+        [self.mapView setRegion:mapRegion animated: YES];
+    }
+
 }
 
 
@@ -215,12 +224,6 @@
 -(IBAction)createRoom:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         
-        /*if([self.input.text isEqualToString:@"Waroftheworldviews"]){
-            [[SpeakUpManager sharedSpeakUpManager] setIsSuperUser:YES];
-            NSLog(@"YOU ARE A SUPER USER NOW :)");
-            self.input.text=@"";
-            [self.input setPlaceholder:@"You are super :)"];
-        }else*/
         NSString *trimmedString = [input.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if(self.input.text.length>0 && trimmedString.length >0){
             NSLog(@"creating a new room %@ ", input.text);
