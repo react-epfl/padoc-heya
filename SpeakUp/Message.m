@@ -3,7 +3,7 @@
 //  InterMix
 //
 //  Created by Adrian Holzer on 16.12.11.
-//  Copyright (c) 2012 Adrian Holzer. All rights reserved.
+//  Copyright (c) 2012 Seance Association. All rights reserved.
 //
 
 #import "Message.h"

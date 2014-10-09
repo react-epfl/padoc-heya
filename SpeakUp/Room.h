@@ -3,7 +3,7 @@
 //  SpeakUp
 //
 //  Created by Adrian Holzer on 02.04.12.
-//  Copyright (c) 2012 Adrian Holzer. All rights reserved.
+//  Copyright (c) 2012 Seance Association. All rights reserved.
 //
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
