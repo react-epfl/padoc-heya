@@ -427,6 +427,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     // should inform the server if the message was the peer's message
 }
 
+-(void) markMessageAsSpam:(Message *) message{
+    //ADER need to send a message to the server
+}
+
 -(void) showDisconnectionView{
     
 }

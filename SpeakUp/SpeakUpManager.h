@@ -53,6 +53,7 @@
 -(void)savePeerData;
 - (void)getNearbyRooms;
 -(void) deleteMessage:(Message *) message;
+-(void) markMessageAsSpam:(Message *) message;
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoomID:(NSString*)roomID orRoomHash:(NSString*) hash;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;

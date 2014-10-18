@@ -284,7 +284,7 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-
+        
         // CONTENT
         cell.message=message;
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
@@ -333,12 +333,12 @@
             time = [NSString stringWithFormat:  NSLocalizedString(@"HOURS_AGO", nil),hours];
         }
         [timeLabel setText: time];
-
+        
         // MESSAGE LABEL
         UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
         backgroundLabel.backgroundColor=[UIColor whiteColor];
         backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
-
+        
         // SCORE
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
         scoreLabel.textColor= [UIColor blackColor];
@@ -391,7 +391,7 @@
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
                                                           action:@"tab_change"  // Event action (required)
                                                            label:eventName          // Event label
-                                                        value:nil] build]];    // Event value
+                                                           value:nil] build]];    // Event value
 }
 
 // CONNECTION HANDLING
@@ -430,7 +430,7 @@
                 // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
                 else{
                     // ADER TO REMOVE
-                   // NSMutableArray* testlikedMessages= [[[SpeakUpManager sharedSpeakUpManager] likedMessages] mutableCopy] ;
+                    // NSMutableArray* testlikedMessages= [[[SpeakUpManager sharedSpeakUpManager] likedMessages] mutableCopy] ;
                     //[testlikedMessages addObject:message.messageID];
                     
                     
@@ -501,22 +501,7 @@
     }
 }
 
-// SLIDE TO DELETE
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return @"Hide";
-}
 
-// DELETE
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Message* message = [self getMessageForIndex:indexPath.row];
-        [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
-        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
-        [tableView reloadData];
-    }
-}
 
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
@@ -663,7 +648,6 @@
 -(void)resizeInputBox{
     CGSize textViewConstraint = CGSizeMake(self.inputTextView.frame.size.width-10,9999);
     CGSize newSize = [self.inputTextView.text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
-    
     NSInteger newSizeH = newSize.height;
     // below 90 we can set the height
     if (newSizeH < 20)
@@ -692,7 +676,6 @@
     }
 }
 
-
 -(void) keyPressed: (NSNotification*) notification{
     [self resizeInputBox];
 }
@@ -705,6 +688,28 @@
                                                           action:@"button_press"  // Event action (required)
                                                            label:@"info_from_add"          // Event label
                                                            value:nil] build]];    // Event value
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *spamAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Spam" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        Message* message = [self getMessageForIndex:indexPath.row];
+        [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
+        [[SpeakUpManager sharedSpeakUpManager] markMessageAsSpam:message];
+        [tableView reloadData];
+    }];
+    spamAction.backgroundColor = [UIColor orangeColor];
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        Message* message = [self getMessageForIndex:indexPath.row];
+        [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
+        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
+        [tableView reloadData];
+    }];
+    return @[deleteAction, spamAction];
+}
+
+// From Master/Detail Xcode template
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 @end
