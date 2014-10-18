@@ -229,6 +229,7 @@
                         <outlet property="roomNameLabel" destination="JmJ-gk-Wcq" id="SKx-6x-uoo"/>
                         <outlet property="roomNumberLabel" destination="pnY-k0-vf9" id="RMB-NG-KHS"/>
                         <outlet property="segmentedControl" destination="PbI-ez-uG9" id="0oq-hR-QZe"/>
+                        <segue destination="v9A-Oq-Foh" kind="modal" id="8UB-2p-DwB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vtB-eR-SoI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -255,14 +256,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="room name" lineBreakMode="tailTruncation" minimumFontSize="18" id="1x4-Xs-4a1" userLabel="helloLabel">
-                                            <rect key="frame" x="20" y="0.0" width="245" height="43"/>
+                                            <rect key="frame" x="20" y="1" width="245" height="43"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="distance" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="Zts-Cf-UaF">
-                                            <rect key="frame" x="250" y="12" width="50" height="21"/>
+                                            <rect key="frame" x="250" y="13" width="50" height="21"/>
                                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -410,7 +411,7 @@
                     <navigationItem key="navigationItem" id="3AO-L8-U0f">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FmC-2P-lkf">
-                            <rect key="frame" x="63" y="8" width="194" height="29"/>
+                            <rect key="frame" x="63" y="7.5" width="194" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             <segments>
@@ -450,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Mi-Er-7yK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1011" y="491"/>
+            <point key="canvasLocation" x="928" y="505"/>
         </scene>
         <!--Message Table View Controller-->
         <scene sceneID="14f-ek-q6Q">
@@ -474,7 +475,7 @@
                                     <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </activityIndicatorView>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="rKY-Qa-3JS">
-                                    <rect key="frame" x="10" y="8" width="290" height="59"/>
+                                    <rect key="frame" x="10" y="8" width="295" height="59"/>
                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
@@ -642,6 +643,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lh3-VP-ThO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1406" y="-221"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="p2I-iV-Dro">
+            <objects>
+                <viewController id="v9A-Oq-Foh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3JD-F9-ZtO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Be Nice" id="Tkb-H2-jJG">
+                                <rect key="frame" x="16" y="167" width="290" height="120"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                            </textView>
+                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yIr-NX-Bon">
+                                <rect key="frame" x="92" y="476" width="139" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="19"/>
+                                <state key="normal" title="I agree">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32941177490000001" green="0.32549020649999999" blue="0.78823536630000002" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vuh-5l-UQG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1443" y="448"/>
         </scene>
     </scenes>
     <resources>

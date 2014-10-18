@@ -240,8 +240,16 @@
 - (IBAction)unlock:(id)sender {
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         // check if the label is ok, then pop the view
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text];
+        //[[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text];
+        
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text withHandler:^(NSDictionary* handler){
+            NSLog(@"XXXXXXXXXXXXXXX");
+        }];
         // could wait for response and then enter the lobby
+        
+        
+        
+        
         [self.navigationController popViewControllerAnimated:YES];
         // GOOGLE ANALYTICS
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -251,6 +259,20 @@
                                                                value:nil] build]];    // Event value
     }
 }
+
+
+- (void)loginFailed:(NSError *)error {
+    // [[[UIAlertView alloc] initWithTitle:@"Login failed" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
+    anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ] ] ;
+    anim.autoreverses = YES ;
+    anim.repeatCount = 2.0f ;
+    anim.duration = 0.07f ;
+    [ unlockRoomButton.layer addAnimation:anim forKey:nil ] ;
+    //loginWarningLabel.text=@"invalid username or password";
+    [unlockRoomButton setHidden:NO];
+}
+
 
 - (IBAction)flip:(id)sender {
     if (pseudoSwitch.on){
