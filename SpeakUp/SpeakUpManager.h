@@ -37,6 +37,10 @@
 #define MediumFontSize 18
 #define SmallFontSize 13
 
+#define THUMB @"THUMB"
+#define PLUS @"PLUS"
+#define ARROW @"ARROW"
+
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 
@@ -93,6 +97,7 @@
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
 @property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;
+@property (nonatomic)  NSString  *likeType;//type of like buttons (e.g. THUMB, PLUS, ARROW)
 
 
 @end

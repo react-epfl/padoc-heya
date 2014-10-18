@@ -299,20 +299,20 @@
         NSString* rowInString = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [thumbUpButton setImage:[UIImage imageNamed:@"tUpP1.png"] forState:UIControlStateNormal] ;
-            [thumbUpButton setImage:[UIImage imageNamed:@"tUp1.png"] forState:UIControlStateHighlighted] ;
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else{
-            [thumbUpButton setImage:[UIImage imageNamed:@"tUp1.png"] forState:UIControlStateNormal] ;
-            [thumbUpButton setImage:[UIImage imageNamed:@"tUpP1.png"] forState:UIControlStateHighlighted] ;
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         UIButton *thumbDownButton = (UIButton *)[cell viewWithTag:5];
         [thumbDownButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [thumbDownButton setImage:[UIImage imageNamed:@"tDownP1.png"] forState:UIControlStateNormal] ;
-            [thumbDownButton setImage:[UIImage imageNamed:@"tDown1.png"] forState:UIControlStateHighlighted] ;
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else {
-            [thumbDownButton setImage:[UIImage imageNamed:@"tDown1.png"] forState:UIControlStateNormal] ;
-            [thumbDownButton setImage:[UIImage imageNamed:@"tDownP1.png"] forState:UIControlStateHighlighted] ;
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         
         // TIME
