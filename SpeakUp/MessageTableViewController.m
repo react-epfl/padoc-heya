@@ -23,7 +23,7 @@
 #define FOOTER_OFFSET 60 // space below the text
 #define HEADER_OFFSET 45 // not used
 #define CELL_VERTICAL_OFFSET 65 // not used
-#define SIDES 30
+#define SIDES 40
 #define EXPIRATION_DURATION_IN_HOURS 24
 #define INPUT_LEFT_PADDING 10
 #define INPUT_TOP_PADDING 5
@@ -429,11 +429,6 @@
                 }
                 // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
                 else{
-                    // ADER TO REMOVE
-                    // NSMutableArray* testlikedMessages= [[[SpeakUpManager sharedSpeakUpManager] likedMessages] mutableCopy] ;
-                    //[testlikedMessages addObject:message.messageID];
-                    
-                    
                     [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
                     yesRating=1;
                 }
@@ -501,8 +496,6 @@
     }
 }
 
-
-
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
@@ -548,17 +541,10 @@
     }
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
-    NSString *text = message.content;
-    int widthCorrection;
-    if(IS_OS_7_OR_LATER){
-        widthCorrection=18;
-    }else{
-        widthCorrection=80;
-    }
-    CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-(SIDES+widthCorrection),CELL_MAX_SIZE);
-    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];// ADER get font from cell
-    return size.height +FOOTER_OFFSET + HEADER_OFFSET;
+    return [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-SIDES, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height + FOOTER_OFFSET + HEADER_OFFSET;
 }
+
+
 
 // SORTING
 -(void) sortMessages{
