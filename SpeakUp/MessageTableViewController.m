@@ -23,7 +23,7 @@
 #define FOOTER_OFFSET 60 // space below the text
 #define HEADER_OFFSET 45 // not used
 #define CELL_VERTICAL_OFFSET 65 // not used
-#define SIDES 40
+#define SIDES 20
 #define EXPIRATION_DURATION_IN_HOURS 24
 #define INPUT_LEFT_PADDING 10
 #define INPUT_TOP_PADDING 5
@@ -34,7 +34,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel;
 
 #pragma mark - View lifecycle
 //=========================
@@ -71,9 +71,14 @@
                                         [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
     
-    // ROOM HEADER
-    [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
-    [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
+    //HEADER
+    if (parentMessage) {
+        [self updateReplyMessages];//sets messageArray and header
+    }else{
+        self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
+        [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+        [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
+    }
     
     /// INPUT VIEW
     keyboardIsVisible=NO;
@@ -116,7 +121,6 @@
 
 - (void)viewTapped:(UITapGestureRecognizer *)tgr
 {
-    NSLog(@"view tapped");
     [inputTextView resignFirstResponder ]; // removes keyboard
 }
 
@@ -253,28 +257,30 @@
 // HANDLES SECTIONS AND ROWS
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]==nil){
-        [connectionLostSpinner startAnimating];
+    if (self.messageArray==nil){
         return 0;
     }
-    [connectionLostSpinner stopAnimating];
-    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
+    if ([self.messageArray count]==0){
         return 1;
     }
-    return [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
+    return [self.messageArray count];
 }
 
 // LOADS DATA
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
+    if ([self.messageArray count]==0){
         NSString *CellIdentifier = @"NoMessageCell";
         MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
-        [noMessageView setText:NSLocalizedString(@"NO_MESSAGE", nil)];
+        if (parentMessage) {
+            [noMessageView setText:NSLocalizedString(@"NO_COMMENT_MESSAGE", nil)];
+        }else{
+            [noMessageView setText:NSLocalizedString(@"NO_MESSAGE", nil)];
+        }
         return cell;
     }
     else{
@@ -286,13 +292,10 @@
         }
         
         // CONTENT
-        cell.message=message;
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
-        NSString * text = [message content];
-        CGSize textViewConstraint = CGSizeMake(contentTextView.frame.size.width,CELL_MAX_SIZE);
-        CGSize size = [text sizeWithFont:contentTextView.font constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];
-        [contentTextView setText:text];
-        [contentTextView setFrame:CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y, contentTextView.frame.size.width, size.height+1000)];// ADER this size is there to avoid cut off text if someone type one line and an empty line....
+        CGFloat height = [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height;
+        contentTextView.frame =  CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
+        [contentTextView setText:message.content];
         
         // THUMBS
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];
@@ -315,6 +318,17 @@
             [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         
+        //COMMENTS
+        if (!parentMessage) {
+            UIButton *commentButton = (UIButton *)[cell viewWithTag:11];
+            if (message.replies.count==0) {
+                            [commentButton setTitle: NSLocalizedString(@"TO_COMMENT", nil) forState:UIControlStateNormal];
+            }else  if (message.replies.count==1){
+                            [commentButton setTitle: NSLocalizedString(@"ONE_COMMENT", nil) forState:UIControlStateNormal];
+            }else{
+                [commentButton setTitle:[NSString stringWithFormat:  NSLocalizedString(@"COMMENTS", nil),parentMessage.replies.count] forState:UIControlStateNormal];
+            }
+        }
         // TIME
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -362,8 +376,8 @@
 
 // GET MESSAGE FOR INDEX
 -(Message*)getMessageForIndex:(NSInteger)index{
-    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]>0){
-        return (Message *)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] objectAtIndex:index];
+    if ([self.messageArray count]>0){
+        return (Message *)[self.messageArray objectAtIndex:index];
     }
     return nil;
 }
@@ -501,6 +515,11 @@
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
     if([roomID isEqual:[[SpeakUpManager sharedSpeakUpManager] currentRoomID]]){
         if(!self.editing){
+            if (parentMessage) {
+                [self updateReplyMessages];
+            }else{
+                 self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
+            }
             [self sortMessages];
             [self.tableView reloadData];
             [self setRoomInfo];
@@ -515,9 +534,9 @@
 
 // Number of messages and votes in the room
 -(void)setRoomInfo{
-    int numberofmessages = (int)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
+    int numberofmessages = (int)[self.messageArray count];
     int numberofvotes=0;
-    for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+    for (Message* message in self.messageArray){
         numberofvotes+=message.numberOfNo + message.numberOfYes;
     }
     if (numberofmessages ==0){
@@ -536,7 +555,7 @@
 // GET HEIGHT FOR ROW
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0) {
+    if ([self.messageArray count]==0) {
         return self.view.frame.size.height - 150;//big enough to put the expiration at the bottom
     }
     NSUInteger row = [indexPath row];
@@ -544,14 +563,12 @@
     return [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-SIDES, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height + FOOTER_OFFSET + HEADER_OFFSET;
 }
 
-
-
 // SORTING
 -(void) sortMessages{
     if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom]messagesSortedBy]==MOST_RECENT) {
-        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessages:  [self sortMessagesByTime:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]]];
+        [self setMessageArray: [self sortMessagesByTime:self.messageArray]];
     }else{
-        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessages:  [self sortMessagesByScore:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]]];
+        [self setMessageArray: [self sortMessagesByScore:self.messageArray]];
     }
 }
 
@@ -612,6 +629,7 @@
             // create a new message
             Message *newMessage = [[Message alloc] init];
             newMessage.content= inputTextView.text;
+            newMessage.parentMessageID = parentMessage.messageID;
             newMessage.roomID=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
             [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
             [inputTextView setText:@""];
@@ -666,27 +684,18 @@
     [self resizeInputBox];
 }
 
--(IBAction)goToWebSite:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"button_press"  // Event action (required)
-                                                           label:@"info_from_add"          // Event label
-                                                           value:nil] build]];    // Event value
-}
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *spamAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Spam" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
-        [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
+        [self.messageArray removeObject:message];
         [[SpeakUpManager sharedSpeakUpManager] markMessageAsSpam:message];
         [tableView reloadData];
     }];
     spamAction.backgroundColor = [UIColor orangeColor];
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
-        [[[[SpeakUpManager sharedSpeakUpManager] currentRoom]messages] removeObject:message];
+        [self.messageArray  removeObject:message];
         [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
         [tableView reloadData];
     }];
@@ -696,6 +705,38 @@
 // From Master/Detail Xcode template
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"MessageToReplies"]) {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+        Message* message = [self getMessageForIndex: [indexPath row]];
+        MessageTableViewController *mvc = (MessageTableViewController *)[segue destinationViewController];
+        [mvc setParentMessage:message];
+    }
+}
+
+- (void)updateReplyHeader{
+        int numberOfVotes= parentMessage.numberOfNo + parentMessage.numberOfYes;
+        [parentMessageVoteNumberLabel setText:[NSString stringWithFormat:  NSLocalizedString(@"VOTE", nil), numberOfVotes]];
+        [parentMessageScoreLabel setText:[NSString stringWithFormat: @"%d",parentMessage.score]];
+        CGFloat height = [parentMessage.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height;
+        parentMessageContentTextView.frame =  CGRectMake(10,0,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
+        [parentMessageContentTextView setText:parentMessage.content];
+        parentMessageView.frame =  CGRectMake(0,0,self.view.frame.size.width,height+FOOTER_OFFSET+20);
+}
+
+-(void)updateReplyMessages{
+        for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+            if ([message.messageID isEqualToString:parentMessage.messageID] ) {
+                parentMessage=message;
+                messageArray=message.replies;
+                [self updateReplyHeader];
+                break;
+            }
+        }
 }
 
 @end

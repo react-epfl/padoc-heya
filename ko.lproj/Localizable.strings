@@ -80,3 +80,12 @@
 "EXPIRES_TOMORROW"= "이방은 내일 %@'에 닫힙니다.";
 "EXPIRES_ANOTHER_DAY" = "이방은 %@ 날 %@에 닫힙니다.";// meaning on a certain date at a certain time
 "NO_NEARBY_ROOMS" = "근처에 방이 없습니다.";
+
+"ONE_COMMENT" = "1 comment";
+
+"COMMENTS" = "%d comments";
+
+"TO_COMMENT" = "comment";
+
+"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+

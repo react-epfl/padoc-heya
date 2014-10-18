@@ -76,3 +76,13 @@
 "EXPIRES_ANOTHER_DAY" = "%@の%@にこのルームはクローズ";// meaning on a certain date at a certain time
 "NO_NEARBY_ROOMS" = "近くにルームなし";
 
+"ONE_COMMENT" = "1 comment";
+
+"COMMENTS" = "%d comments";
+
+"TO_COMMENT" = "comment";
+
+"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+
+
+

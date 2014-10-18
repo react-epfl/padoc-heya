@@ -56,6 +56,7 @@
 -(void) markMessageAsSpam:(Message *) message;
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoomID:(NSString*)roomID orRoomHash:(NSString*) hash;
+-(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSMutableArray*))handler;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
 -(void) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;

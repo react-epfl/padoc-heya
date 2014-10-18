@@ -39,7 +39,7 @@
 
 "SEND" = "Send";
 
-"NO_MESSAGE" = "There is no message in this room. Post one now!";
+"NO_MESSAGE" = "There are no messages in this room. Post one now!";
 
 "ROOM_INFO_22"="%d messages, %d votes";
 
@@ -71,3 +71,11 @@
 "ROOM_KEY" = "Room number";
 
 "TURN_LOCATION_ON" = "Turn location on to create a new room";
+
+"ONE_COMMENT" = "1 comment";
+
+"COMMENTS" = "%d comments";
+
+"TO_COMMENT" = "comment";
+
+"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";

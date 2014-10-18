@@ -222,13 +222,16 @@
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
+        
+        MessageTableViewController *mvc = (MessageTableViewController *)[segue destinationViewController];
+        [mvc setParentMessage:nil];
         if (indexPath.section== NEARBY_SECTION) {
             [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID: [((Room*)[nearbyRooms objectAtIndex:row])roomID] ];
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
         }else{
             [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID:[((Room*)[unlockedRooms objectAtIndex:row])roomID] ];
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
         }
+        // ADER could be done asynchronously with callback
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
     }
 }
 

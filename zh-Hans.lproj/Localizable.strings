@@ -85,4 +85,14 @@
 "NO_NEARBY_ROOMS" = "附近没有聊天室";
 
 
+"ONE_COMMENT" = "1 comment";
+
+"COMMENTS" = "%d comments";
+
+"TO_COMMENT" = "comment";
+
+"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+
+
+
 

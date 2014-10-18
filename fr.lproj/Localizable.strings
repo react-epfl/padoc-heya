@@ -82,6 +82,14 @@
 "NO_NEARBY_ROOMS" = "Pas de salle à proximité";
 
 
+"ONE_COMMENT" = "1 commentaire";
+
+"COMMENTS" = "%d commentaires";
+
+"TO_COMMENT" = "commenter";
+
+"NO_COMMENT_MESSAGE" ="Il n'y a pas encore de commentataire. créez en un!";
+
 
 
 

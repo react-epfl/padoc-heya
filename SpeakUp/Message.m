@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo,avatarURL;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo,avatarURL, replies;
 
 - (id)init{
     self = [super init];
@@ -21,7 +21,7 @@
         numberOfYes=0;
         score=0;
         deleted=NO;
-        //replies= [[NSMutableArray alloc] init];
+        replies= [[NSMutableArray alloc] init];
         parentMessageID=nil;
         pseudo=@"";
     }
@@ -43,6 +43,21 @@
         [self setNumberOfNo: [[dict objectForKey:@"dislikes"]intValue]];
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];
         [self setScore:numberOfYes-numberOfNo];
+        
+        // MESSAGES
+        self.replies = [NSMutableArray array];
+        if ([dict objectForKey:@"replies"]) { // meesages are nil if there are none
+            for (NSDictionary *messageDictionary in [dict objectForKey:@"replies"]) {
+                Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
+                [self.replies addObject:message];
+            }
+        }
+        //ADD SOME MOCK replies
+       // Message *m = [[Message alloc] init];
+       // m.content=@"this is some mock content";
+       // m.messageID=@"666";
+       // m.parentMessageID=self.messageID;
+       // [self.replies addObject:m];
     }
     return self;
 }

@@ -30,5 +30,6 @@
 @property ( nonatomic) int score;
 @property (nonatomic) BOOL  yesIsPressed;
 @property (nonatomic) BOOL  noIsPressed;
+@property (strong, nonatomic) NSMutableArray  *replies;
 
 @end

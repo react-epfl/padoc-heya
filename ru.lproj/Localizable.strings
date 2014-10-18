@@ -83,3 +83,11 @@
 "EXPIRES_TOMORROW"= "Эта коната закрывается завтра в %@";
 "EXPIRES_ANOTHER_DAY" = "Эта комната закрывается %@ в %@";
 "NO_NEARBY_ROOMS" = "Поблизости отсутствуют комнаты";
+
+"ONE_COMMENT" = "1 comment";
+
+"COMMENTS" = "%d comments";
+
+"TO_COMMENT" = "comment";
+
+"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";

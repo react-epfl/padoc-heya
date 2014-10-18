@@ -81,3 +81,12 @@
 "EXPIRES_TOMORROW"= "這個聊天室明天 %@關閉";
 "EXPIRES_ANOTHER_DAY" = "這個聊天室%@  %@關閉";// meaning on a certain date at a certain time
 "NO_NEARBY_ROOMS" = "附近沒有聊天室";
+
+"ONE_COMMENT" = "1 comment";
+
+"COMMENTS" = "%d comments";
+
+"TO_COMMENT" = "comment";
+
+"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+

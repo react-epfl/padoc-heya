@@ -260,12 +260,27 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [self startNetworking];
 }
 
+
+-(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSMutableArray*))handler{
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:room_id forKey:@"room_id"];
+    [myData setValue:key forKey:@"key"];
+    [self startNetworking];
+    [socketIO sendEvent:@"getroom" withData:myData andAcknowledge:^(NSArray *messageArray) {
+        handler([messageArray mutableCopy]);
+    }];
+}
+
+
 // CREATE MSG SOCKET.IO
 -(void) createMessage:(Message *) message{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
+    [myData setValue:message.parentMessageID forKey:@"parent_message_id"];
     NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
     [messageData setValue:message.content forKey:@"body"];
     [myData setValue:messageData forKey:@"message"];
