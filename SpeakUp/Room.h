@@ -12,7 +12,6 @@
 
 @interface Room : NSObject
 
-
 - (id)initWithDictionary:(NSDictionary*) dict;
 
 @property (strong, nonatomic) NSString* roomID;
@@ -31,13 +30,7 @@
 @property ( nonatomic) BOOL deleted;
 @property ( nonatomic) int messagesSortedBy;
 @property (strong, nonatomic) NSCache* avatarCacheByPeerID;
-
 @property (strong, nonatomic) NSString  *lastUpdateTime;
-
 @property (strong, nonatomic) NSMutableArray  *messages;
-
-
-
-
 
 @end

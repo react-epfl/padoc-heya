@@ -10,10 +10,9 @@
 #import "SpeakUpManager.h"
 
 @implementation Room
-    
-    @synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, id_type, isUnlocked, lastUpdateTime ;
-    
-    
+
+@synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, id_type, isUnlocked, lastUpdateTime ;
+
 - (id)init{
     self = [super init];
     if(self){
@@ -25,9 +24,7 @@
     }
     return self;
 }
-    
-    
-    
+
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
@@ -50,10 +47,9 @@
         }
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [[[SpeakUpManager sharedSpeakUpManager] peerLocation] distanceFromLocation:roomlocation];
+        
         // MESSAGES
         if ([dict objectForKey:@"messages"]) { // meesages are nil if there are none
-            
-            
             self.messages = [NSMutableArray array];
             for (NSDictionary *messageDictionary in [dict objectForKey:@"messages"]) {
                 Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
@@ -61,10 +57,7 @@
             }
         }
     }
-    
     return self;
 }
-    
-    
-    
-    @end
+
+@end

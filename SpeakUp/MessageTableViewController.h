@@ -11,43 +11,25 @@
 #import "MessageManagerDelegate.h"
 #import "ConnectionDelegate.h"
 
-@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,ConnectionDelegate,UITextViewDelegate>{
-    
-   // EGORefreshTableHeaderView *_refreshHeaderView;
-	//  Reloading var should really be your tableviews datasource
-	//  Putting it here for demo purposes
-	//BOOL _reloading;
-}
+@interface MessageTableViewController : UITableViewController<UINavigationControllerDelegate, MessageManagerDelegate, UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,ConnectionDelegate,UITextViewDelegate>
 
-//press thumb up
 -(IBAction)rateMessageUp:(id)sender;
-//press thumb up
 -(IBAction)rateMessageDown:(id)sender;
-//press thumb up
 -(IBAction)sortBy:(id)sender;
-
 -(IBAction)goToWebSite:(id)sender;
+
 @property(strong, nonatomic) IBOutlet UILabel* roomNumberLabel;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
-
 @property(strong, nonatomic) IBOutlet UILabel* expirationLabel;
 @property(strong, nonatomic) IBOutlet UILabel* roomInfoLabel;
-
 @property(strong, nonatomic) IBOutlet UISegmentedControl* segmentedControl ;
-//@property(strong, nonatomic) IBOutlet UILabel * noConnectionLabel;
-
 @property(strong, nonatomic)  UIView * inputView;
 @property(strong, nonatomic)  UIButton * inputButton;
 @property(strong, nonatomic)  UITextView * inputTextView;
-
 @property(nonatomic)  BOOL keyboardIsVisible;
 @property(nonatomic)  BOOL showKey;
 @property(nonatomic) int keyboardHeight;
 @property(nonatomic)  BOOL isFirstMessageUpdate;
-
 @property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
-
-
-
 
 @end

@@ -20,31 +20,21 @@
 #define CELL_MAX_SIZE 9999.0f
 #define YES_NO_LOGO_WIDTH 40
 #define YES_NO_LOGO_HEIGHT 36
-//#define YES_LOGO_HORIZONTAL_OFFSET 200
-//#define NO_LOGO_HORIZONTAL_OFFSET 250
 #define FOOTER_OFFSET 60 // space below the text
 #define HEADER_OFFSET 45 // not used
 #define CELL_VERTICAL_OFFSET 65 // not used
-//#define TEXT_WIDTH 280
 #define SIDES 30
 #define EXPIRATION_DURATION_IN_HOURS 24
-
 #define INPUT_LEFT_PADDING 10
 #define INPUT_TOP_PADDING 5
 #define INPUT_HEIGHT 30
 #define SEND_BUTTON_WIDTH 80
 #define SEND_BUTTON_PADDING 5
-
-
-
 #define INPUTVIEW_HEIGHT 40
 
 @implementation MessageTableViewController
 
 @synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel;
-
-
-
 
 #pragma mark - View lifecycle
 //=========================
@@ -60,45 +50,35 @@
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [newBackButton setImage:[UIImage imageNamed: @"button-back1.png"] forState:UIControlStateNormal];
-    
     [newBackButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     newBackButton.frame = CGRectMake(5, 5, 30, 30);
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
-    // BACK BUTTON END
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
     
-    
+    // SEGMENTED CONTROL
     [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
     [segmentedControl setSelectedSegmentIndex:0];// a small routine to avoid a weird color bug
     [segmentedControl setSelectedSegmentIndex:1];
-    
-    
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize], UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor, nil  ];
-    
-    
     [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                            [UIColor lightGrayColor], UITextAttributeTextColor, nil  ];
-    
-    
     [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [UIColor whiteColor], UITextAttributeTextColor,
                                         [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
-   
     [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
     
+    // ROOM HEADER
     [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
     [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
     
     /// INPUT VIEW
     keyboardIsVisible=NO;
     keyboardHeight=0;
-    
     inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
-    
     inputView.backgroundColor = myPurple;
     [self.view addSubview:inputView];
     inputTextView.text=@"";
@@ -108,8 +88,6 @@
     [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
     [inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
     [inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
-    
-    
     [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     inputButton.titleLabel.numberOfLines = 1;
@@ -117,13 +95,11 @@
     inputButton.frame = CGRectMake((self.view.frame.size.width-SEND_BUTTON_WIDTH)+SEND_BUTTON_PADDING, INPUT_TOP_PADDING , SEND_BUTTON_WIDTH-SEND_BUTTON_PADDING*2, INPUT_HEIGHT);
     inputButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [inputView addSubview:inputButton];
-    
     inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(INPUT_LEFT_PADDING, INPUT_TOP_PADDING, self.view.frame.size.width-(SEND_BUTTON_WIDTH+INPUT_LEFT_PADDING), INPUT_HEIGHT)];
     [inputTextView setFont: [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
     inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     inputTextView.keyboardType = UIKeyboardTypeDefault;
     inputTextView.returnKeyType = UIReturnKeyDone;
-    //inputTextView.layer.cornerRadius=0;
     [inputTextView setDelegate:self];
     [inputView addSubview:inputTextView];
     
@@ -135,17 +111,14 @@
     // LISTEN TO TOUCH EVENT
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
     tgr.delegate = self;
-    [self.tableView addGestureRecognizer:tgr]; // or [self.view addGestureRecognizer:tgr];
-    
-    
+    [self.tableView addGestureRecognizer:tgr];
 }
+
 - (void)viewTapped:(UITapGestureRecognizer *)tgr
 {
     NSLog(@"view tapped");
-    [inputTextView resignFirstResponder ];
-    // remove keyboard
+    [inputTextView resignFirstResponder ]; // removes keyboard
 }
-
 
 - (void)placeInputView{
     CGRect newFrame = inputView.frame;
@@ -156,8 +129,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // need this since view did load does not correctly calculate the size of the screen
-    [self placeInputView];
+    [self placeInputView]; // need this since view did load does not correctly calculate the size of the screen
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -168,7 +140,6 @@
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     self.keyboardHeight= keyboardFrameBeginRect.size.height;
-    
     [UIView animateWithDuration:0.3f animations:^{
         [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
     }];
@@ -189,7 +160,7 @@
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-     [self placeInputView];
+    [self placeInputView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -203,88 +174,51 @@
         [connectionLostSpinner startAnimating];
     }
     
-    
-    //============================================
-    // EXPIRATION TIME 24 hours since last change
-    //============================================
+    // EXPIRATION TIME (24 hours since last change)
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
     NSDate *lastUpdateTime = [dateFormatter dateFromString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]lastUpdateTime]];
     NSTimeInterval expirationTimeInSeconds = EXPIRATION_DURATION_IN_HOURS * 60 * 60;
     NSDate *expirationDate = [lastUpdateTime dateByAddingTimeInterval:expirationTimeInSeconds];
-    
     NSDateFormatter *dateFormatterHourMinutes = [[NSDateFormatter alloc]init];
     [dateFormatterHourMinutes setDateFormat:@"HH:mm"];
     NSString *stringExpirationHourMinutes = [dateFormatterHourMinutes stringFromDate:expirationDate];
-    
     NSDateFormatter *dateFormatterMonthDay = [[NSDateFormatter alloc]init];
     [dateFormatterMonthDay setDateFormat:@"MM-dd"];
     NSString *stringExpirationMonthDay = [dateFormatterMonthDay stringFromDate:expirationDate];
-    
-    
     //check if date is today
     NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:expirationDate];
     NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
-    
     NSString* expirationTime=@"";
     if([today day] == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year] && [today era] == [otherDay era]) {
         expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TODAY", nil), stringExpirationHourMinutes];
     }else  if([today day]+1 == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year] && [today era] == [otherDay era]) {
-       expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TOMORROW", nil), stringExpirationHourMinutes];
+        expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TOMORROW", nil), stringExpirationHourMinutes];
     }else{
         expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_ANOTHER_DAY", nil), stringExpirationMonthDay, stringExpirationHourMinutes];
     }
     [expirationLabel setText: expirationTime];
     
-    
-    
-    
-    
-    /*
-    NSString* time=@"";
-    NSTimeInterval elapsedTimeSinceUpdate = [lastUpdateTime timeIntervalSinceNow];
-    //24*3600-elapsedTimeSinceUpdate= time remaining in seconds,
-    NSInteger timeToExpirationInSeconds = EXPIRATION_DURATION_IN_HOURS*3600 + (int)elapsedTimeSinceUpdate;
-    NSInteger minutes = (timeToExpirationInSeconds / 60) % 60;
-    NSInteger hours = (timeToExpirationInSeconds / 3600);
-    
-    if(minutes  <1 && hours  <1){
-        time = NSLocalizedString(@"ABOUT_TO_CLOSE", nil);
-    }else if(minutes>0 && hours == 0){
-        time = [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_MINUTES", nil),minutes];
-    }else {
-        time = [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),hours];
-    }
-    [expirationLabel setText: time];
-    */
-    
+    //GOOGLE TRACKER
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker setAllowIDFACollection:YES];
+    [tracker set:kGAIScreenName value:@"Message Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     
     [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
-    //GOOGLE TRACKER
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Message Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    
     [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
-    
     [self placeInputView];
-    
 }
 
 -(void)resetTimer{
     //for now, when the time is reset, the date is set to tomorrow same time since the expiration date is 24hours
-    
     NSDateFormatter *dateFormatterHourMinutes = [[NSDateFormatter alloc]init];
     [dateFormatterHourMinutes setDateFormat:@"HH:mm"];
     NSString *tomorrowSameTime = [dateFormatterHourMinutes stringFromDate:[NSDate date]];
     [expirationLabel setText: [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TOMORROW", nil), tomorrowSameTime]];
-    
-    //[expirationLabel setText: [NSString stringWithFormat:  NSLocalizedString(@"CLOSES_IN_HOURS", nil),EXPIRATION_DURATION_IN_HOURS]];
 }
-
-
 
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room{
     if ([room.roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
@@ -297,7 +231,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -312,14 +245,12 @@
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
-//=========================
+
 // HANDLES SECTIONS AND ROWS
-//=========================
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]==nil){
@@ -333,17 +264,10 @@
     return [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
 }
 
-//=========================
 // LOADS DATA
-//=========================
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // check this site
-    // http://www.cimgf.com/2009/09/23/uitableviewcell-dynamic-height/
-    //if there is no room, simply put this no room cell
-    
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0){
-        //static
         NSString *CellIdentifier = @"NoMessageCell";
         MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -360,11 +284,9 @@
         if (cell == nil) {
             cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        //=========================
+
         // CONTENT
-        //=========================
         cell.message=message;
-        // CONTENT - set up the content
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         NSString * text = [message content];
         CGSize textViewConstraint = CGSizeMake(contentTextView.frame.size.width,CELL_MAX_SIZE);
@@ -372,9 +294,7 @@
         [contentTextView setText:text];
         [contentTextView setFrame:CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y, contentTextView.frame.size.width, size.height+1000)];// ADER this size is there to avoid cut off text if someone type one line and an empty line....
         
-        //=========================
         // THUMBS
-        //=========================
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];
         NSString* rowInString = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
@@ -394,9 +314,8 @@
             [thumbDownButton setImage:[UIImage imageNamed:@"tDown1.png"] forState:UIControlStateNormal] ;
             [thumbDownButton setImage:[UIImage imageNamed:@"tDownP1.png"] forState:UIControlStateHighlighted] ;
         }
-        //=========================
+        
         // TIME
-        //=========================
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
@@ -414,15 +333,13 @@
             time = [NSString stringWithFormat:  NSLocalizedString(@"HOURS_AGO", nil),hours];
         }
         [timeLabel setText: time];
-        //=========================
+
         // MESSAGE LABEL
-        //=========================
         UILabel *backgroundLabel = (UILabel *)[cell viewWithTag:12];
         backgroundLabel.backgroundColor=[UIColor whiteColor];
         backgroundLabel.layer.shadowColor  = [[UIColor blackColor] CGColor];
-        //=========================
+
         // SCORE
-        //=========================
         UILabel *scoreLabel = (UILabel *)[cell viewWithTag:7];
         scoreLabel.textColor= [UIColor blackColor];
         if(message.score>0){
@@ -439,35 +356,19 @@
         }else{
             [numberofVotesLabel setText: [NSString stringWithFormat: NSLocalizedString(@"VOTES", nil) , numberOfVotes]];
         }
-        //=========================
-        // AVATAR
-        //=========================
-        /*if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] id_type] isEqualToString:AVATAR]) {
-            UIImageView *avatarView = (UIImageView *)[cell viewWithTag:11];
-            
-            UIImage* avatarImage = [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] objectForKey:message.authorPeerID];
-            if (!avatarImage) {
-                avatarImage= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:message.avatarURL]]];
-                [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] avatarCacheByPeerID] setObject:avatarImage forKey:message.authorPeerID];
-            }
-            [avatarView setImage:avatarImage];
-            //avatarView.layer.cornerRadius = 5;
-        }*/
         return cell;
     }
 }
-//=========================
+
 // GET MESSAGE FOR INDEX
-//=========================
 -(Message*)getMessageForIndex:(NSInteger)index{
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]>0){
         return (Message *)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] objectAtIndex:index];
     }
     return nil;
 }
-//=========================
+
 // SORT
-//=========================
 -(IBAction)sortBy:(id)sender{
     UISegmentedControl *seg = (UISegmentedControl *) sender;
     NSInteger selectedSegment = seg.selectedSegmentIndex;
@@ -490,20 +391,18 @@
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
                                                           action:@"tab_change"  // Event action (required)
                                                            label:eventName          // Event label
-                                                           value:nil] build]];    // Event value
+                                                        value:nil] build]];    // Event value
 }
-//=========================
+
 // CONNECTION HANDLING
-//=========================
 -(void)connectionWasLost{
     [connectionLostSpinner startAnimating];
 }
 -(void)connectionHasRecovered{
     [connectionLostSpinner stopAnimating];
 }
-//=========================
+
 // RATING UP
-//=========================
 -(IBAction)rateMessageUp:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         @synchronized(self){
@@ -549,9 +448,8 @@
         }
     }
 }
-//=========================
+
 // RATING DOWN
-//=========================
 -(IBAction)rateMessageDown:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         @synchronized(self){
@@ -597,13 +495,13 @@
         }
     }
 }
-//=========================
+
 // SLIDE TO DELETE
-//=========================
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"Hide";
 }
+
 // DELETE
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -614,9 +512,8 @@
         [tableView reloadData];
     }
 }
-//=========================
+
 // RECEIVE NEW MESSAGES
-//=========================
 -(void)updateMessagesInRoom:(NSString*) roomID{
     //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
     if([roomID isEqual:[[SpeakUpManager sharedSpeakUpManager] currentRoomID]]){
@@ -632,9 +529,8 @@
         }
     }
 }
-//=========================
+
 // Number of messages and votes in the room
-//=========================
 -(void)setRoomInfo{
     int numberofmessages = (int)[[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count];
     int numberofvotes=0;
@@ -653,15 +549,13 @@
         roomInfoLabel.text= [NSString stringWithFormat:  NSLocalizedString(@"ROOM_INFO_22", nil),numberofmessages,numberofvotes];
     }
 }
-//=========================
+
 // GET HEIGHT FOR ROW
-//=========================
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     if ([[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages] count]==0) {
         return self.view.frame.size.height - 150;//big enough to put the expiration at the bottom
     }
-    
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
     NSString *text = message.content;
@@ -669,16 +563,12 @@
     if(IS_OS_7_OR_LATER){
         widthCorrection=18;
     }else{
-       widthCorrection=80;
+        widthCorrection=80;
     }
     CGSize textViewConstraint = CGSizeMake(self.view.frame.size.width-(SIDES+widthCorrection),CELL_MAX_SIZE);
-    
-
     CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByCharWrapping];// ADER get font from cell
     return size.height +FOOTER_OFFSET + HEADER_OFFSET;
-    
 }
-
 
 // SORTING
 -(void) sortMessages{
@@ -688,6 +578,7 @@
         [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessages:  [self sortMessagesByScore:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]]];
     }
 }
+
 -(NSMutableArray*) sortMessagesByScore:(NSMutableArray*)messages{
     NSSortDescriptor *sortDescriptor;
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
@@ -695,6 +586,7 @@
     NSArray *sortedArray = [messages sortedArrayUsingDescriptors:sortDescriptors];
     return [sortedArray mutableCopy];
 }
+
 -(NSMutableArray*) sortMessagesByTime:(NSMutableArray*)messages{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
@@ -710,21 +602,16 @@
     return [sortedArray mutableCopy];
 }
 
-
-
 // INPUT METHODS
 - (void)textViewDidChange:(UITextView *)textView
 {
     int characterNumber = (int)[[inputTextView text] length];
-    //[characterCounterLabel setText:[NSString stringWithFormat:@"%d / %d", characterNumber, MAX_LENGTH]];
-    // update the input
     [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
     [inputButton setEnabled:NO];
     if(characterNumber>0){
         [inputButton setEnabled:YES];
     }
 }
-
 
 // used to limit the number of characters to MAX_LENGTH
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -756,6 +643,7 @@
             [inputTextView resignFirstResponder];
             [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
             [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+            
             // GOOGLE ANALYTICS
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
@@ -776,7 +664,6 @@
     if (newSizeH < 20)
     {
         newSizeH=INPUT_HEIGHT-INPUT_TOP_PADDING*2;
-        
     }
     if (newSizeH > 90)
     {
@@ -814,6 +701,5 @@
                                                            label:@"info_from_add"          // Event label
                                                            value:nil] build]];    // Event value
 }
-
 
 @end

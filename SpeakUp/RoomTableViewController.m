@@ -21,12 +21,7 @@
 
 @synthesize nearbyRooms, plusButton, roomLogo,roomTextField, unlockedRooms, NEARBY_SECTION, UNLOCKED_SECTION,refreshButton;
 
-
-
 #pragma mark - View lifecycle
-//=========================
-// LOAD VIEW
-//=========================
 - (void)viewDidLoad
 {
     nearbyRooms=nil;
@@ -37,29 +32,24 @@
     [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     self.navigationController.navigationBar.translucent = NO;
-
-    // PLUS BUTTON START
+    self.tableView.separatorColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:255.0/255.0 alpha:0.8];// LITE GREY
+    [super viewDidLoad];
+    self.tableView.bounces = YES;
+    
+    // PLUS BUTTON
     plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusButton setImage:[UIImage imageNamed: @"button-add1.png"] forState:UIControlStateNormal];
     [plusButton addTarget:self action:@selector(performAddRoomSegue:) forControlEvents:UIControlEventTouchUpInside];
     plusButton.frame = CGRectMake(0, 0, 40, 40);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
-    // PLUS BUTTON END
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
     
-    self.tableView.separatorColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:255.0/255.0 alpha:0.8];// LITE GREY
-    //[plusButton setEnabled:NO];
-    
-    // REFRESH BUTTON START
+    // REFRESH BUTTON
     refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [refreshButton setImage:[UIImage imageNamed: @"button-refresh.png"] forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
     refreshButton.frame = CGRectMake(0, 0, 40, 40);
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
-    // PLUS BUTTON END
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
     
-    
-    [super viewDidLoad];
-    self.tableView.bounces = YES;
     // NAV TITLE
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
@@ -67,7 +57,7 @@
     [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
-  [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
+    [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -78,10 +68,7 @@
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Room Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-   
-    
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -93,9 +80,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait); // Return YES for supported orientations
 }
 #pragma mark - Table view data source
-//=========================
+
 // HANDLE ROW AND SECTIONS
-//=========================
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (UNLOCKED_SECTION==0) {
@@ -103,6 +89,7 @@
     }
     return 1;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if((![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) && section==NEARBY_SECTION){
@@ -115,18 +102,14 @@
     }
     if (section==UNLOCKED_SECTION && [unlockedRooms count]>0 ){
         return[unlockedRooms count];
-        //return 2;
     }
     return 0;
 }
-//==============
+
 // LOAD DATA
-//==============
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] || ![[SpeakUpManager sharedSpeakUpManager] locationIsOK])  && indexPath.section==NEARBY_SECTION){
-        //[plusButton setEnabled:NO];
-        // [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"LOADING", nil)];
         static NSString *CellIdentifier = @"NoRoomCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -135,22 +118,18 @@
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
         UIActivityIndicatorView *connectionLostSpinner = (UIActivityIndicatorView *)[cell viewWithTag:2];
-        
         if(![[SpeakUpManager sharedSpeakUpManager] locationIsOK]){
-          nameLabel.text = @"";
-          nameLabel.text =  NSLocalizedString(@"NO_ROOM", nil);
+            nameLabel.text = @"";
+            nameLabel.text =  NSLocalizedString(@"NO_ROOM", nil);
             [connectionLostSpinner stopAnimating];
-            
         }
         if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
             //nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
             nameLabel.text=@"";
             [connectionLostSpinner startAnimating];
         }
-        
         return cell;
     }else{
-        //[plusButton setEnabled:YES];
         [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
         //if there is no room, simply put this no room cell
         NSUInteger row = [indexPath row];
@@ -188,54 +167,40 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             // Populate Community Cells
-            //NSUInteger row = [indexPath row];
             Room *room = (Room *)[unlockedRooms objectAtIndex:row];
             UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
             nameLabel.text =  [room name];
-            
             UILabel *distanceLabel = (UILabel *)[cell viewWithTag:2];
             [distanceLabel setText: @""];
             return cell;
         }
     }
 }
-//=======================
+
 // CUSTOM SECTION HEADER
-//======================
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionName = nil;
     if (section==NEARBY_SECTION) {
         if ([nearbyRooms count]==0) {
             sectionName = NSLocalizedString(@"NO_NEARBY_ROOMS", nil);
         }else{
-       sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
+            sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
         }
     }else{
         sectionName = NSLocalizedString(@"UNLOCKED_ROOMS", nil);
     }
-    
     UIView *sectionHeaderView = [[UIView alloc] init];
     UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectMake(20, 1, 200, 20)];
-    
     sectionHeader.backgroundColor =  myGrey;
     sectionHeaderView.backgroundColor =  myGrey;
     sectionHeader.textColor = [UIColor blackColor];
-    
-    //UIColor *darkBlue = [UIColor colorWithRed:58.0/255.0 green:102.0/255.0 blue:159.0/255.0 alpha:1.0];
-   // sectionHeader.backgroundColor = darkBlue;
-    //sectionHeaderView.backgroundColor = darkBlue;
-    
-    //sectionHeader.textColor = [UIColor grayColor];
-    
     sectionHeader.font = [UIFont fontWithName:@"Helvetica-Light" size:SmallFontSize];
-    
     sectionHeader.text = sectionName;
     [sectionHeaderView addSubview:sectionHeader];
     return sectionHeaderView;
 }
-//===========
+
 // SEGUES
-//===========
 -(void)performAddRoomSegue:(id)sender{
     [self performSegueWithIdentifier:@"AddRoomSegue" sender:self];
 }
@@ -247,17 +212,16 @@
     }
     return YES;
 }
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
     }
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
-        // MessageTableViewController *messageTVC  = (MessageTableViewController *)[segue destinationViewController];
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [[self tableView] indexPathForCell:cell];
         NSUInteger row = [indexPath row];
-        
         if (indexPath.section== NEARBY_SECTION) {
             [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID: [((Room*)[nearbyRooms objectAtIndex:row])roomID] ];
             [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
@@ -267,9 +231,8 @@
         }
     }
 }
-//==================
+
 // SERVER CALLBACKS
-//==================
 -(void)updateRooms:(NSMutableArray*)updatedNearbyRooms unlockedRooms: (NSMutableArray*)updatedUnlockedRooms{
     if(!self.editing){
         nearbyRooms=updatedNearbyRooms;
@@ -282,8 +245,6 @@
             UNLOCKED_SECTION=-1;
         }
         [self.tableView reloadData];
-        // EGO finnish loading
-        //[self doneLoadingTableViewData];
     }
 }
 -(void)connectionWasLost{
@@ -315,13 +276,9 @@
                                                           action:@"button_press"  // Event action (required)
                                                            label:@"reload"          // Event label
                                                            value:nil] build]];    // Event value
-    
 }
 
-//=======================
 // DELETE UNLOCKED ROOMS
-//=======================
-//request sent to the server
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == UNLOCKED_SECTION){
@@ -329,6 +286,7 @@
     }
     return @"Hide";
 }
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -346,4 +304,3 @@
 }
 
 @end
-

@@ -51,6 +51,7 @@
 		80AB3D8B183E73340005C603 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D8A183E73340005C603 /* SystemConfiguration.framework */; };
 		80AB3D8D183E73490005C603 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D8C183E73490005C603 /* libz.dylib */; };
 		80B5C8C6183BD6020024E946 /* iPad3Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */; };
+		80C6626419F153F1003E1268 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80C6626319F153F1003E1268 /* libAdIdAccess.a */; };
 		80FB4C4317251EE40004965A /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3C17251EE40004965A /* base64.c */; };
 		80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */; };
 		80FB4C4517251EE40004965A /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C4217251EE40004965A /* SRWebSocket.m */; };
@@ -148,6 +149,11 @@
 		80AB3D8A183E73340005C603 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		80AB3D8C183E73490005C603 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad3Storyboard.storyboard; sourceTree = "<group>"; };
+		80C6626319F153F1003E1268 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdIdAccess.a; path = Library/libAdIdAccess.a; sourceTree = "<group>"; };
+		80C6626519F15F69003E1268 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceFields.h; path = Library/GAIEcommerceFields.h; sourceTree = "<group>"; };
+		80C6626619F15F69003E1268 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProduct.h; path = Library/GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		80C6626719F15F69003E1268 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProductAction.h; path = Library/GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		80C6626819F15F69003E1268 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommercePromotion.h; path = Library/GAIEcommercePromotion.h; sourceTree = "<group>"; };
 		80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
 		80FB4C3C17251EE40004965A /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/base64.c; sourceTree = "<group>"; };
 		80FB4C3D17251EE40004965A /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/base64.h; sourceTree = "<group>"; };
@@ -175,6 +181,7 @@
 				80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */,
 				80939B88166E0D7D0079BEF0 /* MapKit.framework in Frameworks */,
 				8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */,
+				80C6626419F153F1003E1268 /* libAdIdAccess.a in Frameworks */,
 				8096A9261636F39C0092F049 /* CoreLocation.framework in Frameworks */,
 				8096A9241636F37E0092F049 /* QuartzCore.framework in Frameworks */,
 				8096A8AC1636E80C0092F049 /* UIKit.framework in Frameworks */,
@@ -339,7 +346,12 @@
 		80AB3D7C183E727B0005C603 /* Google analytics */ = {
 			isa = PBXGroup;
 			children = (
+				80C6626319F153F1003E1268 /* libAdIdAccess.a */,
 				80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */,
+				80C6626519F15F69003E1268 /* GAIEcommerceFields.h */,
+				80C6626619F15F69003E1268 /* GAIEcommerceProduct.h */,
+				80C6626719F15F69003E1268 /* GAIEcommerceProductAction.h */,
+				80C6626819F15F69003E1268 /* GAIEcommercePromotion.h */,
 				80AB3D7E183E72A80005C603 /* GAI.h */,
 				80AB3D7F183E72A80005C603 /* GAIDictionaryBuilder.h */,
 				80AB3D80183E72A80005C603 /* GAIFields.h */,
@@ -588,6 +600,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					Library,
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -617,6 +630,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					Library,
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

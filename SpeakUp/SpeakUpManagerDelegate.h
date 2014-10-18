@@ -10,11 +10,6 @@
 
 @protocol SpeakUpManagerDelegate <NSObject>
 
-
 -(void)updateData;
-
-
-
-
 
 @end

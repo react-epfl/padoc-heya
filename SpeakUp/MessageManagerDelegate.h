@@ -10,14 +10,7 @@
 
 @protocol MessageManagerDelegate <NSObject>
 
-
-
 -(void)updateMessagesInRoom: (NSString*) roomID;
-
 -(void)notifyThatRoomHasBeenDeleted:(Room*) room;
-
-//-(void)notifyThatRoomIsTooFar:(Room*) room;
-
-//-(void)notifyThatLocationHasChangedSignificantly;
 
 @end

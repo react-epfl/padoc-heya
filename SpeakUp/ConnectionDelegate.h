@@ -10,9 +10,7 @@
 
 @protocol ConnectionDelegate <NSObject>
 
-
 -(void)connectionWasLost;
-
 -(void)connectionHasRecovered;
 
 @end

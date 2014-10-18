@@ -12,14 +12,7 @@
 #import "ConnectionDelegate.h"
 
 
-@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SpeakUpManagerDelegate, ConnectionDelegate>{
-  //  EGORefreshTableHeaderView *_refreshHeaderView;
-	
-	//  Reloading var should really be your tableviews datasource
-	//  Putting it here for demo purposes
-	//BOOL _reloading;
-   // BOOL _roomsReady;
-}
+@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SpeakUpManagerDelegate, ConnectionDelegate>
 
 -(IBAction)refresh:(id)sender;
 

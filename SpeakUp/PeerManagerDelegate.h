@@ -10,10 +10,7 @@
 
 @protocol PeerManagerDelegate <NSObject>
 
-
 -(void)peerIsReady;
-
 -(void)peerIsNotReady;
-
 
 @end

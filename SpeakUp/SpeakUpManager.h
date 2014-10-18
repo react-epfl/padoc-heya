@@ -45,28 +45,20 @@
 
 +(id) sharedSpeakUpManager;
 
-// PEER RELATED METHODS
+
 -(void)savePeerData;
-
 - (void)getNearbyRooms;
-
-// MESSAGE RELATED METHODS
 -(void) deleteMessage:(Message *) message;
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoomID:(NSString*)roomID orRoomHash:(NSString*) hash;
 - (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
-// ROOM RELATED METHODS
 -(void) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;
 - (void)connect;
 
 @property (strong, nonatomic)  SocketIO *socketIO;
-
-
-
 @property (nonatomic) BOOL connectionIsOK;
 @property (nonatomic) BOOL locationIsOK;
-
 // Peer fields
 @property (strong, nonatomic)  CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation* locationAtLastReset;
@@ -83,32 +75,20 @@
 @property (strong, nonatomic) NSMutableArray *likedMessages;
 // dislikedMessages contains the id (NSNumber)  of the user's disliked messages
 @property (strong, nonatomic) NSMutableArray *dislikedMessages;
-
-
 @property (strong, nonatomic) NSString *currentRoomID;
 @property (strong, nonatomic) Room *currentRoom;//returns the room matching the currentRoomID
-
 // contains the message ids that were deleted
 @property (strong, nonatomic) NSMutableArray *deletedMessageIDs;
 // contains the message ids that were deleted
 @property (strong, nonatomic) NSMutableArray *deletedRoomIDs;
-
-
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
 @property (strong, nonatomic) NSMutableArray *roomArray;//nearbyRooms
 @property (strong, nonatomic) NSMutableArray *unlockedRoomArray; // contains all unlocked rooms
-
 @property (strong, nonatomic) NSMutableArray *unlockedRoomKeyArray; // contains all unlocked rooms
-
 @property (strong, nonatomic) NSCache* avatarCacheByPeerID;
-
 // Fields used to communicate with the middleware
 @property (nonatomic)  NSString  *dev_id;//device ID
 @property (nonatomic)  NSString  *peer_id;// peer ID recieved from the server
-
-
-
-//Delegates
 @property (strong, nonatomic) id<ConnectionDelegate> connectionDelegate;
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;

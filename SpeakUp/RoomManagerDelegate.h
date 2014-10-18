@@ -12,6 +12,4 @@
 
 -(void)updateRooms:(NSMutableArray*)updatedNearbyRooms unlockedRooms: (NSMutableArray*)updatedUnlockedRooms;
 
-
-
 @end
