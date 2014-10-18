@@ -136,7 +136,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [unlockedRoomArray removeObjectsInArray:roomsToRemove];
     if ([unlockedRoomKeyArray containsObject:room.key]) {
         [unlockedRoomArray addObject:room];
-    }else{
+    }
+    CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
+    room.distance = [self.peerLocation distanceFromLocation:roomlocation];
+    if (room.distance<200.0){
         [roomArray addObject:room];
     }
     roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
