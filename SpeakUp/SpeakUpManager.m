@@ -35,6 +35,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             // sets up the local location manager, this triggers the didUpdateToLocation callback
             sharedSpeakUpManager.peerLocation=nil;
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
+            [sharedSpeakUpManager.locationManager requestWhenInUseAuthorization];
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m

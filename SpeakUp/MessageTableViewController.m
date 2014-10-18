@@ -429,6 +429,7 @@
                 }
                 // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
                 else{
+                    
                     [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
                     yesRating=1;
                 }
