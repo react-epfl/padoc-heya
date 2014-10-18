@@ -345,33 +345,33 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         inputRoomIDText= nil;
     }
     if([defaults objectForKey:@"likedMessages"]){
-        likedMessages= [defaults objectForKey:@"likedMessages"];
+        likedMessages= [[defaults objectForKey:@"likedMessages"]mutableCopy];
     }else {
         likedMessages= [[NSMutableArray alloc] init];
     }
     if([defaults objectForKey:@"dislikedMessages"]){
-        dislikedMessages= [defaults objectForKey:@"dislikedMessages"];
+        dislikedMessages= [[defaults objectForKey:@"dislikedMessages"]mutableCopy];
     }else {
         dislikedMessages= [[NSMutableArray alloc] init];
     }
     if([defaults objectForKey:@"deletedMessageIDs"]){
-        deletedMessageIDs= [defaults objectForKey:@"deletedMessageIDs"];
+        deletedMessageIDs= [[defaults objectForKey:@"deletedMessageIDs"]mutableCopy];
     }else {
         deletedMessageIDs= [[NSMutableArray alloc] init];
     }
     if([defaults objectForKey:@"deletedRoomIDs"]){
-        deletedRoomIDs= [defaults objectForKey:@"deletedRoomIDs"];
+        deletedRoomIDs= [[defaults objectForKey:@"deletedRoomIDs"]mutableCopy];
     }else {
         deletedRoomIDs= [[NSMutableArray alloc] init];
     }
     if([defaults objectForKey:@"unlockedRoomKeyArray"]){
-        unlockedRoomKeyArray= [defaults objectForKey:@"unlockedRoomKeyArray"];
+        unlockedRoomKeyArray= [[defaults objectForKey:@"unlockedRoomKeyArray"]mutableCopy];
     }else {
         unlockedRoomKeyArray= [[NSMutableArray alloc] init];
     }
     if([defaults objectForKey:@"isSuperUser"]){
         NSNumber* booleanNumber;
-        booleanNumber = [defaults objectForKey:@"isSuperUser"] ;
+        booleanNumber = [defaults objectForKey:@"isSuperUser"];
         isSuperUser = [booleanNumber boolValue];
     }else {
         isSuperUser= NO;

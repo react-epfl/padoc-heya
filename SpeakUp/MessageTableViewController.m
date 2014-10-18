@@ -429,6 +429,10 @@
                 }
                 // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
                 else{
+                    // ADER TO REMOVE
+                   // NSMutableArray* testlikedMessages= [[[SpeakUpManager sharedSpeakUpManager] likedMessages] mutableCopy] ;
+                    //[testlikedMessages addObject:message.messageID];
+                    
                     
                     [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
                     yesRating=1;
