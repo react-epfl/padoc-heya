@@ -58,6 +58,11 @@
         m.messageID=@"666";
         m.parentMessageID=self.messageID;
         [self.replies addObject:m];
+        Message *m2 = [[Message alloc] init];
+        m2.content=@"this is some other mock content that I put";
+        m2.messageID=@"777";
+        m2.parentMessageID=self.messageID;
+        [self.replies addObject:m2];
     }
     return self;
 }

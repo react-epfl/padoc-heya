@@ -40,6 +40,9 @@
 #define THUMB @"THUMB"
 #define PLUS @"PLUS"
 #define ARROW @"ARROW"
+#define ETIQUETTE @"ETIQUETTE"
+#define NO_ETIQUETTE @"NO_ETIQUETTE"
+
 
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
@@ -100,6 +103,8 @@
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
 @property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;
 @property (nonatomic)  NSString  *likeType;//type of like buttons (e.g. THUMB, PLUS, ARROW)
+@property (nonatomic)  NSString  *etiquetteType;//type of etiquette (e.g. ETIQUETTE, NO_ETIQUETTE)
+@property (nonatomic)  BOOL  *etiquetteWasShown;
 
 
 @end

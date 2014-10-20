@@ -31,7 +31,7 @@
             <objects>
                 <tableViewController id="J7I-vu-jbi" customClass="MessageTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="20" sectionFooterHeight="22" id="ewd-Sy-59w">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
@@ -93,7 +93,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="fql-U6-JTL">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                                            <rect key="frame" x="0.0" y="-3" width="320" height="130"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="RdG-We-HA3">
@@ -105,7 +105,7 @@
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                                 </textView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="Xx3-4n-9zc">
-                                                    <rect key="frame" x="16" y="7" width="96" height="20"/>
+                                                    <rect key="frame" x="16" y="7" width="113" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
@@ -156,10 +156,11 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MKG-5S-nfr">
-                                                    <rect key="frame" x="190" y="3" width="115" height="27"/>
+                                                    <rect key="frame" x="195" y="7" width="115" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <state key="normal" title="comment">
+                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -229,7 +230,7 @@
                         <outlet property="roomNameLabel" destination="JmJ-gk-Wcq" id="SKx-6x-uoo"/>
                         <outlet property="roomNumberLabel" destination="pnY-k0-vf9" id="RMB-NG-KHS"/>
                         <outlet property="segmentedControl" destination="PbI-ez-uG9" id="0oq-hR-QZe"/>
-                        <segue destination="v9A-Oq-Foh" kind="modal" id="8UB-2p-DwB"/>
+                        <segue destination="v9A-Oq-Foh" kind="modal" identifier="EtiquetteSegue" id="8UB-2p-DwB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vtB-eR-SoI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -513,7 +514,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="dGo-cs-7vL">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                                            <rect key="frame" x="0.0" y="-3" width="320" height="130"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="u17-uT-imv">
@@ -638,16 +639,17 @@
                         <outlet property="parentMessageView" destination="PVG-aV-XFN" id="GIr-2v-ZTq"/>
                         <outlet property="parentMessageVoteNumberLabel" destination="qf8-c3-yKU" id="Njc-yT-Y4z"/>
                         <outlet property="segmentedControl" destination="0BO-rb-hPI" id="rE8-nn-4tw"/>
+                        <segue destination="v9A-Oq-Foh" kind="modal" identifier="EtiquetteSegue" id="8qB-ph-gw6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lh3-VP-ThO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1406" y="-221"/>
         </scene>
-        <!--View Controller-->
+        <!--Etiquette View Controller-->
         <scene sceneID="p2I-iV-Dro">
             <objects>
-                <viewController id="v9A-Oq-Foh" sceneMemberID="viewController">
+                <viewController id="v9A-Oq-Foh" customClass="EtiquetteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3JD-F9-ZtO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -661,21 +663,28 @@
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                             </textView>
                             <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yIr-NX-Bon">
-                                <rect key="frame" x="92" y="476" width="139" height="51"/>
+                                <rect key="frame" x="16" y="476" width="290" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="19"/>
                                 <state key="normal" title="I agree">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="pressAgree:" destination="v9A-Oq-Foh" eventType="touchUpInside" id="EB6-ZS-GaR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.32941177490000001" green="0.32549020649999999" blue="0.78823536630000002" alpha="1" colorSpace="deviceRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="agreeButton" destination="yIr-NX-Bon" id="wrb-7E-ZvX"/>
+                        <outlet property="etiquetteLabel" destination="Tkb-H2-jJG" id="UoL-Ox-6T0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vuh-5l-UQG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1443" y="448"/>
+            <point key="canvasLocation" x="1420" y="588"/>
         </scene>
     </scenes>
     <resources>
@@ -687,5 +696,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="8UB-2p-DwB"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
 </document>

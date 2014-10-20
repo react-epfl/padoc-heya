@@ -15,7 +15,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -41,8 +41,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
             [sharedSpeakUpManager.locationManager startUpdatingLocation];
             [sharedSpeakUpManager connect];
-            //A/B TESTING THUMB STYLES
+            //A/B TESTING THUMB STYLES and ETIQUETTE
             sharedSpeakUpManager.likeType= THUMB;
+            sharedSpeakUpManager.etiquetteType = ETIQUETTE;
+            sharedSpeakUpManager.etiquetteWasShown = NO;
         }
     }
     return sharedSpeakUpManager;
@@ -502,6 +504,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         self.likeType=ARROW;
     }else if    ([ab_testing_flags containsObject:PLUS]) {
         self.likeType=PLUS;
+    }
+    if ([ab_testing_flags containsObject:ETIQUETTE]) {
+        self.etiquetteType=ETIQUETTE;
+    }else if ([ab_testing_flags containsObject:NO_ETIQUETTE]) {
+        self.etiquetteType=NO_ETIQUETTE;
     }
 }
 

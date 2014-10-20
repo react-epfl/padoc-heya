@@ -54,6 +54,7 @@
 		80B3A53819F27FB600E7CB7C /* THUMB_LIKE_NOTPRESSED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A52919F27FB600E7CB7C /* THUMB_LIKE_NOTPRESSED@2x.png */; };
 		80B3A53919F27FB600E7CB7C /* THUMB_LIKE_PRESSED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A52A19F27FB600E7CB7C /* THUMB_LIKE_PRESSED@2x.png */; };
 		80B5C8C6183BD6020024E946 /* iPad3Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */; };
+		80B6B18519F54490006D10B1 /* EtiquetteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B6B18419F54490006D10B1 /* EtiquetteViewController.m */; };
 		80C6626419F153F1003E1268 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80C6626319F153F1003E1268 /* libAdIdAccess.a */; };
 		80FB4C4317251EE40004965A /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3C17251EE40004965A /* base64.c */; };
 		80FB4C4417251EE40004965A /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80FB4C3F17251EE40004965A /* NSData+SRB64Additions.m */; };
@@ -155,6 +156,8 @@
 		80B3A52919F27FB600E7CB7C /* THUMB_LIKE_NOTPRESSED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "THUMB_LIKE_NOTPRESSED@2x.png"; sourceTree = "<group>"; };
 		80B3A52A19F27FB600E7CB7C /* THUMB_LIKE_PRESSED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "THUMB_LIKE_PRESSED@2x.png"; sourceTree = "<group>"; };
 		80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad3Storyboard.storyboard; sourceTree = "<group>"; };
+		80B6B18319F54490006D10B1 /* EtiquetteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EtiquetteViewController.h; sourceTree = "<group>"; };
+		80B6B18419F54490006D10B1 /* EtiquetteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EtiquetteViewController.m; sourceTree = "<group>"; };
 		80C6626319F153F1003E1268 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdIdAccess.a; path = Library/libAdIdAccess.a; sourceTree = "<group>"; };
 		80C6626519F15F69003E1268 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceFields.h; path = Library/GAIEcommerceFields.h; sourceTree = "<group>"; };
 		80C6626619F15F69003E1268 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProduct.h; path = Library/GAIEcommerceProduct.h; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 				8096A8D91636E9C60092F049 /* NewRoomViewController.m */,
 				803D3D6D17915C7000AC527A /* MessageCell.h */,
 				803D3D6E17915C7000AC527A /* MessageCell.m */,
+				80B6B18319F54490006D10B1 /* EtiquetteViewController.h */,
+				80B6B18419F54490006D10B1 /* EtiquetteViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -497,6 +502,7 @@
 				803EB68817EC61FE00E053EA /* SocketIO.m in Sources */,
 				8096A8F91636E9C60092F049 /* NewRoomViewController.m in Sources */,
 				803EB68A17EC61FE00E053EA /* SocketIOPacket.m in Sources */,
+				80B6B18519F54490006D10B1 /* EtiquetteViewController.m in Sources */,
 				8096A9011636E9C60092F049 /* Room.m in Sources */,
 				8096A9031636E9C60092F049 /* RoomTableViewController.m in Sources */,
 				803EB68B17EC61FE00E053EA /* SocketIOTransportWebsocket.m in Sources */,
