@@ -53,11 +53,11 @@
             }
         }
         //ADD SOME MOCK replies
-       // Message *m = [[Message alloc] init];
-       // m.content=@"this is some mock content";
-       // m.messageID=@"666";
-       // m.parentMessageID=self.messageID;
-       // [self.replies addObject:m];
+        Message *m = [[Message alloc] init];
+        m.content=@"this is some mock content";
+        m.messageID=@"666";
+        m.parentMessageID=self.messageID;
+        [self.replies addObject:m];
     }
     return self;
 }

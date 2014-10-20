@@ -172,13 +172,27 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             if ([msg.messageID isEqual:message.messageID]) {
                 // update received, therefore the message must be deleted
                 messageToRemove=msg;
+            }if ([msg.messageID isEqual:message.parentMessageID]) {
+                Message* replyToRemove=nil;
+                for(Message *reply in msg.replies){
+                    if ([reply.messageID isEqual:message.messageID]) {
+                        // update received, therefore the message must be deleted
+                        replyToRemove=reply;
+                    }
+                }
+                if (replyToRemove) {
+                    [msg.replies removeObject:replyToRemove];
+                }
+                if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+                    [msg.replies addObject:message];
+                }
             }
         }
         if (messageToRemove) {
             [room.messages removeObject:messageToRemove];
         }
-        // add new message unless it has been hidden by the user
-        if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+        // add new message to the room messages, unless it is a reply or has been hidden by the user
+        if (!message.parentMessageID && ![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
             [room.messages addObject:message];
         }
     }
@@ -442,11 +456,26 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // DELETE MESSAGE
 -(void) deleteMessage:(Message *) message{
     [deletedMessageIDs addObject:message.messageID];
-    // should inform the server if the message was the peer's message
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:message.roomID forKey:@"room_id"];
+    [myData setValue:message.messageID forKey:@"msg_id"];
+    NSArray* tags = @[@"DELETE"];
+    [myData setValue:tags forKey:@"new_tags"];
+    [socketIO sendEvent:@"tag_message" withData:myData];
+    
 }
 
 -(void) markMessageAsSpam:(Message *) message{
-    //ADER need to send a message to the server
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:message.roomID forKey:@"room_id"];
+    [myData setValue:message.messageID forKey:@"msg_id"];
+    NSArray* tags = @[@"SPAM"];
+    [myData setValue:tags forKey:@"new_tags"];
+    [socketIO sendEvent:@"tag_message" withData:myData];
 }
 
 -(void) showDisconnectionView{
