@@ -230,6 +230,7 @@
                         <outlet property="roomNameLabel" destination="WOr-KG-tWv" id="zqt-5Q-uoI"/>
                         <outlet property="roomNumberLabel" destination="OUV-6W-Wiw" id="7cJ-X5-BeQ"/>
                         <outlet property="segmentedControl" destination="Qs0-3d-r0I" id="W9j-uX-D5o"/>
+                        <segue destination="dBx-C6-PO5" kind="modal" identifier="EtiquetteSegue" id="qC3-DE-BLW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0S7-Dm-USj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -411,7 +412,7 @@
                     <navigationItem key="navigationItem" id="l4C-QV-1Mi">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="IOC-Ad-qS1">
-                            <rect key="frame" x="287" y="7.5" width="194" height="29"/>
+                            <rect key="frame" x="287" y="8" width="194" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             <segments>
@@ -486,7 +487,7 @@
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="p9s-WY-TVA">
-                                    <rect key="frame" x="358" y="101" width="57" height="21"/>
+                                    <rect key="frame" x="358" y="100.9999998302783" width="57" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -633,11 +634,52 @@
                         <outlet property="parentMessageView" destination="6rI-y9-Xha" id="r9P-ER-Pj6"/>
                         <outlet property="parentMessageVoteNumberLabel" destination="p9s-WY-TVA" id="Rkb-fx-f4T"/>
                         <outlet property="segmentedControl" destination="ayu-cS-7be" id="HYR-z1-3Ui"/>
+                        <segue destination="dBx-C6-PO5" kind="modal" identifier="EtiquetteSegue" id="qU5-Xc-LXR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lwu-IU-fGH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3186" y="95"/>
+        </scene>
+        <!--Etiquette View Controller-->
+        <scene sceneID="sDZ-t3-kro">
+            <objects>
+                <viewController id="dBx-C6-PO5" customClass="EtiquetteViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Fh-ps-ltM">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Be Nice" id="o99-e6-yWd">
+                                <rect key="frame" x="84" y="154" width="600" height="256"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                            </textView>
+                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zgd-kR-xNi">
+                                <rect key="frame" x="239" y="755" width="290" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="19"/>
+                                <state key="normal" title="I agree">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressAgree:" destination="dBx-C6-PO5" eventType="touchUpInside" id="D21-Mb-bCN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32941177490000001" green="0.32549020649999999" blue="0.78823536630000002" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="agreeButton" destination="zgd-kR-xNi" id="7Pf-6b-y1U"/>
+                        <outlet property="etiquetteLabel" destination="o99-e6-yWd" id="9PG-FW-9Qo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qDQ-69-oP5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2624" y="1427"/>
         </scene>
     </scenes>
     <resources>
@@ -649,5 +691,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="qC3-DE-BLW"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23921570180000001" green="0.40784317260000003" blue="0.69803923369999998" alpha="1" colorSpace="deviceRGB"/>
 </document>
