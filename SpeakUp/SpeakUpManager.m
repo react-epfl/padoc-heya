@@ -43,8 +43,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [sharedSpeakUpManager connect];
             //A/B TESTING THUMB STYLES
             sharedSpeakUpManager.likeType= THUMB;
-            //sharedSpeakUpManager.likeType= ARROW;
-            //sharedSpeakUpManager.likeType= PLUS;
         }
     }
     return sharedSpeakUpManager;
@@ -68,6 +66,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                 NSLog(@"Problem the API does not match, display message to go to the app store");
             }
         }
+        [self handle_AB_testing:[data objectForKey:@"ab_flags"]];
         // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
         UIWindow *window = [UIApplication sharedApplication].keyWindow;
         UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
@@ -494,6 +493,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
     return nil;
+}
+
+-(void)handle_AB_testing:(NSArray*)ab_testing_flags{
+    if ([ab_testing_flags containsObject:THUMB]) {
+        self.likeType=THUMB;
+    }else if ([ab_testing_flags containsObject:ARROW]) {
+        self.likeType=ARROW;
+    }else if    ([ab_testing_flags containsObject:PLUS]) {
+        self.likeType=PLUS;
+    }
 }
 
 @end

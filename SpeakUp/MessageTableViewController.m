@@ -170,7 +170,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     isFirstMessageUpdate=YES;
-    roomInfoLabel.text=@"";
+    [self setRoomInfo];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         [connectionLostSpinner stopAnimating];
