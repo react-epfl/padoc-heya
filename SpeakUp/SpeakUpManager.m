@@ -43,7 +43,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [sharedSpeakUpManager connect];
             //A/B TESTING THUMB STYLES and ETIQUETTE
             sharedSpeakUpManager.likeType= THUMB;
-            sharedSpeakUpManager.etiquetteType = ETIQUETTE;
+            sharedSpeakUpManager.etiquetteType = ETIQUETTE;//ADER Probably change to NO_ETIQUETTE as default
             sharedSpeakUpManager.etiquetteWasShown = NO;
         }
     }

@@ -57,11 +57,19 @@
         m.content=@"this is some mock content";
         m.messageID=@"666";
         m.parentMessageID=self.messageID;
+        m.numberOfNo=10;
+        m.numberOfYes=5;
+        m.creationTime=@"2014-10-18T09:19:47.189Z";
+        m.score=-5;
         [self.replies addObject:m];
         Message *m2 = [[Message alloc] init];
         m2.content=@"this is some other mock content that I put";
         m2.messageID=@"777";
         m2.parentMessageID=self.messageID;
+        m2.numberOfNo=2;
+        m2.numberOfYes=5;
+        m2.score=3;
+        m2.creationTime=@"2014-10-18T08:18:47.189Z";
         [self.replies addObject:m2];
     }
     return self;

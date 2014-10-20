@@ -324,14 +324,14 @@
         }
         
         //COMMENTS
-        if (!parentMessage) {
+        if (!message.parentMessageID) {
             UIButton *commentButton = (UIButton *)[cell viewWithTag:11];
             if (message.replies.count==0) {
                             [commentButton setTitle: NSLocalizedString(@"TO_COMMENT", nil) forState:UIControlStateNormal];
             }else  if (message.replies.count==1){
                             [commentButton setTitle: NSLocalizedString(@"ONE_COMMENT", nil) forState:UIControlStateNormal];
             }else{
-                [commentButton setTitle:[NSString stringWithFormat:  NSLocalizedString(@"COMMENTS", nil),parentMessage.replies.count] forState:UIControlStateNormal];
+                [commentButton setTitle:[NSString stringWithFormat:  NSLocalizedString(@"COMMENTS", nil),message.replies.count] forState:UIControlStateNormal];
             }
         }
         // TIME
