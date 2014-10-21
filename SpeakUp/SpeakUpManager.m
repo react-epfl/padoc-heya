@@ -15,7 +15,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, isSuperUser, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -68,7 +68,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                 NSLog(@"Problem the API does not match, display message to go to the app store");
             }
         }
-        [self handle_AB_testing:[data objectForKey:@"ab_flags"]];
+        [self handle_AB_testing:[data objectForKey:@"user_tags"]];
         // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
         UIWindow *window = [UIApplication sharedApplication].keyWindow;
         UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
@@ -406,13 +406,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         unlockedRoomKeyArray= [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"isSuperUser"]){
-        NSNumber* booleanNumber;
-        booleanNumber = [defaults objectForKey:@"isSuperUser"];
-        isSuperUser = [booleanNumber boolValue];
-    }else {
-        isSuperUser= NO;
-    }
     inputText=@"";
     sharedSpeakUpManager.locationAtLastReset = nil;
     sharedSpeakUpManager.peerLocation = nil;
@@ -427,7 +420,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
     [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];
     [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];
-    [defaults setObject:[NSNumber numberWithBool:self.isSuperUser] forKey:@"isSuperUser"];
     [defaults synchronize];
 }
 
@@ -462,7 +454,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.messageID forKey:@"msg_id"];
-    NSArray* tags = @[@"DELETE"];
+    NSArray* tags = @[DELETE];
     [myData setValue:tags forKey:@"new_tags"];
     [socketIO sendEvent:@"tag_message" withData:myData];
     
@@ -474,13 +466,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.messageID forKey:@"msg_id"];
-    NSArray* tags = @[@"SPAM"];
+    NSArray* tags = @[SPAM];
     [myData setValue:tags forKey:@"new_tags"];
     [socketIO sendEvent:@"tag_message" withData:myData];
-}
-
--(void) showDisconnectionView{
-    
 }
 
 -(Room*) currentRoom{

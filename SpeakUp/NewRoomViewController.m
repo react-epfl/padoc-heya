@@ -28,9 +28,6 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-    if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-        [input setPlaceholder:@"You are super :)"];
-    }
     
     // BACK BUTTON
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -163,9 +160,6 @@
         if(self.input.text.length>0 && trimmedString.length >0){
             NSLog(@"creating a new room %@ ", input.text);
             Room* myRoom = [[Room alloc] init];
-            if([[SpeakUpManager sharedSpeakUpManager] isSuperUser]){
-                myRoom.isOfficial=YES;
-            }
             myRoom.name = self.input.text;
             myRoom.latitude=self.mapView.userLocation.coordinate.latitude;
             myRoom.longitude=self.mapView.userLocation.coordinate.longitude;

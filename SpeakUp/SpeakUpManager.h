@@ -35,11 +35,13 @@
 #define MediumFontSize 18
 #define SmallFontSize 13
 
-#define THUMB @"THUMB"
-#define PLUS @"PLUS"
-#define ARROW @"ARROW"
-#define ETIQUETTE @"ETIQUETTE"
-#define NO_ETIQUETTE @"NO_ETIQUETTE"
+#define THUMB @"thumb"
+#define PLUS @"plus"
+#define ARROW @"arrow"
+#define ETIQUETTE @"etiquette"
+#define NO_ETIQUETTE @"no_etiquette"
+#define SPAM @"spam"
+#define DELETE @"delete"
 
 
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
@@ -72,9 +74,6 @@
 @property (strong, nonatomic) CLLocation* peerLocation;
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
-// a superUser can create an unlimited number of official rooms
-// a superUser is created by typing Warsoftheworldviews when creating a new room 
-@property (nonatomic) BOOL isSuperUser;
 // inputText is the user's unsent message 
 @property (strong, nonatomic) NSString *inputText;
 @property (strong, nonatomic) NSString *inputRoomIDText;
