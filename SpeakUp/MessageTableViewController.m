@@ -31,6 +31,8 @@
 #define SEND_BUTTON_WIDTH 80
 #define SEND_BUTTON_PADDING 5
 #define INPUTVIEW_HEIGHT 40
+#define BEST 0
+#define RECENT 1
 
 @implementation MessageTableViewController
 
@@ -55,21 +57,21 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newBackButton];
     
     // SEGMENTED CONTROL
-    [segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:0];
-    [segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:1];
-    [segmentedControl setSelectedSegmentIndex:0];// a small routine to avoid a weird color bug
-    [segmentedControl setSelectedSegmentIndex:1];
+    [self.segmentedControl setTitle:NSLocalizedString(@"RATING_SORT", nil) forSegmentAtIndex:BEST];
+    [self.segmentedControl setTitle:NSLocalizedString(@"RECENT_SORT", nil) forSegmentAtIndex:RECENT];
+    [self.segmentedControl setSelectedSegmentIndex:BEST];// a small routine to avoid a weird color bug
+    [self.segmentedControl setSelectedSegmentIndex:RECENT];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize], UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor, nil  ];
-    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [self.segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                            [UIColor lightGrayColor], UITextAttributeTextColor, nil  ];
-    [segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
+    [self.segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [UIColor whiteColor], UITextAttributeTextColor,
                                         [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
-    [segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+    [self.segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
     
     //HEADER
     if (parentMessage) {
@@ -81,32 +83,32 @@
     }
     
     /// INPUT VIEW
-    keyboardIsVisible=NO;
-    keyboardHeight=0;
-    inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
-    inputView.backgroundColor = myPurple;
+    self.keyboardIsVisible=NO;
+    self.keyboardHeight=0;
+    self.inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
+    self.inputView.backgroundColor = myPurple;
     [self.view addSubview:inputView];
-    inputTextView.text=@"";
-    inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    inputButton.layer.masksToBounds=YES;
-    inputButton.layer.cornerRadius=4.0f;
-    [inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
-    [inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
-    [inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
-    [inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
-    inputButton.titleLabel.numberOfLines = 1;
-    inputButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    inputButton.frame = CGRectMake((self.view.frame.size.width-SEND_BUTTON_WIDTH)+SEND_BUTTON_PADDING, INPUT_TOP_PADDING , SEND_BUTTON_WIDTH-SEND_BUTTON_PADDING*2, INPUT_HEIGHT);
-    inputButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [inputView addSubview:inputButton];
-    inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(INPUT_LEFT_PADDING, INPUT_TOP_PADDING, self.view.frame.size.width-(SEND_BUTTON_WIDTH+INPUT_LEFT_PADDING), INPUT_HEIGHT)];
-    [inputTextView setFont: [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
-    inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-    inputTextView.keyboardType = UIKeyboardTypeDefault;
-    inputTextView.returnKeyType = UIReturnKeyDone;
-    [inputTextView setDelegate:self];
-    [inputView addSubview:inputTextView];
+    self.inputTextView.text=@"";
+    self.inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.inputButton.layer.masksToBounds=YES;
+    self.inputButton.layer.cornerRadius=4.0f;
+    [self.inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
+    [self.inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
+    [self.inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    [self.inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
+    self.inputButton.titleLabel.numberOfLines = 1;
+    self.inputButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.inputButton.frame = CGRectMake((self.view.frame.size.width-SEND_BUTTON_WIDTH)+SEND_BUTTON_PADDING, INPUT_TOP_PADDING , SEND_BUTTON_WIDTH-SEND_BUTTON_PADDING*2, INPUT_HEIGHT);
+    self.inputButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [self.inputView addSubview:inputButton];
+    self.inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(INPUT_LEFT_PADDING, INPUT_TOP_PADDING, self.view.frame.size.width-(SEND_BUTTON_WIDTH+INPUT_LEFT_PADDING), INPUT_HEIGHT)];
+    [self.inputTextView setFont: [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    self.inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.inputTextView.keyboardType = UIKeyboardTypeDefault;
+    self.inputTextView.returnKeyType = UIReturnKeyDone;
+    [self.inputTextView setDelegate:self];
+    [self.inputView addSubview:inputTextView];
     
     // MANAGE KEYBOARD
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -392,12 +394,9 @@
     UISegmentedControl *seg = (UISegmentedControl *) sender;
     NSInteger selectedSegment = seg.selectedSegmentIndex;
     NSString* eventName;
-    
     if (selectedSegment == 0) {
-        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:BEST_RATING];
         eventName=@"score_message_ordering_tab";
     }else if(selectedSegment == 1){
-        [[[SpeakUpManager sharedSpeakUpManager] currentRoom] setMessagesSortedBy:MOST_RECENT];
         eventName=@"time_message_ordering_tab";
     }
     [self sortMessages];
@@ -570,7 +569,7 @@
 
 // SORTING
 -(void) sortMessages{
-    if ([[[SpeakUpManager sharedSpeakUpManager] currentRoom]messagesSortedBy]==MOST_RECENT) {
+    if ( [self.segmentedControl selectedSegmentIndex]==RECENT) {
         [self setMessageArray: [self sortMessagesByTime:self.messageArray]];
     }else{
         [self setMessageArray: [self sortMessagesByScore:self.messageArray]];

@@ -11,14 +11,13 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, messagesSortedBy, creatorID,key, id_type, isUnlocked, lastUpdateTime ;
+@synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, creatorID,key, id_type, isUnlocked, lastUpdateTime ;
 
 - (id)init{
     self = [super init];
     if(self){
         messages = [NSMutableArray array];
         isOfficial=NO;
-        messagesSortedBy=MOST_RECENT;
         deleted=NO;
         isUnlocked=NO;
     }
@@ -29,7 +28,6 @@
     self = [super init];
     if(self){
         avatarCacheByPeerID = [[NSCache alloc] init];
-        messagesSortedBy=MOST_RECENT;
         [self setRoomID: [dict objectForKey:@"room_id"]];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
         NSDictionary* loc = [dict objectForKey:@"loc"];

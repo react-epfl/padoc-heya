@@ -20,8 +20,6 @@
 #define SERVER_URL @"seance.epfl.ch"
 #define SERVER_PORT 80
 #define RANGE 200 
-#define MOST_RECENT 0
-#define BEST_RATING 1
 #define CREATE_TAB 1
 #define UNLOCK_TAB 0
 
