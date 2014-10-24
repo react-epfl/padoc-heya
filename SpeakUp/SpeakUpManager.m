@@ -298,7 +298,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
-    [myData setValue:message.parentMessageID forKey:@"parent_message_id"];
+    [myData setValue:message.parentMessageID forKey:@"parent_id"];
     NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
     [messageData setValue:message.content forKey:@"body"];
     [myData setValue:messageData forKey:@"message"];
@@ -325,13 +325,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 // RATE MESSAGE
-- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
+- (void)rateMessage:(Message*)message  inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:roomID forKey:@"room_id"];
+    [myData setValue:message.parentMessageID forKey:@"parent_id"];
     NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
-    [messageDict setValue:messageID forKey:@"msg_id"];
+    [messageDict setValue:message.messageID forKey:@"msg_id"];
     [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
     [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];

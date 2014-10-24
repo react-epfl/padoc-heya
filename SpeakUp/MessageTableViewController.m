@@ -309,20 +309,20 @@
         NSString* rowInString = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else{
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         UIButton *thumbDownButton = (UIButton *)[cell viewWithTag:5];
         [thumbDownButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else {
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         
         //COMMENTS
@@ -451,7 +451,7 @@
                     yesRating=1;
                 }
                 // update the message rating on the server
-                [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
+                [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
                 [[SpeakUpManager sharedSpeakUpManager] savePeerData];
             }else{
                 NSLog(@"the message %@ does not have an id",[message description]);
@@ -498,7 +498,7 @@
                     noRating++;
                 }
                 // update the message rating on the server
-                [[SpeakUpManager sharedSpeakUpManager] rateMessage:messageID inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
+                [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
                 [[SpeakUpManager sharedSpeakUpManager] savePeerData];
             }else{
                 NSLog(@"the message %@ does not have an id",[message description]);

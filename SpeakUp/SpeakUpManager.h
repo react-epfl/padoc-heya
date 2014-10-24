@@ -16,9 +16,10 @@
 // socket rocket removed #import "SRWebSocket.h"
 #import "SocketIO.h"
 
-//#define SERVER_URL @"localhost"
-#define SERVER_URL @"seance.epfl.ch"
-#define SERVER_PORT 80
+#define SERVER_URL @"128.179.136.26"
+//#define SERVER_URL @"seance.epfl.ch"
+//#define SERVER_PORT 80
+#define SERVER_PORT 1347
 #define RANGE 200 
 #define CREATE_TAB 1
 #define UNLOCK_TAB 0
@@ -60,7 +61,7 @@
 -(void)createMessage:(Message *) message;
 - (void)getMessagesInRoomID:(NSString*)roomID orRoomHash:(NSString*) hash;
 -(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler;
-- (void)rateMessage:(NSString*)messageID inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
+- (void)rateMessage:(Message*)message inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
 -(void) deleteRoom:(Room *) room;
 - (void)createRoom:(Room *)room;
 - (void)connect;

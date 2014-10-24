@@ -25,6 +25,10 @@
     // Optional: set Logger to VERBOSE for debug information.
     [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
     
+
+    // Enable IDFA collection.
+    [[[GAI sharedInstance] defaultTracker] setAllowIDFACollection:YES];
+    
     // Initialize tracker.
     //id<GAITracker> tracker =
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-45860154-1"];
