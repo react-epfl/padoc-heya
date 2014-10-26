@@ -43,7 +43,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [sharedSpeakUpManager connect];
             //A/B TESTING THUMB STYLES and ETIQUETTE
             sharedSpeakUpManager.likeType= THUMB;
-            sharedSpeakUpManager.etiquetteType = ETIQUETTE;//ADER Probably change to NO_ETIQUETTE as default
+            sharedSpeakUpManager.etiquetteType = NO_ETIQUETTE;
             sharedSpeakUpManager.etiquetteWasShown = NO;
         }
     }
@@ -494,8 +494,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else if    ([ab_testing_flags containsObject:PLUS]) {
         self.likeType=PLUS;
     }
-    if ([ab_testing_flags containsObject:ETIQUETTE]) {
-        self.etiquetteType=ETIQUETTE;
+    if ([ab_testing_flags containsObject:ETIQUETTE_PRESENT]) {
+        self.etiquetteType=ETIQUETTE_PRESENT;
+    }else if ([ab_testing_flags containsObject:ETIQUETTE_FUTURE]) {
+        self.etiquetteType=ETIQUETTE_FUTURE;
     }else if ([ab_testing_flags containsObject:NO_ETIQUETTE]) {
         self.etiquetteType=NO_ETIQUETTE;
     }
