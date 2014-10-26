@@ -86,18 +86,19 @@
 "NO_NEARBY_ROOMS" = "No salas cercanas";
 
 
-"ONE_COMMENT" = "1 comment";
+"ONE_COMMENT" = "1 comentario";
 
-"COMMENTS" = "%d comments";
+"COMMENTS" = "%d comentarios";
 
-"TO_COMMENT" = "comment";
+"TO_COMMENT" = "comente";
 
-"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+"NO_COMMENT_MESSAGE" ="No hay comentarios. ¡Crea uno!";
 
+"ETIQUETTE_PRESENT" = "No spam";
 
-"ETIQUETTE_TEXT" = "Use SpeakUp for relevant interactions";
+"ETIQUETTE_FUTURE" = "No spam;
 
-"I_AGREE" = "I agree";
+"OK" = "OK";
 
 
 

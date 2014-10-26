@@ -15,11 +15,11 @@
 #import "ConnectionDelegate.h"
 // socket rocket removed #import "SRWebSocket.h"
 #import "SocketIO.h"
+//#define SERVER_URL @"128.179.136.26"
+//#define SERVER_PORT 1347
+#define SERVER_URL @"seance.epfl.ch"
+#define SERVER_PORT 80
 
-#define SERVER_URL @"128.179.136.26"
-//#define SERVER_URL @"seance.epfl.ch"
-//#define SERVER_PORT 80
-#define SERVER_PORT 1347
 #define RANGE 200 
 #define CREATE_TAB 1
 #define UNLOCK_TAB 0
@@ -39,7 +39,8 @@
 #define THUMB @"thumb"
 #define PLUS @"plus"
 #define ARROW @"arrow"
-#define ETIQUETTE @"etiquette"
+#define ETIQUETTE_PRESENT @"etiquette_present"
+#define ETIQUETTE_FUTURE @"etiquette_future"
 #define NO_ETIQUETTE @"no_etiquette"
 #define SPAM @"spam"
 #define DELETE @"delete"

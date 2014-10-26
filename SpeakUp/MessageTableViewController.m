@@ -149,7 +149,7 @@
     [UIView animateWithDuration:0.3f animations:^{
         [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
     }];
-    if (![[SpeakUpManager sharedSpeakUpManager] etiquetteWasShown] && [[[SpeakUpManager sharedSpeakUpManager] etiquetteType] isEqual:ETIQUETTE]) {
+    if (![[SpeakUpManager sharedSpeakUpManager] etiquetteWasShown] && ![[[SpeakUpManager sharedSpeakUpManager] etiquetteType] isEqual:NO_ETIQUETTE]) {
         [[SpeakUpManager  sharedSpeakUpManager] setEtiquetteWasShown:YES];
         [self performSegueWithIdentifier:@"EtiquetteSegue" sender:self];
     }

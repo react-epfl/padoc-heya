@@ -90,7 +90,9 @@
 
 "NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
 
-"ETIQUETTE_TEXT" = "Use SpeakUp for relevant interactions";
+"ETIQUETTE_PRESENT" = "I don't spam";
 
-"I_AGREE" = "I agree";
+"ETIQUETTE_FUTURE" = "I won't spam";
+
+"OK" = "OK";
 

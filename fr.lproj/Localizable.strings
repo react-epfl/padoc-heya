@@ -90,8 +90,11 @@
 
 "NO_COMMENT_MESSAGE" ="Il n'y a pas encore de commentataire. créez en un!";
 
-"ETIQUETTE_TEXT" = "Use SpeakUp for relevant interactions";
 
-"I_AGREE" = "I agree";
+"ETIQUETTE_PRESENT" = "Je ne spamme pas";
+
+"ETIQUETTE_FUTURE" = "Je ne spammerai pas";
+
+"OK" = "OK";
 
 

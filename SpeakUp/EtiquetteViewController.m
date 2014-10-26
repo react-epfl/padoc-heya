@@ -20,8 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    etiquetteLabel.text = NSLocalizedString(@"ETIQUETTE_TEXT", nil);
-    agreeButton.titleLabel.text=NSLocalizedString(@"I_AGREE", nil);
+    if ([[[SpeakUpManager sharedSpeakUpManager] etiquetteType] isEqual:ETIQUETTE_PRESENT]){
+       etiquetteLabel.text = NSLocalizedString(@"ETIQUETTE_PRESENT", nil);
+    }else{
+        etiquetteLabel.text = NSLocalizedString(@"ETIQUETTE_FUTURE", nil);
+    }
+    agreeButton.titleLabel.text=NSLocalizedString(@"OK", nil);
     
 }
 

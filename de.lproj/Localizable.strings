@@ -83,16 +83,18 @@
 "NO_NEARBY_ROOMS" = "Kein Chatraum in der Nähe";
 
 
-"ONE_COMMENT" = "1 comment";
+"ONE_COMMENT" = "1 Kommentar";
 
-"COMMENTS" = "%d comments";
+"COMMENTS" = "%d Kommentare";
 
-"TO_COMMENT" = "comment";
+"TO_COMMENT" = "kommentieren";
 
-"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+"NO_COMMENT_MESSAGE" ="Es gibt keine Kommentare. Schreibe einen!";
 
-"ETIQUETTE_TEXT" = "Use SpeakUp for relevant interactions";
+"ETIQUETTE_PRESENT" = "Ich spamme nicht";
 
-"I_AGREE" = "I agree";
+"ETIQUETTE_FUTURE" = "I werde nicht spammen";
+
+"OK" = "OK";
 
 
