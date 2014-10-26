@@ -85,16 +85,16 @@
 "EXPIRES_ANOTHER_DAY" = "Ця кімната закривається %@ о %@";
 "NO_NEARBY_ROOMS" = "Поблизу відсутні кімнати";
 
-"ONE_COMMENT" = "1 comment";
+"ONE_COMMENT" = "1 коментар";
 
-"COMMENTS" = "%d comments";
+"COMMENTS" = "%d коментарів";
 
-"TO_COMMENT" = "comment";
+"TO_COMMENT" = "прокоментувати";
 
-"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+"NO_COMMENT_MESSAGE" ="Коментарі відсутні. Опублікуй новий!";
 
-"ETIQUETTE_PRESENT" = "I don't spam";
+"ETIQUETTE_PRESENT" = "Я не спамлю";
 
-"ETIQUETTE_FUTURE" = "I won't spam";
+"ETIQUETTE_FUTURE" = "Я не буду спамити";
 
 "OK" = "OK";

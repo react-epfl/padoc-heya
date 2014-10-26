@@ -84,18 +84,17 @@
 "EXPIRES_ANOTHER_DAY" = "Эта комната закрывается %@ в %@";
 "NO_NEARBY_ROOMS" = "Поблизости отсутствуют комнаты";
 
-"ONE_COMMENT" = "1 comment";
+"ONE_COMMENT" = "1 комментарий";
 
-"COMMENTS" = "%d comments";
+"COMMENTS" = "%d комментариев";
 
-"TO_COMMENT" = "comment";
+"TO_COMMENT" = "прокомментировать";
 
-"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+"NO_COMMENT_MESSAGE" ="Комментарии отсутствуют. Добавь новый!";
 
-"ETIQUETTE_PRESENT" = "I don't spam";
+"ETIQUETTE_PRESENT" = "Я не спамлю";
 
-"ETIQUETTE_FUTURE" = "I won't spam";
+"ETIQUETTE_FUTURE" = "Я не буду спамить";
 
 "OK" = "OK";
-
 
