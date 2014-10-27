@@ -76,13 +76,13 @@
 "EXPIRES_ANOTHER_DAY" = "%@の%@にこのルームはクローズ";// meaning on a certain date at a certain time
 "NO_NEARBY_ROOMS" = "近くにルームなし";
 
-"ONE_COMMENT" = "1 comment";
+"ONE_COMMENT" = "1 注釈";
 
-"COMMENTS" = "%d comments";
+"COMMENTS" = "%d 注釈";
 
-"TO_COMMENT" = "comment";
+"TO_COMMENT" = "注釈";
 
-"NO_COMMENT_MESSAGE" ="There are no comments yet. Post one now!";
+"NO_COMMENT_MESSAGE" ="チャットルームメッセージなし、メッセージを作成";
 
 "ETIQUETTE_PRESENT" = "I don't spam";
 

@@ -21,7 +21,7 @@
 #define YES_NO_LOGO_WIDTH 40
 #define YES_NO_LOGO_HEIGHT 36
 #define FOOTER_OFFSET 60 // space below the text
-#define HEADER_OFFSET 45 // not used
+#define HEADER_OFFSET 45
 #define CELL_VERTICAL_OFFSET 65 // not used
 #define SIDES 20
 #define EXPIRATION_DURATION_IN_HOURS 24
@@ -564,7 +564,7 @@
     }
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
-    return [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-SIDES, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height + FOOTER_OFFSET + HEADER_OFFSET;
+    return [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-(SIDES+10), 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height + FOOTER_OFFSET + HEADER_OFFSET;
 }
 
 // SORTING
