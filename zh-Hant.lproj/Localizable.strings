@@ -82,17 +82,17 @@
 "EXPIRES_ANOTHER_DAY" = "這個聊天室%@  %@關閉";// meaning on a certain date at a certain time
 "NO_NEARBY_ROOMS" = "附近沒有聊天室";
 
-"ONE_COMMENT" = "1 備注";
+"ONE_COMMENT" = "一條評論";
 
-"COMMENTS" = "%d 備注";
+"COMMENTS" = "%d 條評論";
 
-"TO_COMMENT" = "備注";
+"TO_COMMENT" = "評論";
 
-"NO_COMMENT_MESSAGE" ="聊天室裡還沒有消息，創建一條消息吧！";
+"NO_COMMENT_MESSAGE" ="尚無評論。添加你的評論！";
 
-"ETIQUETTE_PRESENT" = "I don't spam";
+"ETIQUETTE_PRESENT" = "我不發垃圾郵件";
 
-"ETIQUETTE_FUTURE" = "I won't spam";
+"ETIQUETTE_FUTURE" = "我將不發垃圾郵件";
 
 "OK" = "OK";
 

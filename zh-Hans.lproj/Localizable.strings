@@ -84,18 +84,17 @@
 "EXPIRES_ANOTHER_DAY" = "这个聊天室%@  %@关闭";// meaning on a certain date at a certain time
 "NO_NEARBY_ROOMS" = "附近没有聊天室";
 
+"ONE_COMMENT" = "一条评论";
 
-"ONE_COMMENT" = "1 备注";
+"COMMENTS" = "%d 条评论";
 
-"COMMENTS" = "%d 备注";
+"TO_COMMENT" = "评论";
 
-"TO_COMMENT" = "备注";
+"NO_COMMENT_MESSAGE" ="尚无评论。 添加你的评论！";
 
-"NO_COMMENT_MESSAGE" ="房间里还没有消息，创建一条消息吧！";
+"ETIQUETTE_PRESENT" = "我不发垃圾邮件";
 
-"ETIQUETTE_PRESENT" = "I don't spam";
-
-"ETIQUETTE_FUTURE" = "I won't spam";
+"ETIQUETTE_FUTURE" = "我将不发垃圾邮件";
 
 "OK" = "OK";
 
