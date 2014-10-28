@@ -47,7 +47,6 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
-    [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
     
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -178,6 +177,7 @@
 {
     isFirstMessageUpdate=YES;
     [self setRoomInfo];
+    [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         [connectionLostSpinner stopAnimating];
