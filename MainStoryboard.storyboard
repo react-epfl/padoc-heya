@@ -34,10 +34,10 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="20" sectionFooterHeight="22" id="ewd-Sy-59w">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                         <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ipY-Yv-fvW">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -63,26 +63,26 @@
                                     <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </activityIndicatorView>
                             </subviews>
-                            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ibe-SA-dm9">
                             <rect key="frame" x="0.0" y="397" width="320" height="85"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expires" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9xe-55-7JG">
-                                    <rect key="frame" x="37" y="0.0" width="256" height="21"/>
+                                    <rect key="frame" x="37" y="3" width="256" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 messages, 400 votes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DjZ-xx-ULZ">
-                                    <rect key="frame" x="37" y="20" width="256" height="21"/>
+                                    <rect key="frame" x="37" y="23" width="256" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
@@ -94,24 +94,24 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="fql-U6-JTL">
-                                            <rect key="frame" x="0.0" y="-3" width="320" height="131"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="RdG-We-HA3">
-                                                    <rect key="frame" x="10" y="25" width="300" height="51"/>
+                                                    <rect key="frame" x="10" y="30" width="300" height="51"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="Xx3-4n-9zc">
-                                                    <rect key="frame" x="15" y="7" width="113" height="20"/>
+                                                    <rect key="frame" x="15" y="12" width="113" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Mlp-gI-b7F" userLabel="ThumbDown">
-                                                    <rect key="frame" x="280" y="77" width="40" height="40"/>
+                                                    <rect key="frame" x="280" y="82" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -128,20 +128,20 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="qcS-q1-ROb">
-                                                    <rect key="frame" x="128" y="76" width="65" height="23"/>
+                                                    <rect key="frame" x="128" y="81" width="65" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="rFs-g6-icw">
-                                                    <rect key="frame" x="132" y="97" width="57" height="21"/>
+                                                    <rect key="frame" x="132" y="102" width="57" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UVf-8f-UQX" userLabel="ThumbUp">
-                                                    <rect key="frame" x="0.0" y="76" width="40" height="40"/>
+                                                    <rect key="frame" x="0.0" y="81" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tUp1.png">
@@ -156,7 +156,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MKG-5S-nfr">
-                                                    <rect key="frame" x="190" y="7" width="115" height="20"/>
+                                                    <rect key="frame" x="190" y="12" width="115" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <state key="normal" title="comment">
@@ -167,13 +167,18 @@
                                                         <segue destination="fDl-lQ-rSs" kind="push" identifier="MessageToReplies" id="mfx-t4-adT"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" id="U17-Il-ygn">
+                                                    <rect key="frame" x="0.0" y="-1" width="320" height="5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="169" id="bGw-Ay-tMv" customClass="MessageCell">
@@ -198,7 +203,7 @@
                                         </view>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </tableViewCell>
                         </prototypes>
@@ -211,7 +216,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="mOR-JZ-Rgz"/>
                         <segmentedControl key="titleView" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="PbI-ez-uG9">
-                            <rect key="frame" x="71" y="8" width="178" height="29"/>
+                            <rect key="frame" x="71" y="7.5" width="178" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="BEST"/>
@@ -412,7 +417,7 @@
                     <navigationItem key="navigationItem" id="3AO-L8-U0f">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FmC-2P-lkf">
-                            <rect key="frame" x="63" y="8" width="194" height="29"/>
+                            <rect key="frame" x="63" y="7.5" width="194" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             <segments>
@@ -461,10 +466,10 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="20" sectionFooterHeight="22" id="jlX-1s-4zh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                         <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="PVG-aV-XFN">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -497,7 +502,7 @@
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="NIx-QY-p72">
                             <rect key="frame" x="0.0" y="397" width="320" height="85"/>
@@ -514,18 +519,18 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="dGo-cs-7vL">
-                                            <rect key="frame" x="0.0" y="-3" width="320" height="131"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="132"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="u17-uT-imv">
-                                                    <rect key="frame" x="10" y="25" width="300" height="51"/>
+                                                    <rect key="frame" x="10" y="30" width="300" height="51"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AGP-sA-mfx" userLabel="ThumbDown">
-                                                    <rect key="frame" x="280" y="77" width="40" height="40"/>
+                                                    <rect key="frame" x="280" y="83" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -542,20 +547,20 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="XhO-vO-BeD">
-                                                    <rect key="frame" x="128" y="76" width="65" height="23"/>
+                                                    <rect key="frame" x="128" y="82" width="65" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="paB-vb-wIt">
-                                                    <rect key="frame" x="132" y="97" width="57" height="21"/>
+                                                    <rect key="frame" x="132" y="103" width="57" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zz0-8z-TCh" userLabel="ThumbUp">
-                                                    <rect key="frame" x="0.0" y="76" width="40" height="40"/>
+                                                    <rect key="frame" x="0.0" y="82" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tUp1.png">
@@ -570,7 +575,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" id="lba-j6-4Y1">
-                                                    <rect key="frame" x="15" y="8" width="96" height="20"/>
+                                                    <rect key="frame" x="15" y="13" width="96" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
@@ -578,10 +583,15 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <view contentMode="scaleToFill" id="tgk-op-mNu">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoMessageCell" rowHeight="169" id="0iF-TX-kSi" customClass="MessageCell">
@@ -606,7 +616,7 @@
                                         </view>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             </tableViewCell>
                         </prototypes>
@@ -619,7 +629,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="2kK-pm-RWH"/>
                         <segmentedControl key="titleView" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="0BO-rb-hPI">
-                            <rect key="frame" x="71" y="8" width="178" height="29"/>
+                            <rect key="frame" x="71" y="7.5" width="178" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="BEST"/>
@@ -696,7 +706,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="8UB-2p-DwB"/>
+        <segue reference="8qB-ph-gw6"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
 </document>
