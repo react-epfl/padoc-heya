@@ -8,7 +8,6 @@
 #import "MessageTableViewController.h"
 #import "Message.h"
 #import "SpeakUpManager.h"
-#import "MessageCell.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
@@ -278,9 +277,9 @@
 {
     if ([self.messageArray count]==0){
         NSString *CellIdentifier = @"NoMessageCell";
-        MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
         if (parentMessage) {
@@ -293,9 +292,9 @@
     else{
         Message* message = [self getMessageForIndex:[indexPath row]];
         NSString *CellIdentifier = @"MessageCell";
-        MessageCell *cell = (MessageCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // CONTENT
@@ -462,7 +461,7 @@
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
                                                                   action:@"button_press"  // Event action (required)
-                                                                   label:@"thumb_up"          // Event label
+                                                                   label:@"thumb_up"       // Event label
                                                                    value:nil] build]];    // Event value
         }
     }

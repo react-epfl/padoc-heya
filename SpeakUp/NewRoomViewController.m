@@ -242,8 +242,6 @@
         // could wait for response and then enter the lobby
         
         
-        
-        
         [self.navigationController popViewControllerAnimated:YES];
         // GOOGLE ANALYTICS
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];

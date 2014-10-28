@@ -13,13 +13,12 @@
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
 #import "ConnectionDelegate.h"
-// socket rocket removed #import "SRWebSocket.h"
 #import "SocketIO.h"
 
-#define SERVER_URL @"128.179.140.32"
-#define SERVER_PORT 1347
-//#define SERVER_URL @"seance.epfl.ch"
-//#define SERVER_PORT 80
+//#define SERVER_URL @"128.179.140.32"
+//#define SERVER_PORT 1347
+#define SERVER_URL @"seance.epfl.ch"
+#define SERVER_PORT 80
 
 #define RANGE 200 
 #define CREATE_TAB 1

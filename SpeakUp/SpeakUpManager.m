@@ -10,6 +10,9 @@
 #import "ConnectionDelegate.h"
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 
 
 
@@ -168,32 +171,29 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 -(void)addMessage:(Message*) message toRoom:(Room*) room{
     if ([room.roomID isEqual:message.roomID]) {
-        Message* messageToRemove=nil;
+        BOOL messageUpdate=NO;
         for(Message *msg in room.messages){
             if ([msg.messageID isEqual:message.messageID]) {
-                // update received, therefore the message must be deleted
-                messageToRemove=msg;
+                // update received, therefore just update the vote fields
+                msg.score=message.score;
+                msg.numberOfYes=message.numberOfYes;
+                msg.numberOfNo=message.numberOfNo;
+                messageUpdate=YES;
             }if ([msg.messageID isEqual:message.parentMessageID]) {
-                Message* replyToRemove=nil;
                 for(Message *reply in msg.replies){
                     if ([reply.messageID isEqual:message.messageID]) {
-                        // update received, therefore the message must be deleted
-                        replyToRemove=reply;
+                        reply.score=message.score;
+                        reply.numberOfYes=message.numberOfYes;
+                        reply.numberOfNo=message.numberOfNo;
+                        messageUpdate=YES;
                     }
                 }
-                if (replyToRemove) {
-                    [msg.replies removeObject:replyToRemove];
-                }
-                if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+                if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
                     [msg.replies addObject:message];
                 }
             }
         }
-        if (messageToRemove) {
-            [room.messages removeObject:messageToRemove];
-        }
-        // add new message to the room messages, unless it is a reply or has been hidden by the user
-        if (!message.parentMessageID && ![deletedMessageIDs containsObject:message.messageID]&& !message.deleted) {
+        if (!message.parentMessageID && ![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
             [room.messages addObject:message];
         }
     }
@@ -459,6 +459,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:tags forKey:@"new_tags"];
     [socketIO sendEvent:@"tag_message" withData:myData];
     
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:@"delete_message"       // Event label
+                                                           value:nil] build]];    // Event value
+    
 }
 
 -(void) markMessageAsSpam:(Message *) message{
@@ -470,6 +477,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSArray* tags = @[SPAM];
     [myData setValue:tags forKey:@"new_tags"];
     [socketIO sendEvent:@"tag_message" withData:myData];
+    
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:@"mark_spam_message"       // Event label
+                                                           value:nil] build]];    // Event value
 }
 
 -(Room*) currentRoom{
