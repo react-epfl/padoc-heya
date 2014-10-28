@@ -302,6 +302,7 @@
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
         CGFloat height = [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height;
         contentTextView.frame =  CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
+        [contentTextView setText:nil];
         [contentTextView setText:message.content];
         
         // THUMBS
