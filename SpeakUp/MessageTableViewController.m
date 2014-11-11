@@ -697,7 +697,7 @@
         [tableView reloadData];
     }];
     spamAction.backgroundColor = [UIColor orangeColor];
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Hide"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
         [self.messageArray  removeObject:message];
         [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];

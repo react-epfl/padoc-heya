@@ -505,11 +505,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="mBz-c1-Yel">
-                                            <rect key="frame" x="0.0" y="5" width="768" height="127"/>
+                                            <rect key="frame" x="0.0" y="5" width="768" height="128"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="D0Y-IQ-gzF">
-                                                    <rect key="frame" x="10" y="30" width="750" height="49"/>
+                                                    <rect key="frame" x="10" y="30" width="750" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
@@ -522,7 +522,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xLt-xc-7M7" userLabel="ThumbDown">
-                                                    <rect key="frame" x="728" y="77" width="40" height="40"/>
+                                                    <rect key="frame" x="728" y="78" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -539,7 +539,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rA9-K5-drI" userLabel="ThumbUp">
-                                                    <rect key="frame" x="0.0" y="77" width="40" height="40"/>
+                                                    <rect key="frame" x="0.0" y="78" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tUp1.png">
@@ -554,14 +554,14 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="QM3-LG-ubV">
-                                                    <rect key="frame" x="352" y="75" width="65" height="23"/>
+                                                    <rect key="frame" x="352" y="76" width="65" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="Y9d-67-Coc">
-                                                    <rect key="frame" x="356" y="96" width="57" height="21"/>
+                                                    <rect key="frame" x="356" y="97" width="57" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -614,7 +614,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="TJn-YR-iYb"/>
                         <segmentedControl key="titleView" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="ayu-cS-7be">
-                            <rect key="frame" x="295" y="7.5" width="178" height="29"/>
+                            <rect key="frame" x="295" y="8" width="178" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="BEST"/>

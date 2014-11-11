@@ -211,7 +211,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="mOR-JZ-Rgz"/>
                         <segmentedControl key="titleView" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="PbI-ez-uG9">
-                            <rect key="frame" x="71" y="7.5" width="178" height="29"/>
+                            <rect key="frame" x="71" y="8" width="178" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="BEST"/>
@@ -510,18 +510,18 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="dGo-cs-7vL">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="133"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" id="u17-uT-imv">
-                                                    <rect key="frame" x="10" y="30" width="300" height="52"/>
+                                                    <rect key="frame" x="10" y="30" width="300" height="54"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AGP-sA-mfx" userLabel="ThumbDown">
-                                                    <rect key="frame" x="280" y="84" width="40" height="40"/>
+                                                    <rect key="frame" x="280" y="86" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -538,20 +538,20 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="XhO-vO-BeD">
-                                                    <rect key="frame" x="128" y="83" width="65" height="23"/>
+                                                    <rect key="frame" x="128" y="85" width="65" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="paB-vb-wIt">
-                                                    <rect key="frame" x="132" y="104" width="57" height="21"/>
+                                                    <rect key="frame" x="132" y="106" width="57" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zz0-8z-TCh" userLabel="ThumbUp">
-                                                    <rect key="frame" x="0.0" y="83" width="40" height="40"/>
+                                                    <rect key="frame" x="0.0" y="85" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                                     <state key="normal" image="tUp1.png">
@@ -591,7 +591,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view tag="12" contentMode="scaleToFill" id="KCS-dd-4CP">
-                                            <rect key="frame" x="0.0" y="59" width="321" height="103"/>
+                                            <rect key="frame" x="0.0" y="59" width="321" height="104"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="No comments for now" textAlignment="center" id="rmU-6l-CDi">
@@ -618,7 +618,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="2kK-pm-RWH"/>
                         <segmentedControl key="titleView" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="0BO-rb-hPI">
-                            <rect key="frame" x="71" y="7.5" width="178" height="29"/>
+                            <rect key="frame" x="71" y="8" width="178" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="BEST"/>
@@ -662,7 +662,7 @@
                             </textView>
                             <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yIr-NX-Bon">
                                 <rect key="frame" x="16" y="476" width="290" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="19"/>
                                 <state key="normal" title="OK">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
