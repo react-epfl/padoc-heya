@@ -19,11 +19,10 @@
 @property(strong, nonatomic) IBOutlet UIButton * refreshButton;
 @property(strong, nonatomic) IBOutlet UIButton * plusButton;
 @property(strong, nonatomic) IBOutlet UIImageView * roomLogo;
-@property(strong, nonatomic) NSMutableArray *nearbyRooms;
-@property(strong, nonatomic) NSMutableArray *unlockedRooms;
 @property(strong, nonatomic) IBOutlet UITextField * roomTextField;
 @property( nonatomic)  int UNLOCKED_SECTION;
 @property( nonatomic)  int NEARBY_SECTION;
+@property( nonatomic)  int MY_SECTION;
 
 
 @end

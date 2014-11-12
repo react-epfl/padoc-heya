@@ -166,14 +166,21 @@
             myRoom.range=RANGE;
             myRoom.lifetime=LIFETIME;
             myRoom.id_type = ANONYMOUS;
-            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];
+            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];// ADER GET CALLBACK AND ADD ROOMKEY TO LIST OF OWN ROOMS
+            
+            // DUMMY
+            
+            [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] addObject:@"15576"];
+            
+            //DUMMMY
+            
             self.input.text=@"";
             [self.navigationController popViewControllerAnimated:YES];
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             // GOOGLE ANALYTICS
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
                                                                   action:@"button_press"  // Event action (required)
-                                                                   label:@"create_room"          // Event label
+                                                                   label:@"create_room"   // Event label
                                                                    value:nil] build]];    // Event value
         }
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];

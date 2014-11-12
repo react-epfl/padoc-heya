@@ -18,7 +18,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -28,8 +28,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         if (sharedSpeakUpManager == nil){
             sharedSpeakUpManager.avatarCacheByPeerID = [[NSCache alloc] init];
             sharedSpeakUpManager = [[self alloc] init];
-            sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
-            sharedSpeakUpManager.unlockedRoomArray= [[NSMutableArray alloc] init];// initializes the room array, containing all nearby rooms
+            sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];
+            sharedSpeakUpManager.unlockedRoomArray= [[NSMutableArray alloc] init];
+            sharedSpeakUpManager.myOwnRoomArray= [[NSMutableArray alloc] init];
             sharedSpeakUpManager.connectionDelegate=nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
             sharedSpeakUpManager.connectionIsOK=NO;
@@ -119,7 +120,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self receivedRoom:roomDictionary];
     }
     // needs to refresh view if there was no room in the list
-    [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+    [roomManagerDelegate updateRooms];
 }
 
 // RECEIVED ROOM
@@ -140,7 +141,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
     [unlockedRoomArray removeObjectsInArray:roomsToRemove];
-    if ([unlockedRoomKeyArray containsObject:room.key]) {
+    [roomsToRemove removeAllObjects];
+    for(Room *r in myOwnRoomArray){
+        if ([r.roomID isEqual:room.roomID]) {
+            [roomsToRemove addObject:r];
+        }
+    }
+    [myOwnRoomArray removeObjectsInArray:roomsToRemove];
+    
+    if ([myOwnRoomKeyArray containsObject:room.key]) {
+        [myOwnRoomArray addObject:room];
+        [unlockedRoomKeyArray removeObject:room.key];
+    }else if ([unlockedRoomKeyArray containsObject:room.key]) {
         [unlockedRoomArray addObject:room];
     }
     CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
@@ -149,7 +161,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [roomArray addObject:room];
     }
     roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-    [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+    [roomManagerDelegate updateRooms];
     return room.roomID;
 }
 
@@ -167,6 +179,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self addMessage:message toRoom:room];
     }
     for(Room *room in unlockedRoomArray){
+        [self addMessage:message toRoom:room];
+    }
+    for(Room *room in myOwnRoomArray){
         [self addMessage:message toRoom:room];
     }
 }
@@ -263,7 +278,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [myData setValue:myLoc forKey:@"loc"];
         [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
         [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
-        [myData setValue:self.unlockedRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS
+        NSArray* unlockedAndMyOwnRoomKeyArray = [[self.unlockedRoomKeyArray mutableCopy] arrayByAddingObjectsFromArray:[self.myOwnRoomKeyArray mutableCopy]];
+        [myData setValue:unlockedAndMyOwnRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS AND OWN ROOMS
         [socketIO sendEvent:@"getrooms" withData:myData];
         [self startNetworking];
     }
@@ -358,7 +374,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         room.distance = [self.peerLocation distanceFromLocation:roomlocation];
     }
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
-    [roomManagerDelegate updateRooms:[NSMutableArray arrayWithArray:roomArray] unlockedRooms:unlockedRoomArray];
+    [roomManagerDelegate updateRooms];
 }
 
 // LOCATION FAILED
@@ -409,6 +425,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else {
         unlockedRoomKeyArray= [[NSMutableArray alloc] init];
     }
+    if([defaults objectForKey:@"myOwnRoomKeyArray"]){
+        myOwnRoomKeyArray= [[defaults objectForKey:@"myOwnRoomKeyArray"]mutableCopy];
+    }else {
+        myOwnRoomKeyArray= [[NSMutableArray alloc] init];
+    }
     inputText=@"";
     sharedSpeakUpManager.locationAtLastReset = nil;
     sharedSpeakUpManager.peerLocation = nil;
@@ -420,6 +441,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [defaults setObject:inputRoomIDText forKey:@"inputRoomIDText"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
     [defaults setObject:unlockedRoomKeyArray forKey:@"unlockedRoomKeyArray"];
+     [defaults setObject:myOwnRoomKeyArray forKey:@"myOwnRoomKeyArray"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
     [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];
     [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];
@@ -446,7 +468,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // DELETE ROOM
 -(void) deleteRoom:(Room *) room{
     [deletedRoomIDs addObject:room.roomID];
-    // should inform the server if the room was the peer's rooms
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:room.roomID forKey:@"room_id"];
+     [socketIO sendEvent:@"delete_room" withData:myData];
+    
+    // GOOGLE ANALYTICS
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:@"delete_room"       // Event label
+                                                           value:nil] build]];    // Event value
 }
 
 // DELETE MESSAGE
@@ -489,12 +522,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 -(Room*) currentRoom{
-    for(Room *room in roomArray){
+    for(Room *room in myOwnRoomArray){
         if([room.roomID isEqual:self.currentRoomID]){
             return room;
         }
     }
     for(Room *room in unlockedRoomArray){
+        if([room.roomID isEqual:self.currentRoomID]){
+            return room;
+        }
+    }
+    for(Room *room in roomArray){
         if([room.roomID isEqual:self.currentRoomID]){
             return room;
         }

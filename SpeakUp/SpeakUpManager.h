@@ -92,7 +92,10 @@
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
 @property (strong, nonatomic) NSMutableArray *roomArray;//nearbyRooms
 @property (strong, nonatomic) NSMutableArray *unlockedRoomArray; // contains all unlocked rooms
-@property (strong, nonatomic) NSMutableArray *unlockedRoomKeyArray; // contains all unlocked rooms
+@property (strong, nonatomic) NSMutableArray *unlockedRoomKeyArray; // contains all unlocked rooms and all my own room keys
+@property (strong, nonatomic) NSMutableArray *myOwnRoomKeyArray; // contains all my own room keys
+@property (strong, nonatomic) NSMutableArray *myOwnRoomArray; // contains all my own rooms
+
 @property (strong, nonatomic) NSCache* avatarCacheByPeerID;
 // Fields used to communicate with the middleware
 @property (nonatomic)  NSString  *dev_id;//device ID
