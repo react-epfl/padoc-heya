@@ -26,11 +26,11 @@
 
 "OK" = "오케이";
 
-"JUST_NOW" = "지금";
+"JUST_NOW" = "지금 %@";
 
-"MINUTES_AGO" = "몇 분전에";
+"MINUTES_AGO" = "몇 분전에 %@";
 
-"HOURS_AGO"="몇 시간 전에";
+"HOURS_AGO"="몇 시간 전에 %@";
 
 "VOTE"="(%d 투표)";
 
@@ -96,4 +96,8 @@
 "OK" = "OK";
 
 "MY_ROOMS" = "Meine Chaträume";
+
+"ME" = "by me";
+
+"ADMIN" = "by the admin";
 

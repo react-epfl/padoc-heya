@@ -23,11 +23,11 @@
 ///////////////////////
 // MESSAGE VIEW
 ///////////////////////
-"JUST_NOW" = "Just now";
+"JUST_NOW" = "Just now %@";
 
-"MINUTES_AGO" = "%d min ago";
+"MINUTES_AGO" = "%d min ago %@";
 
-"HOURS_AGO"="%d hours ago";
+"HOURS_AGO"="%d hours ago %@";
 
 "VOTE"="(%d vote)";
 
@@ -87,4 +87,8 @@
 "OK" = "OK";
 
 "MY_ROOMS" = "My rooms";
+
+"ME" = "by me";
+
+"ADMIN" = "by the admin";
 

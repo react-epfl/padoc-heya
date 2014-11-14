@@ -32,6 +32,8 @@
 #define INPUTVIEW_HEIGHT 40
 #define BEST 0
 #define RECENT 1
+#define RATING_UP 1
+#define RATING_DOWN -1
 
 @implementation MessageTableViewController
 
@@ -60,7 +62,7 @@
     [self.segmentedControl setSelectedSegmentIndex:BEST];// a small routine to avoid a weird color bug
     [self.segmentedControl setSelectedSegmentIndex:RECENT];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize], UITextAttributeFont,
+                                [UIFont fontWithName:FontName size:MediumFontSize], UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor, nil  ];
     [self.segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -92,7 +94,7 @@
     self.inputButton.layer.cornerRadius=4.0f;
     [self.inputButton setTitleColor: [UIColor whiteColor ] forState:UIControlStateNormal];
     [self.inputButton setTitleColor: [UIColor lightGrayColor ] forState:UIControlStateHighlighted];
-    [self.inputButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    [self.inputButton.titleLabel setFont:[UIFont fontWithName:FontName size:MediumFontSize]];
     [self.inputButton addTarget:self action:@selector(sendInput:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputButton setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
     self.inputButton.titleLabel.numberOfLines = 1;
@@ -101,7 +103,7 @@
     self.inputButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.inputView addSubview:inputButton];
     self.inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(INPUT_LEFT_PADDING, INPUT_TOP_PADDING, self.view.frame.size.width-(SEND_BUTTON_WIDTH+INPUT_LEFT_PADDING), INPUT_HEIGHT)];
-    [self.inputTextView setFont: [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    [self.inputTextView setFont: [UIFont fontWithName:FontName size:MediumFontSize]];
     self.inputTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     self.inputTextView.keyboardType = UIKeyboardTypeDefault;
     self.inputTextView.returnKeyType = UIReturnKeyDone;
@@ -299,7 +301,7 @@
         
         // CONTENT
         UITextView *contentTextView = (UITextView *)[cell viewWithTag:10];
-        CGFloat height = [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height;
+        CGFloat height = [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:FontName size:NormalFontSize]} context:nil].size.height;
         contentTextView.frame =  CGRectMake(contentTextView.frame.origin.x, contentTextView.frame.origin.y,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
         [contentTextView setText:nil];
         [contentTextView setText:message.content];
@@ -336,7 +338,7 @@
                 [commentButton setTitle:[NSString stringWithFormat:  NSLocalizedString(@"COMMENTS", nil),message.replies.count] forState:UIControlStateNormal];
             }
         }
-        // TIME
+        // TIME AND NAME
         UILabel *timeLabel = (UILabel *)[cell viewWithTag:6];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
@@ -346,12 +348,19 @@
         NSInteger minutes = -(message.secondsSinceCreation / 60) % 60;
         NSInteger hours = -(message.secondsSinceCreation / 3600);
         NSString* time=@"";
+        NSString* name=@"";
+        if ([message.authorPeerID isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]) {
+            name=NSLocalizedString(@"ME", nil);
+        }
+        if ([message.authorPeerID isEqualToString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID]]) {
+            name=NSLocalizedString(@"ADMIN", nil);
+        }
         if(minutes  <1 && hours  <1){
-            time = NSLocalizedString(@"JUST_NOW", nil);
+            time = [NSString stringWithFormat:  NSLocalizedString(@"JUST_NOW", nil),name];
         }else if(minutes>0 && hours == 0){
-            time = [NSString stringWithFormat:  NSLocalizedString(@"MINUTES_AGO", nil),minutes];
+            time = [NSString stringWithFormat:  NSLocalizedString(@"MINUTES_AGO", nil),minutes,name];
         }else {
-            time = [NSString stringWithFormat:  NSLocalizedString(@"HOURS_AGO", nil),hours];
+            time = [NSString stringWithFormat:  NSLocalizedString(@"HOURS_AGO", nil),hours,name];
         }
         [timeLabel setText: time];
         
@@ -457,12 +466,7 @@
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
             [self.tableView reloadData];
-            // GOOGLE ANALYTICS
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                                  action:@"button_press"  // Event action (required)
-                                                                   label:@"thumb_up"       // Event label
-                                                                   value:nil] build]];    // Event value
+            [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_up" value:nil] build]];
         }
     }
 }
@@ -504,12 +508,7 @@
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
             [self.tableView reloadData];
-            // GOOGLE ANALYTICS
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                                  action:@"button_press"  // Event action (required)
-                                                                   label:@"thumb_down"          // Event label
-                                                                   value:nil] build]];    // Event value
+            [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_down" value:nil] build]];
         }
     }
 }
@@ -564,7 +563,7 @@
     }
     NSUInteger row = [indexPath row];
     Message* message = [self getMessageForIndex:row];
-    return [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-(SIDES+10), 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height + FOOTER_OFFSET + HEADER_OFFSET;
+    return [message.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-(SIDES+10), 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:FontName size:NormalFontSize]} context:nil].size.height + FOOTER_OFFSET + HEADER_OFFSET;
 }
 
 // SORTING
@@ -642,12 +641,7 @@
             [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
             [[SpeakUpManager sharedSpeakUpManager] savePeerData];
             
-            // GOOGLE ANALYTICS
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                                  action:@"button_press"  // Event action (required)
-                                                                   label:@"send"          // Event label
-                                                                   value:nil] build]];    // Event value
+
             [self resizeInputBox];
         }
     }
@@ -655,7 +649,7 @@
 
 -(void)resizeInputBox{
     CGSize textViewConstraint = CGSizeMake(self.inputTextView.frame.size.width-10,9999);
-    CGSize newSize = [self.inputTextView.text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize newSize = [self.inputTextView.text sizeWithFont:[UIFont fontWithName:FontName size:MediumFontSize] constrainedToSize:textViewConstraint lineBreakMode:NSLineBreakByWordWrapping];
     NSInteger newSizeH = newSize.height;
     // below 90 we can set the height
     if (newSizeH < 20)
@@ -726,7 +720,7 @@
         int numberOfVotes= parentMessage.numberOfNo + parentMessage.numberOfYes;
         [parentMessageVoteNumberLabel setText:[NSString stringWithFormat:  NSLocalizedString(@"VOTE", nil), numberOfVotes]];
         [parentMessageScoreLabel setText:[NSString stringWithFormat: @"%d",parentMessage.score]];
-        CGFloat height = [parentMessage.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Light" size:NormalFontSize]} context:nil].size.height;
+        CGFloat height = [parentMessage.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:FontName size:NormalFontSize]} context:nil].size.height;
         parentMessageContentTextView.frame =  CGRectMake(10,0,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
         [parentMessageContentTextView setText:parentMessage.content];
         parentMessageView.frame =  CGRectMake(0,0,self.view.frame.size.width,height+FOOTER_OFFSET+20);

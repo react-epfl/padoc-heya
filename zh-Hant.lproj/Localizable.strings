@@ -28,11 +28,11 @@
 
 "OK" = "確定";
 
-"JUST_NOW" = "剛剛";
+"JUST_NOW" = "剛剛 %@";
 
-"MINUTES_AGO" = "%d 分鐘前";
+"MINUTES_AGO" = "%d 分鐘前 %@";
 
-"HOURS_AGO"="%d 小時前";
+"HOURS_AGO"="%d 小時前 %@";
 
 "VOTE"="(%d 人支持)";
 
@@ -97,6 +97,10 @@
 "OK" = "OK";
 
 "MY_ROOMS" = "Meine Chaträume";
+
+"ME" = "by me";
+
+"ADMIN" = "by the admin";
 
 
 

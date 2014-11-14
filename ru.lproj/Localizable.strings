@@ -28,11 +28,11 @@
 
 "OK" = "OK";
 
-"JUST_NOW" = "только что";
+"JUST_NOW" = "только что %@";
 
-"MINUTES_AGO" = "%d минут назад";
+"MINUTES_AGO" = "%d минут назад %@";
 
-"HOURS_AGO"="%d часов назад";
+"HOURS_AGO"="%d часов назад %@";
 
 "VOTE"="(%d голос)";
 
@@ -99,4 +99,8 @@
 "OK" = "OK";
 
 "MY_ROOMS" = "Meine Chaträume";
+
+"ME" = "by me";
+
+"ADMIN" = "by the admin";
 

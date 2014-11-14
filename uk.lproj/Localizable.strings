@@ -28,11 +28,11 @@
 
 "OK" = "OK";
 
-"JUST_NOW" = "щойно";
+"JUST_NOW" = "щойно %@";
 
-"MINUTES_AGO" = "%d хв тому";
+"MINUTES_AGO" = "%d хв тому %@";
 
-"HOURS_AGO"="%d годин тому";
+"HOURS_AGO"="%d годин тому %@";
 
 "VOTE"="(%d голос)";
 
@@ -100,3 +100,7 @@
 "OK" = "OK";
 
 "MY_ROOMS" = "My rooms";
+
+"ME" = "by me";
+
+"ADMIN" = "by the admin";

@@ -53,7 +53,7 @@
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
     customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    [customLabel setFont:[UIFont fontWithName:FontName size:MediumFontSize]];
     customLabel.textColor =  [UIColor whiteColor];
     self.navigationItem.titleView = customLabel;
     [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"ROOMS", nil)];
@@ -123,7 +123,6 @@
             [connectionLostSpinner stopAnimating];
         }
         if(![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-            //nameLabel.text =  NSLocalizedString(@"NO_CONNECTION", nil) ;
             nameLabel.text=@"";
             [connectionLostSpinner startAnimating];
         }
@@ -133,7 +132,7 @@
         //if there is no room, simply put this no room cell
         NSUInteger row = [indexPath row];
         NSUInteger section = [indexPath section];
-        if (indexPath.section==NEARBY_SECTION) {
+        if (section==NEARBY_SECTION) {
             if ([[[SpeakUpManager sharedSpeakUpManager] roomArray] count]==0){
                 static NSString *CellIdentifier = @"NoRoomCell";
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -161,9 +160,9 @@
             }
         }else{
             Room *room = nil;
-            if (indexPath.section==UNLOCKED_SECTION) {
+            if (section==UNLOCKED_SECTION) {
                 room = (Room *)[[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] objectAtIndex:row];
-            }else if  (indexPath.section==MY_SECTION) {
+            }else if  (section==MY_SECTION) {
                 room = (Room *)[[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] objectAtIndex:row];
             }
             static NSString *CellIdentifier = @"CommunityCell";
@@ -201,7 +200,7 @@
     sectionHeader.backgroundColor =  myGrey;
     sectionHeaderView.backgroundColor =  myGrey;
     sectionHeader.textColor = [UIColor blackColor];
-    sectionHeader.font = [UIFont fontWithName:@"Helvetica-Light" size:SmallFontSize];
+    sectionHeader.font = [UIFont fontWithName:FontName size:SmallFontSize];
     sectionHeader.text = sectionName;
     [sectionHeaderView addSubview:sectionHeader];
     return sectionHeaderView;
@@ -223,7 +222,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler){
+            NSLog(@"XXXXXXXXXXXXXXX");
+        }];
     }
     if ([[segue identifier] isEqualToString:@"RoomToMessages"]) {
         UITableViewCell *cell = (UITableViewCell *)sender;
@@ -240,7 +241,9 @@
             [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID:[((Room*)[[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] objectAtIndex:row])roomID] ];
         }
         // ADER could be done asynchronously with callback
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler){
+            NSLog(@"XXXXXXXXXXXXXXX");
+        }];
     }
 }
 

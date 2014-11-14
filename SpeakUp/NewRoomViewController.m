@@ -40,7 +40,7 @@
     UILabel *customLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120.0f, 44.0f)];
     customLabel.backgroundColor= [UIColor clearColor];
     customLabel.textAlignment = NSTextAlignmentCenter;
-    [customLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize]];
+    [customLabel setFont:[UIFont fontWithName:FontName size:MediumFontSize]];
     customLabel.textColor =  [UIColor whiteColor];
     
     // INPUT
@@ -68,7 +68,7 @@
     [segmentedControl setTitle:NSLocalizedString(@"UNLOCK", nil) forSegmentAtIndex:0];
     [segmentedControl setTitle:NSLocalizedString(@"CREATE", nil) forSegmentAtIndex:1];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"Helvetica-Light" size:MediumFontSize], UITextAttributeFont,
+                                [UIFont fontWithName:FontName size:MediumFontSize], UITextAttributeFont,
                                 [UIColor whiteColor], UITextAttributeTextColor, nil  ];
     [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -147,13 +147,6 @@
     return NO;
 }
 
--(void)connectionWasLost{
-    [connectionLostSpinner startAnimating];
-}
--(void)connectionHasRecovered{
-    [connectionLostSpinner stopAnimating];
-}
-
 -(IBAction)createRoom:(id)sender{
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         NSString *trimmedString = [input.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -166,25 +159,43 @@
             myRoom.range=RANGE;
             myRoom.lifetime=LIFETIME;
             myRoom.id_type = ANONYMOUS;
-            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom];// ADER GET CALLBACK AND ADD ROOMKEY TO LIST OF OWN ROOMS
-            
-            // DUMMY
-            
-            [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] addObject:@"15576"];
-            
-            //DUMMMY
-            
+            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary* handler){
+                if (handler) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press"  label:@"join_room"  value:nil] build]];
+                }else{
+                    [self unlockorcreatefailed];
+                }
+            }];
             self.input.text=@"";
-            [self.navigationController popViewControllerAnimated:YES];
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            // GOOGLE ANALYTICS
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                                  action:@"button_press"  // Event action (required)
-                                                                   label:@"create_room"   // Event label
-                                                                   value:nil] build]];    // Event value
         }
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
+}
+
+- (IBAction)unlock:(id)sender {
+    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text withHandler:^(NSDictionary* handler){
+            if (handler) {
+                [self.navigationController popViewControllerAnimated:YES];
+                [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press"  label:@"join_room"  value:nil] build]];
+            }else{
+                [self unlockorcreatefailed];
+            }
+        }];
+        keyTextField.text = @"";
+    }
+}
+
+- (void)unlockorcreatefailed{
+    CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
+    anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ] ] ;
+    anim.autoreverses = YES ;
+    anim.repeatCount = 2.0f ;
+    anim.duration = 0.07f ;
+    [unlockRoomButton.layer addAnimation:anim forKey:nil];
+    [createRoomButton.layer addAnimation:anim forKey:nil];
+    //[unlockRoomButton setHidden:NO];
 }
 
 // used to limit the number of characters to MAX_LENGTH
@@ -238,56 +249,16 @@
     }
 }
 
-- (IBAction)unlock:(id)sender {
-    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-        // check if the label is ok, then pop the view
-        //[[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text];
-        
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text withHandler:^(NSDictionary* handler){
-            NSLog(@"XXXXXXXXXXXXXXX");
-        }];
-        // could wait for response and then enter the lobby
-        
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        // GOOGLE ANALYTICS
-        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                              action:@"button_press"  // Event action (required)
-                                                               label:@"join_room"          // Event label
-                                                               value:nil] build]];    // Event value
-    }
-}
-
-
-- (void)loginFailed:(NSError *)error {
-    // [[[UIAlertView alloc] initWithTitle:@"Login failed" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
-    anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ] ] ;
-    anim.autoreverses = YES ;
-    anim.repeatCount = 2.0f ;
-    anim.duration = 0.07f ;
-    [ unlockRoomButton.layer addAnimation:anim forKey:nil ] ;
-    //loginWarningLabel.text=@"invalid username or password";
-    [unlockRoomButton setHidden:NO];
-}
-
-
-- (IBAction)flip:(id)sender {
-    if (pseudoSwitch.on){
-        NSLog(@"Should use pseudo");
-    }
-    else  NSLog(@"Should not use pseudo");
-}
-
 -(IBAction)goToWebSite:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"button_press"  // Event action (required)
-                                                           label:@"info_from_add"          // Event label
-                                                           value:nil] build]];    // Event value
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press"  label:@"info_from_add"  value:nil] build]];
+}
+
+-(void)connectionWasLost{
+    [connectionLostSpinner startAnimating];
+}
+-(void)connectionHasRecovered{
+    [connectionLostSpinner stopAnimating];
 }
 
 

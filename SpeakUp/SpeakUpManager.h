@@ -15,7 +15,7 @@
 #import "ConnectionDelegate.h"
 #import "SocketIO.h"
 
-//#define SERVER_URL @"128.179.141.181"
+//#define SERVER_URL @"128.179.143.7"
 //#define SERVER_PORT 1347
 #define SERVER_URL @"seance.epfl.ch"
 #define SERVER_PORT 80
@@ -35,6 +35,7 @@
 #define NormalFontSize 22
 #define MediumFontSize 18
 #define SmallFontSize 13
+#define FontName @"Helvetica-Light"
 
 #define THUMB @"thumb"
 #define PLUS @"plus"
@@ -49,23 +50,21 @@
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 
-// socket rocket removed @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SRWebSocketDelegate>
 @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>
 
 +(id) sharedSpeakUpManager;
 
-
+- (void)connect;
 -(void)savePeerData;
 - (void)getNearbyRooms;
+-(void) deleteRoom:(Room *) room;
 -(void) deleteMessage:(Message *) message;
 -(void) markMessageAsSpam:(Message *) message;
 -(void)createMessage:(Message *) message;
-- (void)getMessagesInRoomID:(NSString*)roomID orRoomHash:(NSString*) hash;
--(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler;
 - (void)rateMessage:(Message*)message inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
--(void) deleteRoom:(Room *) room;
-- (void)createRoom:(Room *)room;
-- (void)connect;
+- (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler;
+-(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler;
+
 
 @property (strong, nonatomic)  SocketIO *socketIO;
 @property (nonatomic) BOOL connectionIsOK;

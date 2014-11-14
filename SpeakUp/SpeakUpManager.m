@@ -4,7 +4,6 @@
 //  Created by Adrian Holzer on 06.11.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
 //
-
 #import "SpeakUpManager.h"
 #import "SocketIOPacket.h"
 #import "ConnectionDelegate.h"
@@ -13,8 +12,6 @@
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
-
-
 
 @implementation SpeakUpManager
 
@@ -36,7 +33,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.connectionIsOK=NO;
             sharedSpeakUpManager.locationIsOK=NO;
             sharedSpeakUpManager.currentRoomID=nil;
-            // sets up the local location manager, this triggers the didUpdateToLocation callback
             sharedSpeakUpManager.peerLocation=nil;
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
@@ -45,9 +41,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-            [sharedSpeakUpManager.locationManager startUpdatingLocation];
+            [sharedSpeakUpManager.locationManager startUpdatingLocation];// sets up the local location manager, this triggers the didUpdateToLocation callback
             [sharedSpeakUpManager connect];
-            //A/B TESTING THUMB STYLES and ETIQUETTE
             sharedSpeakUpManager.likeType= THUMB;
             sharedSpeakUpManager.etiquetteType = NO_ETIQUETTE;
             sharedSpeakUpManager.etiquetteWasShown = NO;
@@ -55,7 +50,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     return sharedSpeakUpManager;
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// INCOMING CALLS TO THE SERVER
 // SOCKET DID RECEIVE MESSAGE
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet{
     [self stopNetworking];
@@ -63,26 +59,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     NSString* type = packet.name;
     if ([type isEqual:@"peer_welcome"]) {
         NSDictionary *data = [packet.args objectAtIndex:0];
-        peer_id = [data objectForKey:@"peer_id"];
-        connectionIsOK=YES;
-        [connectionDelegate connectionHasRecovered];
-        // VERSION CHECKING
-        NSNumber* minVersion = [data objectForKey:@"min_v"];
-        NSNumber* maxVersion = [data objectForKey:@"max_v"];
-        if(minVersion && maxVersion){
-            if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
-                NSLog(@"Problem the API does not match, display message to go to the app store");
-            }
-        }
-        [self handle_AB_testing:[data objectForKey:@"user_tags"]];
-        // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
-        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-        UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
-        if([myNavController.visibleViewController isKindOfClass:[RoomTableViewController class]]){
-            [self getNearbyRooms];
-        }else{
-            [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil];
-        }
+        [self receivedWelcome:data];
     }else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packet.args objectAtIndex:0]];
         self.locationAtLastReset=self.peerLocation;
@@ -110,19 +87,39 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [self savePeerData];
     [speakUpDelegate updateData];
 }
-
+// WELCOME
+-(void)receivedWelcome:(NSDictionary*)data{
+    peer_id = [data objectForKey:@"peer_id"];
+    connectionIsOK=YES;
+    [connectionDelegate connectionHasRecovered];
+    NSNumber* minVersion = [data objectForKey:@"min_v"];
+    NSNumber* maxVersion = [data objectForKey:@"max_v"];
+    if(minVersion && maxVersion){
+        if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
+            NSLog(@"Problem the API does not match, display message to go to the app store");
+        }
+    }
+    [self handle_AB_testing:[data objectForKey:@"user_tags"]];
+    // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UINavigationController *myNavController = (UINavigationController*) window.rootViewController;;
+    if([myNavController.visibleViewController isKindOfClass:[RoomTableViewController class]]){
+        [self getNearbyRooms];
+    }else{
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler){
+            NSLog(@"got nearby rooms in the callback");
+        }];
+    }
+}
 // RECEIVED ROOMS
 -(void)receivedRooms:(NSArray*)roomDictionaries{
     [roomArray removeAllObjects];
     self.locationAtLastReset=self.peerLocation;
-    NSLog(@"ALL OBJECT ARE REMOVED FROM NEARBY ROOMS");
     for (NSDictionary *roomDictionary in roomDictionaries) {
         [self receivedRoom:roomDictionary];
     }
-    // needs to refresh view if there was no room in the list
     [roomManagerDelegate updateRooms];
 }
-
 // RECEIVED ROOM
 -(NSString*)receivedRoom:(NSDictionary*)roomDictionary{
     Room *room = [[Room alloc] initWithDictionary:roomDictionary];
@@ -149,7 +146,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     [myOwnRoomArray removeObjectsInArray:roomsToRemove];
     
-    if ([myOwnRoomKeyArray containsObject:room.key]) {
+    if ([room.creatorID isEqualToString:self.peer_id]) {
+        if(![myOwnRoomKeyArray containsObject:room.key]){
+            [myOwnRoomKeyArray addObject:room.key];
+        }
         [myOwnRoomArray addObject:room];
         [unlockedRoomKeyArray removeObject:room.key];
     }else if ([unlockedRoomKeyArray containsObject:room.key]) {
@@ -164,14 +164,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [roomManagerDelegate updateRooms];
     return room.roomID;
 }
-
 // RECEIVED MESSAGES
 -(void)receivedMessages:(NSArray*)messageDictionaries roomID:(NSString*)roomID{
     for (NSDictionary *messageDictionary in messageDictionaries) {
         [self receivedMessage:messageDictionary roomID:roomID];
     }
 }
-
 // RECEIVED MESSAGE
 -(void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
     Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
@@ -185,7 +183,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self addMessage:message toRoom:room];
     }
 }
-
 -(void)addMessage:(Message*) message toRoom:(Room*) room{
     if ([room.roomID isEqual:message.roomID]) {
         BOOL messageUpdate=NO;
@@ -215,8 +212,33 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
 }
-
-// HANDSHAKE SOCKET.IO
+- (void) socketIODidConnect:(SocketIO *)socket{
+    [self stopNetworking];
+    NSLog(@"socket is now open");
+    [self handshake];
+}
+- (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
+    [self stopNetworking];
+    connectionIsOK=NO;
+    [connectionDelegate connectionWasLost];
+    [self performSelector:@selector(connect) withObject:nil afterDelay:arc4random() % 4];
+    NSLog(@"socket did fail with error: %@",[error description]);
+}
+- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
+    [self stopNetworking];
+    connectionIsOK=NO;
+    [ connectionDelegate connectionWasLost];
+    [self performSelector:@selector(connect)  withObject:nil afterDelay:arc4random() % 4];
+    NSLog(@"socket did close with error %@ ",[error description]);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// OUTGOING MESSAGES
+// CONNECT
+- (void)connect{
+    socketIO = [[SocketIO alloc] initWithDelegate:self];
+    [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
+}
+// 2 - HANDSHAKE
 - (void)handshake{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:API_VERSION forKey:@"api_v"];
@@ -230,40 +252,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-    [socketIO sendEvent:@"peer" withData:myData];
+    [socketIO sendEvent:@"peer" withData:myData andAcknowledge:^(NSDictionary *data) {
+        NSLog(@"Hanshake response received: %@", data  );
+        [self receivedWelcome:data];
+    }];
     [self startNetworking];
 }
-
-// SOCKET CONNECT
-- (void)connect{
-    socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
-    [self startNetworking];
-}
-
-- (void) socketIODidConnect:(SocketIO *)socket{
-    [self stopNetworking];
-    NSLog(@"socket is now open");
-    [self handshake];
-}
-
-- (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
-    [self stopNetworking];
-    connectionIsOK=NO;
-    [connectionDelegate connectionWasLost];
-    [self performSelector:@selector(connect) withObject:nil afterDelay:arc4random() % 4];
-    NSLog(@"socket did fail with error: %@",[error description]);
-}
-
-- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
-    [self stopNetworking];
-    connectionIsOK=NO;
-    [ connectionDelegate connectionWasLost];
-    [self performSelector:@selector(connect)  withObject:nil afterDelay:arc4random() % 4];
-    //[self connect];
-    NSLog(@"socket did close with error %@ ",[error description]);
-}
-
 // GET ROOMS SOCKET.IO
 -(void)getNearbyRooms{
     if (!connectionIsOK) {
@@ -280,23 +274,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
         NSArray* unlockedAndMyOwnRoomKeyArray = [[self.unlockedRoomKeyArray mutableCopy] arrayByAddingObjectsFromArray:[self.myOwnRoomKeyArray mutableCopy]];
         [myData setValue:unlockedAndMyOwnRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS AND OWN ROOMS
-        [socketIO sendEvent:@"getrooms" withData:myData];
-        [self startNetworking];
+        [socketIO sendEvent:@"getrooms" withData:myData andAcknowledge:^(NSArray *data) {
+            NSLog(@"Received nearby rooms: %@", data  );
+            [self receivedRooms:data];
+        }];
     }
 }
-
-// GET MESSAGES SOCKET.IO NOW CALLED GET ROOM
--(void)getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key{
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
-    [myData setValue:room_id forKey:@"room_id"];
-    [myData setValue:key forKey:@"key"];
-    [socketIO sendEvent:@"getroom" withData:myData];
-    [self startNetworking];
-}
-
-
+//CALL FOR MESSAGES IN A ROOM EITHER UPON UNLOCK OR ENTERING A ROOM
 -(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:API_VERSION forKey:@"api_v"];
@@ -304,12 +288,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:room_id forKey:@"room_id"];
     [myData setValue:key forKey:@"key"];
     [self startNetworking];
-    [self.socketIO sendEvent:@"getroom" withData:myData andAcknowledge:^(NSArray *someResponse) {
-        NSLog(@"RECEIVED...." );
+    [self.socketIO sendEvent:@"getroom" withData:myData andAcknowledge:^(NSDictionary *data) {
+        NSLog(@"Received messages of a room: %@", data  );
+        // ADER NEEDS TO CHECK WHETHER IT IS A CORRECT ROOM OR NOT
+        [self receivedMessages: [data objectForKey:@"messages"] roomID:[data objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[data objectForKey:@"room_id"]];
+        handler(data);
     }];
 }
-
-
 // CREATE MSG SOCKET.IO
 -(void) createMessage:(Message *) message{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -321,11 +307,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [messageData setValue:message.content forKey:@"body"];
     [myData setValue:messageData forKey:@"message"];
     [socketIO sendEvent:@"createmessage" withData:myData];
-    [self startNetworking];
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
 }
-
-// CREATE ROOM SOCKET.IO
-- (void)createRoom:(Room *)room{
+// CREATE ROOM
+- (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"creator_id"];
@@ -337,11 +322,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
     [myData setValue:myLoc forKey:@"loc"];
     [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-    [socketIO sendEvent:@"createroom" withData:myData];
-    [self startNetworking];
+    [socketIO sendEvent:@"createroom" withData:myData andAcknowledge:^(NSDictionary *data) {
+        NSString* roomID=[self receivedRoom: data];
+        [messageManagerDelegate updateMessagesInRoom:roomID];
+        [myOwnRoomKeyArray addObject:roomID];
+        NSLog(@"Received newly created room: %@", data );
+        handler(data);
+    }];
     [self savePeerData];
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
 }
-
 // RATE MESSAGE
 - (void)rateMessage:(Message*)message  inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -355,10 +345,44 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];
     [socketIO sendEvent:@"updatemessage" withData:myData];
-    [self startNetworking];
     [self savePeerData];
 }
-
+// DELETE ROOM
+-(void) deleteRoom:(Room *) room{
+    [deletedRoomIDs addObject:room.roomID];
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:room.roomID forKey:@"room_id"];
+    [socketIO sendEvent:@"delete_room" withData:myData];
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
+}
+// DELETE MESSAGE
+-(void) deleteMessage:(Message *) message{
+    [deletedMessageIDs addObject:message.messageID];
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:message.roomID forKey:@"room_id"];
+    [myData setValue:message.messageID forKey:@"msg_id"];
+    NSArray* tags = @[DELETE];
+    [myData setValue:tags forKey:@"new_tags"];
+    [socketIO sendEvent:@"tag_message" withData:myData];
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
+}
+// SPAM MESSAGE
+-(void) markMessageAsSpam:(Message *) message{
+    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:API_VERSION forKey:@"api_v"];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
+    [myData setValue:message.roomID forKey:@"room_id"];
+    [myData setValue:message.messageID forKey:@"msg_id"];
+    NSArray* tags = @[SPAM];
+    [myData setValue:tags forKey:@"new_tags"];
+    [socketIO sendEvent:@"tag_message" withData:myData];
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LOCATION MANAGER CALLBACK
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.peerLocation = newLocation;
@@ -367,7 +391,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [sharedSpeakUpManager getNearbyRooms];
     }
 }
-
 -(void)updateRoomLocations{
     for(Room *room in roomArray){
         CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
@@ -376,12 +399,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     self.roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms];
 }
-
 // LOCATION FAILED
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     NSLog(@"location FAILED %@", [error description]);
 }
-
 // SAVING DATA
 -(void)initPeerData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -441,13 +462,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [defaults setObject:inputRoomIDText forKey:@"inputRoomIDText"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
     [defaults setObject:unlockedRoomKeyArray forKey:@"unlockedRoomKeyArray"];
-     [defaults setObject:myOwnRoomKeyArray forKey:@"myOwnRoomKeyArray"];
+    [defaults setObject:myOwnRoomKeyArray forKey:@"myOwnRoomKeyArray"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
     [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];
     [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];
     [defaults synchronize];
 }
-
 // UTILITIES
 -(NSArray*) sortArrayByDistance:(NSArray*) unsortedRooms{
     NSSortDescriptor *sortDescriptor;
@@ -464,63 +484,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)stopNetworking{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
-
-// DELETE ROOM
--(void) deleteRoom:(Room *) room{
-    [deletedRoomIDs addObject:room.roomID];
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
-    [myData setValue:room.roomID forKey:@"room_id"];
-     [socketIO sendEvent:@"delete_room" withData:myData];
-    
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"button_press"  // Event action (required)
-                                                           label:@"delete_room"       // Event label
-                                                           value:nil] build]];    // Event value
-}
-
-// DELETE MESSAGE
--(void) deleteMessage:(Message *) message{
-    [deletedMessageIDs addObject:message.messageID];
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
-    [myData setValue:message.roomID forKey:@"room_id"];
-    [myData setValue:message.messageID forKey:@"msg_id"];
-    NSArray* tags = @[DELETE];
-    [myData setValue:tags forKey:@"new_tags"];
-    [socketIO sendEvent:@"tag_message" withData:myData];
-    
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"button_press"  // Event action (required)
-                                                           label:@"delete_message"       // Event label
-                                                           value:nil] build]];    // Event value
-    
-}
-
--(void) markMessageAsSpam:(Message *) message{
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
-    [myData setValue:message.roomID forKey:@"room_id"];
-    [myData setValue:message.messageID forKey:@"msg_id"];
-    NSArray* tags = @[SPAM];
-    [myData setValue:tags forKey:@"new_tags"];
-    [socketIO sendEvent:@"tag_message" withData:myData];
-    
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"button_press"  // Event action (required)
-                                                           label:@"mark_spam_message"       // Event label
-                                                           value:nil] build]];    // Event value
-}
-
 -(Room*) currentRoom{
     for(Room *room in myOwnRoomArray){
         if([room.roomID isEqual:self.currentRoomID]){
@@ -539,7 +502,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     return nil;
 }
-
+// AB TESTING
 -(void)handle_AB_testing:(NSArray*)ab_testing_flags{
     if ([ab_testing_flags containsObject:THUMB]) {
         self.likeType=THUMB;

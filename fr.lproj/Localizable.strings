@@ -24,11 +24,11 @@
 
 //"OK" = "OK";
 
-"JUST_NOW" = "maintenant";
+"JUST_NOW" = "maintenant %@";
 
-"MINUTES_AGO" = "il y a %d min";
+"MINUTES_AGO" = "il y a %d min %@";
 
-"HOURS_AGO"="il y a %d heures";
+"HOURS_AGO"="il y a %d heures %@";
 
 "VOTE"="(%d vote)";
 
@@ -98,4 +98,7 @@
 
 "MY_ROOMS" = "Mes salles";
 
+"ME" = "by me";
+
+"ADMIN" = "by the admin";
 

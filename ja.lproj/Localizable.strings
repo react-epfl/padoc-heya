@@ -28,9 +28,9 @@
 "OK"="確定";
 
 
-"JUST_NOW"="今現在";
-"MINUTES_AGO"="%d 分前";
-"HOURS_AGO"="%d 時間前";
+"JUST_NOW"="今現在 %@";
+"MINUTES_AGO"="%d 分前 %@";
+"HOURS_AGO"="%d 時間前 %@";
 "VOTE"=" (%d 投票者)";
 
 
@@ -91,4 +91,9 @@
 "OK" = "OK";
 
 "MY_ROOMS" = "Meine Chaträume";
+
+"ME" = "by me";
+
+"ADMIN" = "by the admin";
+
 
