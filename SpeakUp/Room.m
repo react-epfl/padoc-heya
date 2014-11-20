@@ -20,6 +20,8 @@
         isOfficial=NO;
         deleted=NO;
         isUnlocked=NO;
+        latitude=-1;
+        longitude=-1;
     }
     return self;
 }

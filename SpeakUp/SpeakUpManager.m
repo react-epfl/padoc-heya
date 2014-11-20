@@ -81,6 +81,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+    }else if ([type isEqual:@"roomdeleted"]) {
+        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+        //remove room with roomID [dict objectForKey:@"room_id"]
+        [self receivedRoomToDelete:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+    }else if ([type isEqual:@"messagedeleted"]) {
+        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+        [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
+        [self receivedMessageToDelete:[dict objectForKey:@"msg_id"] inRoom:[dict objectForKey:@"room_id"] withParent:[dict objectForKey:@"parent_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     }else{
         NSLog(@"got something else");
     }
@@ -164,6 +174,37 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [roomManagerDelegate updateRooms];
     return room.roomID;
 }
+// RECEIVED ROOM TO DELETE
+-(void)receivedRoomToDelete:(NSString*)room_id{
+    Room *roomToDelete=nil;
+    for(Room *r in roomArray){
+        if ([r.roomID isEqual:room_id]) {
+            roomToDelete=r;
+        }
+    }
+    if (roomToDelete) {
+        [roomArray removeObject:roomToDelete];
+        roomToDelete=nil;
+    }
+    for(Room *r in unlockedRoomArray){
+        if ([r.roomID isEqual:room_id]) {
+            roomToDelete=r;
+        }
+    }
+    if (roomToDelete) {
+        [roomArray removeObject:roomToDelete];
+        roomToDelete=nil;
+    }
+    for(Room *r in myOwnRoomArray){
+        if ([r.roomID isEqual:room_id]) {
+            roomToDelete=r;
+        }
+    }
+    if (roomToDelete) {
+        [roomArray removeObject:roomToDelete];
+        roomToDelete=nil;
+    }
+}
 // RECEIVED MESSAGES
 -(void)receivedMessages:(NSArray*)messageDictionaries roomID:(NSString*)roomID{
     for (NSDictionary *messageDictionary in messageDictionaries) {
@@ -212,6 +253,42 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
 }
+-(void)receivedMessageToDelete:(NSString*) m_id inRoom:(NSString*) room_id withParent:(NSString*) parent_id{
+    for(Room *room in roomArray){
+        [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
+    }
+    for(Room *room in unlockedRoomArray){
+        [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
+    }
+    for(Room *room in myOwnRoomArray){
+        [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
+    }
+}
+-(void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id{
+    if ([room_id isEqual:room_id]) {
+        Message* messageToDelete=nil;
+        for(Message *msg in room.messages){
+            if ([msg.messageID isEqual:m_id]) {
+                // update received, therefore just update the vote fields
+                messageToDelete=msg;
+            }if ([msg.messageID isEqual:parent_id]) {
+                for(Message *reply in msg.replies){
+                    if ([reply.messageID isEqual:m_id]) {
+                        messageToDelete=msg;
+                    }
+                }
+                if (messageToDelete) {
+                    [msg.replies removeObject:messageToDelete];
+                    messageToDelete=nil;
+                }
+            }
+        }
+        if (messageToDelete) {
+            [room.messages removeObject:messageToDelete];
+        }
+    }
+}
+
 - (void) socketIODidConnect:(SocketIO *)socket{
     [self stopNetworking];
     NSLog(@"socket is now open");
@@ -317,11 +394,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:room.name forKey:@"name"];
     [myData setValue:room.id_type forKey:@"id_type"];
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
-    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
-    [myData setValue:myLoc forKey:@"loc"];
-    [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
+    if (room.latitude!=-1 && room.longitude!=-1) {
+        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+        [myLoc setValue:[NSNumber numberWithDouble:room.latitude] forKey:@"lat"];
+        [myLoc setValue:[NSNumber numberWithDouble:room.longitude] forKey:@"lng"];
+        [myData setValue:myLoc forKey:@"loc"];
+        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
+    }
     [socketIO sendEvent:@"createroom" withData:myData andAcknowledge:^(NSDictionary *data) {
         NSString* roomID=[self receivedRoom: data];
         [messageManagerDelegate updateMessagesInRoom:roomID];
@@ -354,7 +433,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:API_VERSION forKey:@"api_v"];
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room.roomID forKey:@"room_id"];
-    [socketIO sendEvent:@"delete_room" withData:myData];
+    [socketIO sendEvent:@"deleteroom" withData:myData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
 }
 // DELETE MESSAGE
@@ -365,9 +444,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.messageID forKey:@"msg_id"];
-    NSArray* tags = @[DELETE];
-    [myData setValue:tags forKey:@"new_tags"];
-    [socketIO sendEvent:@"tag_message" withData:myData];
+    [socketIO sendEvent:@"deletemessage" withData:myData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
 }
 // SPAM MESSAGE

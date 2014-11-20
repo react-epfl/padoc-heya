@@ -37,7 +37,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel,roomIsClosed;
 
 #pragma mark - View lifecycle
 //=========================
@@ -48,6 +48,7 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
+    self.roomIsClosed=NO;
     
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -232,15 +233,9 @@
     [expirationLabel setText: [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TOMORROW", nil), tomorrowSameTime]];
 }
 
--(void)notifyThatRoomHasBeenDeleted:(Room*) room{
-    if ([room.roomID isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"ROOM_CLOSED", nil)
-                                                        message:[NSString stringWithFormat: NSLocalizedString(@"ROOM_CLOSED_LONG", nil) , [[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]]
-                                                       delegate:nil
-                                              cancelButtonTitle: NSLocalizedString(@"OK", nil)
-                                              otherButtonTitles:nil];
-        [alert show];
-        [self.navigationController popViewControllerAnimated:YES];
+-(void)notifyThatRoomHasBeenDeleted:(NSString*) room_id{
+    if ([room_id isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
+        self.roomIsClosed=YES;
     }
 }
 
@@ -277,7 +272,16 @@
 // LOADS DATA
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.messageArray count]==0){
+    if (roomIsClosed) {
+        NSString *CellIdentifier = @"NoMessageCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        UITextView *noMessageView = (UITextView *)[cell viewWithTag:1];
+        [noMessageView setText:NSLocalizedString(@"ROOM_CLOSED_MESSAGE", nil)];
+        return cell;
+    }else if ([self.messageArray count]==0){
         NSString *CellIdentifier = @"NoMessageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -352,9 +356,9 @@
         if ([message.authorPeerID isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]) {
             name=NSLocalizedString(@"ME", nil);
         }
-        if ([message.authorPeerID isEqualToString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID]]) {
-            name=NSLocalizedString(@"ADMIN", nil);
-        }
+        //if ([message.authorPeerID isEqualToString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID]]) {
+          //  name=NSLocalizedString(@"ADMIN", nil);
+        //}
         if(minutes  <1 && hours  <1){
             time = [NSString stringWithFormat:  NSLocalizedString(@"JUST_NOW", nil),name];
         }else if(minutes>0 && hours == 0){
@@ -412,13 +416,7 @@
     [self.tableView reloadData];
     NSIndexPath *myIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView selectRowAtIndexPath:myIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
-    
-    // GOOGLE ANALYTICS
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
-                                                          action:@"tab_change"  // Event action (required)
-                                                           label:eventName          // Event label
-                                                           value:nil] build]];    // Event value
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"tab_change"   label:eventName   value:nil] build]];    // Event value
 }
 
 // CONNECTION HANDLING
@@ -640,8 +638,6 @@
             [inputTextView resignFirstResponder];
             [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
             [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-            
-
             [self resizeInputBox];
         }
     }
@@ -665,7 +661,6 @@
         CGRect chatBoxFrame = self.inputTextView.frame;
         chatBoxFrame.size.height = newSizeH+INPUT_TOP_PADDING*2;
         self.inputTextView.frame = chatBoxFrame;
-        
         // input view
         CGRect formFrame = self.inputView.frame;
         if(chatBoxFrame.size.height<INPUT_HEIGHT){
@@ -682,7 +677,6 @@
     [self resizeInputBox];
 }
 
-
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *spamAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Spam" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
@@ -691,10 +685,17 @@
         [tableView reloadData];
     }];
     spamAction.backgroundColor = [UIColor orangeColor];
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Hide"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    NSString* hideOrDelete=NSLocalizedString(@"HIDE", nil);
+   //Only room admins can delete
+    if( [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID] isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]){
+        hideOrDelete=NSLocalizedString(@"DELETE", nil);
+    }
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:hideOrDelete  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
         [self.messageArray  removeObject:message];
-        [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
+        if( [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID] isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]){
+            [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
+        }
         [tableView reloadData];
     }];
     return @[deleteAction, spamAction];

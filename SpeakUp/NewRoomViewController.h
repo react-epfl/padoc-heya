@@ -23,12 +23,13 @@
 @property(strong, nonatomic) IBOutlet UIButton * unlockRoomButton;
 @property(strong, nonatomic) IBOutlet UILabel * createRoomLabel;
 @property(strong, nonatomic) IBOutlet UITextView * warningLabel;
-@property(strong, nonatomic) IBOutlet UILabel * avatarLabel;
-@property(strong, nonatomic) IBOutlet UISwitch * pseudoSwitch;
-@property(strong, nonatomic) IBOutlet UILabel * pseudoLabel;
+@property(strong, nonatomic) IBOutlet UILabel * privateTopLabel;
+@property(strong, nonatomic) IBOutlet UILabel * privateBottomLabel;
+@property(strong, nonatomic) IBOutlet UISwitch * privatSwitch;
 @property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
 
 -(IBAction)createOrUnlock:(id)sender;
+-(IBAction)privateOrPublic:(id)sender;
 -(IBAction)goToWebSite:(id)sender;
 
 @end

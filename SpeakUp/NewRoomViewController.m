@@ -21,7 +21,7 @@
 
 @implementation NewRoomViewController
 
-@synthesize input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, pseudoLabel, pseudoSwitch,warningLabel,avatarLabel;
+@synthesize input, mapView, connectionLostSpinner, segmentedControl, keyTextField, createRoomButton, unlockRoomButton,createRoomLabel, privateBottomLabel, privateTopLabel, privatSwitch,warningLabel;
 
 - (void)viewDidLoad
 {
@@ -94,9 +94,9 @@
     // HIDE CREATION STUFF AND SHOW UNLOCK STUFF
     [mapView setHidden:YES];
     [input setHidden:YES];
-    [pseudoSwitch setHidden:YES];
-    [pseudoLabel setHidden:YES];
-    [avatarLabel setHidden:YES];
+    [privatSwitch setHidden:YES];
+    [privateBottomLabel setHidden:YES];
+    [privateTopLabel setHidden:YES];
     [createRoomButton setHidden:YES];
     [unlockRoomButton setHidden:NO];
     [createRoomButton setHidden:YES];
@@ -107,6 +107,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    unlockRoomButton.enabled=YES;
+     createRoomButton.enabled=YES;
     if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
         [connectionLostSpinner stopAnimating];
     }else{
@@ -154,20 +156,24 @@
             NSLog(@"creating a new room %@ ", input.text);
             Room* myRoom = [[Room alloc] init];
             myRoom.name = self.input.text;
-            myRoom.latitude=self.mapView.userLocation.coordinate.latitude;
-            myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
+            if (!privatSwitch.on) {
+                myRoom.latitude=self.mapView.userLocation.coordinate.latitude;
+                myRoom.longitude=self.mapView.userLocation.coordinate.longitude;
+            }
             myRoom.range=RANGE;
             myRoom.lifetime=LIFETIME;
             myRoom.id_type = ANONYMOUS;
+            createRoomButton.enabled=NO;
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary* handler){
-                if (handler) {
+                if ([handler objectForKey:@"key"]) {
                     [self.navigationController popViewControllerAnimated:YES];
-                    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press"  label:@"join_room"  value:nil] build]];
+                    self.input.text=@"";
+                    [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] addObject:[handler objectForKey:@"key"]];
                 }else{
                     [self unlockorcreatefailed];
                 }
+                createRoomButton.enabled=YES;
             }];
-            self.input.text=@"";
         }
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
@@ -175,15 +181,19 @@
 
 - (IBAction)unlock:(id)sender {
     if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+        unlockRoomButton.enabled=NO;
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:nil  orRoomHash:keyTextField.text withHandler:^(NSDictionary* handler){
-            if (handler) {
+            BOOL unlocked = [[handler objectForKey:@"unlocked"] boolValue];
+            if (unlocked) {
                 [self.navigationController popViewControllerAnimated:YES];
+                [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] addObject:[handler objectForKey:@"key"]];
+                keyTextField.text = @"";
                 [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press"  label:@"join_room"  value:nil] build]];
             }else{
                 [self unlockorcreatefailed];
             }
+            unlockRoomButton.enabled=YES;
         }];
-        keyTextField.text = @"";
     }
 }
 
@@ -195,7 +205,6 @@
     anim.duration = 0.07f ;
     [unlockRoomButton.layer addAnimation:anim forKey:nil];
     [createRoomButton.layer addAnimation:anim forKey:nil];
-    //[unlockRoomButton setHidden:NO];
 }
 
 // used to limit the number of characters to MAX_LENGTH
@@ -215,30 +224,30 @@
         [unlockRoomButton setHidden:YES];
         [keyTextField setHidden:YES];
         if ([[SpeakUpManager sharedSpeakUpManager] locationIsOK]) {
+            privatSwitch.on=NO;
             [warningLabel setHidden:YES];
             [mapView setHidden:NO];
             [input setHidden:NO];
             [createRoomButton setHidden:NO];
             [createRoomLabel setHidden:NO];
-            [pseudoSwitch setHidden:NO];
-            [pseudoLabel setHidden:NO];
-            [avatarLabel setHidden:NO];
+            [privatSwitch setHidden:NO];
+            [privateBottomLabel setHidden:NO];
+            [privateTopLabel setHidden:NO];
+            privateTopLabel.text=NSLocalizedString(@"PUBLIC_ROOM_TOP", nil);
+            privateBottomLabel.text=NSLocalizedString(@"PUBLIC_ROOM_BOTTOM", nil);
             [input becomeFirstResponder];
         }else{
-            [warningLabel setHidden:NO];
-            [pseudoSwitch setHidden:YES];
-            [pseudoLabel setHidden:YES];
-            [avatarLabel setHidden:YES];
+             privatSwitch.on = YES;
+            privateTopLabel.text=NSLocalizedString(@"PRIVATE_ROOM_TOP", nil);
+            privateBottomLabel.text=NSLocalizedString(@"PRIVATE_ROOM_BOTTOM", nil);
+            [privatSwitch setHidden:YES];
             [mapView setHidden:YES];
-            [input setHidden:YES];
-            [createRoomButton setHidden:YES];
-            [createRoomLabel setHidden:YES];
         }
     }else if(selectedSegment == UNLOCK_TAB){
         [warningLabel setHidden:YES];
-        [pseudoSwitch setHidden:YES];
-        [pseudoLabel setHidden:YES];
-        [avatarLabel setHidden:YES];
+        [privatSwitch setHidden:YES];
+        [privateBottomLabel setHidden:YES];
+        [privateTopLabel setHidden:YES];
         [mapView setHidden:YES];
         [input setHidden:YES];
         [createRoomButton setHidden:YES];
@@ -246,6 +255,18 @@
         [keyTextField setHidden:NO];
         [createRoomLabel setHidden:YES];
         [keyTextField becomeFirstResponder];
+    }
+}
+
+-(IBAction)privateOrPublic:(id)sender{
+    if (privatSwitch.on) {
+        [mapView setHidden:YES];
+        privateTopLabel.text=NSLocalizedString(@"PRIVATE_ROOM_TOP", nil);
+        privateBottomLabel.text=NSLocalizedString(@"PRIVATE_ROOM_BOTTOM", nil);
+    }else{
+        [mapView setHidden:NO];
+        privateTopLabel.text=NSLocalizedString(@"PUBLIC_ROOM_TOP", nil);
+        privateBottomLabel.text=NSLocalizedString(@"PUBLIC_ROOM_BOTTOM", nil);
     }
 }
 

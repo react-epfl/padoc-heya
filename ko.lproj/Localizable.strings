@@ -101,3 +101,11 @@
 
 "ADMIN" = "by the admin";
 
+"PRIVATE_ROOM_TOP" = "Private room";
+"PRIVATE_ROOM_BOTTOM" = "People nearby will not see the room";
+"PUBLIC_ROOM_TOP" = "Public room";
+"PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
+
+"HIDE"="Hide";
+"DELETE"="Delete";
+

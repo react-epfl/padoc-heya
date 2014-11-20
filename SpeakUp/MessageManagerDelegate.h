@@ -11,6 +11,6 @@
 @protocol MessageManagerDelegate <NSObject>
 
 -(void)updateMessagesInRoom: (NSString*) roomID;
--(void)notifyThatRoomHasBeenDeleted:(Room*) room;
+-(void)notifyThatRoomHasBeenDeleted:(NSString*) roomID;
 
 @end
