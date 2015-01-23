@@ -102,4 +102,6 @@
 "PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
 "HIDE"="Hide";
 "DELETE"="Delete";
+"ROOM_CLOSED_MESSAGE"="This room is now closed";
+
 

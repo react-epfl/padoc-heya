@@ -108,4 +108,7 @@
 
 "HIDE"="Hide";
 "DELETE"="Delete";
+"ROOM_CLOSED_MESSAGE"="This room is now closed";
+
+
 

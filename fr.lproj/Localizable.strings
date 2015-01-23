@@ -108,5 +108,5 @@
 "PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
 "HIDE"="Cacher";
 "DELETE"="Effacer";
-
+"ROOM_CLOSED_MESSAGE"="This room is now closed";
 

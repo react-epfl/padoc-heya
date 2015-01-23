@@ -84,11 +84,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else if ([type isEqual:@"roomdeleted"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         //remove room with roomID [dict objectForKey:@"room_id"]
+                [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
         [self receivedRoomToDelete:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        
     }else if ([type isEqual:@"messagedeleted"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
-        [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
         [self receivedMessageToDelete:[dict objectForKey:@"msg_id"] inRoom:[dict objectForKey:@"room_id"] withParent:[dict objectForKey:@"parent_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     }else{

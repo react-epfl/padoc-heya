@@ -44,7 +44,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string> </string>
 	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard</string>
+	<string>GenericStoryboard</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>iPad3Storyboard</string>
 	<key>UIPrerenderedIcon</key>

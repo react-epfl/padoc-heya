@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80070C951A727E0900256E60 /* GenericStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80070C941A727E0900256E60 /* GenericStoryboard.storyboard */; };
 		803165A917BCC8CC003C4E77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 803165AB17BCC8CC003C4E77 /* Localizable.strings */; };
 		803165DC17BD0E6F003C4E77 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */; };
 		80386C3319FA7FF200DDE7F6 /* arrowDISLIKE_NOTPRESSED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80386C2719FA7FF200DDE7F6 /* arrowDISLIKE_NOTPRESSED@2x.png */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80070C941A727E0900256E60 /* GenericStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GenericStoryboard.storyboard; sourceTree = "<group>"; };
 		802F98AD17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		802F98AE17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		803165AA17BCC8CC003C4E77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				80AB3D7C183E727B0005C603 /* Google analytics */,
+				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
 				80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */,
 				803165DB17BD0E6F003C4E77 /* MainStoryboard.storyboard */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
@@ -454,6 +457,7 @@
 				80B3A52D19F27FB600E7CB7C /* button-refresh@2x.png in Resources */,
 				80B5C8C6183BD6020024E946 /* iPad3Storyboard.storyboard in Resources */,
 				80386C3E19FA7FF200DDE7F6 /* thumbLIKE_PRESSED@2x.png in Resources */,
+				80070C951A727E0900256E60 /* GenericStoryboard.storyboard in Resources */,
 				80386C3B19FA7FF200DDE7F6 /* thumbDISLIKE_NOTPRESSED@2x.png in Resources */,
 				80386C3719FA7FF200DDE7F6 /* plusDISLIKE_NOTPRESSED@2x.png in Resources */,
 				80386C3619FA7FF200DDE7F6 /* arrowLIKE_PRESSED@2x.png in Resources */,

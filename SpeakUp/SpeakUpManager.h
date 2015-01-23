@@ -15,10 +15,10 @@
 #import "ConnectionDelegate.h"
 #import "SocketIO.h"
 
-#define SERVER_URL @"128.179.141.174"
-#define SERVER_PORT 1347
-//#define SERVER_URL @"seance.epfl.ch"
-//#define SERVER_PORT 80
+//#define SERVER_URL @"128.179.138.87"
+//#define SERVER_PORT 1347
+#define SERVER_URL @"seance.epfl.ch"
+#define SERVER_PORT 80
 
 #define RANGE 200 
 #define CREATE_TAB 1

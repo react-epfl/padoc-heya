@@ -37,7 +37,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel,roomIsClosed;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel;
 
 #pragma mark - View lifecycle
 //=========================
@@ -48,7 +48,7 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
-    self.roomIsClosed=NO;
+
     
     // BACK BUTTON START
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -235,7 +235,7 @@
 
 -(void)notifyThatRoomHasBeenDeleted:(NSString*) room_id{
     if ([room_id isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
-        self.roomIsClosed=YES;
+        [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:nil];
     }
 }
 
@@ -272,7 +272,8 @@
 // LOADS DATA
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (roomIsClosed) {
+    if (![[SpeakUpManager sharedSpeakUpManager] currentRoom] && indexPath.row==0) {
+        [expirationLabel setText:@""];
         NSString *CellIdentifier = @"NoMessageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {

@@ -32,7 +32,6 @@
 @property(strong, nonatomic)  UITextView * inputTextView;
 @property(nonatomic)  BOOL keyboardIsVisible;
 @property(nonatomic)  BOOL showKey;
-@property(nonatomic)  BOOL roomIsClosed;
 @property(nonatomic) int keyboardHeight;
 @property(nonatomic)  BOOL isFirstMessageUpdate;
 @property(strong, nonatomic) IBOutlet UIActivityIndicatorView *connectionLostSpinner;
