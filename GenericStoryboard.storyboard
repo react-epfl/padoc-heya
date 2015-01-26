@@ -254,7 +254,7 @@
                                         <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ttB-1a-Zmq">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="163"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" misplaced="YES" text="No comments for now" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="t9h-39-cQg">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="No comments for now" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="t9h-39-cQg">
                                                     <rect key="frame" x="10" y="6" width="582" height="105"/>
                                                     <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
@@ -265,7 +265,7 @@
                                                 <constraint firstAttribute="centerX" secondItem="t9h-39-cQg" secondAttribute="centerX" constant="-1" id="MBE-7D-yT4"/>
                                                 <constraint firstItem="t9h-39-cQg" firstAttribute="top" secondItem="ttB-1a-Zmq" secondAttribute="top" constant="6" id="UtF-4E-idY"/>
                                                 <constraint firstAttribute="bottom" secondItem="t9h-39-cQg" secondAttribute="bottom" constant="52" id="Vam-Yi-whR"/>
-                                                <constraint firstAttribute="trailing" secondItem="t9h-39-cQg" secondAttribute="trailing" constant="10" id="eWt-Qo-KYV"/>
+                                                <constraint firstAttribute="trailing" secondItem="t9h-39-cQg" secondAttribute="trailing" constant="8" id="eWt-Qo-KYV"/>
                                                 <constraint firstItem="t9h-39-cQg" firstAttribute="leading" secondItem="ttB-1a-Zmq" secondAttribute="leading" constant="10" id="eqP-dk-SzM"/>
                                             </constraints>
                                         </view>
@@ -311,7 +311,7 @@
                         <outlet property="roomNameLabel" destination="qtW-2R-BQx" id="bH6-oh-Cz7"/>
                         <outlet property="roomNumberLabel" destination="qQ9-5X-l6H" id="riM-T8-bRK"/>
                         <outlet property="segmentedControl" destination="7E6-jm-9U4" id="8H5-Mq-23v"/>
-                        <segue destination="nHg-O5-ciC" kind="modal" identifier="EtiquetteSegue" id="lJV-W5-Q0n"/>
+                        <segue destination="nHg-O5-ciC" kind="showDetail" identifier="EtiquetteSegue" id="lJV-W5-Q0n"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJR-S2-8b6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -338,30 +338,25 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" fixedFrame="YES" text="room name" lineBreakMode="tailTruncation" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="ujp-WO-wmu" userLabel="helloLabel">
-                                            <rect key="frame" x="20" y="4" width="336" height="36"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <rect key="frame" x="20" y="2" width="336" height="36"/>
                                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" misplaced="YES" text="distance" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Opc-qy-DvG">
-                                            <rect key="frame" x="517" y="11" width="50" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" fixedFrame="YES" text="distance" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Opc-qy-DvG">
+                                            <rect key="frame" x="515" y="11" width="50" height="21"/>
                                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="Opc-qy-DvG" firstAttribute="top" secondItem="dtu-7J-R1u" secondAttribute="topMargin" constant="3" id="BNR-rJ-l5D"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Opc-qy-DvG" secondAttribute="trailing" constant="-10" id="EcV-tg-n8C"/>
-                                    </constraints>
                                     <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                                 <connections>
-                                    <segue destination="C2l-FJ-8fX" kind="push" identifier="RoomToMessages" id="UxH-Ff-oga"/>
+                                    <segue destination="C2l-FJ-8fX" kind="show" identifier="RoomToMessages" id="UxH-Ff-oga"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoRoomCell" rowHeight="40" id="5CD-pF-82q">
@@ -407,7 +402,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="CJf-fn-Fa9">
                             <connections>
-                                <segue destination="zjH-Qu-7Hi" kind="push" identifier="AddRoomSegue" id="ZMg-Js-L2M"/>
+                                <segue destination="zjH-Qu-7Hi" kind="show" identifier="AddRoomSegue" id="ZMg-Js-L2M"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -577,7 +572,7 @@
                     <navigationItem key="navigationItem" id="IeW-T5-6Gj">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="8DL-IZ-cRe">
-                            <rect key="frame" x="203" y="7.5" width="194" height="29"/>
+                            <rect key="frame" x="203" y="8" width="194" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                             <segments>
@@ -780,8 +775,8 @@
                                         <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnv-xy-smH">
                                             <rect key="frame" x="0.0" y="5" width="600" height="127"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" misplaced="YES" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="2u9-zK-Mfl">
-                                                    <rect key="frame" x="15" y="5" width="187" height="20"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="17 hours ago" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="2u9-zK-Mfl">
+                                                    <rect key="frame" x="15" y="5" width="187" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="187" id="ZiN-jA-bJO"/>
                                                     </constraints>
@@ -898,7 +893,7 @@
                                         <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UE6-x7-4jy">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="163"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" misplaced="YES" text="No comments for now" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RRK-IO-Wnf">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="No comments for now" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RRK-IO-Wnf">
                                                     <rect key="frame" x="10" y="6" width="582" height="105"/>
                                                     <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
@@ -907,7 +902,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="RRK-IO-Wnf" firstAttribute="top" secondItem="UE6-x7-4jy" secondAttribute="top" constant="6" id="3UI-6V-Fzv"/>
-                                                <constraint firstAttribute="trailing" secondItem="RRK-IO-Wnf" secondAttribute="trailing" constant="10" id="Ein-Dh-Ns4"/>
+                                                <constraint firstAttribute="trailing" secondItem="RRK-IO-Wnf" secondAttribute="trailing" constant="8" id="Ein-Dh-Ns4"/>
                                                 <constraint firstAttribute="centerX" secondItem="RRK-IO-Wnf" secondAttribute="centerX" constant="-1" id="RdS-A1-xBR"/>
                                                 <constraint firstAttribute="bottom" secondItem="RRK-IO-Wnf" secondAttribute="bottom" constant="52" id="imH-qp-po3"/>
                                                 <constraint firstItem="RRK-IO-Wnf" firstAttribute="leading" secondItem="UE6-x7-4jy" secondAttribute="leading" constant="10" id="rfB-Tj-Ajv"/>
