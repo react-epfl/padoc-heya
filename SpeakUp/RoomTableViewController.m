@@ -301,7 +301,6 @@
 // DELETE UNLOCKED ROOMS
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if(indexPath.section == MY_SECTION){
         return @"Delete";
     }

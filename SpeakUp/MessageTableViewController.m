@@ -37,7 +37,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel,viewIsPopping;
 
 #pragma mark - View lifecycle
 //=========================
@@ -45,6 +45,7 @@
 //=========================
 - (void)viewDidLoad
 {
+    self.viewIsPopping=NO;
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor whiteColor];
@@ -136,6 +137,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]&&!viewIsPopping) {
+        self.viewIsPopping=YES;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     [self placeInputView]; // need this since view did load does not correctly calculate the size of the screen
 }
 
@@ -221,9 +226,6 @@
 
     [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
     [self placeInputView];
-    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
     if (parentMessage) {
         [self updateReplyMessages];//sets messageArray and header
     }else{
@@ -246,7 +248,8 @@
 }
 
 -(void)notifyThatRoomHasBeenDeleted:(NSString*) room_id{
-    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]) {
+    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]&&!self.viewIsPopping) {
+        self.viewIsPopping=YES;
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -538,7 +541,8 @@
                     break;
                 }
             }
-            if(parentWasDeleted){
+            if(parentWasDeleted && !self.viewIsPopping){
+                self.viewIsPopping=YES;
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
