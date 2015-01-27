@@ -28,7 +28,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbv-Hh-9Eb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="238" y="-155"/>
+            <point key="canvasLocation" x="486" y="-242"/>
         </scene>
         <!--Message Table View Controller-->
         <scene sceneID="XRz-yJ-TiE">
@@ -126,6 +126,41 @@
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" misplaced="YES" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="kQ1-f5-2bl">
+                                                    <rect key="frame" x="210" y="83" width="180" height="23"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" translatesAutoresizingMaskIntoConstraints="NO" id="qzH-84-0z7">
+                                                    <rect key="frame" x="9" y="25" width="583" height="56"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="VgG-Y0-FIX">
+                                                    <rect key="frame" x="214" y="104" width="172" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="96J-GW-xEG"/>
+                                                        <constraint firstAttribute="width" constant="172" id="9zg-c1-zkP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imq-AO-mCv">
+                                                    <rect key="frame" x="477" y="5" width="115" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="115" id="goc-Hr-1WL"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
+                                                    <state key="normal" title="comment">
+                                                        <color key="titleColor" red="0.32941177490000001" green="0.32549020649999999" blue="0.78823536630000002" alpha="1" colorSpace="deviceRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="x8f-fR-aoa" kind="show" identifier="MessageToReplies" id="yJ3-Pp-x0m"/>
+                                                    </connections>
+                                                </button>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vp-4P-1si" userLabel="ThumbDown">
                                                     <rect key="frame" x="560" y="83" width="40" height="40"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -146,12 +181,6 @@
                                                         <action selector="rateMessageDown:" destination="C2l-FJ-8fX" eventType="touchUpInside" id="fWw-6u-OPX"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" misplaced="YES" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="kQ1-f5-2bl">
-                                                    <rect key="frame" x="210" y="83" width="180" height="23"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tod-lx-kz4" userLabel="ThumbUp">
                                                     <rect key="frame" x="0.0" y="83" width="40" height="40"/>
                                                     <constraints>
@@ -170,35 +199,6 @@
                                                         <action selector="rateMessageUp:" destination="C2l-FJ-8fX" eventType="touchUpInside" id="e6m-TQ-PMn"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imq-AO-mCv">
-                                                    <rect key="frame" x="477" y="5" width="115" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="115" id="goc-Hr-1WL"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
-                                                    <state key="normal" title="comment">
-                                                        <color key="titleColor" red="0.32941177490000001" green="0.32549020649999999" blue="0.78823536630000002" alpha="1" colorSpace="deviceRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <segue destination="x8f-fR-aoa" kind="show" identifier="MessageToReplies" id="yJ3-Pp-x0m"/>
-                                                    </connections>
-                                                </button>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" translatesAutoresizingMaskIntoConstraints="NO" id="qzH-84-0z7">
-                                                    <rect key="frame" x="9" y="25" width="583" height="56"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="VgG-Y0-FIX">
-                                                    <rect key="frame" x="214" y="104" width="172" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="96J-GW-xEG"/>
-                                                        <constraint firstAttribute="width" constant="172" id="9zg-c1-zkP"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -316,7 +316,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJR-S2-8b6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1815" y="-242"/>
+            <point key="canvasLocation" x="1827" y="-242"/>
         </scene>
         <!--Room Table View Controller-->
         <scene sceneID="bGo-mk-tne">
@@ -409,7 +409,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rzr-Et-FJi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1184" y="-242"/>
+            <point key="canvasLocation" x="1162" y="-242"/>
         </scene>
         <!--New Room View Controller-->
         <scene sceneID="VGw-86-EMB">
@@ -487,7 +487,7 @@
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L2b-EX-uNU">
-                                <rect key="frame" x="0.0" y="158" width="600" height="133"/>
+                                <rect key="frame" x="0.0" y="158" width="600" height="185"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-oC-mA4">
                                 <rect key="frame" x="10" y="112" width="227" height="28"/>
@@ -508,7 +508,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" misplaced="YES" text="Turn location on to create a new room" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vm1-ec-9FC">
-                                <rect key="frame" x="20" y="186" width="580" height="105"/>
+                                <rect key="frame" x="20" y="186" width="580" height="123"/>
                                 <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -551,10 +551,10 @@
                             <constraint firstItem="Vm1-ec-9FC" firstAttribute="top" secondItem="lgd-mY-Xpt" secondAttribute="bottom" constant="27" id="iAE-OX-gse"/>
                             <constraint firstAttribute="centerX" secondItem="baa-5a-Z5A" secondAttribute="centerX" id="iAd-9e-kFj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="baa-5a-Z5A" secondAttribute="trailing" constant="-6" id="iJc-It-INz"/>
-                            <constraint firstItem="9mp-DC-UcW" firstAttribute="top" secondItem="L2b-EX-uNU" secondAttribute="bottom" constant="245" id="iMM-5K-U1f"/>
+                            <constraint firstItem="9mp-DC-UcW" firstAttribute="top" secondItem="L2b-EX-uNU" secondAttribute="bottom" constant="193" id="iMM-5K-U1f"/>
                             <constraint firstItem="baa-5a-Z5A" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leadingMargin" constant="-6" id="iNP-04-IXU"/>
                             <constraint firstItem="L2b-EX-uNU" firstAttribute="top" secondItem="Mbx-oC-mA4" secondAttribute="bottom" constant="18" id="ipe-99-Bcm"/>
-                            <constraint firstItem="L2b-EX-uNU" firstAttribute="bottom" secondItem="Vm1-ec-9FC" secondAttribute="bottom" id="kBp-2V-tq7"/>
+                            <constraint firstItem="L2b-EX-uNU" firstAttribute="bottom" secondItem="Vm1-ec-9FC" secondAttribute="bottom" constant="34" id="kBp-2V-tq7"/>
                             <constraint firstItem="baa-5a-Z5A" firstAttribute="leading" secondItem="HxD-f9-f7W" secondAttribute="leading" id="laD-8i-6Ss"/>
                             <constraint firstItem="baa-5a-Z5A" firstAttribute="top" secondItem="HxD-f9-f7W" secondAttribute="bottom" constant="20" id="ltE-sK-w5l"/>
                             <constraint firstItem="baa-5a-Z5A" firstAttribute="leading" secondItem="MI6-Z7-6u6" secondAttribute="leading" id="oFQ-1l-2FJ"/>
@@ -615,7 +615,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yoB-Ei-xBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1495" y="411"/>
+            <point key="canvasLocation" x="1162" y="451"/>
         </scene>
         <!--Etiquette View Controller-->
         <scene sceneID="EOT-UQ-vxC">
@@ -667,7 +667,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vTq-Pk-vv3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2557" y="411"/>
+            <point key="canvasLocation" x="1827" y="451"/>
         </scene>
         <!--Message Table View Controller-->
         <scene sceneID="JSJ-WO-tAA">
@@ -783,6 +783,27 @@
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" misplaced="YES" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="b6I-bm-GMG">
+                                                    <rect key="frame" x="210" y="83" width="180" height="23"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" translatesAutoresizingMaskIntoConstraints="NO" id="aDM-uE-ncw">
+                                                    <rect key="frame" x="9" y="25" width="583" height="56"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Vof-rc-eGv">
+                                                    <rect key="frame" x="214" y="104" width="172" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="igl-Ke-Fx0"/>
+                                                        <constraint firstAttribute="width" constant="172" id="lRA-n8-YKO"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cej-d8-tKz" userLabel="ThumbDown">
                                                     <rect key="frame" x="560" y="83" width="40" height="40"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -803,12 +824,6 @@
                                                         <action selector="rateMessageDown:" destination="x8f-fR-aoa" eventType="touchUpInside" id="oQ0-QG-fcb"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" misplaced="YES" text="score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="b6I-bm-GMG">
-                                                    <rect key="frame" x="210" y="83" width="180" height="23"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmE-Cm-j0u" userLabel="ThumbUp">
                                                     <rect key="frame" x="0.0" y="83" width="40" height="40"/>
                                                     <constraints>
@@ -827,21 +842,6 @@
                                                         <action selector="rateMessageUp:" destination="x8f-fR-aoa" eventType="touchUpInside" id="qv4-tu-ndp"/>
                                                     </connections>
                                                 </button>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="HAHAHAHAHAH" translatesAutoresizingMaskIntoConstraints="NO" id="aDM-uE-ncw">
-                                                    <rect key="frame" x="9" y="25" width="583" height="56"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" text="(00 votes)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Vof-rc-eGv">
-                                                    <rect key="frame" x="214" y="104" width="172" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="igl-Ke-Fx0"/>
-                                                        <constraint firstAttribute="width" constant="172" id="lRA-n8-YKO"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="13"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -857,6 +857,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="xmE-Cm-j0u" secondAttribute="bottom" constant="4" id="cUR-Rx-ekI"/>
                                                 <constraint firstAttribute="trailing" secondItem="cej-d8-tKz" secondAttribute="trailing" id="d2c-hx-S6R"/>
                                                 <constraint firstItem="2u9-zK-Mfl" firstAttribute="leading" secondItem="aDM-uE-ncw" secondAttribute="leading" constant="6" id="eEz-wi-TZv"/>
+                                                <constraint firstAttribute="trailing" secondItem="aDM-uE-ncw" secondAttribute="trailing" constant="8" id="fPM-V6-uDu"/>
                                                 <constraint firstAttribute="trailing" secondItem="cej-d8-tKz" secondAttribute="trailing" id="fld-Lq-hTr"/>
                                                 <constraint firstItem="2u9-zK-Mfl" firstAttribute="top" secondItem="Fnv-xy-smH" secondAttribute="top" constant="5" id="gza-IQ-e6X"/>
                                                 <constraint firstItem="xmE-Cm-j0u" firstAttribute="top" secondItem="2u9-zK-Mfl" secondAttribute="bottom" constant="53" id="p1i-kX-VSr"/>
@@ -956,7 +957,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RYn-6s-zhd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2557" y="-262"/>
+            <point key="canvasLocation" x="2492" y="-242"/>
         </scene>
     </scenes>
     <resources>

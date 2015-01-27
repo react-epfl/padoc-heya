@@ -84,10 +84,10 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else if ([type isEqual:@"roomdeleted"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         //remove room with roomID [dict objectForKey:@"room_id"]
-                [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
         [self receivedRoomToDelete:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-        
+        [roomManagerDelegate updateRooms];
+        [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
     }else if ([type isEqual:@"messagedeleted"]) {
         NSMutableDictionary* dict = [packet.args objectAtIndex:0];
         [self receivedMessageToDelete:[dict objectForKey:@"msg_id"] inRoom:[dict objectForKey:@"room_id"] withParent:[dict objectForKey:@"parent_id"]];
@@ -193,7 +193,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
     if (roomToDelete) {
-        [roomArray removeObject:roomToDelete];
+        [unlockedRoomArray removeObject:roomToDelete];
         roomToDelete=nil;
     }
     for(Room *r in myOwnRoomArray){
@@ -202,7 +202,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
     if (roomToDelete) {
-        [roomArray removeObject:roomToDelete];
+        [myOwnRoomArray removeObject:roomToDelete];
         roomToDelete=nil;
     }
 }
@@ -270,17 +270,17 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         Message* messageToDelete=nil;
         for(Message *msg in room.messages){
             if ([msg.messageID isEqual:m_id]) {
-                // update received, therefore just update the vote fields
                 messageToDelete=msg;
             }if ([msg.messageID isEqual:parent_id]) {
+                Message* replyToDelete=nil;
                 for(Message *reply in msg.replies){
                     if ([reply.messageID isEqual:m_id]) {
-                        messageToDelete=msg;
+                        replyToDelete=reply;
                     }
                 }
-                if (messageToDelete) {
-                    [msg.replies removeObject:messageToDelete];
-                    messageToDelete=nil;
+                if (replyToDelete) {
+                    [msg.replies removeObject:replyToDelete];
+                    replyToDelete=nil;
                 }
             }
         }
@@ -436,6 +436,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:room.roomID forKey:@"room_id"];
     [socketIO sendEvent:@"deleteroom" withData:myData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
+    [self receivedRoomToDelete:room.roomID];
+    [messageManagerDelegate updateMessagesInRoom:room.roomID];
+    [roomManagerDelegate updateRooms];
 }
 // DELETE MESSAGE
 -(void) deleteMessage:(Message *) message{

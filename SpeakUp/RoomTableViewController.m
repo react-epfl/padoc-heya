@@ -242,7 +242,7 @@
         }
         // ADER could be done asynchronously with callback
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler){
-            NSLog(@"XXXXXXXXXXXXXXX");
+            NSLog(@"YYYYYY");
         }];
     }
 }

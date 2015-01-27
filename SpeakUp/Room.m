@@ -25,7 +25,6 @@
     }
     return self;
 }
-
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
@@ -53,11 +52,12 @@
             self.messages = [NSMutableArray array];
             for (NSDictionary *messageDictionary in [dict objectForKey:@"messages"]) {
                 Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
-                [self.messages addObject:message];
+                if (!message.deleted && !message.parentMessageID) {
+                    [self.messages addObject:message];
+                }
             }
         }
     }
     return self;
 }
-
 @end

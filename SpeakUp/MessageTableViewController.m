@@ -218,11 +218,23 @@
     [tracker set:kGAIScreenName value:@"Message Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     
+
+    [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
+    [self placeInputView];
+    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    if (parentMessage) {
+        [self updateReplyMessages];//sets messageArray and header
+    }else{
+        self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
+        [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+        [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
+    }
     [self sortMessages];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
-    [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
-    [self placeInputView];
+    
 }
 
 -(void)resetTimer{
@@ -234,8 +246,8 @@
 }
 
 -(void)notifyThatRoomHasBeenDeleted:(NSString*) room_id{
-    if ([room_id isEqual:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]]) {
-        [[SpeakUpManager sharedSpeakUpManager] setCurrentRoom:nil];
+    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -357,9 +369,6 @@
         if ([message.authorPeerID isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]) {
             name=NSLocalizedString(@"ME", nil);
         }
-        //if ([message.authorPeerID isEqualToString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID]]) {
-          //  name=NSLocalizedString(@"ADMIN", nil);
-        //}
         if(minutes  <1 && hours  <1){
             time = [NSString stringWithFormat:  NSLocalizedString(@"JUST_NOW", nil),name];
         }else if(minutes>0 && hours == 0){
@@ -512,27 +521,66 @@
     }
 }
 
+
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
-    //maybe we can use a room ID and if the room ID is equal to the current room, then there is an update, not otherwise.
     if([roomID isEqual:[[SpeakUpManager sharedSpeakUpManager] currentRoomID]]){
-        if(!self.editing){
-            if (parentMessage) {
-                [self updateReplyMessages];
-            }else{
-                 self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
+        if (!parentMessage) {
+            self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
+        }else{
+            BOOL parentWasDeleted = YES;
+            for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+                if ([message.messageID isEqualToString:parentMessage.messageID] ) {
+                    parentMessage=message;
+                    self.messageArray=message.replies;
+                    [self updateReplyHeader];
+                    parentWasDeleted=NO;
+                    break;
+                }
             }
-            [self sortMessages];
-            [self.tableView reloadData];
-            [self setRoomInfo];
-            if (isFirstMessageUpdate) {
-                isFirstMessageUpdate=NO;
-            }else{
-                [self resetTimer];// puts timer back to 24 hours but only if its not the first time
+            if(parentWasDeleted){
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
+        [self sortMessages];
+        [self.tableView reloadData];
+        [self setRoomInfo];
+        if (isFirstMessageUpdate) {
+            isFirstMessageUpdate=NO;
+        }else{
+            [self resetTimer];// puts timer back to 24 hours but only if its not the first time
+        }
+        [self.tableView reloadData];
+    }
+    
+}
+-(void)updateReplyMessages{
+    BOOL foundparentMessage = NO;
+    for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+        if ([message.messageID isEqualToString:parentMessage.messageID] ) {
+            parentMessage=message;
+            self.messageArray=message.replies;
+            [self updateReplyHeader];
+            foundparentMessage=YES;
+            break;
+        }
+    }
+    if(!foundparentMessage){
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
+- (void)updateReplyHeader{
+    int numberOfVotes= parentMessage.numberOfNo + parentMessage.numberOfYes;
+    [parentMessageVoteNumberLabel setText:[NSString stringWithFormat:  NSLocalizedString(@"VOTE", nil), numberOfVotes]];
+    [parentMessageScoreLabel setText:[NSString stringWithFormat: @"%d",parentMessage.score]];
+    CGFloat height = [parentMessage.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:FontName size:NormalFontSize]} context:nil].size.height;
+    parentMessageContentTextView.frame =  CGRectMake(10,0,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
+    [parentMessageContentTextView setText:parentMessage.content];
+    parentMessageView.frame =  CGRectMake(0,0,self.view.frame.size.width,height+FOOTER_OFFSET+20);
+}
+
+    
+
 
 // Number of messages and votes in the room
 -(void)setRoomInfo{
@@ -718,25 +766,6 @@
     }
 }
 
-- (void)updateReplyHeader{
-        int numberOfVotes= parentMessage.numberOfNo + parentMessage.numberOfYes;
-        [parentMessageVoteNumberLabel setText:[NSString stringWithFormat:  NSLocalizedString(@"VOTE", nil), numberOfVotes]];
-        [parentMessageScoreLabel setText:[NSString stringWithFormat: @"%d",parentMessage.score]];
-        CGFloat height = [parentMessage.content boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, 2000.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:FontName size:NormalFontSize]} context:nil].size.height;
-        parentMessageContentTextView.frame =  CGRectMake(10,0,self.view.frame.size.width-SIDES,height+1000);//add 1000 to avoid cut offs with 1 lines
-        [parentMessageContentTextView setText:parentMessage.content];
-        parentMessageView.frame =  CGRectMake(0,0,self.view.frame.size.width,height+FOOTER_OFFSET+20);
-}
 
--(void)updateReplyMessages{
-        for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
-            if ([message.messageID isEqualToString:parentMessage.messageID] ) {
-                parentMessage=message;
-                messageArray=message.replies;
-                [self updateReplyHeader];
-                break;
-            }
-        }
-}
 
 @end
