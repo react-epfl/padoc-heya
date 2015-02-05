@@ -99,17 +99,14 @@
 
 "MY_ROOMS" = "Meine Chaträume";
 
-"ME" = "by me";
-
-"ADMIN" = "by the admin";
-
-"PRIVATE_ROOM_TOP" = "Private room";
-"PRIVATE_ROOM_BOTTOM" = "People nearby will not see the room";
-"PUBLIC_ROOM_TOP" = "Public room";
-"PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
-
-"HIDE"="Hide";
-"DELETE"="Delete";
-"ROOM_CLOSED_MESSAGE"="This room is now closed";
+"ME" = "von mir"; //or “durch mich” depending on the context, but I think “von mir” would work in more cases
+"ADMIN" = "vom Administrator"; //or, again, “durch den Administrator”
+"PRIVATE_ROOM_TOP" = "Privater Raum";
+"PRIVATE_ROOM_BOTTOM" = "Personen in der Nähe werden diesen Raum nicht sehen"; //if the “will” is indicating future in this sentence, otherwise “Personen in der Nähe können diesen Raum nicht sehen” might be better (literal translation: “People nearby cannot/are not able to see this room”)
+"PUBLIC_ROOM_TOP" = "Öffentlicher Raum";
+"PUBLIC_ROOM_BOTTOM" = "Personen in der Nähe werden diesen Raum sehen";//The (können) indicates the following difference: “they will (be able to) see the room” as above, depending on the meaning “Personen in der Nähe können diesen Raum sehen”
+"HIDE"="Verbergen"; //or “ausblenden” depending on the context
+"DELETE"="Löschen";
+"ROOM_CLOSED_MESSAGE"="Dieser Raum ist jetzt geschlossen";//depending on the context I would suggest to leave out the “jetzt” (now)
 
 
