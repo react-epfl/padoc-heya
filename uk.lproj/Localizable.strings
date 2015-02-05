@@ -99,14 +99,14 @@
 
 "OK" = "OK";
 
-"MY_ROOMS" = "My rooms";
-"ME" = "by me";
-"ADMIN" = "by the admin";
-"PRIVATE_ROOM_TOP" = "Private room";
-"PRIVATE_ROOM_BOTTOM" = "People nearby will not see the room";
-"PUBLIC_ROOM_TOP" = "Public room";
-"PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
-"HIDE"="Hide";
-"DELETE"="Delete";
-"ROOM_CLOSED_MESSAGE"="This room is now closed";
+"MY_ROOMS" = "Мої кімнати";
+"ME" = "написано мною";
+"ADMIN" = "написано адміном";
+"PRIVATE_ROOM_TOP" = "Приватна кімната";
+"PRIVATE_ROOM_BOTTOM" = "Люди поблизу не бачитимуть кімнату"
+"PUBLIC_ROOM_TOP" = "Відкрита кімнати";
+"PUBLIC_ROOM_BOTTOM" = "Люди поблизу бачитимуть кімнату";
+"HIDE"="Сховати";
+"DELETE"="Видалити";
+"ROOM_CLOSED_MESSAGE"="Ця кімната наразі закрита";
 
