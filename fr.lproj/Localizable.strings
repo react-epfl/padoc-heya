@@ -98,15 +98,15 @@
 
 "MY_ROOMS" = "Mes salles";
 
-"ME" = "by me";
+"ME" = "par moi";
 
-"ADMIN" = "by the admin";
+"ADMIN" = "par l'admin";
 
-"PRIVATE_ROOM_TOP" = "Private room";
-"PRIVATE_ROOM_BOTTOM" = "People nearby will not see the room";
-"PUBLIC_ROOM_TOP" = "Public room";
-"PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
+"PRIVATE_ROOM_TOP" = "Salle privée";
+"PRIVATE_ROOM_BOTTOM" = "Les gens à proximité ne verront pas la salle";
+"PUBLIC_ROOM_TOP" = "Salle publique";
+"PUBLIC_ROOM_BOTTOM" = "Les gens à proximité verront la salle";
 "HIDE"="Cacher";
 "DELETE"="Effacer";
-"ROOM_CLOSED_MESSAGE"="This room is now closed";
+"ROOM_CLOSED_MESSAGE"="Cette salle est fermée";
 

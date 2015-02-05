@@ -223,6 +223,9 @@
     if (selectedSegment == CREATE_TAB) {
         [unlockRoomButton setHidden:YES];
         [keyTextField setHidden:YES];
+        [input setHidden:NO];
+        [createRoomButton setHidden:NO];
+        [createRoomLabel setHidden:NO];
         if ([[SpeakUpManager sharedSpeakUpManager] locationIsOK]) {
             privatSwitch.on=NO;
             [warningLabel setHidden:YES];
@@ -237,9 +240,11 @@
             privateBottomLabel.text=NSLocalizedString(@"PUBLIC_ROOM_BOTTOM", nil);
             [input becomeFirstResponder];
         }else{
-             privatSwitch.on = YES;
+            privatSwitch.on = YES;
             privateTopLabel.text=NSLocalizedString(@"PRIVATE_ROOM_TOP", nil);
             privateBottomLabel.text=NSLocalizedString(@"PRIVATE_ROOM_BOTTOM", nil);
+            [privateTopLabel setHidden:NO];
+            [privateBottomLabel setHidden:NO];
             [privatSwitch setHidden:YES];
             [mapView setHidden:YES];
         }
@@ -257,7 +262,6 @@
         [keyTextField becomeFirstResponder];
     }
 }
-
 -(IBAction)privateOrPublic:(id)sender{
     if (privatSwitch.on) {
         [mapView setHidden:YES];
@@ -269,18 +273,15 @@
         privateBottomLabel.text=NSLocalizedString(@"PUBLIC_ROOM_BOTTOM", nil);
     }
 }
-
 -(IBAction)goToWebSite:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press"  label:@"info_from_add"  value:nil] build]];
 }
-
 -(void)connectionWasLost{
     [connectionLostSpinner startAnimating];
 }
 -(void)connectionHasRecovered{
     [connectionLostSpinner stopAnimating];
 }
-
 
 @end

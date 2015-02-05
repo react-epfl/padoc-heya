@@ -302,9 +302,9 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == MY_SECTION){
-        return @"Delete";
+        return NSLocalizedString(@"DELETE", nil);
     }
-    return @"Hide";
+    return NSLocalizedString(@"HIDE", nil);
 }
 
 // Override to support editing the table view.
