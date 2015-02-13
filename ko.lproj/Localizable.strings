@@ -95,20 +95,25 @@
 
 "OK" = "OK";
 
-"MY_ROOMS" = "Meine Chaträume";
+"MY_ROOMS" = "내 채팅방";
 
-"ME" = "by me";
+"ME" = "내 메세지";
 
-"ADMIN" = "by the admin";
+"ADMIN" = "관리자";
 
-"PRIVATE_ROOM_TOP" = "Private room";
-"PRIVATE_ROOM_BOTTOM" = "People nearby will not see the room";
-"PUBLIC_ROOM_TOP" = "Public room";
-"PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
+"PRIVATE_ROOM_TOP" = "비밀방";
 
-"HIDE"="Hide";
-"DELETE"="Delete";
-"ROOM_CLOSED_MESSAGE"="This room is now closed";
+"PRIVATE_ROOM_BOTTOM" = "주변 사람들이 볼 수 없습니다.";
+
+"PUBLIC_ROOM_TOP" = "공개방";
+
+"PUBLIC_ROOM_BOTTOM" = " 주변 사람들이 볼 수 있습니다.";
+
+"HIDE"="숨기기";
+
+"DELETE"="지우기";
+
+"ROOM_CLOSED_MESSAGE"="채팅 끝";
 
 
 
