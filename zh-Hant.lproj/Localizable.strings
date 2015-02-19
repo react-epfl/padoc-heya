@@ -100,12 +100,12 @@
 "ME" = "由我 …";
 "ADMIN" = "由管理员…";
 "PRIVATE_ROOM_TOP" = "私人聊天室";
-"PRIVATE_ROOM_BOTTOM" = "对附近的用户不开放";
+"PRIVATE_ROOM_BOTTOM" = "對附近的用戶不開放";
 "PUBLIC_ROOM_TOP" = "公共聊天室";
-"PUBLIC_ROOM_BOTTOM" = "对附近的用户开放";
+"PUBLIC_ROOM_BOTTOM" = "對附近的用戶開放";
 "HIDE"="隐藏";
 "DELETE"="删除";
-"ROOM_CLOSED_MESSAGE"="这个聊天室现在已关闭";
+"ROOM_CLOSED_MESSAGE"="這個聊天室現在已關閉";
 
 
 

@@ -90,18 +90,24 @@
 
 "OK" = "OK";
 
-"MY_ROOMS" = "Meine Chaträume";
+"MY_ROOMS" = "私のチャットルーム";
 
-"ME" = "by me";
+"ME" = "私のメッセージ";
 
-"ADMIN" = "by the admin";
+"ADMIN" = "管理者";
 
-"PRIVATE_ROOM_TOP" = "Private room";
-"PRIVATE_ROOM_BOTTOM" = "People nearby will not see the room";
-"PUBLIC_ROOM_TOP" = "Public room";
-"PUBLIC_ROOM_BOTTOM" = "People nearby will see the room";
-"HIDE"="Hide";
-"DELETE"="Delete";
-"ROOM_CLOSED_MESSAGE"="This room is now closed";
+"PRIVATE_ROOM_TOP" = "秘密の部屋";
+
+"PRIVATE_ROOM_BOTTOM" = "周りの人が見ることができません。";
+
+"PUBLIC_ROOM_TOP" = "ゴンゲバン";
+
+"PUBLIC_ROOM_BOTTOM" = "周りの人が見ることができます。";
+
+"HIDE"="隠す";
+
+"DELETE"="クリア";
+
+"ROOM_CLOSED_MESSAGE"="チャット終了";
 
 
