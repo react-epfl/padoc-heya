@@ -622,13 +622,23 @@
     if ( [self.segmentedControl selectedSegmentIndex]==RECENT) {
         [self setMessageArray: [self sortMessagesByTime:self.messageArray]];
     }else{
-        [self setMessageArray: [self sortMessagesByScore:self.messageArray]];
+        //[self setMessageArray: [self sortMessagesByScore:self.messageArray]];
+        [self setMessageArray: [self sortMessagesByTime:self.messageArray]];
+        [self setMessageArray: [self sortMessagesByHotScore:self.messageArray]];
     }
 }
 
 -(NSMutableArray*) sortMessagesByScore:(NSMutableArray*)messages{
     NSSortDescriptor *sortDescriptor;
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
+    NSMutableArray *sortDescriptors = [NSMutableArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray = [messages sortedArrayUsingDescriptors:sortDescriptors];
+    return [sortedArray mutableCopy];
+}
+
+-(NSMutableArray*) sortMessagesByHotScore:(NSMutableArray*)messages{
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"hotScore" ascending:NO];
     NSMutableArray *sortDescriptors = [NSMutableArray arrayWithObject:sortDescriptor];
     NSArray *sortedArray = [messages sortedArrayUsingDescriptors:sortDescriptors];
     return [sortedArray mutableCopy];

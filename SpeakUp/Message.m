@@ -10,7 +10,7 @@
 
 @implementation Message
 
-@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo,avatarURL, replies;
+@synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo,avatarURL, replies,hotScore;
 
 - (id)init{
     self = [super init];
@@ -44,6 +44,7 @@
         [self setNumberOfYes: [[dict objectForKey:@"likes"]intValue]];
         [self setScore:numberOfYes-numberOfNo];
         
+        
         // MESSAGES
         [self setParentMessageID: [dict objectForKey:@"parent_id"]];
         if (!self.deleted) {
@@ -59,6 +60,27 @@
         }
     }
     return self;
+}
+
+
+-(double)hotScore{
+    if(self.score<=0){
+        return self.score;
+    }else{
+        int HotScoreHalfLifeInMinutes=15;
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        NSDate *messageCreationTime = [dateFormatter dateFromString:self.creationTime];
+        NSTimeInterval elapsedTimeSinceMessageCreation = [messageCreationTime timeIntervalSinceNow];
+        self.secondsSinceCreation = elapsedTimeSinceMessageCreation;
+        NSInteger minutes = -self.secondsSinceCreation/60;
+        int e = minutes/HotScoreHalfLifeInMinutes;
+        double hot = self.score/pow(2,e);
+        NSLog(@"Message date in minutes: %d, score: %d, hot: %f", minutes, self.score, hot  );
+        return hot;
+    }
+    
 }
 
 @end

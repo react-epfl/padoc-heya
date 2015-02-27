@@ -28,6 +28,7 @@
 @property ( nonatomic) int numberOfYes;
 @property ( nonatomic) int numberOfNo;
 @property ( nonatomic) int score;
+@property ( nonatomic) double hotScore;
 @property (nonatomic) BOOL  yesIsPressed;
 @property (nonatomic) BOOL  noIsPressed;
 @property (strong, nonatomic) NSMutableArray  *replies;
