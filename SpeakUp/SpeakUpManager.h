@@ -13,12 +13,7 @@
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
 #import "ConnectionDelegate.h"
-#import "SocketIO.h"
-
-//#define SERVER_URL @"128.178.5.145"
-//#define SERVER_PORT 1347
-#define SERVER_URL @"seance.epfl.ch"
-#define SERVER_PORT 80
+#import "MHMulticastSocket.h"
 
 #define RANGE 200 
 #define CREATE_TAB 1
@@ -50,7 +45,7 @@
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 
-@interface SpeakUpManager : NSObject <CLLocationManagerDelegate, SocketIODelegate>
+@interface SpeakUpManager : NSObject <CLLocationManagerDelegate, MHMulticastSocketDelegate>
 
 +(id) sharedSpeakUpManager;
 
@@ -65,8 +60,7 @@
 - (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler;
 -(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler;
 
-
-@property (strong, nonatomic)  SocketIO *socketIO;
+@property (strong, nonatomic) MHMulticastSocket *socket;
 @property (nonatomic) BOOL connectionIsOK;
 @property (nonatomic) BOOL locationIsOK;
 // Peer fields

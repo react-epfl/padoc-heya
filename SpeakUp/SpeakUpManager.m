@@ -13,9 +13,11 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 
+#import "PacketContent.h"
+
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socketIO, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
+@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
 
 static SpeakUpManager   *sharedSpeakUpManager = nil;
 
@@ -50,54 +52,62 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     return sharedSpeakUpManager;
 }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// INCOMING CALLS TO THE SERVER
+// CALLBACKS OF MHMULTICAST
+
 // SOCKET DID RECEIVE MESSAGE
-- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet{
+- (void)mhMulticastSocket:(MHMulticastSocket *)mhMulticastSocket
+         didReceivePacket:(MHPacket *)packet {
     [self stopNetworking];
-    NSLog(@"webSocket received a message: %@", packet.args );
-    NSString* type = packet.name;
+    
+    PacketContent* packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:packet.data];
+    
+//    NSLog(@"webSocket received a message: %@", packet.args );
+    NSString* type = packetContent.type;
     if ([type isEqual:@"peer_welcome"]) {
-        NSDictionary *data = [packet.args objectAtIndex:0];
+        NSDictionary *data = [packetContent.args objectAtIndex:0];
         [self receivedWelcome:data];
-    }else if ([type isEqual:@"rooms"]) {
-        [self receivedRooms: [packet.args objectAtIndex:0]];
+    } else if ([type isEqual:@"rooms"]) {
+        [self receivedRooms: [packetContent.args objectAtIndex:0]];
         self.locationAtLastReset=self.peerLocation;
     } else if ([type isEqual:@"room"]) {
-        NSString* roomID=[self receivedRoom: [packet.args objectAtIndex:0]];
+        NSString* roomID=[self receivedRoom: [packetContent.args objectAtIndex:0]];
         [messageManagerDelegate updateMessagesInRoom:roomID];
-    }else if ([type isEqual:@"roomcreated"]) {
-        [self receivedRoom: [packet.args objectAtIndex:0]];
+    } else if ([type isEqual:@"roomcreated"]) {
+        [self receivedRoom: [packetContent.args objectAtIndex:0]];
     } else if ([type isEqual:@"roommessages"]) {
-        NSArray *argsArray = packet.args;
-        NSMutableDictionary* dict = [argsArray objectAtIndex:0];
+        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessages: [dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
     } else if ([type isEqual:@"messagecreated"]) {
-        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-    }else if ([type isEqual:@"messageupdated"]) {
-        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+    } else if ([type isEqual:@"messageupdated"]) {
+        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-    }else if ([type isEqual:@"roomdeleted"]) {
-        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+    } else if ([type isEqual:@"roomdeleted"]) {
+        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         //remove room with roomID [dict objectForKey:@"room_id"]
         [self receivedRoomToDelete:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         [roomManagerDelegate updateRooms];
         [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
-    }else if ([type isEqual:@"messagedeleted"]) {
-        NSMutableDictionary* dict = [packet.args objectAtIndex:0];
+    } else if ([type isEqual:@"messagedeleted"]) {
+        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessageToDelete:[dict objectForKey:@"msg_id"] inRoom:[dict objectForKey:@"room_id"] withParent:[dict objectForKey:@"parent_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-    }else{
+    } else{
         NSLog(@"got something else");
     }
+    
     [self savePeerData];
     [speakUpDelegate updateData];
 }
+
 // WELCOME
 -(void)receivedWelcome:(NSDictionary*)data{
     peer_id = [data objectForKey:@"peer_id"];
@@ -122,6 +132,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }];
     }
 }
+
 // RECEIVED ROOMS
 -(void)receivedRooms:(NSArray*)roomDictionaries{
     [roomArray removeAllObjects];
@@ -131,6 +142,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     [roomManagerDelegate updateRooms];
 }
+
 // RECEIVED ROOM
 -(NSString*)receivedRoom:(NSDictionary*)roomDictionary{
     Room *room = [[Room alloc] initWithDictionary:roomDictionary];
@@ -175,6 +187,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [roomManagerDelegate updateRooms];
     return room.roomID;
 }
+
 // RECEIVED ROOM TO DELETE
 -(void)receivedRoomToDelete:(NSString*)room_id{
     Room *roomToDelete=nil;
@@ -206,12 +219,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         roomToDelete=nil;
     }
 }
+
 // RECEIVED MESSAGES
 -(void)receivedMessages:(NSArray*)messageDictionaries roomID:(NSString*)roomID{
     for (NSDictionary *messageDictionary in messageDictionaries) {
         [self receivedMessage:messageDictionary roomID:roomID];
     }
 }
+
 // RECEIVED MESSAGE
 -(void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
     Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
@@ -225,6 +240,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self addMessage:message toRoom:room];
     }
 }
+
 -(void)addMessage:(Message*) message toRoom:(Room*) room{
     if ([room.roomID isEqual:message.roomID]) {
         BOOL messageUpdate=NO;
@@ -254,6 +270,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }
     }
 }
+
 -(void)receivedMessageToDelete:(NSString*) m_id inRoom:(NSString*) room_id withParent:(NSString*) parent_id{
     for(Room *room in roomArray){
         [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
@@ -265,6 +282,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
     }
 }
+
 -(void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id{
     if ([room_id isEqual:room_id]) {
         Message* messageToDelete=nil;
@@ -290,32 +308,44 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
 }
 
-- (void) socketIODidConnect:(SocketIO *)socket{
-    [self stopNetworking];
-    NSLog(@"socket is now open");
-    [self handshake];
+
+- (void)mhMulticastSocket:(MHMulticastSocket *)mhMulticastSocket
+          failedToConnect:(NSError *)error {
+    
 }
-- (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
-    [self stopNetworking];
-    connectionIsOK=NO;
-    [connectionDelegate connectionWasLost];
-    [self performSelector:@selector(connect) withObject:nil afterDelay:arc4random() % 4];
-    NSLog(@"socket did fail with error: %@",[error description]);
-}
-- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
-    [self stopNetworking];
-    connectionIsOK=NO;
-    [ connectionDelegate connectionWasLost];
-    [self performSelector:@selector(connect)  withObject:nil afterDelay:arc4random() % 4];
-    NSLog(@"socket did close with error %@ ",[error description]);
-}
+
+//- (void) socketIODidConnect:(SocketIO *)socket{
+//    [self stopNetworking];
+//    NSLog(@"socket is now open");
+//    [self handshake];
+//}
+//
+//- (void) socketIO:(SocketIO *)socket onError:(NSError *)error{
+//    [self stopNetworking];
+//    connectionIsOK=NO;
+//    [connectionDelegate connectionWasLost];
+//    [self performSelector:@selector(connect) withObject:nil afterDelay:arc4random() % 4];
+//    NSLog(@"socket did fail with error: %@",[error description]);
+//}
+//
+//- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error{
+//    [self stopNetworking];
+//    connectionIsOK=NO;
+//    [ connectionDelegate connectionWasLost];
+//    [self performSelector:@selector(connect)  withObject:nil afterDelay:arc4random() % 4];
+//    NSLog(@"socket did close with error %@ ",[error description]);
+//}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OUTGOING MESSAGES
+
 // CONNECT
 - (void)connect{
     socketIO = [[SocketIO alloc] initWithDelegate:self];
     [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
 }
+
 // 2 - HANDSHAKE
 - (void)handshake{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -336,6 +366,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }];
     [self startNetworking];
 }
+
 // GET ROOMS SOCKET.IO
 -(void)getNearbyRooms{
     if (!connectionIsOK) {
@@ -358,7 +389,8 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         }];
     }
 }
-//CALL FOR MESSAGES IN A ROOM EITHER UPON UNLOCK OR ENTERING A ROOM
+
+// CALL FOR MESSAGES IN A ROOM EITHER UPON UNLOCK OR ENTERING A ROOM
 -(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:API_VERSION forKey:@"api_v"];
@@ -387,6 +419,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socketIO sendEvent:@"createmessage" withData:myData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
 }
+
 // CREATE ROOM
 - (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -412,6 +445,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [self savePeerData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
 }
+
 // RATE MESSAGE
 - (void)rateMessage:(Message*)message  inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -427,6 +461,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socketIO sendEvent:@"updatemessage" withData:myData];
     [self savePeerData];
 }
+
 // DELETE ROOM
 -(void) deleteRoom:(Room *) room{
     [deletedRoomIDs addObject:room.roomID];
@@ -440,6 +475,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [messageManagerDelegate updateMessagesInRoom:room.roomID];
     [roomManagerDelegate updateRooms];
 }
+
 // DELETE MESSAGE
 -(void) deleteMessage:(Message *) message{
     [deletedMessageIDs addObject:message.messageID];
@@ -451,6 +487,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socketIO sendEvent:@"deletemessage" withData:myData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
 }
+
 // SPAM MESSAGE
 -(void) markMessageAsSpam:(Message *) message{
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
@@ -463,8 +500,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socketIO sendEvent:@"tag_message" withData:myData];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
 }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LOCATION MANAGER CALLBACK
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.peerLocation = newLocation;
     if (!locationIsOK){
