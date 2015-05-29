@@ -15,6 +15,9 @@
 
 #import "PacketContent.h"
 
+#define GLOBAL @"global"
+
+
 @implementation SpeakUpManager
 
 @synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
@@ -342,8 +345,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // CONNECT
 - (void)connect{
-    socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:SERVER_URL onPort:SERVER_PORT];
+    // Set up the socket and the groups
+    self.socket = [[MHMulticastSocket alloc] initWithServiceType:@"chat"];
+    self.socket.delegate = self;
+    
+    // For background mode
+    [speakUpDelegate setSocket:self.socket];
+    
+    // Join the groups
+    [self.socket joinGroup:GLOBAL];
+    [self.socket joinGroup:[self.socket getOwnPeer]];
 }
 
 // 2 - HANDSHAKE

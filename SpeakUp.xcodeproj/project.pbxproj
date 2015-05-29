@@ -527,7 +527,7 @@
 				ORGANIZATIONNAME = "Adrian Holzer";
 				TargetAttributes = {
 					8096A8A61636E80B0092F049 = {
-						DevelopmentTeam = 2Y732Q5T2P;
+						DevelopmentTeam = 8HKT3VB273;
 					};
 				};
 			};
