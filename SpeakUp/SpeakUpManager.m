@@ -72,26 +72,33 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     if ([type isEqual:@"peer_welcome"]) {
         NSDictionary *data = [packetContent.args objectAtIndex:0];
         [self receivedWelcome:data];
+        
     } else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packetContent.args objectAtIndex:0]];
         self.locationAtLastReset=self.peerLocation;
+        
     } else if ([type isEqual:@"room"]) {
         NSString* roomID=[self receivedRoom: [packetContent.args objectAtIndex:0]];
         [messageManagerDelegate updateMessagesInRoom:roomID];
+        
     } else if ([type isEqual:@"roomcreated"]) {
         [self receivedRoom: [packetContent.args objectAtIndex:0]];
+        
     } else if ([type isEqual:@"roommessages"]) {
         NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessages: [dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        
     } else if ([type isEqual:@"messagecreated"]) {
         NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        
     } else if ([type isEqual:@"messageupdated"]) {
         NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        
     } else if ([type isEqual:@"roomdeleted"]) {
         NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         //remove room with roomID [dict objectForKey:@"room_id"]
@@ -99,11 +106,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         [roomManagerDelegate updateRooms];
         [messageManagerDelegate notifyThatRoomHasBeenDeleted:[dict objectForKey:@"room_id"]];
+        
     } else if ([type isEqual:@"messagedeleted"]) {
         NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
         [self receivedMessageToDelete:[dict objectForKey:@"msg_id"] inRoom:[dict objectForKey:@"room_id"] withParent:[dict objectForKey:@"parent_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
-    } else{
+        
+    } else if ([type isEqual:@"getrooms"]) {
+        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
+        [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
+        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        
+    } else {
         NSLog(@"got something else");
     }
     
@@ -359,22 +373,22 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // 2 - HANDSHAKE
 - (void)handshake{
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.dev_id forKey:@"dev_id"];
-    if (peer_id) {
-        [myData setValue:self.peer_id forKey:@"peer_id"];
-    }
-    [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
-    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
-    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
-    [myData setValue:myLoc forKey:@"loc"];
-    [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-    [socketIO sendEvent:@"peer" withData:myData andAcknowledge:^(NSDictionary *data) {
-        NSLog(@"Hanshake response received: %@", data  );
-        [self receivedWelcome:data];
-    }];
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.dev_id forKey:@"dev_id"];
+//    if (peer_id) {
+//        [myData setValue:self.peer_id forKey:@"peer_id"];
+//    }
+//    [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
+//    NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+//    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
+//    [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
+//    [myData setValue:myLoc forKey:@"loc"];
+//    [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
+//    [socketIO sendEvent:@"peer" withData:myData andAcknowledge:^(NSDictionary *data) {
+//        NSLog(@"Hanshake response received: %@", data  );
+//        [self receivedWelcome:data];
+//    }];
     [self startNetworking];
 }
 
@@ -383,93 +397,148 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     if (!connectionIsOK) {
         [self connect];
     }else{
-        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-        [myData setValue:API_VERSION forKey:@"api_v"];
-        [myData setValue:self.peer_id forKey:@"peer_id"];
-        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
-        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
-        [myData setValue:myLoc forKey:@"loc"];
-        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-        [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
-        NSArray* unlockedAndMyOwnRoomKeyArray = [[self.unlockedRoomKeyArray mutableCopy] arrayByAddingObjectsFromArray:[self.myOwnRoomKeyArray mutableCopy]];
-        [myData setValue:unlockedAndMyOwnRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS AND OWN ROOMS
-        [socketIO sendEvent:@"getrooms" withData:myData andAcknowledge:^(NSArray *data) {
-            NSLog(@"Received nearby rooms: %@", data  );
-            [self receivedRooms:data];
-        }];
+//        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//        [myData setValue:API_VERSION forKey:@"api_v"];
+//        [myData setValue:self.peer_id forKey:@"peer_id"];
+//        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+//        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
+//        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
+//        [myData setValue:myLoc forKey:@"loc"];
+//        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
+//        [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
+//        NSArray* unlockedAndMyOwnRoomKeyArray = [[self.unlockedRoomKeyArray mutableCopy] arrayByAddingObjectsFromArray:[self.myOwnRoomKeyArray mutableCopy]];
+//        [myData setValue:unlockedAndMyOwnRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS AND OWN ROOMS
+        
+        
+        PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
+        NSError *error;
+        [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+             toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                      error:&error];
     }
 }
 
 // CALL FOR MESSAGES IN A ROOM EITHER UPON UNLOCK OR ENTERING A ROOM
 -(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler{
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"peer_id"];
+//    [myData setValue:room_id forKey:@"room_id"];
+//    [myData setValue:key forKey:@"key"];
+//    [self startNetworking];
+//    [self.socketIO sendEvent:@"getroom" withData:myData andAcknowledge:^(NSDictionary *data) {
+//        NSLog(@"Received messages of a room: %@", data  );
+//        // ADER NEEDS TO CHECK WHETHER IT IS A CORRECT ROOM OR NOT
+//        [self receivedMessages: [data objectForKey:@"messages"] roomID:[data objectForKey:@"room_id"]];
+//        [messageManagerDelegate updateMessagesInRoom:[data objectForKey:@"room_id"]];
+//        handler(data);
+//    }];
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room_id forKey:@"room_id"];
     [myData setValue:key forKey:@"key"];
-    [self startNetworking];
-    [self.socketIO sendEvent:@"getroom" withData:myData andAcknowledge:^(NSDictionary *data) {
-        NSLog(@"Received messages of a room: %@", data  );
-        // ADER NEEDS TO CHECK WHETHER IT IS A CORRECT ROOM OR NOT
-        [self receivedMessages: [data objectForKey:@"messages"] roomID:[data objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[data objectForKey:@"room_id"]];
-        handler(data);
-    }];
+    
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"getroom" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
 }
 // CREATE MSG SOCKET.IO
 -(void) createMessage:(Message *) message{
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"peer_id"];
+//    [myData setValue:message.roomID forKey:@"room_id"];
+//    [myData setValue:message.parentMessageID forKey:@"parent_id"];
+//    NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
+//    [messageData setValue:message.content forKey:@"body"];
+//    [myData setValue:messageData forKey:@"message"];
+//    [socketIO sendEvent:@"createmessage" withData:myData];
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.parentMessageID forKey:@"parent_id"];
     NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
     [messageData setValue:message.content forKey:@"body"];
     [myData setValue:messageData forKey:@"message"];
-    [socketIO sendEvent:@"createmessage" withData:myData];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
+    
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
 }
 
 // CREATE ROOM
 - (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler{
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"creator_id"];
+//    [myData setValue:room.name forKey:@"name"];
+//    [myData setValue:room.id_type forKey:@"id_type"];
+//    [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
+//    if (room.latitude!=-1 && room.longitude!=-1) {
+//        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
+//        [myLoc setValue:[NSNumber numberWithDouble:room.latitude] forKey:@"lat"];
+//        [myLoc setValue:[NSNumber numberWithDouble:room.longitude] forKey:@"lng"];
+//        [myData setValue:myLoc forKey:@"loc"];
+//        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
+//    }
+//    [socketIO sendEvent:@"createroom" withData:myData andAcknowledge:^(NSDictionary *data) {
+//        NSString* roomID=[self receivedRoom: data];
+//        [messageManagerDelegate updateMessagesInRoom:roomID];
+//        [myOwnRoomKeyArray addObject:roomID];
+//        NSLog(@"Received newly created room: %@", data );
+//        handler(data);
+//    }];
+//    [self savePeerData];
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"creator_id"];
     [myData setValue:room.name forKey:@"name"];
     [myData setValue:room.id_type forKey:@"id_type"];
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
-    if (room.latitude!=-1 && room.longitude!=-1) {
-        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-        [myLoc setValue:[NSNumber numberWithDouble:room.latitude] forKey:@"lat"];
-        [myLoc setValue:[NSNumber numberWithDouble:room.longitude] forKey:@"lng"];
-        [myData setValue:myLoc forKey:@"loc"];
-        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-    }
-    [socketIO sendEvent:@"createroom" withData:myData andAcknowledge:^(NSDictionary *data) {
-        NSString* roomID=[self receivedRoom: data];
-        [messageManagerDelegate updateMessagesInRoom:roomID];
-        [myOwnRoomKeyArray addObject:roomID];
-        NSLog(@"Received newly created room: %@", data );
-        handler(data);
-    }];
+    
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
+    
     [self savePeerData];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
 }
 
 // RATE MESSAGE
 - (void)rateMessage:(Message*)message  inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating{
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"peer_id"];
+//    [myData setValue:roomID forKey:@"room_id"];
+//    [myData setValue:message.parentMessageID forKey:@"parent_id"];
+//    NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
+//    [messageDict setValue:message.messageID forKey:@"msg_id"];
+//    [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
+//    [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
+//    [myData setValue:messageDict forKey:@"message"];
+//    [socketIO sendEvent:@"updatemessage" withData:myData];
+//    [self savePeerData];
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:roomID forKey:@"room_id"];
-    [myData setValue:message.parentMessageID forKey:@"parent_id"];
     NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
     [messageDict setValue:message.messageID forKey:@"msg_id"];
     [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
     [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];
-    [socketIO sendEvent:@"updatemessage" withData:myData];
+    
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
+    
     [self savePeerData];
 }
 
