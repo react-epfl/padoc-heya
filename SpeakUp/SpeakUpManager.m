@@ -113,9 +113,28 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         
     } else if ([type isEqual:@"getrooms"]) {
-        NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
-        [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        // Send our list of rooms to the requesting peer
+        
+    } else if ([type isEqual:@"getroom"]) {
+        // Send the requested room to the peer
+        
+    } else if ([type isEqual:@"createmessage"]) {
+        // Add the new message to the list of messages of the room
+        
+    } else if ([type isEqual:@"createroom"]) {
+        // Add the created room to the list of rooms
+        
+    } else if ([type isEqual:@"updatemessage"]) {
+        // Update the message
+        
+    } else if ([type isEqual:@"deleteroom"]) {
+        // Delete the specified room from the list of rooms
+        
+    } else if ([type isEqual:@"deletemessage"]) {
+        // Delete the specified message from the room
+        
+    } else if ([type isEqual:@"tag_message"]) {
+        // Tag the specified message
         
     } else {
         NSLog(@"got something else");
@@ -537,7 +556,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
     [myData setValue:messageDict forKey:@"message"];
     
-    PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:myData];
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"updatemessage" withContent:myData];
     NSError *error;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
