@@ -434,6 +434,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //        handler(data);
 //    }];
     
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:room_id forKey:@"room_id"];
     [myData setValue:key forKey:@"key"];
@@ -456,6 +457,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    [myData setValue:messageData forKey:@"message"];
 //    [socketIO sendEvent:@"createmessage" withData:myData];
 //    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
+    
     
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:message.roomID forKey:@"room_id"];
@@ -496,6 +498,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    [self savePeerData];
 //    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
     
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:room.name forKey:@"name"];
     [myData setValue:room.id_type forKey:@"id_type"];
@@ -525,6 +528,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    [socketIO sendEvent:@"updatemessage" withData:myData];
 //    [self savePeerData];
     
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:roomID forKey:@"room_id"];
     NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
@@ -544,13 +548,29 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // DELETE ROOM
 -(void) deleteRoom:(Room *) room{
+//    [deletedRoomIDs addObject:room.roomID];
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"peer_id"];
+//    [myData setValue:room.roomID forKey:@"room_id"];
+//    [socketIO sendEvent:@"deleteroom" withData:myData];
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
+//    [self receivedRoomToDelete:room.roomID];
+//    [messageManagerDelegate updateMessagesInRoom:room.roomID];
+//    [roomManagerDelegate updateRooms];
+    
+    
     [deletedRoomIDs addObject:room.roomID];
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:room.roomID forKey:@"room_id"];
-    [socketIO sendEvent:@"deleteroom" withData:myData];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
+    
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"deleteroom" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
+    
     [self receivedRoomToDelete:room.roomID];
     [messageManagerDelegate updateMessagesInRoom:room.roomID];
     [roomManagerDelegate updateRooms];
@@ -558,27 +578,53 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // DELETE MESSAGE
 -(void) deleteMessage:(Message *) message{
+//    [deletedMessageIDs addObject:message.messageID];
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"peer_id"];
+//    [myData setValue:message.roomID forKey:@"room_id"];
+//    [myData setValue:message.messageID forKey:@"msg_id"];
+//    [socketIO sendEvent:@"deletemessage" withData:myData];
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
+    
+    
     [deletedMessageIDs addObject:message.messageID];
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.messageID forKey:@"msg_id"];
-    [socketIO sendEvent:@"deletemessage" withData:myData];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
+    
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"deletemessage" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
 }
 
 // SPAM MESSAGE
 -(void) markMessageAsSpam:(Message *) message{
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:API_VERSION forKey:@"api_v"];
+//    [myData setValue:self.peer_id forKey:@"peer_id"];
+//    [myData setValue:message.roomID forKey:@"room_id"];
+//    [myData setValue:message.messageID forKey:@"msg_id"];
+//    NSArray* tags = @[SPAM];
+//    [myData setValue:tags forKey:@"new_tags"];
+//    [socketIO sendEvent:@"tag_message" withData:myData];
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
+    
+    
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:API_VERSION forKey:@"api_v"];
-    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.messageID forKey:@"msg_id"];
     NSArray* tags = @[SPAM];
     [myData setValue:tags forKey:@"new_tags"];
-    [socketIO sendEvent:@"tag_message" withData:myData];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
+
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"tag_message" withContent:myData];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
 }
 
 
