@@ -75,7 +75,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         
     } else if ([type isEqual:@"rooms"]) {
         [self receivedRooms: [packetContent.args objectAtIndex:0]];
-        self.locationAtLastReset=self.peerLocation;
+//        self.locationAtLastReset=self.peerLocation;
         
     } else if ([type isEqual:@"room"]) {
         NSString* roomID=[self receivedRoom: [packetContent.args objectAtIndex:0]];
@@ -114,6 +114,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         
     } else if ([type isEqual:@"getrooms"]) {
         // Send our list of rooms to the requesting peer
+        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+        [myData setValue:roomArray forKey:@"rooms"];
+        
+        PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:myData];
+        NSError *error;
+        [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+             toDestinations:[[NSArray alloc] initWithObjects:packet.source, nil]
+                      error:&error];
         
     } else if ([type isEqual:@"getroom"]) {
         // Send the requested room to the requesting peer
@@ -127,6 +135,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     [self savePeerData];
     [speakUpDelegate updateData];
+}
+
+- (void)mhSocket:(MHSocket *)mhSocket
+          failedToConnect:(NSError *)error {
+    
 }
 
 // WELCOME
@@ -199,11 +212,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }else if ([unlockedRoomKeyArray containsObject:room.key]) {
         [unlockedRoomArray addObject:room];
     }
-    CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
-    room.distance = [self.peerLocation distanceFromLocation:roomlocation];
-    if (room.distance<200.0){
+//    CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
+//    room.distance = [self.peerLocation distanceFromLocation:roomlocation];
+//    if (room.distance<200.0){
         [roomArray addObject:room];
-    }
+//    }
     roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms];
     return room.roomID;
@@ -327,12 +340,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             [room.messages removeObject:messageToDelete];
         }
     }
-}
-
-
-- (void)mhMulticastSocket:(MHMulticastSocket *)mhMulticastSocket
-          failedToConnect:(NSError *)error {
-    
 }
 
 //- (void) socketIODidConnect:(SocketIO *)socket{
