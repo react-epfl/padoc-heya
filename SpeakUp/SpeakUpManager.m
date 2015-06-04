@@ -147,13 +147,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     peer_id = [data objectForKey:@"peer_id"];
     connectionIsOK=YES;
     [connectionDelegate connectionHasRecovered];
-    NSNumber* minVersion = [data objectForKey:@"min_v"];
-    NSNumber* maxVersion = [data objectForKey:@"max_v"];
-    if(minVersion && maxVersion){
-        if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
-            NSLog(@"Problem the API does not match, display message to go to the app store");
-        }
-    }
+//    NSNumber* minVersion = [data objectForKey:@"min_v"];
+//    NSNumber* maxVersion = [data objectForKey:@"max_v"];
+//    if(minVersion && maxVersion){
+//        if ([minVersion intValue]> [API_VERSION intValue] || [maxVersion intValue] < [API_VERSION intValue]) {
+//            NSLog(@"Problem the API does not match, display message to go to the app store");
+//        }
+//    }
     [self handle_AB_testing:[data objectForKey:@"user_tags"]];
     // if the current view is nearby rooms, then get new rooms, otherwise get the messages in the current room
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -400,6 +400,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //        NSLog(@"Hanshake response received: %@", data  );
 //        [self receivedWelcome:data];
 //    }];
+//    [self startNetworking];
+    
+    
     [self startNetworking];
 }
 
