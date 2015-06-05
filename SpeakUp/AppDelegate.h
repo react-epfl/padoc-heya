@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MHMulticastSocket.h"
+
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+- (void)setSocket:(MHMulticastSocket *)socket;
 
 @end

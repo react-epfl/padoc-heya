@@ -12,10 +12,6 @@
 
 @protocol SpeakUpManagerDelegate <NSObject>
 
-@property (nonatomic, strong) MHMulticastSocket *socket;
-
 -(void)updateData;
-
-- (void)setSocket:(MHMulticastSocket *)socket;
 
 @end
