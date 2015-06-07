@@ -70,18 +70,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // CALLBACKS OF MHMULTICAST - INCOMING MESSAGES
 
 // SOCKET DID RECEIVE MESSAGE
-- (void)mhMulticastSocket:(MHMulticastSocket *)mhMulticastSocket
-         didReceivePacket:(MHPacket *)packet {
-    NSLog(@"Packet received");
+- (void)mhSocket:(MHSocket *)mhSocket
+        didReceiveMessage:(NSData *)message
+                 fromPeer:(NSString *)peer
+            withTraceInfo:(NSArray *)traceInfo {
+    NSLog(@"########## Packet received");
     
     [self stopNetworking];
     
-    PacketContent* packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:packet.data];
+    PacketContent* packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:message];
     
 //    NSLog(@"webSocket received a message: %@", packet.args );
     NSString* type = packetContent.type;
     if ([type isEqual:@"peer_welcome"]) {
-        NSDictionary *data = [packetContent.args objectAtIndex:0];
+        NSDictionary *data = packetContent.content;
         [self receivedWelcome:data];
         
     } else if ([type isEqual:@"rooms"]) {
@@ -93,7 +95,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [messageManagerDelegate updateMessagesInRoom:roomID];
         
     } else if ([type isEqual:@"roomcreated"] || [type isEqual:@"createroom"]) {
-        [self receivedRoom: [packetContent.args objectAtIndex:0]];
+        [self receivedRoom: packetContent.content];
         
     } else if ([type isEqual:@"roommessages"]) {
         NSMutableDictionary* dict = [packetContent.args objectAtIndex:0];
@@ -131,7 +133,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:myData];
         NSError *error;
         [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
-             toDestinations:[[NSArray alloc] initWithObjects:packet.source, nil]
+             toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
                       error:&error];
         
     } else if ([type isEqual:@"getroom"]) {
@@ -381,21 +383,21 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // CONNECT
 - (void)connect{
-    if (self.socket == nil) {
+    if (socket == nil) {
         // Set up the socket and the groups
-        self.socket = [[MHMulticastSocket alloc] initWithServiceType:@"speakup"];
-        self.socket.delegate = self;
+        socket = [[MHMulticastSocket alloc] initWithServiceType:@"chat"];
+        socket.delegate = self;
     
         // For background mode
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate setSocket:self.socket];
     
         // Join the groups
-        [self.socket joinGroup:GLOBAL];
-        [self.socket joinGroup:[self.socket getOwnPeer]];
+        [socket joinGroup:GLOBAL];
+        [socket joinGroup:[socket getOwnPeer]];
     }
     
-    self.connectionIsOK = YES;
+    connectionIsOK = YES;
 }
 
 // 2 - HANDSHAKE
@@ -444,6 +446,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //        }];
     
         
+        NSLog(@"########## GET ROOMS");
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
         [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
@@ -537,8 +540,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:room.name forKey:@"name"];
     [myData setValue:room.id_type forKey:@"id_type"];
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
-    
-    NSLog(@"ROOOOOOOM");
     
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:myData];
     NSError *error;

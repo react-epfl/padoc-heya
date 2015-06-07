@@ -61,31 +61,31 @@
 		80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4817251F540004965A /* libicucore.dylib */; };
 		80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4A17251F5D0004965A /* Security.framework */; };
 		AA3A45E41B176E9F007EAFCA /* PacketContent.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A45E31B176E9F007EAFCA /* PacketContent.m */; };
-		AA3A46A91B2084A8007EAFCA /* MH6ShotsProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A467E1B2084A8007EAFCA /* MH6ShotsProtocol.m */; };
-		AA3A46AA1B2084A8007EAFCA /* MH6ShotsSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46801B2084A8007EAFCA /* MH6ShotsSchedule.m */; };
-		AA3A46AB1B2084A8007EAFCA /* MH6ShotsScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46821B2084A8007EAFCA /* MH6ShotsScheduler.m */; };
-		AA3A46AC1B2084A8007EAFCA /* MHComputation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46841B2084A8007EAFCA /* MHComputation.m */; };
-		AA3A46AD1B2084A8007EAFCA /* MHConnectionBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46861B2084A8007EAFCA /* MHConnectionBuffer.m */; };
-		AA3A46AE1B2084A8007EAFCA /* MHConnectionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46881B2084A8007EAFCA /* MHConnectionsHandler.m */; };
-		AA3A46AF1B2084A8007EAFCA /* MHController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A468A1B2084A8007EAFCA /* MHController.m */; };
-		AA3A46B01B2084A8007EAFCA /* MHDiagnostics.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A468C1B2084A8007EAFCA /* MHDiagnostics.m */; };
-		AA3A46B11B2084A8007EAFCA /* MHFloodingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A468E1B2084A8007EAFCA /* MHFloodingProtocol.m */; };
-		AA3A46B21B2084A8007EAFCA /* MHLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46901B2084A8007EAFCA /* MHLocationManager.m */; };
-		AA3A46B31B2084A8007EAFCA /* MHMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46921B2084A8007EAFCA /* MHMessage.m */; };
-		AA3A46B41B2084A8007EAFCA /* MHMulticastController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46941B2084A8007EAFCA /* MHMulticastController.m */; };
-		AA3A46B51B2084A8007EAFCA /* MHMulticastRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46961B2084A8007EAFCA /* MHMulticastRoutingProtocol.m */; };
-		AA3A46B61B2084A8007EAFCA /* MHMulticastSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46981B2084A8007EAFCA /* MHMulticastSocket.m */; };
-		AA3A46B71B2084A8007EAFCA /* MHMultipeerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A469A1B2084A8007EAFCA /* MHMultipeerWrapper.m */; };
-		AA3A46B81B2084A8007EAFCA /* MHPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A469C1B2084A8007EAFCA /* MHPacket.m */; };
-		AA3A46B91B2084A8007EAFCA /* MHPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A469E1B2084A8007EAFCA /* MHPeer.m */; };
-		AA3A46BA1B2084A8007EAFCA /* MHRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46A01B2084A8007EAFCA /* MHRoutingProtocol.m */; };
-		AA3A46BB1B2084A8007EAFCA /* MHSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46A21B2084A8007EAFCA /* MHSocket.m */; };
-		AA3A46BC1B2084A8007EAFCA /* MHUnicastController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46A41B2084A8007EAFCA /* MHUnicastController.m */; };
-		AA3A46BD1B2084A8007EAFCA /* MHUnicastRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46A61B2084A8007EAFCA /* MHUnicastRoutingProtocol.m */; };
-		AA3A46BE1B2084A8007EAFCA /* MHUnicastSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46A81B2084A8007EAFCA /* MHUnicastSocket.m */; };
 		AA3A46C01B2085A9007EAFCA /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3A46BF1B2085A9007EAFCA /* MultipeerConnectivity.framework */; };
 		AA3A46C11B2085DB007EAFCA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9251636F39B0092F049 /* CoreLocation.framework */; };
 		AA3A46C31B208610007EAFCA /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3A46C21B208610007EAFCA /* CoreBluetooth.framework */; };
+		AA3A46F11B247524007EAFCA /* MH6ShotsProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46C61B247524007EAFCA /* MH6ShotsProtocol.m */; };
+		AA3A46F21B247524007EAFCA /* MH6ShotsSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46C81B247524007EAFCA /* MH6ShotsSchedule.m */; };
+		AA3A46F31B247524007EAFCA /* MH6ShotsScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46CA1B247524007EAFCA /* MH6ShotsScheduler.m */; };
+		AA3A46F41B247524007EAFCA /* MHComputation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46CC1B247524007EAFCA /* MHComputation.m */; };
+		AA3A46F51B247524007EAFCA /* MHConnectionBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46CE1B247524007EAFCA /* MHConnectionBuffer.m */; };
+		AA3A46F61B247524007EAFCA /* MHConnectionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46D01B247524007EAFCA /* MHConnectionsHandler.m */; };
+		AA3A46F71B247524007EAFCA /* MHController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46D21B247524007EAFCA /* MHController.m */; };
+		AA3A46F81B247524007EAFCA /* MHDiagnostics.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46D41B247524007EAFCA /* MHDiagnostics.m */; };
+		AA3A46F91B247524007EAFCA /* MHFloodingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46D61B247524007EAFCA /* MHFloodingProtocol.m */; };
+		AA3A46FA1B247524007EAFCA /* MHLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46D81B247524007EAFCA /* MHLocationManager.m */; };
+		AA3A46FB1B247524007EAFCA /* MHMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46DA1B247524007EAFCA /* MHMessage.m */; };
+		AA3A46FC1B247524007EAFCA /* MHMulticastController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46DC1B247524007EAFCA /* MHMulticastController.m */; };
+		AA3A46FD1B247524007EAFCA /* MHMulticastRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46DE1B247524007EAFCA /* MHMulticastRoutingProtocol.m */; };
+		AA3A46FE1B247524007EAFCA /* MHMulticastSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46E01B247524007EAFCA /* MHMulticastSocket.m */; };
+		AA3A46FF1B247524007EAFCA /* MHMultipeerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46E21B247524007EAFCA /* MHMultipeerWrapper.m */; };
+		AA3A47001B247524007EAFCA /* MHPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46E41B247524007EAFCA /* MHPacket.m */; };
+		AA3A47011B247524007EAFCA /* MHPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46E61B247524007EAFCA /* MHPeer.m */; };
+		AA3A47021B247524007EAFCA /* MHRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46E81B247524007EAFCA /* MHRoutingProtocol.m */; };
+		AA3A47031B247524007EAFCA /* MHSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46EA1B247524007EAFCA /* MHSocket.m */; };
+		AA3A47041B247524007EAFCA /* MHUnicastController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46EC1B247524007EAFCA /* MHUnicastController.m */; };
+		AA3A47051B247524007EAFCA /* MHUnicastRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46EE1B247524007EAFCA /* MHUnicastRoutingProtocol.m */; };
+		AA3A47061B247524007EAFCA /* MHUnicastSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A46F01B247524007EAFCA /* MHUnicastSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,52 +197,52 @@
 		80FB4C4A17251F5D0004965A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AA3A45E21B176E92007EAFCA /* PacketContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PacketContent.h; sourceTree = "<group>"; };
 		AA3A45E31B176E9F007EAFCA /* PacketContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketContent.m; sourceTree = "<group>"; };
-		AA3A467D1B2084A8007EAFCA /* MH6ShotsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MH6ShotsProtocol.h; sourceTree = "<group>"; };
-		AA3A467E1B2084A8007EAFCA /* MH6ShotsProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MH6ShotsProtocol.m; sourceTree = "<group>"; };
-		AA3A467F1B2084A8007EAFCA /* MH6ShotsSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MH6ShotsSchedule.h; sourceTree = "<group>"; };
-		AA3A46801B2084A8007EAFCA /* MH6ShotsSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MH6ShotsSchedule.m; sourceTree = "<group>"; };
-		AA3A46811B2084A8007EAFCA /* MH6ShotsScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MH6ShotsScheduler.h; sourceTree = "<group>"; };
-		AA3A46821B2084A8007EAFCA /* MH6ShotsScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MH6ShotsScheduler.m; sourceTree = "<group>"; };
-		AA3A46831B2084A8007EAFCA /* MHComputation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHComputation.h; sourceTree = "<group>"; };
-		AA3A46841B2084A8007EAFCA /* MHComputation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHComputation.m; sourceTree = "<group>"; };
-		AA3A46851B2084A8007EAFCA /* MHConnectionBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHConnectionBuffer.h; sourceTree = "<group>"; };
-		AA3A46861B2084A8007EAFCA /* MHConnectionBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHConnectionBuffer.m; sourceTree = "<group>"; };
-		AA3A46871B2084A8007EAFCA /* MHConnectionsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHConnectionsHandler.h; sourceTree = "<group>"; };
-		AA3A46881B2084A8007EAFCA /* MHConnectionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHConnectionsHandler.m; sourceTree = "<group>"; };
-		AA3A46891B2084A8007EAFCA /* MHController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHController.h; sourceTree = "<group>"; };
-		AA3A468A1B2084A8007EAFCA /* MHController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHController.m; sourceTree = "<group>"; };
-		AA3A468B1B2084A8007EAFCA /* MHDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHDiagnostics.h; sourceTree = "<group>"; };
-		AA3A468C1B2084A8007EAFCA /* MHDiagnostics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHDiagnostics.m; sourceTree = "<group>"; };
-		AA3A468D1B2084A8007EAFCA /* MHFloodingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHFloodingProtocol.h; sourceTree = "<group>"; };
-		AA3A468E1B2084A8007EAFCA /* MHFloodingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHFloodingProtocol.m; sourceTree = "<group>"; };
-		AA3A468F1B2084A8007EAFCA /* MHLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHLocationManager.h; sourceTree = "<group>"; };
-		AA3A46901B2084A8007EAFCA /* MHLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHLocationManager.m; sourceTree = "<group>"; };
-		AA3A46911B2084A8007EAFCA /* MHMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMessage.h; sourceTree = "<group>"; };
-		AA3A46921B2084A8007EAFCA /* MHMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMessage.m; sourceTree = "<group>"; };
-		AA3A46931B2084A8007EAFCA /* MHMulticastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMulticastController.h; sourceTree = "<group>"; };
-		AA3A46941B2084A8007EAFCA /* MHMulticastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMulticastController.m; sourceTree = "<group>"; };
-		AA3A46951B2084A8007EAFCA /* MHMulticastRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMulticastRoutingProtocol.h; sourceTree = "<group>"; };
-		AA3A46961B2084A8007EAFCA /* MHMulticastRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMulticastRoutingProtocol.m; sourceTree = "<group>"; };
-		AA3A46971B2084A8007EAFCA /* MHMulticastSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMulticastSocket.h; sourceTree = "<group>"; };
-		AA3A46981B2084A8007EAFCA /* MHMulticastSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMulticastSocket.m; sourceTree = "<group>"; };
-		AA3A46991B2084A8007EAFCA /* MHMultipeerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMultipeerWrapper.h; sourceTree = "<group>"; };
-		AA3A469A1B2084A8007EAFCA /* MHMultipeerWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMultipeerWrapper.m; sourceTree = "<group>"; };
-		AA3A469B1B2084A8007EAFCA /* MHPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPacket.h; sourceTree = "<group>"; };
-		AA3A469C1B2084A8007EAFCA /* MHPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPacket.m; sourceTree = "<group>"; };
-		AA3A469D1B2084A8007EAFCA /* MHPeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPeer.h; sourceTree = "<group>"; };
-		AA3A469E1B2084A8007EAFCA /* MHPeer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPeer.m; sourceTree = "<group>"; };
-		AA3A469F1B2084A8007EAFCA /* MHRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHRoutingProtocol.h; sourceTree = "<group>"; };
-		AA3A46A01B2084A8007EAFCA /* MHRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHRoutingProtocol.m; sourceTree = "<group>"; };
-		AA3A46A11B2084A8007EAFCA /* MHSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSocket.h; sourceTree = "<group>"; };
-		AA3A46A21B2084A8007EAFCA /* MHSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSocket.m; sourceTree = "<group>"; };
-		AA3A46A31B2084A8007EAFCA /* MHUnicastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUnicastController.h; sourceTree = "<group>"; };
-		AA3A46A41B2084A8007EAFCA /* MHUnicastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUnicastController.m; sourceTree = "<group>"; };
-		AA3A46A51B2084A8007EAFCA /* MHUnicastRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUnicastRoutingProtocol.h; sourceTree = "<group>"; };
-		AA3A46A61B2084A8007EAFCA /* MHUnicastRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUnicastRoutingProtocol.m; sourceTree = "<group>"; };
-		AA3A46A71B2084A8007EAFCA /* MHUnicastSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUnicastSocket.h; sourceTree = "<group>"; };
-		AA3A46A81B2084A8007EAFCA /* MHUnicastSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUnicastSocket.m; sourceTree = "<group>"; };
 		AA3A46BF1B2085A9007EAFCA /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		AA3A46C21B208610007EAFCA /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		AA3A46C51B247524007EAFCA /* MH6ShotsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MH6ShotsProtocol.h; sourceTree = "<group>"; };
+		AA3A46C61B247524007EAFCA /* MH6ShotsProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MH6ShotsProtocol.m; sourceTree = "<group>"; };
+		AA3A46C71B247524007EAFCA /* MH6ShotsSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MH6ShotsSchedule.h; sourceTree = "<group>"; };
+		AA3A46C81B247524007EAFCA /* MH6ShotsSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MH6ShotsSchedule.m; sourceTree = "<group>"; };
+		AA3A46C91B247524007EAFCA /* MH6ShotsScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MH6ShotsScheduler.h; sourceTree = "<group>"; };
+		AA3A46CA1B247524007EAFCA /* MH6ShotsScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MH6ShotsScheduler.m; sourceTree = "<group>"; };
+		AA3A46CB1B247524007EAFCA /* MHComputation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHComputation.h; sourceTree = "<group>"; };
+		AA3A46CC1B247524007EAFCA /* MHComputation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHComputation.m; sourceTree = "<group>"; };
+		AA3A46CD1B247524007EAFCA /* MHConnectionBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHConnectionBuffer.h; sourceTree = "<group>"; };
+		AA3A46CE1B247524007EAFCA /* MHConnectionBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHConnectionBuffer.m; sourceTree = "<group>"; };
+		AA3A46CF1B247524007EAFCA /* MHConnectionsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHConnectionsHandler.h; sourceTree = "<group>"; };
+		AA3A46D01B247524007EAFCA /* MHConnectionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHConnectionsHandler.m; sourceTree = "<group>"; };
+		AA3A46D11B247524007EAFCA /* MHController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHController.h; sourceTree = "<group>"; };
+		AA3A46D21B247524007EAFCA /* MHController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHController.m; sourceTree = "<group>"; };
+		AA3A46D31B247524007EAFCA /* MHDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHDiagnostics.h; sourceTree = "<group>"; };
+		AA3A46D41B247524007EAFCA /* MHDiagnostics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHDiagnostics.m; sourceTree = "<group>"; };
+		AA3A46D51B247524007EAFCA /* MHFloodingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHFloodingProtocol.h; sourceTree = "<group>"; };
+		AA3A46D61B247524007EAFCA /* MHFloodingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHFloodingProtocol.m; sourceTree = "<group>"; };
+		AA3A46D71B247524007EAFCA /* MHLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHLocationManager.h; sourceTree = "<group>"; };
+		AA3A46D81B247524007EAFCA /* MHLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHLocationManager.m; sourceTree = "<group>"; };
+		AA3A46D91B247524007EAFCA /* MHMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMessage.h; sourceTree = "<group>"; };
+		AA3A46DA1B247524007EAFCA /* MHMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMessage.m; sourceTree = "<group>"; };
+		AA3A46DB1B247524007EAFCA /* MHMulticastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMulticastController.h; sourceTree = "<group>"; };
+		AA3A46DC1B247524007EAFCA /* MHMulticastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMulticastController.m; sourceTree = "<group>"; };
+		AA3A46DD1B247524007EAFCA /* MHMulticastRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMulticastRoutingProtocol.h; sourceTree = "<group>"; };
+		AA3A46DE1B247524007EAFCA /* MHMulticastRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMulticastRoutingProtocol.m; sourceTree = "<group>"; };
+		AA3A46DF1B247524007EAFCA /* MHMulticastSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMulticastSocket.h; sourceTree = "<group>"; };
+		AA3A46E01B247524007EAFCA /* MHMulticastSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMulticastSocket.m; sourceTree = "<group>"; };
+		AA3A46E11B247524007EAFCA /* MHMultipeerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMultipeerWrapper.h; sourceTree = "<group>"; };
+		AA3A46E21B247524007EAFCA /* MHMultipeerWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMultipeerWrapper.m; sourceTree = "<group>"; };
+		AA3A46E31B247524007EAFCA /* MHPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPacket.h; sourceTree = "<group>"; };
+		AA3A46E41B247524007EAFCA /* MHPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPacket.m; sourceTree = "<group>"; };
+		AA3A46E51B247524007EAFCA /* MHPeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPeer.h; sourceTree = "<group>"; };
+		AA3A46E61B247524007EAFCA /* MHPeer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPeer.m; sourceTree = "<group>"; };
+		AA3A46E71B247524007EAFCA /* MHRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHRoutingProtocol.h; sourceTree = "<group>"; };
+		AA3A46E81B247524007EAFCA /* MHRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHRoutingProtocol.m; sourceTree = "<group>"; };
+		AA3A46E91B247524007EAFCA /* MHSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSocket.h; sourceTree = "<group>"; };
+		AA3A46EA1B247524007EAFCA /* MHSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSocket.m; sourceTree = "<group>"; };
+		AA3A46EB1B247524007EAFCA /* MHUnicastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUnicastController.h; sourceTree = "<group>"; };
+		AA3A46EC1B247524007EAFCA /* MHUnicastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUnicastController.m; sourceTree = "<group>"; };
+		AA3A46ED1B247524007EAFCA /* MHUnicastRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUnicastRoutingProtocol.h; sourceTree = "<group>"; };
+		AA3A46EE1B247524007EAFCA /* MHUnicastRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUnicastRoutingProtocol.m; sourceTree = "<group>"; };
+		AA3A46EF1B247524007EAFCA /* MHUnicastSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUnicastSocket.h; sourceTree = "<group>"; };
+		AA3A46F01B247524007EAFCA /* MHUnicastSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUnicastSocket.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,7 +277,7 @@
 		8096A89C1636E80B0092F049 = {
 			isa = PBXGroup;
 			children = (
-				AA3A467C1B2084A8007EAFCA /* Multihop */,
+				AA3A46C41B247524007EAFCA /* Multihop */,
 				80AB3D7C183E727B0005C603 /* Google analytics */,
 				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
 				80B5C8C5183BD6020024E946 /* iPad3Storyboard.storyboard */,
@@ -463,53 +463,53 @@
 			name = SocketRocket;
 			sourceTree = "<group>";
 		};
-		AA3A467C1B2084A8007EAFCA /* Multihop */ = {
+		AA3A46C41B247524007EAFCA /* Multihop */ = {
 			isa = PBXGroup;
 			children = (
-				AA3A467D1B2084A8007EAFCA /* MH6ShotsProtocol.h */,
-				AA3A467E1B2084A8007EAFCA /* MH6ShotsProtocol.m */,
-				AA3A467F1B2084A8007EAFCA /* MH6ShotsSchedule.h */,
-				AA3A46801B2084A8007EAFCA /* MH6ShotsSchedule.m */,
-				AA3A46811B2084A8007EAFCA /* MH6ShotsScheduler.h */,
-				AA3A46821B2084A8007EAFCA /* MH6ShotsScheduler.m */,
-				AA3A46831B2084A8007EAFCA /* MHComputation.h */,
-				AA3A46841B2084A8007EAFCA /* MHComputation.m */,
-				AA3A46851B2084A8007EAFCA /* MHConnectionBuffer.h */,
-				AA3A46861B2084A8007EAFCA /* MHConnectionBuffer.m */,
-				AA3A46871B2084A8007EAFCA /* MHConnectionsHandler.h */,
-				AA3A46881B2084A8007EAFCA /* MHConnectionsHandler.m */,
-				AA3A46891B2084A8007EAFCA /* MHController.h */,
-				AA3A468A1B2084A8007EAFCA /* MHController.m */,
-				AA3A468B1B2084A8007EAFCA /* MHDiagnostics.h */,
-				AA3A468C1B2084A8007EAFCA /* MHDiagnostics.m */,
-				AA3A468D1B2084A8007EAFCA /* MHFloodingProtocol.h */,
-				AA3A468E1B2084A8007EAFCA /* MHFloodingProtocol.m */,
-				AA3A468F1B2084A8007EAFCA /* MHLocationManager.h */,
-				AA3A46901B2084A8007EAFCA /* MHLocationManager.m */,
-				AA3A46911B2084A8007EAFCA /* MHMessage.h */,
-				AA3A46921B2084A8007EAFCA /* MHMessage.m */,
-				AA3A46931B2084A8007EAFCA /* MHMulticastController.h */,
-				AA3A46941B2084A8007EAFCA /* MHMulticastController.m */,
-				AA3A46951B2084A8007EAFCA /* MHMulticastRoutingProtocol.h */,
-				AA3A46961B2084A8007EAFCA /* MHMulticastRoutingProtocol.m */,
-				AA3A46971B2084A8007EAFCA /* MHMulticastSocket.h */,
-				AA3A46981B2084A8007EAFCA /* MHMulticastSocket.m */,
-				AA3A46991B2084A8007EAFCA /* MHMultipeerWrapper.h */,
-				AA3A469A1B2084A8007EAFCA /* MHMultipeerWrapper.m */,
-				AA3A469B1B2084A8007EAFCA /* MHPacket.h */,
-				AA3A469C1B2084A8007EAFCA /* MHPacket.m */,
-				AA3A469D1B2084A8007EAFCA /* MHPeer.h */,
-				AA3A469E1B2084A8007EAFCA /* MHPeer.m */,
-				AA3A469F1B2084A8007EAFCA /* MHRoutingProtocol.h */,
-				AA3A46A01B2084A8007EAFCA /* MHRoutingProtocol.m */,
-				AA3A46A11B2084A8007EAFCA /* MHSocket.h */,
-				AA3A46A21B2084A8007EAFCA /* MHSocket.m */,
-				AA3A46A31B2084A8007EAFCA /* MHUnicastController.h */,
-				AA3A46A41B2084A8007EAFCA /* MHUnicastController.m */,
-				AA3A46A51B2084A8007EAFCA /* MHUnicastRoutingProtocol.h */,
-				AA3A46A61B2084A8007EAFCA /* MHUnicastRoutingProtocol.m */,
-				AA3A46A71B2084A8007EAFCA /* MHUnicastSocket.h */,
-				AA3A46A81B2084A8007EAFCA /* MHUnicastSocket.m */,
+				AA3A46C51B247524007EAFCA /* MH6ShotsProtocol.h */,
+				AA3A46C61B247524007EAFCA /* MH6ShotsProtocol.m */,
+				AA3A46C71B247524007EAFCA /* MH6ShotsSchedule.h */,
+				AA3A46C81B247524007EAFCA /* MH6ShotsSchedule.m */,
+				AA3A46C91B247524007EAFCA /* MH6ShotsScheduler.h */,
+				AA3A46CA1B247524007EAFCA /* MH6ShotsScheduler.m */,
+				AA3A46CB1B247524007EAFCA /* MHComputation.h */,
+				AA3A46CC1B247524007EAFCA /* MHComputation.m */,
+				AA3A46CD1B247524007EAFCA /* MHConnectionBuffer.h */,
+				AA3A46CE1B247524007EAFCA /* MHConnectionBuffer.m */,
+				AA3A46CF1B247524007EAFCA /* MHConnectionsHandler.h */,
+				AA3A46D01B247524007EAFCA /* MHConnectionsHandler.m */,
+				AA3A46D11B247524007EAFCA /* MHController.h */,
+				AA3A46D21B247524007EAFCA /* MHController.m */,
+				AA3A46D31B247524007EAFCA /* MHDiagnostics.h */,
+				AA3A46D41B247524007EAFCA /* MHDiagnostics.m */,
+				AA3A46D51B247524007EAFCA /* MHFloodingProtocol.h */,
+				AA3A46D61B247524007EAFCA /* MHFloodingProtocol.m */,
+				AA3A46D71B247524007EAFCA /* MHLocationManager.h */,
+				AA3A46D81B247524007EAFCA /* MHLocationManager.m */,
+				AA3A46D91B247524007EAFCA /* MHMessage.h */,
+				AA3A46DA1B247524007EAFCA /* MHMessage.m */,
+				AA3A46DB1B247524007EAFCA /* MHMulticastController.h */,
+				AA3A46DC1B247524007EAFCA /* MHMulticastController.m */,
+				AA3A46DD1B247524007EAFCA /* MHMulticastRoutingProtocol.h */,
+				AA3A46DE1B247524007EAFCA /* MHMulticastRoutingProtocol.m */,
+				AA3A46DF1B247524007EAFCA /* MHMulticastSocket.h */,
+				AA3A46E01B247524007EAFCA /* MHMulticastSocket.m */,
+				AA3A46E11B247524007EAFCA /* MHMultipeerWrapper.h */,
+				AA3A46E21B247524007EAFCA /* MHMultipeerWrapper.m */,
+				AA3A46E31B247524007EAFCA /* MHPacket.h */,
+				AA3A46E41B247524007EAFCA /* MHPacket.m */,
+				AA3A46E51B247524007EAFCA /* MHPeer.h */,
+				AA3A46E61B247524007EAFCA /* MHPeer.m */,
+				AA3A46E71B247524007EAFCA /* MHRoutingProtocol.h */,
+				AA3A46E81B247524007EAFCA /* MHRoutingProtocol.m */,
+				AA3A46E91B247524007EAFCA /* MHSocket.h */,
+				AA3A46EA1B247524007EAFCA /* MHSocket.m */,
+				AA3A46EB1B247524007EAFCA /* MHUnicastController.h */,
+				AA3A46EC1B247524007EAFCA /* MHUnicastController.m */,
+				AA3A46ED1B247524007EAFCA /* MHUnicastRoutingProtocol.h */,
+				AA3A46EE1B247524007EAFCA /* MHUnicastRoutingProtocol.m */,
+				AA3A46EF1B247524007EAFCA /* MHUnicastSocket.h */,
+				AA3A46F01B247524007EAFCA /* MHUnicastSocket.m */,
 			);
 			name = Multihop;
 			path = "../multihop-lib-ios/Multihop";
@@ -612,46 +612,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA3A46B31B2084A8007EAFCA /* MHMessage.m in Sources */,
+				AA3A46FB1B247524007EAFCA /* MHMessage.m in Sources */,
 				8096A8B81636E80C0092F049 /* main.m in Sources */,
-				AA3A46BB1B2084A8007EAFCA /* MHSocket.m in Sources */,
-				AA3A46B61B2084A8007EAFCA /* MHMulticastSocket.m in Sources */,
+				AA3A47031B247524007EAFCA /* MHSocket.m in Sources */,
+				AA3A46FE1B247524007EAFCA /* MHMulticastSocket.m in Sources */,
 				8096A8BC1636E80C0092F049 /* AppDelegate.m in Sources */,
-				AA3A46B51B2084A8007EAFCA /* MHMulticastRoutingProtocol.m in Sources */,
+				AA3A46FD1B247524007EAFCA /* MHMulticastRoutingProtocol.m in Sources */,
 				8096A8F61636E9C60092F049 /* Message.m in Sources */,
 				8096A8F81636E9C60092F049 /* MessageTableViewController.m in Sources */,
-				AA3A46AC1B2084A8007EAFCA /* MHComputation.m in Sources */,
-				AA3A46A91B2084A8007EAFCA /* MH6ShotsProtocol.m in Sources */,
-				AA3A46BC1B2084A8007EAFCA /* MHUnicastController.m in Sources */,
+				AA3A46F41B247524007EAFCA /* MHComputation.m in Sources */,
+				AA3A46F11B247524007EAFCA /* MH6ShotsProtocol.m in Sources */,
+				AA3A47041B247524007EAFCA /* MHUnicastController.m in Sources */,
 				803EB68817EC61FE00E053EA /* SocketIO.m in Sources */,
 				8096A8F91636E9C60092F049 /* NewRoomViewController.m in Sources */,
 				803EB68A17EC61FE00E053EA /* SocketIOPacket.m in Sources */,
-				AA3A46B81B2084A8007EAFCA /* MHPacket.m in Sources */,
+				AA3A47001B247524007EAFCA /* MHPacket.m in Sources */,
 				80B6B18519F54490006D10B1 /* EtiquetteViewController.m in Sources */,
-				AA3A46B71B2084A8007EAFCA /* MHMultipeerWrapper.m in Sources */,
+				AA3A46FF1B247524007EAFCA /* MHMultipeerWrapper.m in Sources */,
 				AA3A45E41B176E9F007EAFCA /* PacketContent.m in Sources */,
 				8096A9011636E9C60092F049 /* Room.m in Sources */,
 				8096A9031636E9C60092F049 /* RoomTableViewController.m in Sources */,
-				AA3A46AF1B2084A8007EAFCA /* MHController.m in Sources */,
+				AA3A46F71B247524007EAFCA /* MHController.m in Sources */,
 				803EB68B17EC61FE00E053EA /* SocketIOTransportWebsocket.m in Sources */,
 				809F781919FFCF4400BB9062 /* NSData+SRB64Additions.m in Sources */,
-				AA3A46B41B2084A8007EAFCA /* MHMulticastController.m in Sources */,
-				AA3A46AE1B2084A8007EAFCA /* MHConnectionsHandler.m in Sources */,
-				AA3A46BE1B2084A8007EAFCA /* MHUnicastSocket.m in Sources */,
-				AA3A46AB1B2084A8007EAFCA /* MH6ShotsScheduler.m in Sources */,
-				AA3A46AA1B2084A8007EAFCA /* MH6ShotsSchedule.m in Sources */,
+				AA3A46FC1B247524007EAFCA /* MHMulticastController.m in Sources */,
+				AA3A46F61B247524007EAFCA /* MHConnectionsHandler.m in Sources */,
+				AA3A47061B247524007EAFCA /* MHUnicastSocket.m in Sources */,
+				AA3A46F31B247524007EAFCA /* MH6ShotsScheduler.m in Sources */,
+				AA3A46F21B247524007EAFCA /* MH6ShotsSchedule.m in Sources */,
 				8090FE6D1664FC6A005A6358 /* SpeakUpManager.m in Sources */,
-				AA3A46AD1B2084A8007EAFCA /* MHConnectionBuffer.m in Sources */,
+				AA3A46F51B247524007EAFCA /* MHConnectionBuffer.m in Sources */,
 				809F781819FFCF4400BB9062 /* base64.c in Sources */,
 				803EB68C17EC61FE00E053EA /* SocketIOTransportXHR.m in Sources */,
-				AA3A46BD1B2084A8007EAFCA /* MHUnicastRoutingProtocol.m in Sources */,
-				AA3A46B91B2084A8007EAFCA /* MHPeer.m in Sources */,
-				AA3A46B11B2084A8007EAFCA /* MHFloodingProtocol.m in Sources */,
+				AA3A47051B247524007EAFCA /* MHUnicastRoutingProtocol.m in Sources */,
+				AA3A47011B247524007EAFCA /* MHPeer.m in Sources */,
+				AA3A46F91B247524007EAFCA /* MHFloodingProtocol.m in Sources */,
 				809F781A19FFCF4400BB9062 /* SRWebSocket.m in Sources */,
 				803EB68917EC61FE00E053EA /* SocketIOJSONSerialization.m in Sources */,
-				AA3A46BA1B2084A8007EAFCA /* MHRoutingProtocol.m in Sources */,
-				AA3A46B01B2084A8007EAFCA /* MHDiagnostics.m in Sources */,
-				AA3A46B21B2084A8007EAFCA /* MHLocationManager.m in Sources */,
+				AA3A47021B247524007EAFCA /* MHRoutingProtocol.m in Sources */,
+				AA3A46F81B247524007EAFCA /* MHDiagnostics.m in Sources */,
+				AA3A46FA1B247524007EAFCA /* MHLocationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

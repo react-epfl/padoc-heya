@@ -14,7 +14,7 @@
 @synthesize type, content, args;
 
 - (instancetype)initWithType:(NSString *)typeInit
-                 withContent:(NSObject *)contentInit
+                 withContent:(id)contentInit
 {
     self = [super init];
     if (self)

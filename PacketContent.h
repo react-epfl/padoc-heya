@@ -19,11 +19,11 @@
 }
 
 @property (nonatomic, copy) NSString *type;
-@property (nonatomic, copy) NSObject *content;
+@property (nonatomic, copy) id content;
 @property (nonatomic, copy) NSArray *args;
 
 - (instancetype)initWithType:(NSString *)type
-                 withContent:(NSObject *)content;
+                 withContent:(id)content;
 
 @end
 
