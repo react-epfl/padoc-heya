@@ -31,9 +31,9 @@
         avatarCacheByPeerID = [[NSCache alloc] init];
         [self setRoomID: [dict objectForKey:@"room_id"]];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
-        NSDictionary* loc = [dict objectForKey:@"loc"];
-        [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
-        [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
+//        NSDictionary* loc = [dict objectForKey:@"loc"];
+//        [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
+//        [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
         [self setName: [dict objectForKey:@"name"] ] ; // LOWER CASE
         [self setKey: [dict objectForKey:@"key"]];
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
