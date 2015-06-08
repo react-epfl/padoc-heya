@@ -288,6 +288,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
 }
 
+-(void)receivedMessage:(Message *)message {
+    for(Room *room in roomArray){
+        [self addMessage:message toRoom:room];
+    }
+    for(Room *room in unlockedRoomArray){
+        [self addMessage:message toRoom:room];
+    }
+    for(Room *room in myOwnRoomArray){
+        [self addMessage:message toRoom:room];
+    }
+}
+
 -(void)addMessage:(Message*) message toRoom:(Room*) room{
     if ([room.roomID isEqual:message.roomID]) {
         BOOL messageUpdate=NO;
@@ -483,7 +495,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                   error:&error];
 }
 // CREATE MSG SOCKET.IO
--(void) createMessage:(Message *) message{
+-(void) createMessage:(Message *) message {
 //    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
 //    [myData setValue:API_VERSION forKey:@"api_v"];
 //    [myData setValue:self.peer_id forKey:@"peer_id"];
@@ -497,17 +509,24 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.parentMessageID forKey:@"parent_id"];
     NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
     [messageData setValue:message.content forKey:@"body"];
     [myData setValue:messageData forKey:@"message"];
     
+    // Broadcast the message
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:myData];
     NSError *error;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
+    
+    // Add the message locally
+    [self receivedMessage:message];
+    
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
 }
 
 // CREATE ROOM
@@ -546,7 +565,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     [myData setValue:[[NSProcessInfo processInfo] globallyUniqueString] forKey:@"key"];
     
-    [myData setValue:[UIDevice currentDevice].name forKey:@"creator_id"];
+    [myData setValue:peer_id forKey:@"creator_id"];
     
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:myData];
     NSError *error;
@@ -560,6 +579,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     handler(myData);
     
     [self savePeerData];
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
 }
 
 // RATE MESSAGE
