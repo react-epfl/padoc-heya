@@ -612,6 +612,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
+    // Update the message locally
+    [self receivedMessage:message];
+    
     [self savePeerData];
 }
 
@@ -640,6 +643,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
+    // Delete the room locally
     [self receivedRoomToDelete:room.roomID];
     [messageManagerDelegate updateMessagesInRoom:room.roomID];
     [roomManagerDelegate updateRooms];
@@ -660,6 +664,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [deletedMessageIDs addObject:message.messageID];
     
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+    [myData setValue:self.peer_id forKey:@"peer_id"];
     [myData setValue:message.roomID forKey:@"room_id"];
     [myData setValue:message.messageID forKey:@"msg_id"];
     
@@ -668,6 +673,12 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
+    
+    // Delete the message locally
+    [self receivedMessageToDelete:message.messageID inRoom:message.roomID withParent:message.parentMessageID];
+    [messageManagerDelegate updateMessagesInRoom:message.roomID];
+    
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
 }
 
 // SPAM MESSAGE
@@ -694,6 +705,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
+    
+    // Update the message locally
+    [self receivedMessage:message];
+    
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
 }
 
 
