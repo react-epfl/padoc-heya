@@ -525,6 +525,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
     // Add the message locally
     [self receivedMessage:message];
+    [messageManagerDelegate updateMessagesInRoom:message.roomID];
     
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
 }
