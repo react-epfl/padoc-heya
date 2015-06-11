@@ -138,6 +138,37 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         
     } else if ([type isEqual:@"getroom"]) {
         // Send the requested room to the requesting peer
+        NSMutableDictionary* dict = packetContent.content;
+        
+        Room* myData = nil;
+        for (Room *room in roomArray) {
+            if (room.roomID == [dict objectForKey:@"room_id"]) {
+                myData = room;
+                break;
+            }
+        }
+        if (!myData) {
+            for (Room *room in unlockedRoomArray) {
+                if (room.roomID == [dict objectForKey:@"room_id"]) {
+                    myData = room;
+                    break;
+                }
+            }
+        }
+        if (!myData) {
+            for (Room *room in myOwnRoomArray) {
+                if (room.roomID == [dict objectForKey:@"room_id"]) {
+                    myData = room;
+                    break;
+                }
+            }
+        }
+        
+        PacketContent* msg = [[PacketContent alloc] initWithType:@"room" withContent:myData];
+        NSError *error;
+        [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+             toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
+                      error:&error];
         
     } else if ([type isEqual:@"tag_message"]) {
         // Tag the specified message
@@ -300,18 +331,19 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
 }
 
--(void)addMessage:(Message*) message toRoom:(Room*) room{
+-(void)addMessage:(Message*) message toRoom:(Room*) room {
     if ([room.roomID isEqual:message.roomID]) {
         BOOL messageUpdate=NO;
-        for(Message *msg in room.messages){
+        for (Message *msg in room.messages) {
             if ([msg.messageID isEqual:message.messageID]) {
                 // update received, therefore just update the vote fields
                 msg.score=message.score;
                 msg.numberOfYes=message.numberOfYes;
                 msg.numberOfNo=message.numberOfNo;
                 messageUpdate=YES;
-            }if ([msg.messageID isEqual:message.parentMessageID]) {
-                for(Message *reply in msg.replies){
+            }
+            if ([msg.messageID isEqual:message.parentMessageID]) {
+                for (Message *reply in msg.replies) {
                     if ([reply.messageID isEqual:message.messageID]) {
                         reply.score=message.score;
                         reply.numberOfYes=message.numberOfYes;
@@ -322,6 +354,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
                 if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
                     [msg.replies addObject:message];
                 }
+            }
+            if (messageUpdate) {
+                break;
             }
         }
         if (!message.parentMessageID && ![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
@@ -342,15 +377,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
 }
 
--(void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id{
+-(void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id {
     if ([room_id isEqual:room_id]) {
         Message* messageToDelete=nil;
-        for(Message *msg in room.messages){
+        for (Message *msg in room.messages) {
             if ([msg.messageID isEqual:m_id]) {
                 messageToDelete=msg;
-            }if ([msg.messageID isEqual:parent_id]) {
+            }
+            if ([msg.messageID isEqual:parent_id]) {
                 Message* replyToDelete=nil;
-                for(Message *reply in msg.replies){
+                for (Message *reply in msg.replies){
                     if ([reply.messageID isEqual:m_id]) {
                         replyToDelete=reply;
                     }
@@ -440,7 +476,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 -(void)getNearbyRooms{
     if (!connectionIsOK) {
         [self connect];
-    }else{
+    } else {
 //        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
 //        [myData setValue:API_VERSION forKey:@"api_v"];
 //        [myData setValue:self.peer_id forKey:@"peer_id"];
@@ -457,8 +493,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //            [self receivedRooms:data];
 //        }];
     
-        
-        NSLog(@"########## GET ROOMS");
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
         [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
