@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Room.h"
 
-@interface Message : NSObject
+@interface Message : NSObject<NSCoding>
 
 - (id)initWithDictionary:(NSDictionary*) dict roomID:(NSString*) roomID;
 

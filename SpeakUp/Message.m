@@ -12,6 +12,7 @@
 
 @synthesize content, numberOfNo, numberOfYes, yesIsPressed,noIsPressed, messageID, score, creationTime, room, roomID, secondsSinceCreation, lastModified, deleted, authorPeerID, parentMessageID,pseudo,avatarURL, replies,hotScore;
 
+
 - (id)init{
     self = [super init];
     if(self){
@@ -81,6 +82,54 @@
         return hot;
     }
     
+}
+
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {
+        messageID = [decoder decodeObjectForKey:@"messageID"];
+        parentMessageID = [decoder decodeObjectForKey:@"parentMessageID"];
+        pseudo = [decoder decodeObjectForKey:@"pseudo"];
+        authorPeerID = [decoder decodeObjectForKey:@"authorPeerID"];
+        roomID = [decoder decodeObjectForKey:@"roomID"];
+        room = [decoder decodeObjectForKey:@"room"];
+        avatarURL = [decoder decodeObjectForKey:@"avatarURL"];
+        content = [decoder decodeObjectForKey:@"content"];
+        creationTime = [decoder decodeObjectForKey:@"creationTime"];
+        lastModified = [decoder decodeObjectForKey:@"lastModified"];
+        secondsSinceCreation = [decoder decodeIntForKey:@"secondsSinceCreation"];
+        deleted = [decoder decodeBoolForKey:@"deleted"];
+        numberOfYes = [decoder decodeIntForKey:@"numberOfYes"];
+        numberOfNo = [decoder decodeIntForKey:@"numberOfNo"];
+        score = [decoder decodeIntForKey:@"score"];
+        hotScore = [decoder decodeDoubleForKey:@"hotScore"];
+        yesIsPressed = [decoder decodeBoolForKey:@"yesIsPressed"];
+        noIsPressed = [decoder decodeBoolForKey:@"noIsPressed"];
+        replies = [decoder decodeObjectForKey:@"replies"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:messageID forKey:@"messageID"];
+    [encoder encodeObject:parentMessageID forKey:@"parentMessageID"];
+    [encoder encodeObject:pseudo forKey:@"pseudo"];
+    [encoder encodeObject:authorPeerID forKey:@"authorPeerID"];
+    [encoder encodeObject:roomID forKey:@"roomID"];
+    [encoder encodeObject:room forKey:@"room"];
+    [encoder encodeObject:avatarURL forKey:@"avatarURL"];
+    [encoder encodeObject:content forKey:@"content"];
+    [encoder encodeObject:creationTime forKey:@"creationTime"];
+    [encoder encodeObject:lastModified forKey:@"lastModified"];
+    [encoder encodeInt:secondsSinceCreation forKey:@"secondsSinceCreation"];
+    [encoder encodeBool:deleted forKey:@"deleted"];
+    [encoder encodeInt:numberOfYes forKey:@"numberOfYes"];
+    [encoder encodeInt:numberOfNo forKey:@"numberOfNo"];
+    [encoder encodeInt:score forKey:@"score"];
+    [encoder encodeDouble:hotScore forKey:@"hotScore"];
+    [encoder encodeBool:yesIsPressed forKey:@"yesIsPressed"];
+    [encoder encodeBool:noIsPressed forKey:@"noIsPressed"];
+    [encoder encodeObject:replies forKey:@"replies"];
 }
 
 @end

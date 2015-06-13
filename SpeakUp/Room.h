@@ -10,7 +10,7 @@
 
 #define ANON 
 
-@interface Room : NSObject
+@interface Room : NSObject<NSCoding>
 
 - (id)initWithDictionary:(NSDictionary*) dict;
 

@@ -25,6 +25,7 @@
     }
     return self;
 }
+
 - (id)initWithDictionary:(NSDictionary*) dict{
     self = [super init];
     if(self){
@@ -60,4 +61,50 @@
     }
     return self;
 }
+
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {
+        roomID = [decoder decodeObjectForKey:@"roomID"];
+        creatorID = [decoder decodeObjectForKey:@"creatorID"];
+        distance = [decoder decodeFloatForKey:@"distance"];
+        name = [decoder decodeObjectForKey:@"name"];
+        key = [decoder decodeObjectForKey:@"key"];
+        location = [decoder decodeObjectForKey:@"location"];
+        latitude = [decoder decodeDoubleForKey:@"latitude"];
+        longitude = [decoder decodeDoubleForKey:@"longitude"];
+        lifetime = [decoder decodeIntForKey:@"lifetime"];
+        range = [decoder decodeIntForKey:@"range"];
+        isOfficial = [decoder decodeBoolForKey:@"isOfficial"];
+        isUnlocked = [decoder decodeBoolForKey:@"isUnlocked"];
+        id_type = [decoder decodeObjectForKey:@"id_type"];
+        deleted = [decoder decodeBoolForKey:@"deleted"];
+//        avatarCacheByPeerID = [decoder decodeObjectForKey:@"avatarCacheByPeerID"];
+        lastUpdateTime = [decoder decodeObjectForKey:@"lastUpdateTime"];
+        messages = [decoder decodeObjectForKey:@"messages"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:roomID forKey:@"roomID"];
+    [encoder encodeObject:creatorID forKey:@"creatorID"];
+    [encoder encodeFloat:distance forKey:@"distance"];
+    [encoder encodeObject:name forKey:@"name"];
+    [encoder encodeObject:key forKey:@"key"];
+    [encoder encodeObject:location forKey:@"location"];
+    [encoder encodeDouble:latitude forKey:@"latitude"];
+    [encoder encodeDouble:longitude forKey:@"longitude"];
+    [encoder encodeInt:lifetime forKey:@"lifetime"];
+    [encoder encodeInt:range forKey:@"range"];
+    [encoder encodeBool:isOfficial forKey:@"isOfficial"];
+    [encoder encodeBool:isUnlocked forKey:@"isUnlocked"];
+    [encoder encodeObject:id_type forKey:@"id_type"];
+    [encoder encodeBool:deleted forKey:@"deleted"];
+//    [encoder encodeObject:avatarCacheByPeerID forKey:@"avatarCacheByPeerID"];
+    [encoder encodeObject:lastUpdateTime forKey:@"lastUpdateTime"];
+    [encoder encodeObject:messages forKey:@"messages"];
+}
+
+
 @end
