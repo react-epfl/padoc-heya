@@ -30,6 +30,8 @@
     self = [super init];
     if(self){
         avatarCacheByPeerID = [[NSCache alloc] init];
+        NSLog(@"ROOM ID");
+//        NSLog([dict objectForKey:@"room_id"]);
         [self setRoomID: [dict objectForKey:@"room_id"]];
         [self setDeleted:[[dict objectForKey:@"deleted"] boolValue]];
 //        NSDictionary* loc = [dict objectForKey:@"loc"];

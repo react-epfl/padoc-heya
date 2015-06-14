@@ -87,15 +87,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [self receivedWelcome:data];
         
     } else if ([type isEqual:@"rooms"]) {
-        [self receivedRooms: packetContent.content];
+        [self receivedRoomsObjects: packetContent.content];
 //        self.locationAtLastReset=self.peerLocation;
         
     } else if ([type isEqual:@"room"]) {
-        NSString* roomID=[self receivedRoom: packetContent.content];
-        [messageManagerDelegate updateMessagesInRoom:roomID];
+        Room *room = packetContent.content;
+        if (room) {
+            NSString* roomID=[self receivedRoomObject: room];
+            [messageManagerDelegate updateMessagesInRoom:roomID];
+        }
         
     } else if ([type isEqual:@"roomcreated"] || [type isEqual:@"createroom"]) {
-        [self receivedRoom: packetContent.content];
+        [self receivedRoomObject: packetContent.content];
         
     } else if ([type isEqual:@"roommessages"]) {
         NSMutableDictionary* dict = packetContent.content;
@@ -127,10 +130,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         
     } else if ([type isEqual:@"getrooms"]) {
         // Send our list of rooms to the requesting peer
-        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-        [myData setValue:roomArray forKey:@"rooms"];
-        
-        PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:myData];
+        PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:roomArray];
         NSError *error;
         [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
@@ -220,6 +220,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     }
     [roomManagerDelegate updateRooms];
 }
+-(void)receivedRoomsObjects:(NSArray*)rooms{
+    [roomArray removeAllObjects];
+    self.locationAtLastReset=self.peerLocation;
+    for (Room *room in rooms) {
+        [self receivedRoomObject:room];
+    }
+    [roomManagerDelegate updateRooms];
+}
 
 // RECEIVED ROOM
 -(NSString*)receivedRoom:(NSMutableDictionary*)roomDictionary {
@@ -261,6 +269,50 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    if (room.distance<200.0){
         [roomArray addObject:room];
 //    }
+    roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
+    [roomManagerDelegate updateRooms];
+    return room.roomID;
+}
+
+// RECEIVED ROOM
+-(NSString*)receivedRoomObject:(Room *)room {
+    // when a room is received it is added if it was not already in the list, unless the user has hidden the room before
+    NSMutableArray* roomsToRemove = [NSMutableArray array];
+    for (Room *r in roomArray) {
+        if ([r.roomID isEqual:room.roomID]) {
+            [roomsToRemove addObject:r];
+        }
+    }
+    [roomArray removeObjectsInArray:roomsToRemove];
+    [roomsToRemove removeAllObjects];
+    for (Room *r in unlockedRoomArray) {
+        if ([r.roomID isEqual:room.roomID]) {
+            [roomsToRemove addObject:r];
+        }
+    }
+    [unlockedRoomArray removeObjectsInArray:roomsToRemove];
+    [roomsToRemove removeAllObjects];
+    for (Room *r in myOwnRoomArray) {
+        if ([r.roomID isEqual:room.roomID]) {
+            [roomsToRemove addObject:r];
+        }
+    }
+    [myOwnRoomArray removeObjectsInArray:roomsToRemove];
+    
+    if ([room.creatorID isEqualToString:self.peer_id]) {
+        if (![myOwnRoomKeyArray containsObject:room.key]) {
+            [myOwnRoomKeyArray addObject:room.key];
+        }
+        [myOwnRoomArray addObject:room];
+        [unlockedRoomKeyArray removeObject:room.key];
+    } else if ([unlockedRoomKeyArray containsObject:room.key]) {
+        [unlockedRoomArray addObject:room];
+    }
+    //    CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[room latitude] longitude: [room longitude]];
+    //    room.distance = [self.peerLocation distanceFromLocation:roomlocation];
+    //    if (room.distance<200.0){
+    [roomArray addObject:room];
+    //    }
     roomArray = [[self sortArrayByDistance:roomArray] mutableCopy];
     [roomManagerDelegate updateRooms];
     return room.roomID;
@@ -589,6 +641,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    [self savePeerData];
 //    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
     
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:room];
+    NSError *error;
+    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
+                  error:&error];
+    
+    NSString* roomID=[self receivedRoomObject:room];
+    [messageManagerDelegate updateMessagesInRoom:roomID];
+    [myOwnRoomKeyArray addObject:roomID];
     
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:room.name forKey:@"name"];
@@ -596,21 +657,11 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
     
     // Let us generate a random string for the room ID
-    [myData setValue:[[NSProcessInfo processInfo] globallyUniqueString] forKey:@"room_id"];
+    [myData setValue:room.roomID forKey:@"room_id"];
+    [myData setValue:room.key forKey:@"key"];
     
-    [myData setValue:[[NSProcessInfo processInfo] globallyUniqueString] forKey:@"key"];
+    [myData setValue:room.creatorID forKey:@"creator_id"];
     
-    [myData setValue:peer_id forKey:@"creator_id"];
-    
-    PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:myData];
-    NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
-         toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
-                  error:&error];
-    
-    NSString* roomID=[self receivedRoom: myData];
-    [messageManagerDelegate updateMessagesInRoom:roomID];
-    [myOwnRoomKeyArray addObject:roomID];
     handler(myData);
     
     [self savePeerData];

@@ -154,6 +154,7 @@
         NSString *trimmedString = [input.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if(self.input.text.length>0 && trimmedString.length >0){
             NSLog(@"creating a new room %@ ", input.text);
+            
             Room* myRoom = [[Room alloc] init];
             myRoom.name = self.input.text;
             if (!privatSwitch.on) {
@@ -163,6 +164,11 @@
             myRoom.range=RANGE;
             myRoom.lifetime=LIFETIME;
             myRoom.id_type = ANONYMOUS;
+            
+            myRoom.roomID = [[NSProcessInfo processInfo] globallyUniqueString];
+            myRoom.key = [[NSProcessInfo processInfo] globallyUniqueString];
+            myRoom.creatorID = [[SpeakUpManager sharedSpeakUpManager] peer_id];
+            
             createRoomButton.enabled=NO;
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary* handler){
                 if ([handler objectForKey:@"key"]) {
