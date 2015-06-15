@@ -441,41 +441,49 @@
 }
 
 // RATING UP
--(IBAction)rateMessageUp:(id)sender{
-    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-        @synchronized(self){
+-(IBAction)rateMessageUp:(id)sender {
+    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+        @synchronized(self) {
             NSString* messageID;
             int yesRating = 0;
             int noRating = 0;
+            
             UIButton *aButton = (UIButton *)sender;
             NSString* rowInString = [aButton titleForState:UIControlStateNormal];
             NSUInteger row = [rowInString integerValue];
             Message* message = [self getMessageForIndex:row];
+            
             messageID = message.messageID;
             if (messageID) {
                 //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
-                if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+                if ([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:messageID]) {
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:messageID];
                     noRating = -1;
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-                    yesRating=1;
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:messageID];
+                    yesRating = 1;
                 }
                 //else if the message was liked remove it from the list of liked messages
-                else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
-                    yesRating=-1;
+                else if ([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:messageID]) {
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:messageID];
+                    yesRating = -1;
                 }
-                // else (i.e., when the message was neither liked or dislike, add it to the list of like messages)
-                else{
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:message.messageID];
-                    yesRating=1;
+                // else (i.e., when the message was neither liked or disliked, add it to the list of liked messages)
+                else {
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:messageID];
+                    yesRating = 1;
                 }
-                // update the message rating on the server
+                // update the message rating
                 [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
                 [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-            }else{
+            } else {
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
+            
+            message.yesIsPressed = YES;
+            message.noIsPressed = NO;
+            message.numberOfYes += yesRating;
+            message.numberOfNo += noRating;
+            
             [self.tableView reloadData];
             [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_up" value:nil] build]];
         }
@@ -483,41 +491,49 @@
 }
 
 // RATING DOWN
--(IBAction)rateMessageDown:(id)sender{
-    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-        @synchronized(self){
+-(IBAction)rateMessageDown:(id)sender {
+    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+        @synchronized(self) {
             NSString* messageID;
             int yesRating = 0;
             int noRating = 0;
+            
             UIButton *aButton = (UIButton *)sender;
             NSString* rowInString = [aButton titleForState:UIControlStateNormal];
             NSUInteger row = [rowInString integerValue];
             Message* message = [self getMessageForIndex:row];
+            
             messageID = message.messageID;
             if (messageID) {
                 //if the message was disliked, remove the message from the list of disliked messages
-                if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:message.messageID];
+                if ([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:messageID]) {
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:messageID];
                     noRating--;
                 }
                 //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
-                else if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:message.messageID];
+                else if ([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:messageID]) {
+                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:messageID];
                     yesRating--;
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:message.messageID];
-                    noRating++;
-                }
-                // else (i.e., when the message was neither liked or dislike, add it to the list of disliked messages)
-                else{
                     [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
                     noRating++;
                 }
-                // update the message rating on the server
+                // else (i.e., when the message was neither liked or disliked, add it to the list of disliked messages)
+                else {
+                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+                    noRating++;
+                }
+                // update the message rating
                 [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
                 [[SpeakUpManager sharedSpeakUpManager] savePeerData];
-            }else{
+            } else {
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
+            
+            message.yesIsPressed = NO;
+            message.noIsPressed = YES;
+            message.numberOfYes += yesRating;
+            message.numberOfNo += noRating;
+            
             [self.tableView reloadData];
             [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_down" value:nil] build]];
         }
@@ -692,9 +708,11 @@
         if(![inputTextView.text isEqualToString:@""]){
             // create a new message
             Message *newMessage = [[Message alloc] init];
-            newMessage.content= inputTextView.text;
+            newMessage.content = inputTextView.text;
             newMessage.parentMessageID = parentMessage.messageID;
-            newMessage.roomID=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            newMessage.roomID = [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            newMessage.messageID = [[NSProcessInfo processInfo] globallyUniqueString];
+            
             [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
             [inputTextView setText:@""];
             //update the input

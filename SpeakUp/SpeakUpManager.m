@@ -102,18 +102,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         
     } else if ([type isEqual:@"roommessages"]) {
         NSMutableDictionary* dict = packetContent.content;
-        [self receivedMessages: [dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
+        [self receivedMessages:[dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         
     } else if ([type isEqual:@"messagecreated"] || [type isEqual:@"createmessage"]) {
         NSMutableDictionary* dict = packetContent.content;
-        [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
+        [self receivedMessage:[dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         
     } else if ([type isEqual:@"messageupdated"] || [type isEqual:@"updatemessage"]) {
-        NSMutableDictionary* dict = packetContent.content;
-        [self receivedMessage: [dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        Message *message = packetContent.content;
+        [self receivedMessage:message];
+        [messageManagerDelegate updateMessagesInRoom:message.roomID];
         
     } else if ([type isEqual:@"roomdeleted"] || [type isEqual:@"deleteroom"]) {
         NSMutableDictionary* dict = packetContent.content;
@@ -683,16 +683,15 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    [socketIO sendEvent:@"updatemessage" withData:myData];
 //    [self savePeerData];
     
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:roomID forKey:@"room_id"];
+//    NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
+//    [messageDict setValue:message.messageID forKey:@"msg_id"];
+//    [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
+//    [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
+//    [myData setValue:messageDict forKey:@"message"];
     
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:roomID forKey:@"room_id"];
-    NSMutableDictionary* messageDict = [[NSMutableDictionary alloc] init];
-    [messageDict setValue:message.messageID forKey:@"msg_id"];
-    [messageDict setValue:[NSNumber numberWithInt:yesRating] forKey:@"liked"];
-    [messageDict setValue:[NSNumber numberWithInt: noRating] forKey:@"disliked"];
-    [myData setValue:messageDict forKey:@"message"];
-    
-    PacketContent* msg = [[PacketContent alloc] initWithType:@"updatemessage" withContent:myData];
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"updatemessage" withContent:message];
     NSError *error;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
