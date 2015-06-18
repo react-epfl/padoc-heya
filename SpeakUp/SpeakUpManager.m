@@ -106,9 +106,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         
     } else if ([type isEqual:@"messagecreated"] || [type isEqual:@"createmessage"]) {
-        NSMutableDictionary* dict = packetContent.content;
-        [self receivedMessage:[dict objectForKey:@"message"] roomID:[dict objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+        Message *message = packetContent.content;
+        [self receivedMessage:message];
+        [messageManagerDelegate updateMessagesInRoom:message.roomID];
         
     } else if ([type isEqual:@"messageupdated"] || [type isEqual:@"updatemessage"]) {
         Message *message = packetContent.content;
@@ -389,18 +389,18 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         for (Message *msg in room.messages) {
             if ([msg.messageID isEqual:message.messageID]) {
                 // update received, therefore just update the vote fields
-                msg.score=message.score;
-                msg.numberOfYes=message.numberOfYes;
-                msg.numberOfNo=message.numberOfNo;
-                messageUpdate=YES;
+                msg.score = message.score;
+                msg.numberOfYes = message.numberOfYes;
+                msg.numberOfNo = message.numberOfNo;
+                messageUpdate = YES;
             }
             if ([msg.messageID isEqual:message.parentMessageID]) {
                 for (Message *reply in msg.replies) {
                     if ([reply.messageID isEqual:message.messageID]) {
-                        reply.score=message.score;
-                        reply.numberOfYes=message.numberOfYes;
-                        reply.numberOfNo=message.numberOfNo;
-                        messageUpdate=YES;
+                        reply.score = message.score;
+                        reply.numberOfYes = message.numberOfYes;
+                        reply.numberOfNo = message.numberOfNo;
+                        messageUpdate = YES;
                     }
                 }
                 if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
@@ -594,16 +594,16 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 //    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
     
     
-    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:peer_id forKey:@"peer_id"];
-    [myData setValue:message.roomID forKey:@"room_id"];
-    [myData setValue:message.parentMessageID forKey:@"parent_id"];
-    NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
-    [messageData setValue:message.content forKey:@"body"];
-    [myData setValue:messageData forKey:@"message"];
+//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
+//    [myData setValue:peer_id forKey:@"peer_id"];
+//    [myData setValue:message.roomID forKey:@"room_id"];
+//    [myData setValue:message.parentMessageID forKey:@"parent_id"];
+//    NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
+//    [messageData setValue:message.content forKey:@"body"];
+//    [myData setValue:messageData forKey:@"message"];
     
     // Broadcast the message
-    PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:myData];
+    PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:message];
     NSError *error;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]

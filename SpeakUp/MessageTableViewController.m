@@ -472,17 +472,19 @@
                     [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:messageID];
                     yesRating = 1;
                 }
+                
+                message.yesIsPressed = YES;
+                message.noIsPressed = NO;
+                message.numberOfYes += yesRating;
+                message.numberOfNo += noRating;
+                message.score = message.numberOfYes - message.numberOfNo;
+                
                 // update the message rating
                 [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
                 [[SpeakUpManager sharedSpeakUpManager] savePeerData];
             } else {
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
-            
-            message.yesIsPressed = YES;
-            message.noIsPressed = NO;
-            message.numberOfYes += yesRating;
-            message.numberOfNo += noRating;
             
             [self.tableView reloadData];
             [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_up" value:nil] build]];
@@ -522,17 +524,19 @@
                     [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
                     noRating++;
                 }
+                
+                message.yesIsPressed = NO;
+                message.noIsPressed = YES;
+                message.numberOfYes += yesRating;
+                message.numberOfNo += noRating;
+                message.score = message.numberOfYes - message.numberOfNo;
+                
                 // update the message rating
                 [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
                 [[SpeakUpManager sharedSpeakUpManager] savePeerData];
             } else {
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
-            
-            message.yesIsPressed = NO;
-            message.noIsPressed = YES;
-            message.numberOfYes += yesRating;
-            message.numberOfNo += noRating;
             
             [self.tableView reloadData];
             [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_down" value:nil] build]];
