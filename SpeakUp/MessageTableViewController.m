@@ -715,7 +715,16 @@
             newMessage.content = inputTextView.text;
             newMessage.parentMessageID = parentMessage.messageID;
             newMessage.roomID = [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            
             newMessage.messageID = [[NSProcessInfo processInfo] globallyUniqueString];
+            
+//            newMessage.creationTime = [NSDateFormatter localizedStringFromDate:[NSDate date]
+//                                                                     dateStyle:NSDateFormatterMediumStyle
+//                                                                     timeStyle:NSDateFormatterFullStyle];
+            // Set the creation time
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+            newMessage.creationTime = [dateFormatter stringFromDate:[NSDate date]];
             
             [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
             [inputTextView setText:@""];
