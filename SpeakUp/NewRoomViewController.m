@@ -169,6 +169,10 @@
             myRoom.key = [[NSProcessInfo processInfo] globallyUniqueString];
             myRoom.creatorID = [[SpeakUpManager sharedSpeakUpManager] peer_id];
             
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+            myRoom.lastUpdateTime = [dateFormatter stringFromDate:[NSDate date]];
+            
             createRoomButton.enabled=NO;
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary* handler){
                 if ([handler objectForKey:@"key"]) {

@@ -716,11 +716,9 @@
             newMessage.parentMessageID = parentMessage.messageID;
             newMessage.roomID = [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
             
+            // Generate a random long string for the message id
             newMessage.messageID = [[NSProcessInfo processInfo] globallyUniqueString];
             
-//            newMessage.creationTime = [NSDateFormatter localizedStringFromDate:[NSDate date]
-//                                                                     dateStyle:NSDateFormatterMediumStyle
-//                                                                     timeStyle:NSDateFormatterFullStyle];
             // Set the creation time
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
@@ -733,6 +731,9 @@
             [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
             [[SpeakUpManager sharedSpeakUpManager] savePeerData];
             [self resizeInputBox];
+            
+            // Update the room
+            [[SpeakUpManager sharedSpeakUpManager] currentRoom].lastUpdateTime = [dateFormatter stringFromDate:[NSDate date]];
         }
     }
 }
