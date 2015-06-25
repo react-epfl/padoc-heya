@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I6L-Wc-bhm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I6L-Wc-bhm">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -455,40 +454,52 @@
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="go"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Room key" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="HxD-f9-f7W">
-                                <rect key="frame" x="15" y="20" width="570" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L2b-EX-uNU">
+                                <rect key="frame" x="0.0" y="159" width="600" height="185"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Private room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-oC-mA4">
+                                <rect key="frame" x="15" y="110" width="512" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="zQn-st-3pW"/>
+                                    <constraint firstAttribute="height" constant="28" id="UIb-4b-JUo"/>
                                 </constraints>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="go"/>
-                                <connections>
-                                    <outlet property="delegate" destination="zjH-Qu-7Hi" id="G9K-WK-tdL"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MI6-Z7-6u6">
-                                <rect key="frame" x="15" y="70" width="570" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" red="0.24867556330000001" green="0.2352782165" blue="0.195086176" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="People nearby will not see the room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lgd-mY-Xpt">
+                                <rect key="frame" x="16" y="131" width="512" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="maE-mF-7OY"/>
+                                    <constraint firstAttribute="height" constant="28" id="4FO-G7-vtv"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                <color key="textColor" red="0.24867556330000001" green="0.2352782165" blue="0.195086176" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Turn location on to create a new room" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vm1-ec-9FC">
+                                <rect key="frame" x="15" y="159" width="570" height="185"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="185" id="SqQ-GD-r8r"/>
+                                </constraints>
+                                <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Join room">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="veS-YF-dO8">
+                                <rect key="frame" x="536" y="120" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="2x0-Hs-9w4"/>
+                                    <constraint firstAttribute="width" constant="49" id="stg-M5-6if"/>
+                                </constraints>
                                 <connections>
-                                    <action selector="unlock:" destination="zjH-Qu-7Hi" eventType="touchUpInside" id="SIl-xn-22d"/>
+                                    <action selector="privateOrPublic:" destination="zjH-Qu-7Hi" eventType="valueChanged" id="DhL-QD-waA"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baa-5a-Z5A">
-                                <rect key="frame" x="15" y="70" width="570" height="30"/>
+                            </switch>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="76p-hg-FG8">
+                                <rect key="frame" x="290" y="8" width="20" height="20"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baa-5a-Z5A">
+                                <rect key="frame" x="15" y="72" width="570" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Hqq-rE-Itu"/>
@@ -504,81 +515,29 @@
                                 </state>
                                 <connections>
                                     <action selector="createRoom:" destination="zjH-Qu-7Hi" eventType="touchUpInside" id="dQi-sj-UQ8"/>
-                                    <action selector="unlock:" destination="zjH-Qu-7Hi" eventType="touchUpInside" id="A7V-3W-v9f"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L2b-EX-uNU">
-                                <rect key="frame" x="0.0" y="159" width="600" height="185"/>
-                            </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-oC-mA4">
-                                <rect key="frame" x="15" y="110" width="512" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="UIb-4b-JUo"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
-                                <color key="textColor" red="0.24867556330000001" green="0.2352782165" blue="0.195086176" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="People nearby will not see the room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lgd-mY-Xpt">
-                                <rect key="frame" x="16" y="131" width="512" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="4FO-G7-vtv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <color key="textColor" red="0.24867556330000001" green="0.2352782165" blue="0.195086176" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="Turn location on to create a new room" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vm1-ec-9FC">
-                                <rect key="frame" x="15" y="159" width="570" height="185"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="185" id="SqQ-GD-r8r"/>
-                                </constraints>
-                                <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="veS-YF-dO8">
-                                <rect key="frame" x="536" y="120" width="51" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="2x0-Hs-9w4"/>
-                                    <constraint firstAttribute="width" constant="49" id="stg-M5-6if"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="privateOrPublic:" destination="zjH-Qu-7Hi" eventType="valueChanged" id="DhL-QD-waA"/>
-                                </connections>
-                            </switch>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="76p-hg-FG8">
-                                <rect key="frame" x="290" y="8" width="20" height="20"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="veS-YF-dO8" firstAttribute="top" secondItem="baa-5a-Z5A" secondAttribute="bottom" constant="20" id="00v-83-Fm0"/>
-                            <constraint firstItem="HxD-f9-f7W" firstAttribute="top" secondItem="M7M-eO-4Ej" secondAttribute="bottom" constant="20" id="2Ih-je-R03"/>
                             <constraint firstAttribute="trailing" secondItem="Vm1-ec-9FC" secondAttribute="trailing" constant="15" id="2Ud-XJ-IYU"/>
                             <constraint firstItem="Vm1-ec-9FC" firstAttribute="top" secondItem="lgd-mY-Xpt" secondAttribute="bottom" id="9b5-Hb-boS"/>
                             <constraint firstAttribute="trailing" secondItem="veS-YF-dO8" secondAttribute="trailing" constant="15" id="DmT-7D-6J7"/>
                             <constraint firstAttribute="trailing" secondItem="L2b-EX-uNU" secondAttribute="trailing" id="GKL-At-Yo3"/>
                             <constraint firstItem="9mp-DC-UcW" firstAttribute="top" secondItem="L2b-EX-uNU" secondAttribute="bottom" constant="192" id="KWv-Xz-f4v"/>
-                            <constraint firstItem="baa-5a-Z5A" firstAttribute="top" secondItem="HxD-f9-f7W" secondAttribute="bottom" constant="20" id="LQx-sh-Thp"/>
-                            <constraint firstItem="MI6-Z7-6u6" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="15" id="LlW-HL-qdY"/>
                             <constraint firstItem="Mbx-oC-mA4" firstAttribute="top" secondItem="baa-5a-Z5A" secondAttribute="bottom" constant="10" id="Nnc-am-tPU"/>
                             <constraint firstItem="baa-5a-Z5A" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="15" id="OX0-HO-6an"/>
                             <constraint firstItem="veS-YF-dO8" firstAttribute="leading" secondItem="lgd-mY-Xpt" secondAttribute="trailing" constant="8" id="PUQ-ci-HME"/>
                             <constraint firstAttribute="trailing" secondItem="El6-M9-lLT" secondAttribute="trailing" constant="15" id="Sh1-fv-ZMF"/>
                             <constraint firstItem="veS-YF-dO8" firstAttribute="leading" secondItem="Mbx-oC-mA4" secondAttribute="trailing" constant="9" id="T2P-HD-uNK"/>
-                            <constraint firstItem="MI6-Z7-6u6" firstAttribute="top" secondItem="HxD-f9-f7W" secondAttribute="bottom" constant="20" id="TCk-Hg-si6"/>
                             <constraint firstItem="lgd-mY-Xpt" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="16" id="aw2-X2-fHM"/>
                             <constraint firstItem="Vm1-ec-9FC" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="15" id="baL-ci-ZgW"/>
                             <constraint firstItem="L2b-EX-uNU" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" id="cUJ-Yv-5MR"/>
-                            <constraint firstItem="HxD-f9-f7W" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="15" id="dxv-wn-itN"/>
-                            <constraint firstAttribute="trailing" secondItem="MI6-Z7-6u6" secondAttribute="trailing" constant="15" id="gn0-6j-0X8"/>
                             <constraint firstItem="76p-hg-FG8" firstAttribute="top" secondItem="M7M-eO-4Ej" secondAttribute="bottom" constant="8" id="iH3-R9-FPD"/>
                             <constraint firstItem="Mbx-oC-mA4" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="15" id="km1-yM-eiH"/>
                             <constraint firstItem="L2b-EX-uNU" firstAttribute="top" secondItem="lgd-mY-Xpt" secondAttribute="bottom" id="mQa-cV-uPs"/>
                             <constraint firstItem="lgd-mY-Xpt" firstAttribute="top" secondItem="baa-5a-Z5A" secondAttribute="bottom" constant="31" id="qQa-IE-io8"/>
-                            <constraint firstAttribute="trailing" secondItem="HxD-f9-f7W" secondAttribute="trailing" constant="15" id="sJb-v6-dbd"/>
                             <constraint firstItem="El6-M9-lLT" firstAttribute="leading" secondItem="Ae3-an-GHo" secondAttribute="leading" constant="15" id="ssd-x2-osx"/>
                             <constraint firstAttribute="centerX" secondItem="76p-hg-FG8" secondAttribute="centerX" id="wDt-ur-do7"/>
                             <constraint firstAttribute="trailing" secondItem="baa-5a-Z5A" secondAttribute="trailing" constant="15" id="yRn-Qt-9bX"/>
@@ -587,19 +546,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="IeW-T5-6Gj">
                         <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="8DL-IZ-cRe">
-                            <rect key="frame" x="203" y="8" width="194" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
-                            <segments>
-                                <segment title="UNLOCK"/>
-                                <segment title="CREATE"/>
-                            </segments>
-                            <color key="tintColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="createOrUnlock:" destination="zjH-Qu-7Hi" eventType="valueChanged" id="HGb-Yx-2TG"/>
-                            </connections>
-                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" id="FJz-Me-F5E">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gPB-HY-wWo">
                                 <rect key="frame" x="282" y="11" width="22" height="22"/>
@@ -619,13 +565,10 @@
                         <outlet property="connectionLostSpinner" destination="76p-hg-FG8" id="Mmd-BS-qix"/>
                         <outlet property="createRoomButton" destination="baa-5a-Z5A" id="WB6-CW-lLb"/>
                         <outlet property="input" destination="El6-M9-lLT" id="0mK-US-6IV"/>
-                        <outlet property="keyTextField" destination="HxD-f9-f7W" id="Ehu-Lz-XYB"/>
                         <outlet property="mapView" destination="L2b-EX-uNU" id="qtg-Vb-iyq"/>
                         <outlet property="privatSwitch" destination="veS-YF-dO8" id="KY7-o5-mQ4"/>
                         <outlet property="privateBottomLabel" destination="lgd-mY-Xpt" id="uIr-Nl-dcn"/>
                         <outlet property="privateTopLabel" destination="Mbx-oC-mA4" id="shb-1N-0Vy"/>
-                        <outlet property="segmentedControl" destination="8DL-IZ-cRe" id="amC-VM-6m7"/>
-                        <outlet property="unlockRoomButton" destination="MI6-Z7-6u6" id="NFO-yJ-DaT"/>
                         <outlet property="warningLabel" destination="Vm1-ec-9FC" id="2cr-9m-JIf"/>
                     </connections>
                 </viewController>

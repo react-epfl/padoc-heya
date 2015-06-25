@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpeakUp/SpeakUpManager.m"
-            timestampString = "456096122.1781"
+            timestampString = "456883407.038619"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
-            landmarkName = "-addMessage:toRoom:"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
+            landmarkName = "-deleteMessage:inRoom:withRoomID:withParent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
