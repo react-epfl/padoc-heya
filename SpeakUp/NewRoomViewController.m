@@ -40,6 +40,8 @@
     customLabel.textAlignment = NSTextAlignmentCenter;
     [customLabel setFont:[UIFont fontWithName:FontName size:MediumFontSize]];
     customLabel.textColor =  [UIColor whiteColor];
+    self.navigationItem.titleView = customLabel;
+    [((UILabel *)self.navigationItem.titleView) setText:NSLocalizedString(@"NEW_ROOM", nil)];
     
     // INPUT
     self.input.delegate=self;

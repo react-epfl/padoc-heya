@@ -70,8 +70,9 @@
 
 
 
+"NEW_ROOM" = "NOUVELLE SALLE";
 "NO_ROOM"= "Ajouter une salle avec '+'";
-"ROOMS" ="Salles";
+"ROOMS" ="SALLES";
 "ROOM_INFO_22"="%d messages, %d votes";
 "ROOM_INFO_12"="%d message, %d votes";
 "ROOM_INFO_21"="%d messages, %d vote";

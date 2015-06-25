@@ -12,7 +12,7 @@
 ///////////////////////
 "NO_ROOM"= "Press '+' to add a room";
 
-"ROOMS"="Rooms";
+"ROOMS"="ROOMS";
 
 "NEARBY_ROOMS" = "Nearby rooms";
 
@@ -58,6 +58,8 @@
 ///////////////////////
 // NEW ROOM VIEW
 ///////////////////////
+"NEW_ROOM" = "NEW ROOM";
+
 "CREATE_ROOM" = "Create new room";
 
 "UNLOCK" = "Join";
