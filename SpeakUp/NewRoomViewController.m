@@ -20,11 +20,10 @@
 
 @implementation NewRoomViewController
 
-@synthesize input, mapView, connectionLostSpinner, createRoomButton, createRoomLabel, privateBottomLabel, privateTopLabel, privatSwitch, warningLabel;
+@synthesize input, connectionLostSpinner, createRoomButton, createRoomLabel, warningLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mapView.delegate = self;
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
     
     // BACK BUTTON
@@ -57,7 +56,7 @@
     [createRoomButton setTitle:NSLocalizedString(@"CREATE_ROOM", nil) forState:UIControlStateNormal];
     createRoomButton.layer.masksToBounds=YES;
     [createRoomButton setTitleColor: [UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [createRoomButton setBackgroundColor:myPurple];
+    [createRoomButton setBackgroundColor:myLightBlue];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,30 +67,14 @@
         [connectionLostSpinner startAnimating];
     }
     
-    // GOOGLE TRACKER
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"NewRoom Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+//    // GOOGLE TRACKER
+//    id tracker = [[GAI sharedInstance] defaultTracker];
+//    [tracker set:kGAIScreenName value:@"NewRoom Screen"];
+//    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    MKCoordinateRegion mapRegion;
-    mapRegion.center = self.mapView.userLocation.coordinate;
-    // set sane span values
-    mapRegion.span.latitudeDelta = 0.0f;
-    mapRegion.span.longitudeDelta = 0.0f;
-    // check for sane center values
-    if (mapRegion.center.latitude > 90.0f || mapRegion.center.latitude < -90.0f ||
-        mapRegion.center.longitude > 360.0f || mapRegion.center.longitude < -180.0f
-        ) {
-        //Bad Lat or Long don't do anything
-    } else {
-        [self.mapView setRegion:mapRegion animated:YES];
-    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -101,18 +84,14 @@
     return NO;
 }
 
--(IBAction)createRoom:(id)sender {
+- (IBAction)createRoom:(id)sender {
     if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
         NSString *trimmedString = [input.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        if (self.input.text.length>0 && trimmedString.length > 0) {
+        if (self.input.text.length > 0 && trimmedString.length > 0) {
             NSLog(@"creating a new room %@ ", input.text);
             
             Room *myRoom = [[Room alloc] init];
             myRoom.name = self.input.text;
-            if (!privatSwitch.on) {
-                myRoom.latitude = self.mapView.userLocation.coordinate.latitude;
-                myRoom.longitude = self.mapView.userLocation.coordinate.longitude;
-            }
             myRoom.range = RANGE;
             myRoom.lifetime = LIFETIME;
             myRoom.id_type = ANONYMOUS;
@@ -126,17 +105,19 @@
             myRoom.lastUpdateTime = [dateFormatter stringFromDate:[NSDate date]];
             
             createRoomButton.enabled = NO;
-            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary* handler) {
-                if ([handler objectForKey:@"key"]) {
+            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary *handler) {
+                NSString *key = [handler objectForKey:@"key"];
+                if (key) {
                     [self.navigationController popViewControllerAnimated:YES];
                     self.input.text = @"";
-                    [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] addObject:[handler objectForKey:@"key"]];
+                    [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] addObject:key];
                 } else {
                     [self createfailed];
                 }
                 createRoomButton.enabled = YES;
             }];
         }
+        
         [[SpeakUpManager sharedSpeakUpManager] savePeerData];
     }
 }
@@ -151,7 +132,7 @@
 }
 
 // used to limit the number of characters to MAX_LENGTH
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSUInteger newLength = (textField.text.length - range.length) + string.length;
     if (newLength <= MAX_LENGTH){
         return YES;
@@ -159,19 +140,7 @@
     return NO;
 }
 
--(IBAction)privateOrPublic:(id)sender {
-    if (privatSwitch.on) {
-        [mapView setHidden:YES];
-        privateTopLabel.text = NSLocalizedString(@"PRIVATE_ROOM_TOP", nil);
-        privateBottomLabel.text = NSLocalizedString(@"PRIVATE_ROOM_BOTTOM", nil);
-    } else {
-        [mapView setHidden:NO];
-        privateTopLabel.text = NSLocalizedString(@"PUBLIC_ROOM_TOP", nil);
-        privateBottomLabel.text = NSLocalizedString(@"PUBLIC_ROOM_BOTTOM", nil);
-    }
-}
-
--(IBAction)goToWebSite:(id)sender {
+- (IBAction)goToWebSite:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
     [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                                         action:@"button_press"
@@ -179,12 +148,12 @@
                                                                                          value:nil] build]];
 }
 
--(void)connectionWasLost {
-    [connectionLostSpinner startAnimating];
+- (void)connectionWasLost {
+//    [connectionLostSpinner startAnimating];
 }
 
--(void)connectionHasRecovered {
-    [connectionLostSpinner stopAnimating];
+- (void)connectionHasRecovered {
+//    [connectionLostSpinner stopAnimating];
 }
 
 @end

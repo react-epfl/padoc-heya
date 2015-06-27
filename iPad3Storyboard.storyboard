@@ -12,7 +12,7 @@
                     <navigationItem key="navigationItem" id="0Q5-K6-6hs"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translucent="NO" id="5eX-JM-GVo">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.29411764705881999" green="0.82745098039216003" blue="0.92549019607842997" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="EIj-nH-ko1">
                         <rect key="frame" x="0.0" y="416" width="320" height="44"/>
@@ -215,7 +215,7 @@
                                 <segment title="BEST"/>
                                 <segment title="RECENT"/>
                             </segments>
-                            <color key="tintColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.29411764705881999" green="0.82745098039216003" blue="0.92549019607842997" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="sortBy:" destination="Yam-4S-fMK" eventType="valueChanged" id="znf-4N-5j6"/>
                             </connections>
@@ -347,17 +347,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="Turn location on to create a new room" textAlignment="center" id="MuW-Nm-ogq">
-                                <rect key="frame" x="66" y="80" width="636" height="126"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="nOO-Le-9A0">
-                                <rect key="frame" x="0.0" y="117" width="768" height="591"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DHw-Wq-b0q">
                                 <rect key="frame" x="448" y="42" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -395,8 +384,6 @@
                         <outlet property="connectionLostSpinner" destination="nV8-Pu-5YB" id="AZs-aP-6UG"/>
                         <outlet property="createRoomButton" destination="DHw-Wq-b0q" id="Sa1-ls-2vn"/>
                         <outlet property="input" destination="W8Y-B2-C6V" id="U1d-ix-xL7"/>
-                        <outlet property="mapView" destination="nOO-Le-9A0" id="MR4-YL-wSp"/>
-                        <outlet property="warningLabel" destination="MuW-Nm-ogq" id="0zG-Yw-Fke"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UmC-pP-5XN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -574,7 +561,7 @@
                                 <segment title="BEST"/>
                                 <segment title="RECENT"/>
                             </segments>
-                            <color key="tintColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.29411764705881999" green="0.82745098039216003" blue="0.92549019607842997" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="sortBy:" destination="nwH-V8-EwE" eventType="valueChanged" id="38b-vF-fXJ"/>
                             </connections>
@@ -647,5 +634,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="qU5-Xc-LXR"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.23921570180000001" green="0.40784317260000003" blue="0.69803923369999998" alpha="1" colorSpace="deviceRGB"/>
+    <color key="tintColor" red="0.29803921568627451" green="0.84313725490196079" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
 </document>

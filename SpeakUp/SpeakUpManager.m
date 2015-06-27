@@ -20,9 +20,9 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id, likedMessages, speakUpDelegate,dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK,unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom,inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
+@synthesize peer_id, dev_id,likedMessages, speakUpDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
 
-static SpeakUpManager   *sharedSpeakUpManager = nil;
+static SpeakUpManager *sharedSpeakUpManager = nil;
 
 // creates the sharedSpeakUpManager singleton
 +(id) sharedSpeakUpManager{
@@ -35,7 +35,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.myOwnRoomArray= [[NSMutableArray alloc] init];
             sharedSpeakUpManager.connectionDelegate=nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
-            sharedSpeakUpManager.connectionIsOK=YES;
+            sharedSpeakUpManager.connectionIsOK=NO;
             sharedSpeakUpManager.locationIsOK=NO;
             sharedSpeakUpManager.currentRoomID=nil;
             sharedSpeakUpManager.peerLocation=nil;
@@ -51,15 +51,6 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.likeType= THUMB;
             sharedSpeakUpManager.etiquetteType = NO_ETIQUETTE;
             sharedSpeakUpManager.etiquetteWasShown = NO;
-            
-//            // Set up the socket and the groups
-//            sharedSpeakUpManager.socket = [[MHMulticastSocket alloc] initWithServiceType:@"speakup"];
-//            sharedSpeakUpManager.socket.delegate = sharedSpeakUpManager;
-//            // For background mode
-//            //    [speakUpDelegate setSocket:self.socket];
-//            // Join the groups
-//            [sharedSpeakUpManager.socket joinGroup:GLOBAL];
-//            [sharedSpeakUpManager.socket joinGroup:[sharedSpeakUpManager.socket getOwnPeer]];
         }
     }
     return sharedSpeakUpManager;
@@ -74,14 +65,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
         didReceiveMessage:(NSData *)message
                  fromPeer:(NSString *)peer
             withTraceInfo:(NSArray *)traceInfo {
-    NSLog(@"########## Packet received");
-    
     [self stopNetworking];
     
-    PacketContent* packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:message];
+    PacketContent *packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:message];
     
-//    NSLog(@"webSocket received a message: %@", packet.args );
-    NSString* type = packetContent.type;
+    NSString *type = packetContent.type;
+    NSLog(@"Packet of type '%@' received", type);
+    
     if ([type isEqual:@"peer_welcome"]) {
         NSDictionary *data = packetContent.content;
         [self receivedWelcome:data];
@@ -93,7 +83,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     } else if ([type isEqual:@"room"]) {
         Room *room = packetContent.content;
         if (room) {
-            NSString* roomID=[self receivedRoomObject: room];
+            NSString *roomID=[self receivedRoomObject: room];
             [messageManagerDelegate updateMessagesInRoom:roomID];
         }
         
@@ -187,9 +177,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 // WELCOME
--(void)receivedWelcome:(NSDictionary*)data{
+-(void)receivedWelcome:(NSDictionary *)data {
     peer_id = [data objectForKey:@"peer_id"];
-    connectionIsOK=YES;
+    connectionIsOK = YES;
     [connectionDelegate connectionHasRecovered];
 //    NSNumber* minVersion = [data objectForKey:@"min_v"];
 //    NSNumber* maxVersion = [data objectForKey:@"max_v"];
@@ -213,7 +203,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 
 // RECEIVED ROOMS
 -(void)receivedRooms:(NSArray*)roomDictionaries{
-    [roomArray removeAllObjects];
+//    [roomArray removeAllObjects];
     self.locationAtLastReset=self.peerLocation;
     for (NSMutableDictionary *roomDictionary in roomDictionaries) {
         [self receivedRoom:roomDictionary];
@@ -482,11 +472,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 // OUTGOING MESSAGES
 
 // CONNECT
-- (void)connect{
+- (void)connect {
     if (socket == nil) {
         // Set up the socket and the groups
-        socket = [[MHMulticastSocket alloc] initWithServiceType:@"chat"];
+        socket = [[MHMulticastSocket alloc] initWithServiceType:@"heya"];
         socket.delegate = self;
+        
+        // Set the peer id
+        peer_id = [socket getOwnPeer];
     
         // For background mode
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -494,14 +487,14 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
     
         // Join the groups
         [socket joinGroup:GLOBAL];
-        [socket joinGroup:[socket getOwnPeer]];
+        [socket joinGroup:peer_id];
     }
     
     connectionIsOK = YES;
 }
 
 // 2 - HANDSHAKE
-- (void)handshake{
+- (void)handshake {
 //    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
 //    [myData setValue:API_VERSION forKey:@"api_v"];
 //    [myData setValue:self.dev_id forKey:@"dev_id"];
@@ -525,25 +518,13 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 // GET ROOMS SOCKET.IO
--(void)getNearbyRooms{
+- (void)getNearbyRooms {
     if (!connectionIsOK) {
         [self connect];
     } else {
-//        NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-//        [myData setValue:API_VERSION forKey:@"api_v"];
-//        [myData setValue:self.peer_id forKey:@"peer_id"];
-//        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-//        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.latitude] forKey:@"lat"];
-//        [myLoc setValue:[NSNumber numberWithDouble:self.peerLocation.coordinate.longitude] forKey:@"lng"];
-//        [myData setValue:myLoc forKey:@"loc"];
-//        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-//        [myData setValue:[NSNumber numberWithInt:RANGE] forKey:@"range"];
-//        NSArray* unlockedAndMyOwnRoomKeyArray = [[self.unlockedRoomKeyArray mutableCopy] arrayByAddingObjectsFromArray:[self.myOwnRoomKeyArray mutableCopy]];
-        //        [myData setValue:unlockedAndMyOwnRoomKeyArray forKey:@"keys"];// UNLOCKED KEYS AND OWN ROOMS
-//        [socketIO sendEvent:@"getrooms" withData:myData andAcknowledge:^(NSArray *data) {
-//            NSLog(@"Received nearby rooms: %@", data  );
-//            [self receivedRooms:data];
-//        }];
+        // Empty the current list of rooms
+        [roomArray removeAllObjects];
+        [roomArray addObjectsFromArray:myOwnRoomArray];
     
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
@@ -554,22 +535,7 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 // CALL FOR MESSAGES IN A ROOM EITHER UPON UNLOCK OR ENTERING A ROOM
--(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler{
-//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-//    [myData setValue:API_VERSION forKey:@"api_v"];
-//    [myData setValue:self.peer_id forKey:@"peer_id"];
-//    [myData setValue:room_id forKey:@"room_id"];
-//    [myData setValue:key forKey:@"key"];
-//    [self startNetworking];
-//    [self.socketIO sendEvent:@"getroom" withData:myData andAcknowledge:^(NSDictionary *data) {
-//        NSLog(@"Received messages of a room: %@", data  );
-//        // ADER NEEDS TO CHECK WHETHER IT IS A CORRECT ROOM OR NOT
-//        [self receivedMessages: [data objectForKey:@"messages"] roomID:[data objectForKey:@"room_id"]];
-//        [messageManagerDelegate updateMessagesInRoom:[data objectForKey:@"room_id"]];
-//        handler(data);
-//    }];
-    
-    
+- (void) getMessagesInRoomID:(NSString *)room_id  orRoomHash:(NSString *) key withHandler:(void (^)(NSDictionary *))handler {
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:room_id forKey:@"room_id"];
     [myData setValue:key forKey:@"key"];
@@ -580,8 +546,9 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
 }
+
 // CREATE MSG SOCKET.IO
--(void) createMessage:(Message *) message {
+- (void) createMessage:(Message *) message {
 //    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
 //    [myData setValue:API_VERSION forKey:@"api_v"];
 //    [myData setValue:self.peer_id forKey:@"peer_id"];
@@ -617,51 +584,20 @@ static SpeakUpManager   *sharedSpeakUpManager = nil;
 }
 
 // CREATE ROOM
-- (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler{
-//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-//    [myData setValue:API_VERSION forKey:@"api_v"];
-//    [myData setValue:self.peer_id forKey:@"creator_id"];
-//    [myData setValue:room.name forKey:@"name"];
-//    [myData setValue:room.id_type forKey:@"id_type"];
-//    [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
-//    if (room.latitude!=-1 && room.longitude!=-1) {
-//        NSMutableDictionary* myLoc = [[NSMutableDictionary alloc] init];
-//        [myLoc setValue:[NSNumber numberWithDouble:room.latitude] forKey:@"lat"];
-//        [myLoc setValue:[NSNumber numberWithDouble:room.longitude] forKey:@"lng"];
-//        [myData setValue:myLoc forKey:@"loc"];
-//        [myData setValue:[NSNumber numberWithDouble:self.peerLocation.horizontalAccuracy] forKey:@"accu"];
-//    }
-//    [socketIO sendEvent:@"createroom" withData:myData andAcknowledge:^(NSDictionary *data) {
-//        NSString* roomID=[self receivedRoom: data];
-//        [messageManagerDelegate updateMessagesInRoom:roomID];
-//        [myOwnRoomKeyArray addObject:roomID];
-//        NSLog(@"Received newly created room: %@", data );
-//        handler(data);
-//    }];
-//    [self savePeerData];
-//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
+- (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler {
+    // Save the room locally
+    [self receivedRoomObject:room];
     
+    // Broadcast the room to the other peers
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:room];
     NSError *error;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
-    NSString* roomID=[self receivedRoomObject:room];
-    [messageManagerDelegate updateMessagesInRoom:roomID];
-    [myOwnRoomKeyArray addObject:roomID];
-    
+    // Use the creation view callback
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:room.name forKey:@"name"];
-    [myData setValue:room.id_type forKey:@"id_type"];
-    [myData setValue:[NSNumber numberWithBool:room.isOfficial] forKey:@"official"];
-    
-    // Let us generate a random string for the room ID
-    [myData setValue:room.roomID forKey:@"room_id"];
     [myData setValue:room.key forKey:@"key"];
-    
-    [myData setValue:room.creatorID forKey:@"creator_id"];
-    
     handler(myData);
     
     [self savePeerData];

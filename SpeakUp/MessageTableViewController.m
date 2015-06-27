@@ -88,7 +88,7 @@
     self.keyboardIsVisible=NO;
     self.keyboardHeight=0;
     self.inputView = [[UIView alloc] initWithFrame:CGRectMake(0,self.tableView.contentOffset.y+(self.tableView.frame.size.height-INPUTVIEW_HEIGHT),self.view.frame.size.width,INPUTVIEW_HEIGHT)];
-    self.inputView.backgroundColor = myPurple;
+    self.inputView.backgroundColor = myLightBlue;
     [self.view addSubview:inputView];
     self.inputTextView.text=@"";
     self.inputButton = [UIButton buttonWithType:UIButtonTypeCustom];
