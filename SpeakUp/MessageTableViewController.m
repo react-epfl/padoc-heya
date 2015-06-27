@@ -217,11 +217,11 @@
     }
     [expirationLabel setText: expirationTime];
     
-    //GOOGLE TRACKER
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker setAllowIDFACollection:YES];
-    [tracker set:kGAIScreenName value:@"Message Screen"];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+//    //GOOGLE TRACKER
+//    id tracker = [[GAI sharedInstance] defaultTracker];
+//    [tracker setAllowIDFACollection:YES];
+//    [tracker set:kGAIScreenName value:@"Message Screen"];
+//    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     
 
     [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
