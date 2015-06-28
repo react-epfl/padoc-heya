@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHMulticastSocket.h"
+#import "MHSocket.h"
 
 @protocol SpeakUpManagerDelegate <NSObject>
 

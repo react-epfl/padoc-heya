@@ -13,7 +13,7 @@
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
-@property (nonatomic, strong) MHMulticastSocket *socket;
+@property (nonatomic, strong) MHSocket *socket;
 
 @end
 

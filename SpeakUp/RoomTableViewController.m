@@ -249,6 +249,7 @@
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
         [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
             NSLog(@"XXXXXXXXXXXXXXX");
+            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] addObject:[[SpeakUpManager sharedSpeakUpManager] currentRoom].key];
         }];
     }
     
@@ -291,7 +292,9 @@
             UNLOCKED_SECTION = -1;
             NEARBY_SECTION--;
         }
+        
         [self.tableView reloadData];
+        NSLog(@"HELLO");
     }
 }
 

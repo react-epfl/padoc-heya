@@ -25,7 +25,7 @@
 static SpeakUpManager *sharedSpeakUpManager = nil;
 
 // creates the sharedSpeakUpManager singleton
-+(id) sharedSpeakUpManager{
++ (id) sharedSpeakUpManager{
     @synchronized(self) {
         if (sharedSpeakUpManager == nil){
             sharedSpeakUpManager.avatarCacheByPeerID = [[NSCache alloc] init];
@@ -58,7 +58,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CALLBACKS OF MHMULTICAST - INCOMING MESSAGES
+// CALLBACKS OF MultiHop lib - INCOMING MESSAGES
 
 // SOCKET DID RECEIVE MESSAGE
 - (void)mhSocket:(MHSocket *)mhSocket
@@ -323,7 +323,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
 }
 
--(void)addMessage:(Message*) message toRoom:(Room*) room {
+- (void)addMessage:(Message*) message toRoom:(Room*) room {
     if ([room.roomID isEqual:message.roomID]) {
         BOOL messageUpdate=NO;
         for (Message *msg in room.messages) {
@@ -357,7 +357,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
 }
 
--(void)receivedMessageToDelete:(NSString*) m_id inRoom:(NSString*) room_id withParent:(NSString*) parent_id{
+- (void)receivedMessageToDelete:(NSString*) m_id inRoom:(NSString*) room_id withParent:(NSString*) parent_id{
     for(Room *room in roomArray){
         [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
     }
@@ -369,7 +369,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
 }
 
--(void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id {
+- (void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id {
     if ([room_id isEqual:room_id]) {
         Message* messageToDelete=nil;
         for (Message *msg in room.messages) {
@@ -425,7 +425,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 - (void)connect {
     if (socket == nil) {
         // Set up the socket and the groups
-        socket = [[MHMulticastSocket alloc] initWithServiceType:@"heya"];
+        socket = [[MHSocket alloc] initWithServiceType:@"heya"];
         socket.delegate = self;
         
         // Set the peer id
@@ -499,26 +499,6 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 
 // CREATE NEW MESSAGE
 - (void) createMessage:(Message *) message {
-//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-//    [myData setValue:API_VERSION forKey:@"api_v"];
-//    [myData setValue:self.peer_id forKey:@"peer_id"];
-//    [myData setValue:message.roomID forKey:@"room_id"];
-//    [myData setValue:message.parentMessageID forKey:@"parent_id"];
-//    NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
-//    [messageData setValue:message.content forKey:@"body"];
-//    [myData setValue:messageData forKey:@"message"];
-//    [socketIO sendEvent:@"createmessage" withData:myData];
-//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
-    
-    
-//    NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-//    [myData setValue:peer_id forKey:@"peer_id"];
-//    [myData setValue:message.roomID forKey:@"room_id"];
-//    [myData setValue:message.parentMessageID forKey:@"parent_id"];
-//    NSMutableDictionary* messageData = [[NSMutableDictionary alloc] init];
-//    [messageData setValue:message.content forKey:@"body"];
-//    [myData setValue:messageData forKey:@"message"];
-    
     // Broadcast the message
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:message];
     NSError *error;
@@ -725,6 +705,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];
     [defaults synchronize];
 }
+
 // UTILITIES
 //-(NSArray*) sortArrayByDistance:(NSArray*) unsortedRooms{
 //    NSSortDescriptor *sortDescriptor;
@@ -742,31 +723,35 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     sortedArray = [unsortedRooms sortedArrayUsingDescriptors:sortDescriptors];
     return sortedArray;
 }
+
 // METHODS RELATED TO NETWORKING
--(void)startNetworking{
+- (void)startNetworking {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
--(void)stopNetworking{
+
+- (void)stopNetworking {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
--(Room*) currentRoom{
-    for(Room *room in myOwnRoomArray){
-        if([room.roomID isEqual:self.currentRoomID]){
+
+- (Room*)currentRoom {
+    for (Room *room in myOwnRoomArray) {
+        if ([room.roomID isEqual:self.currentRoomID]) {
             return room;
         }
     }
-    for(Room *room in unlockedRoomArray){
-        if([room.roomID isEqual:self.currentRoomID]){
+    for (Room *room in unlockedRoomArray) {
+        if ([room.roomID isEqual:self.currentRoomID]) {
             return room;
         }
     }
-    for(Room *room in roomArray){
-        if([room.roomID isEqual:self.currentRoomID]){
+    for (Room *room in roomArray) {
+        if ([room.roomID isEqual:self.currentRoomID]) {
             return room;
         }
     }
     return nil;
 }
+
 // AB TESTING
 -(void)handle_AB_testing:(NSArray*)ab_testing_flags{
     if ([ab_testing_flags containsObject:THUMB]) {
