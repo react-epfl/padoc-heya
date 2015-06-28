@@ -48,26 +48,26 @@
 
 @interface SpeakUpManager : NSObject <CLLocationManagerDelegate, MHSocketDelegate>
 
-+(id) sharedSpeakUpManager;
++ (id)sharedSpeakUpManager;
 
 - (void)connect;
--(void)savePeerData;
+- (void)savePeerData;
 - (void)getNearbyRooms;
--(void) deleteRoom:(Room *) room;
--(void) deleteMessage:(Message *) message;
--(void) markMessageAsSpam:(Message *) message;
--(void)createMessage:(Message *) message;
-- (void)rateMessage:(Message*)message inRoom:(NSString*)roomID  yesRating:(int) yesRating noRating:(int) noRating;
+- (void)deleteRoom:(Room *)room;
+- (void)deleteMessage:(Message *)message;
+- (void)markMessageAsSpam:(Message *)message;
+- (void)createMessage:(Message *)message;
+- (void)rateMessage:(Message*)message inRoom:(NSString*)roomID yesRating:(int)yesRating noRating:(int)noRating;
 - (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler;
--(void) getMessagesInRoomID:(NSString*)room_id  orRoomHash:(NSString*) key withHandler:(void (^)(NSDictionary*))handler;
+- (void)getMessagesInRoomID:(NSString*)room_id orRoomHash:(NSString*)key withHandler:(void (^)(NSDictionary*))handler;
 
 @property (strong, nonatomic) MHSocket *socket;
 @property (nonatomic) BOOL connectionIsOK;
 @property (nonatomic) BOOL locationIsOK;
 // Peer fields
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLLocation* locationAtLastReset;
-@property (strong, nonatomic) CLLocation* peerLocation;
+@property (strong, nonatomic) CLLocation *locationAtLastReset;
+@property (strong, nonatomic) CLLocation *peerLocation;
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
 // inputText is the user's unsent message 
@@ -86,21 +86,21 @@
 // roomArray is the main data element, it contains nearby room objects, which contain messages and ratings
 @property (strong, nonatomic) NSMutableArray *roomArray;//nearbyRooms
 @property (strong, nonatomic) NSMutableArray *unlockedRoomArray; // contains all unlocked rooms
-@property (strong, nonatomic) NSMutableArray *unlockedRoomKeyArray; // contains all unlocked rooms and all my own room keys
-@property (strong, nonatomic) NSMutableArray *myOwnRoomKeyArray; // contains all my own room keys
+@property (strong, nonatomic) NSMutableArray *unlockedRoomIDArray; // contains all unlocked rooms and all my own room IDs
 @property (strong, nonatomic) NSMutableArray *myOwnRoomArray; // contains all my own rooms
+@property (strong, nonatomic) NSMutableArray *myOwnRoomIDArray; // contains all my own room IDs
 
-@property (strong, nonatomic) NSCache* avatarCacheByPeerID;
+@property (strong, nonatomic) NSCache *avatarCacheByPeerID;
 // Fields used to communicate with the middleware
-@property (nonatomic)  NSString  *dev_id;//device ID
-@property (nonatomic)  NSString  *peer_id;// peer ID recieved from the server
+@property (nonatomic) NSString *dev_id;//device ID
+@property (nonatomic) NSString *peer_id;// peer ID recieved from the server
 @property (strong, nonatomic) id<ConnectionDelegate> connectionDelegate;
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
 @property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;
-@property (nonatomic)  NSString  *likeType;//type of like buttons (e.g. THUMB, PLUS, ARROW)
-@property (nonatomic)  NSString  *etiquetteType;//type of etiquette (e.g. ETIQUETTE, NO_ETIQUETTE)
-@property (nonatomic)  BOOL  *etiquetteWasShown;
+@property (nonatomic) NSString *likeType;//type of like buttons (e.g. THUMB, PLUS, ARROW)
+@property (nonatomic) NSString *etiquetteType;//type of etiquette (e.g. ETIQUETTE, NO_ETIQUETTE)
+@property (nonatomic) BOOL *etiquetteWasShown;
 
 
 @end

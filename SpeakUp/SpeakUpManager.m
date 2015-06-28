@@ -20,7 +20,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id,likedMessages, speakUpDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomKeyArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomKeyArray, myOwnRoomArray;
+@synthesize peer_id, dev_id,likedMessages, speakUpDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
 
 static SpeakUpManager *sharedSpeakUpManager = nil;
 
@@ -239,15 +239,15 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [myOwnRoomArray removeObjectsInArray:roomsToRemove];
     
     if ([room.creatorID isEqualToString:self.peer_id]) {
-        if (![myOwnRoomKeyArray containsObject:room.key]) {
-            [myOwnRoomKeyArray addObject:room.key];
+        if (![myOwnRoomIDArray containsObject:room.roomID]) {
+            [myOwnRoomIDArray addObject:room.roomID];
         }
         [myOwnRoomArray addObject:room];
-        [unlockedRoomKeyArray removeObject:room.key];
+        [unlockedRoomIDArray removeObject:room.roomID];
         myOwnRoomArray = [[self sortArrayByName:myOwnRoomArray] mutableCopy];
-    } else if ([unlockedRoomKeyArray containsObject:room.key]) {
+    } else if ([unlockedRoomIDArray containsObject:room.roomID]) {
         [unlockedRoomArray addObject:room];
-        unlockedRoomKeyArray = [[self sortArrayByName:unlockedRoomKeyArray] mutableCopy];
+        unlockedRoomArray = [[self sortArrayByName:unlockedRoomArray] mutableCopy];
     } else {
         [roomArray addObject:room];
         roomArray = [[self sortArrayByName:roomArray] mutableCopy];
@@ -494,7 +494,6 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 - (void)getMessagesInRoomID:(NSString *)room_id orRoomHash:(NSString *)key withHandler:(void (^)(NSDictionary *))handler {
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:room_id forKey:@"room_id"];
-    [myData setValue:key forKey:@"key"];
     
     // Broadcast a message to retrieve the mesages in the room
     PacketContent* msg = [[PacketContent alloc] initWithType:@"getroom" withContent:myData];
@@ -534,7 +533,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     
     // Use the creation view callback
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
-    [myData setValue:room.key forKey:@"key"];
+    [myData setValue:room.roomID forKey:@"room_id"];
     handler(myData);
     
     [self savePeerData];
@@ -648,52 +647,61 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 // SAVING DATA
 -(void)initPeerData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if([defaults objectForKey:@"dev_id"]){
-        dev_id= [defaults objectForKey:@"dev_id"];
-    }else {
+    if ([defaults objectForKey:@"dev_id"]) {
+        dev_id = [defaults objectForKey:@"dev_id"];
+    } else {
         dev_id = [UIDevice currentDevice].identifierForVendor.UUIDString;
     }
-    if([defaults objectForKey:@"peer_id"]){
-        peer_id= [defaults objectForKey:@"peer_id"];
-    }else {
-        peer_id= nil;
+    
+    if ([defaults objectForKey:@"peer_id"]) {
+        peer_id = [defaults objectForKey:@"peer_id"];
+    } else {
+        peer_id = nil;
     }
-    if([defaults objectForKey:@"inputRoomIDText"]){
-        inputRoomIDText= [defaults objectForKey:@"inputRoomIDText"];
-    }else {
-        inputRoomIDText= nil;
+    
+    if ([defaults objectForKey:@"inputRoomIDText"]) {
+        inputRoomIDText = [defaults objectForKey:@"inputRoomIDText"];
+    } else {
+        inputRoomIDText = nil;
     }
-    if([defaults objectForKey:@"likedMessages"]){
-        likedMessages= [[defaults objectForKey:@"likedMessages"]mutableCopy];
-    }else {
-        likedMessages= [[NSMutableArray alloc] init];
+    
+    if ([defaults objectForKey:@"likedMessages"]) {
+        likedMessages = [[defaults objectForKey:@"likedMessages"]mutableCopy];
+    } else {
+        likedMessages = [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"dislikedMessages"]){
-        dislikedMessages= [[defaults objectForKey:@"dislikedMessages"]mutableCopy];
-    }else {
-        dislikedMessages= [[NSMutableArray alloc] init];
+    
+    if ([defaults objectForKey:@"dislikedMessages"]) {
+        dislikedMessages = [[defaults objectForKey:@"dislikedMessages"]mutableCopy];
+    } else {
+        dislikedMessages = [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"deletedMessageIDs"]){
-        deletedMessageIDs= [[defaults objectForKey:@"deletedMessageIDs"]mutableCopy];
-    }else {
-        deletedMessageIDs= [[NSMutableArray alloc] init];
+    
+    if ([defaults objectForKey:@"deletedMessageIDs"]) {
+        deletedMessageIDs = [[defaults objectForKey:@"deletedMessageIDs"]mutableCopy];
+    } else {
+        deletedMessageIDs = [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"deletedRoomIDs"]){
-        deletedRoomIDs= [[defaults objectForKey:@"deletedRoomIDs"]mutableCopy];
-    }else {
-        deletedRoomIDs= [[NSMutableArray alloc] init];
+    
+    if ([defaults objectForKey:@"deletedRoomIDs"]) {
+        deletedRoomIDs = [[defaults objectForKey:@"deletedRoomIDs"]mutableCopy];
+    } else {
+        deletedRoomIDs = [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"unlockedRoomKeyArray"]){
-        unlockedRoomKeyArray= [[defaults objectForKey:@"unlockedRoomKeyArray"]mutableCopy];
-    }else {
-        unlockedRoomKeyArray= [[NSMutableArray alloc] init];
+    
+    if ([defaults objectForKey:@"unlockedRoomIDArray"]) {
+        unlockedRoomIDArray = [[defaults objectForKey:@"unlockedRoomIDArray"]mutableCopy];
+    } else {
+        unlockedRoomIDArray = [[NSMutableArray alloc] init];
     }
-    if([defaults objectForKey:@"myOwnRoomKeyArray"]){
-        myOwnRoomKeyArray= [[defaults objectForKey:@"myOwnRoomKeyArray"]mutableCopy];
-    }else {
-        myOwnRoomKeyArray= [[NSMutableArray alloc] init];
+    
+    if ([defaults objectForKey:@"myOwnRoomIDArray"]) {
+        myOwnRoomIDArray = [[defaults objectForKey:@"myOwnRoomIDArray"]mutableCopy];
+    } else {
+        myOwnRoomIDArray = [[NSMutableArray alloc] init];
     }
-    inputText=@"";
+    
+    inputText = @"";
     sharedSpeakUpManager.locationAtLastReset = nil;
     sharedSpeakUpManager.peerLocation = nil;
 }
@@ -703,8 +711,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [defaults setObject:peer_id forKey:@"peer_id"];
     [defaults setObject:inputRoomIDText forKey:@"inputRoomIDText"];
     [defaults setObject:likedMessages forKey:@"likedMessages"];
-    [defaults setObject:unlockedRoomKeyArray forKey:@"unlockedRoomKeyArray"];
-    [defaults setObject:myOwnRoomKeyArray forKey:@"myOwnRoomKeyArray"];
+    [defaults setObject:unlockedRoomIDArray forKey:@"unlockedRoomIDArray"];
+    [defaults setObject:myOwnRoomIDArray forKey:@"myOwnRoomIDArray"];
     [defaults setObject:dislikedMessages forKey:@"dislikedMessages"];
     [defaults setObject:deletedMessageIDs forKey:@"deletedMessageIDs"];
     [defaults setObject:deletedRoomIDs forKey:@"deletedRoomIDs"];

@@ -97,7 +97,6 @@
             myRoom.id_type = ANONYMOUS;
             
             myRoom.roomID = [[NSProcessInfo processInfo] globallyUniqueString];
-            myRoom.key = [[NSProcessInfo processInfo] globallyUniqueString];
             myRoom.creatorID = [[SpeakUpManager sharedSpeakUpManager] peer_id];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -106,11 +105,11 @@
             
             createRoomButton.enabled = NO;
             [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary *handler) {
-                NSString *key = [handler objectForKey:@"key"];
-                if (key) {
+                NSString *roomID = [handler objectForKey:@"room_id"];
+                if (roomID) {
                     [self.navigationController popViewControllerAnimated:YES];
                     self.input.text = @"";
-                    [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] addObject:key];
+                    [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomIDArray] addObject:roomID];
                 } else {
                     [self createfailed];
                 }

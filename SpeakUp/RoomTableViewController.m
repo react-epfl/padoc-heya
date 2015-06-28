@@ -351,13 +351,13 @@
         if (indexPath.section == MY_SECTION) {
             Room* room = [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] objectAtIndex:indexPath.row];
             [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] removeObject:room];
-            [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomKeyArray] removeObject:room.key];
+            [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomIDArray] removeObject:room.roomID];
             [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
             [tableView reloadData];
         } else if (indexPath.section == UNLOCKED_SECTION) {
             Room* room = [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] objectAtIndex:indexPath.row];
             [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] removeObject:room];
-            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] removeObject:room.key];
+            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomIDArray] removeObject:room.roomID];
             [tableView reloadData];
         } else {
             Room* room = [[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];

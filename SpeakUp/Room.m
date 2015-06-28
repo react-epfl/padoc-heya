@@ -11,7 +11,7 @@
 
 @implementation Room
 
-@synthesize roomID, name, location, messages,avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, creatorID,key, id_type, isUnlocked, lastUpdateTime ;
+@synthesize roomID, name, location, messages, avatarCacheByPeerID, distance, latitude, longitude, lifetime, range, isOfficial, deleted, creatorID, id_type, isUnlocked, lastUpdateTime ;
 
 - (id)init{
     self = [super init];
@@ -38,16 +38,15 @@
 //        [self setLatitude: [[loc objectForKey:@"lat"] doubleValue]];
 //        [self setLongitude: [[loc objectForKey:@"lng"] doubleValue]];
         [self setName: [dict objectForKey:@"name"] ] ; // LOWER CASE
-        [self setKey: [dict objectForKey:@"key"]];
         [self setCreatorID: [dict objectForKey:@"creator_id"]];
         [self setLastUpdateTime: [dict objectForKey:@"update_time"]];
         [self setId_type:[dict objectForKey:@"id_type"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
-        if (self.isUnlocked && ![[[SpeakUpManager sharedSpeakUpManager]unlockedRoomKeyArray] containsObject:self.key]) {
-            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] addObject:self.key];
+        if (self.isUnlocked && ![[[SpeakUpManager sharedSpeakUpManager]unlockedRoomIDArray] containsObject:self.roomID]) {
+            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomIDArray] addObject:self.roomID];
         }
-        CLLocation * roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
+        CLLocation *roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
         self.distance = [[[SpeakUpManager sharedSpeakUpManager] peerLocation] distanceFromLocation:roomlocation];
         
         // MESSAGES
@@ -71,7 +70,6 @@
         creatorID = [decoder decodeObjectForKey:@"creatorID"];
         distance = [decoder decodeFloatForKey:@"distance"];
         name = [decoder decodeObjectForKey:@"name"];
-        key = [decoder decodeObjectForKey:@"key"];
         location = [decoder decodeObjectForKey:@"location"];
         latitude = [decoder decodeDoubleForKey:@"latitude"];
         longitude = [decoder decodeDoubleForKey:@"longitude"];
@@ -93,7 +91,6 @@
     [encoder encodeObject:creatorID forKey:@"creatorID"];
     [encoder encodeFloat:distance forKey:@"distance"];
     [encoder encodeObject:name forKey:@"name"];
-    [encoder encodeObject:key forKey:@"key"];
     [encoder encodeObject:location forKey:@"location"];
     [encoder encodeDouble:latitude forKey:@"latitude"];
     [encoder encodeDouble:longitude forKey:@"longitude"];
