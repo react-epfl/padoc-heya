@@ -47,13 +47,6 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="85674" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pnY-k0-vf9">
-                                    <rect key="frame" x="20" y="38" width="280" height="26"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="ZpJ-gv-kg6">
                                     <rect key="frame" x="151" y="16" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -227,7 +220,6 @@
                         <outlet property="expirationLabel" destination="9xe-55-7JG" id="gj1-8v-Nxq"/>
                         <outlet property="roomInfoLabel" destination="DjZ-xx-ULZ" id="c1v-cw-WRJ"/>
                         <outlet property="roomNameLabel" destination="JmJ-gk-Wcq" id="SKx-6x-uoo"/>
-                        <outlet property="roomNumberLabel" destination="pnY-k0-vf9" id="RMB-NG-KHS"/>
                         <outlet property="segmentedControl" destination="PbI-ez-uG9" id="0oq-hR-QZe"/>
                         <segue destination="v9A-Oq-Foh" kind="modal" identifier="EtiquetteSegue" id="8UB-2p-DwB"/>
                     </connections>

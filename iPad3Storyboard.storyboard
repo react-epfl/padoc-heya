@@ -47,13 +47,6 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="85674" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OUV-6W-Wiw">
-                                    <rect key="frame" x="244" y="37" width="280" height="26"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="QfL-le-dGC">
                                     <rect key="frame" x="374" y="16" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -209,7 +202,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="c80-2b-4DA"/>
                         <segmentedControl key="titleView" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="Qs0-3d-r0I">
-                            <rect key="frame" x="295" y="7.5" width="178" height="29"/>
+                            <rect key="frame" x="295" y="8" width="178" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="BEST"/>
@@ -226,7 +219,6 @@
                         <outlet property="expirationLabel" destination="BaC-c1-ZVm" id="KWk-qH-Sb1"/>
                         <outlet property="roomInfoLabel" destination="6IL-M2-CbV" id="1hK-dZ-7JJ"/>
                         <outlet property="roomNameLabel" destination="WOr-KG-tWv" id="zqt-5Q-uoI"/>
-                        <outlet property="roomNumberLabel" destination="OUV-6W-Wiw" id="7cJ-X5-BeQ"/>
                         <outlet property="segmentedControl" destination="Qs0-3d-r0I" id="W9j-uX-D5o"/>
                         <segue destination="dBx-C6-PO5" kind="modal" identifier="EtiquetteSegue" id="qC3-DE-BLW"/>
                     </connections>
@@ -632,7 +624,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qU5-Xc-LXR"/>
+        <segue reference="qC3-DE-BLW"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921568627451" green="0.84313725490196079" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -118,7 +118,6 @@
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
         UIActivityIndicatorView *connectionLostSpinner = (UIActivityIndicatorView *)[cell viewWithTag:2];
         if (![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) {
-//            nameLabel.text = @"";
             nameLabel.text = NSLocalizedString(@"NO_ROOM", nil);
             [connectionLostSpinner stopAnimating];
         }
@@ -155,7 +154,8 @@
                 UITableViewCell *cell = [self buildCellForIdentifier:CellIdentifier inTableView:tableView];
                 
                 [self setRoomName:[room name] toCell:cell];
-                [self setRoomDistance:[NSString stringWithFormat:@"%.0f m", room.distance] toCell:cell];
+//                [self setRoomDistance:[NSString stringWithFormat:@"%.0f m", room.distance] toCell:cell];
+                [self setRoomDistance:@"" toCell:cell];
                 
                 return cell;
                 

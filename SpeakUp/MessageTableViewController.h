@@ -18,7 +18,6 @@
 -(IBAction)rateMessageDown:(id)sender;
 -(IBAction)sortBy:(id)sender;
 
-@property(strong, nonatomic) IBOutlet UILabel* roomNumberLabel;
 @property(strong, nonatomic) IBOutlet UILabel* roomNameLabel;
 @property(strong, nonatomic) IBOutlet UILabel* expirationLabel;
 @property(strong, nonatomic) IBOutlet UILabel* roomInfoLabel;

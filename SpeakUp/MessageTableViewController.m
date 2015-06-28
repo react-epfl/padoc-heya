@@ -37,7 +37,7 @@
 
 @implementation MessageTableViewController
 
-@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView,showKey,roomNumberLabel,expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel,viewIsPopping;
+@synthesize roomNameLabel, segmentedControl, connectionLostSpinner, inputView, keyboardIsVisible,keyboardHeight, inputButton, inputTextView, showKey, expirationLabel,isFirstMessageUpdate,roomInfoLabel, parentMessage,messageArray, parentMessageContentTextView, parentMessageScoreLabel, parentMessageView, parentMessageVoteNumberLabel,viewIsPopping;
 
 #pragma mark - View lifecycle
 //=========================
@@ -64,14 +64,14 @@
     [self.segmentedControl setSelectedSegmentIndex:BEST];// a small routine to avoid a weird color bug
     [self.segmentedControl setSelectedSegmentIndex:RECENT];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:FontName size:MediumFontSize], UITextAttributeFont,
-                                [UIColor whiteColor], UITextAttributeTextColor, nil  ];
+                                [UIFont fontWithName:FontName size:MediumFontSize], NSFontAttributeName,
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil  ];
     [self.segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           [UIColor lightGrayColor], UITextAttributeTextColor, nil  ];
+                                           [UIColor lightGrayColor], NSForegroundColorAttributeName, nil  ];
     [self.segmentedControl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIColor whiteColor], UITextAttributeTextColor,
+                                        [UIColor whiteColor], NSForegroundColorAttributeName,
                                         [NSNumber numberWithInt:NSUnderlineStyleSingle],NSUnderlineStyleAttributeName, nil  ];
     [self.segmentedControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
     
@@ -81,7 +81,6 @@
     }else{
         self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
         [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
-        [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
     }
     
     /// INPUT VIEW
@@ -205,8 +204,8 @@
     [dateFormatterMonthDay setDateFormat:@"MM-dd"];
     NSString *stringExpirationMonthDay = [dateFormatterMonthDay stringFromDate:expirationDate];
     //check if date is today
-    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:expirationDate];
-    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:expirationDate];
+    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
     NSString* expirationTime=@"";
     if([today day] == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year] && [today era] == [otherDay era]) {
         expirationTime = [NSString stringWithFormat: NSLocalizedString(@"EXPIRES_TODAY", nil), stringExpirationHourMinutes];
@@ -231,7 +230,6 @@
     }else{
         self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
         [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
-        [roomNumberLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]key]];
     }
     [self sortMessages];
     [self.tableView reloadData];

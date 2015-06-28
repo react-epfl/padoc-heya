@@ -50,12 +50,6 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="85674" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQ9-5X-l6H">
-                                    <rect key="frame" x="0.0" y="38" width="600" height="21"/>
-                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="9mQ-JI-zzW">
                                     <rect key="frame" x="290" y="28" width="20" height="20"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,10 +61,7 @@
                                 <constraint firstAttribute="trailing" secondItem="qtW-2R-BQx" secondAttribute="trailing" id="2hS-HT-YA2"/>
                                 <constraint firstItem="qtW-2R-BQx" firstAttribute="top" secondItem="iZa-BI-VuP" secondAttribute="top" constant="5" id="77C-8b-sVa"/>
                                 <constraint firstAttribute="centerY" secondItem="9mQ-JI-zzW" secondAttribute="centerY" id="8dA-Od-cdZ"/>
-                                <constraint firstItem="qtW-2R-BQx" firstAttribute="leading" secondItem="qQ9-5X-l6H" secondAttribute="leading" id="Cyv-uZ-YWr"/>
-                                <constraint firstItem="qQ9-5X-l6H" firstAttribute="top" secondItem="qtW-2R-BQx" secondAttribute="bottom" id="HAU-07-0yp"/>
                                 <constraint firstAttribute="centerX" secondItem="9mQ-JI-zzW" secondAttribute="centerX" id="dn4-bE-RJu"/>
-                                <constraint firstItem="qtW-2R-BQx" firstAttribute="trailing" secondItem="qQ9-5X-l6H" secondAttribute="trailing" id="zXr-MK-wd8"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="DhR-gw-guY">
@@ -310,7 +301,6 @@
                         <outlet property="expirationLabel" destination="oUj-E7-aEh" id="CMW-GU-XNK"/>
                         <outlet property="roomInfoLabel" destination="FiA-Qh-hcA" id="SCJ-wR-hHm"/>
                         <outlet property="roomNameLabel" destination="qtW-2R-BQx" id="bH6-oh-Cz7"/>
-                        <outlet property="roomNumberLabel" destination="qQ9-5X-l6H" id="riM-T8-bRK"/>
                         <outlet property="segmentedControl" destination="7E6-jm-9U4" id="8H5-Mq-23v"/>
                         <segue destination="nHg-O5-ciC" kind="showDetail" identifier="EtiquetteSegue" id="lJV-W5-Q0n"/>
                     </connections>
