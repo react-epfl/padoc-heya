@@ -185,11 +185,11 @@
     [self setRoomInfo];
     [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
     [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
-        [connectionLostSpinner stopAnimating];
-    }else{
-        [connectionLostSpinner startAnimating];
-    }
+//    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+//        [connectionLostSpinner stopAnimating];
+//    }else{
+//        [connectionLostSpinner startAnimating];
+//    }
     
     // EXPIRATION TIME (24 hours since last change)
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -432,10 +432,10 @@
 
 // CONNECTION HANDLING
 -(void)connectionWasLost{
-    [connectionLostSpinner startAnimating];
+//    [connectionLostSpinner startAnimating];
 }
 -(void)connectionHasRecovered{
-    [connectionLostSpinner stopAnimating];
+//    [connectionLostSpinner stopAnimating];
 }
 
 // RATING UP

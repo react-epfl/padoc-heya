@@ -61,11 +61,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     createRoomButton.enabled = YES;
-    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
-        [connectionLostSpinner stopAnimating];
-    } else {
-        [connectionLostSpinner startAnimating];
-    }
+//    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+//        [connectionLostSpinner stopAnimating];
+//    } else {
+//        [connectionLostSpinner startAnimating];
+//    }
     
 //    // GOOGLE TRACKER
 //    id tracker = [[GAI sharedInstance] defaultTracker];

@@ -30,15 +30,16 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         if (sharedSpeakUpManager == nil){
             sharedSpeakUpManager.avatarCacheByPeerID = [[NSCache alloc] init];
             sharedSpeakUpManager = [[self alloc] init];
-            sharedSpeakUpManager.roomArray= [[NSMutableArray alloc] init];
-            sharedSpeakUpManager.unlockedRoomArray= [[NSMutableArray alloc] init];
-            sharedSpeakUpManager.myOwnRoomArray= [[NSMutableArray alloc] init];
-            sharedSpeakUpManager.connectionDelegate=nil;
+            sharedSpeakUpManager.roomArray = [[NSMutableArray alloc] init];
+            sharedSpeakUpManager.unlockedRoomArray = [[NSMutableArray alloc] init];
+            sharedSpeakUpManager.myOwnRoomArray = [[NSMutableArray alloc] init];
+            sharedSpeakUpManager.connectionDelegate = nil;
             [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
-            sharedSpeakUpManager.connectionIsOK=NO;
-            sharedSpeakUpManager.locationIsOK=YES;
-            sharedSpeakUpManager.currentRoomID=nil;
-            sharedSpeakUpManager.peerLocation=nil;
+            sharedSpeakUpManager.connectionIsOK = NO;
+            sharedSpeakUpManager.locationIsOK = YES;
+            sharedSpeakUpManager.currentRoomID = nil;
+            sharedSpeakUpManager.peerLocation = nil;
+            
             sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
                 [sharedSpeakUpManager.locationManager requestWhenInUseAuthorization];
@@ -47,8 +48,10 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
             sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
             sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
             [sharedSpeakUpManager.locationManager startUpdatingLocation];// sets up the local location manager, this triggers the didUpdateToLocation callback
+            
             [sharedSpeakUpManager connect];
-            sharedSpeakUpManager.likeType= THUMB;
+            
+            sharedSpeakUpManager.likeType = THUMB;
             sharedSpeakUpManager.etiquetteType = NO_ETIQUETTE;
             sharedSpeakUpManager.etiquetteWasShown = NO;
         }
@@ -72,7 +75,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     NSString *type = packetContent.type;
     NSLog(@"Packet of type '%@' received", type);
     
-    if ([type isEqual:@"peer_welcome"]) {
+    if ([type isEqual:@"peer_welcome"]) { // TODO: Remove
 //        NSDictionary *data = packetContent.content;
 //        [self receivedWelcome:data];
         
@@ -90,10 +93,10 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     } else if ([type isEqual:@"roomcreated"] || [type isEqual:@"createroom"]) {
         [self receivedRoom:packetContent.content];
         
-    } else if ([type isEqual:@"roommessages"]) {
-        NSMutableDictionary* dict = packetContent.content;
-        [self receivedMessages:[dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
-        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
+    } else if ([type isEqual:@"roommessages"]) { // TODO: Remove
+//        NSMutableDictionary* dict = packetContent.content;
+//        [self receivedMessages:[dict objectForKey:@"messages"] roomID:[dict objectForKey:@"room_id"]];
+//        [messageManagerDelegate updateMessagesInRoom:[dict objectForKey:@"room_id"]];
         
     } else if ([type isEqual:@"messagecreated"] || [type isEqual:@"createmessage"]) {
         Message *message = packetContent.content;
@@ -295,41 +298,39 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 }
 
 // RECEIVED MESSAGES
-- (void)receivedMessages:(NSArray*)messageDictionaries roomID:(NSString*)roomID{
-    for (NSDictionary *messageDictionary in messageDictionaries) {
-        [self receivedMessage:messageDictionary roomID:roomID];
-    }
-}
+//- (void)receivedMessages:(NSArray*)messageDictionaries roomID:(NSString*)roomID{
+//    for (NSDictionary *messageDictionary in messageDictionaries) {
+//        [self receivedMessage:messageDictionary roomID:roomID];
+//    }
+//}
 
 // RECEIVED MESSAGE
-- (void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
-    Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
-    for(Room *room in roomArray){
-        [self addMessage:message toRoom:room];
-    }
-    for(Room *room in unlockedRoomArray){
-        [self addMessage:message toRoom:room];
-    }
-    for(Room *room in myOwnRoomArray){
-        [self addMessage:message toRoom:room];
-    }
-}
-
+//- (void)receivedMessage:(NSDictionary*)messageDictionary roomID:(NSString*)roomID{
+//    Message* message = [[Message alloc] initWithDictionary:messageDictionary roomID: roomID];
+//    for(Room *room in roomArray){
+//        [self addMessage:message toRoom:room];
+//    }
+//    for(Room *room in unlockedRoomArray){
+//        [self addMessage:message toRoom:room];
+//    }
+//    for(Room *room in myOwnRoomArray){
+//        [self addMessage:message toRoom:room];
+//    }
+//}
 - (void)receivedMessage:(Message *)message {
-    for(Room *room in roomArray){
+    for (Room *room in roomArray) {
         [self addMessage:message toRoom:room];
     }
-    for(Room *room in unlockedRoomArray){
+    for (Room *room in unlockedRoomArray) {
         [self addMessage:message toRoom:room];
     }
-    for(Room *room in myOwnRoomArray){
+    for (Room *room in myOwnRoomArray) {
         [self addMessage:message toRoom:room];
     }
 }
-
-- (void)addMessage:(Message*) message toRoom:(Room*) room {
+- (void)addMessage:(Message *) message toRoom:(Room *) room {
     if ([room.roomID isEqual:message.roomID]) {
-        BOOL messageUpdate=NO;
+        BOOL messageUpdate = NO;
         for (Message *msg in room.messages) {
             if ([msg.messageID isEqual:message.messageID]) {
                 // update received, therefore just update the vote fields
@@ -347,7 +348,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
                         messageUpdate = YES;
                     }
                 }
-                if (![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
+                if (![deletedMessageIDs containsObject:message.messageID] && !message.deleted && !messageUpdate) {
                     [msg.replies addObject:message];
                 }
             }
@@ -355,41 +356,41 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
                 break;
             }
         }
-        if (!message.parentMessageID && ![deletedMessageIDs containsObject:message.messageID]&& !message.deleted && !messageUpdate) {
+        if (!message.parentMessageID && ![deletedMessageIDs containsObject:message.messageID] && !message.deleted && !messageUpdate) {
             [room.messages addObject:message];
         }
     }
 }
 
-- (void)receivedMessageToDelete:(NSString*) m_id inRoom:(NSString*) room_id withParent:(NSString*) parent_id{
-    for(Room *room in roomArray){
+// DELETE MESSAGE
+- (void)receivedMessageToDelete:(NSString *)m_id inRoom:(NSString *)room_id withParent:(NSString *)parent_id {
+    for (Room *room in roomArray) {
         [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
     }
-    for(Room *room in unlockedRoomArray){
+    for (Room *room in unlockedRoomArray) {
         [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
     }
-    for(Room *room in myOwnRoomArray){
+    for (Room *room in myOwnRoomArray) {
         [self deleteMessage:m_id inRoom:room withRoomID:room_id withParent:parent_id];
     }
 }
-
-- (void)deleteMessage:(NSString*) m_id inRoom:(Room*) room  withRoomID:(NSString*) room_id withParent:(NSString*) parent_id {
+- (void)deleteMessage:(NSString *)m_id inRoom:(Room *)room withRoomID:(NSString *)room_id withParent:(NSString *)parent_id {
     if ([room_id isEqual:room_id]) {
-        Message* messageToDelete=nil;
+        Message *messageToDelete = nil;
         for (Message *msg in room.messages) {
             if ([msg.messageID isEqual:m_id]) {
-                messageToDelete=msg;
+                messageToDelete = msg;
             }
             if ([msg.messageID isEqual:parent_id]) {
-                Message* replyToDelete=nil;
+                Message *replyToDelete = nil;
                 for (Message *reply in msg.replies){
                     if ([reply.messageID isEqual:m_id]) {
-                        replyToDelete=reply;
+                        replyToDelete = reply;
                     }
                 }
                 if (replyToDelete) {
                     [msg.replies removeObject:replyToDelete];
-                    replyToDelete=nil;
+                    replyToDelete = nil;
                 }
             }
         }
@@ -479,7 +480,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         // Empty the current list of rooms
         [roomArray removeAllObjects];
 //        [roomArray addObjectsFromArray:myOwnRoomArray];
-    
+        
+        // Broadcast a rooms retrieval message
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
         [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
@@ -489,11 +491,12 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 }
 
 // CALL FOR MESSAGES IN A ROOM EITHER UPON UNLOCK OR ENTERING A ROOM
-- (void) getMessagesInRoomID:(NSString *)room_id  orRoomHash:(NSString *) key withHandler:(void (^)(NSDictionary *))handler {
+- (void)getMessagesInRoomID:(NSString *)room_id orRoomHash:(NSString *)key withHandler:(void (^)(NSDictionary *))handler {
     NSMutableDictionary* myData = [[NSMutableDictionary alloc] init];
     [myData setValue:room_id forKey:@"room_id"];
     [myData setValue:key forKey:@"key"];
     
+    // Broadcast a message to retrieve the mesages in the room
     PacketContent* msg = [[PacketContent alloc] initWithType:@"getroom" withContent:myData];
     NSError *error;
     [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
@@ -502,7 +505,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 }
 
 // CREATE NEW MESSAGE
-- (void) createMessage:(Message *) message {
+- (void)createMessage:(Message *) message {
     // Broadcast the message
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:message];
     NSError *error;
@@ -730,7 +733,6 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 - (void)startNetworking {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
-
 - (void)stopNetworking {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }

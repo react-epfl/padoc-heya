@@ -116,14 +116,14 @@
         
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
-        UIActivityIndicatorView *connectionLostSpinner = (UIActivityIndicatorView *)[cell viewWithTag:2];
+//        UIActivityIndicatorView *connectionLostSpinner = (UIActivityIndicatorView *)[cell viewWithTag:2];
         if (![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) {
             nameLabel.text = NSLocalizedString(@"NO_ROOM", nil);
-            [connectionLostSpinner stopAnimating];
+//            [connectionLostSpinner stopAnimating];
         }
         if (![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
             nameLabel.text = @"";
-            [connectionLostSpinner startAnimating];
+//            [connectionLostSpinner startAnimating];
         }
         
         return cell;
@@ -142,7 +142,11 @@
                 static NSString *CellIdentifier = @"NoRoomCell";
                 UITableViewCell *cell = [self buildCellForIdentifier:CellIdentifier inTableView:tableView];
                 
-                [self setRoomName:NSLocalizedString(@"NO_ROOM", nil) toCell:cell];
+                if ([[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] count] == 0) {
+                    [self setRoomName:NSLocalizedString(@"NO_ROOM", nil) toCell:cell];
+                } else {
+                    [self setRoomName:NSLocalizedString(@"", nil) toCell:cell];
+                }
                 
                 return cell;
                 
@@ -247,9 +251,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
+        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
             NSLog(@"XXXXXXXXXXXXXXX");
-            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomKeyArray] addObject:[[SpeakUpManager sharedSpeakUpManager] currentRoom].key];
         }];
     }
     
