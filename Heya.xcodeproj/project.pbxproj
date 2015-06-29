@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		80070C951A727E0900256E60 /* GenericStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80070C941A727E0900256E60 /* GenericStoryboard.storyboard */; };
+		802BF65A1B41A280003E9E31 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 802BF6591B41A280003E9E31 /* LaunchScreen.xib */; };
 		803165A917BCC8CC003C4E77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 803165AB17BCC8CC003C4E77 /* Localizable.strings */; };
 		80386C3B19FA7FF200DDE7F6 /* thumbDISLIKE_NOTPRESSED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80386C2F19FA7FF200DDE7F6 /* thumbDISLIKE_NOTPRESSED@2x.png */; };
 		80386C3C19FA7FF200DDE7F6 /* thumbDISLIKE_PRESSED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80386C3019FA7FF200DDE7F6 /* thumbDISLIKE_PRESSED@2x.png */; };
@@ -77,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		80070C941A727E0900256E60 /* GenericStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GenericStoryboard.storyboard; sourceTree = "<group>"; };
+		802BF6591B41A280003E9E31 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		802F98AD17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		802F98AE17F4D828003AB861 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		803165AA17BCC8CC003C4E77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 		8096A89C1636E80B0092F049 = {
 			isa = PBXGroup;
 			children = (
+				802BF6591B41A280003E9E31 /* LaunchScreen.xib */,
 				AA52964C1B3EF4D60017019B /* Multihop */,
 				80AB3D7C183E727B0005C603 /* Google analytics */,
 				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
@@ -540,6 +543,7 @@
 				8096A8B61636E80C0092F049 /* InfoPlist.strings in Resources */,
 				80B3A52D19F27FB600E7CB7C /* button-refresh@2x.png in Resources */,
 				80386C3E19FA7FF200DDE7F6 /* thumbLIKE_PRESSED@2x.png in Resources */,
+				802BF65A1B41A280003E9E31 /* LaunchScreen.xib in Resources */,
 				80070C951A727E0900256E60 /* GenericStoryboard.storyboard in Resources */,
 				80386C3B19FA7FF200DDE7F6 /* thumbDISLIKE_NOTPRESSED@2x.png in Resources */,
 				80386C3D19FA7FF200DDE7F6 /* thumbLIKE_NOTPRESSED@2x.png in Resources */,
@@ -691,7 +695,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -721,7 +724,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

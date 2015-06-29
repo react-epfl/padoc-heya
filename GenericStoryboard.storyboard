@@ -13,7 +13,7 @@
                     <navigationItem key="navigationItem" id="3Hl-8L-fx4"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translucent="NO" id="Wem-M7-J6G">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.29411764705881999" green="0.82745098039216003" blue="0.92549019607842997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.94117647059999998" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aty-bT-icw">
                         <rect key="frame" x="0.0" y="416" width="320" height="44"/>
@@ -38,7 +38,7 @@
                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="64" maxX="0.0" maxY="-64"/>
                         <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="iZa-BI-VuP">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MMMMM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtW-2R-BQx">
@@ -50,18 +50,11 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="9mQ-JI-zzW">
-                                    <rect key="frame" x="290" y="28" width="20" height="20"/>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </activityIndicatorView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="qtW-2R-BQx" firstAttribute="leading" secondItem="iZa-BI-VuP" secondAttribute="leading" id="1R7-Hg-Evx"/>
                                 <constraint firstAttribute="trailing" secondItem="qtW-2R-BQx" secondAttribute="trailing" id="2hS-HT-YA2"/>
                                 <constraint firstItem="qtW-2R-BQx" firstAttribute="top" secondItem="iZa-BI-VuP" secondAttribute="top" constant="5" id="77C-8b-sVa"/>
-                                <constraint firstAttribute="centerY" secondItem="9mQ-JI-zzW" secondAttribute="centerY" id="8dA-Od-cdZ"/>
-                                <constraint firstAttribute="centerX" secondItem="9mQ-JI-zzW" secondAttribute="centerX" id="dn4-bE-RJu"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="DhR-gw-guY">
@@ -277,14 +270,13 @@
                                 <segment title="BEST"/>
                                 <segment title="RECENT"/>
                             </segments>
-                            <color key="tintColor" red="0.29411764705881999" green="0.82745098039216003" blue="0.92549019607842997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.94117647059999998" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="sortBy:" destination="C2l-FJ-8fX" eventType="valueChanged" id="a0U-ni-U1Y"/>
                             </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="connectionLostSpinner" destination="9mQ-JI-zzW" id="UKi-cc-QTM"/>
                         <outlet property="roomInfoLabel" destination="FiA-Qh-hcA" id="SCJ-wR-hHm"/>
                         <outlet property="roomNameLabel" destination="qtW-2R-BQx" id="bH6-oh-Cz7"/>
                         <outlet property="segmentedControl" destination="7E6-jm-9U4" id="8H5-Mq-23v"/>
@@ -366,18 +358,11 @@
                                             <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <activityIndicatorView hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="z1g-2d-87z">
-                                            <rect key="frame" x="294" y="8" width="20" height="20"/>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        </activityIndicatorView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="Ppf-Q6-0Mv" secondAttribute="centerY" id="3u5-cP-jgP"/>
                                         <constraint firstItem="Ppf-Q6-0Mv" firstAttribute="leading" secondItem="Pf6-vu-duj" secondAttribute="leading" constant="20" id="CXS-CD-vyd"/>
                                         <constraint firstAttribute="trailing" secondItem="Ppf-Q6-0Mv" secondAttribute="trailing" constant="11" id="KyL-J2-YNG"/>
-                                        <constraint firstAttribute="centerY" secondItem="z1g-2d-87z" secondAttribute="centerY" constant="2" id="avF-7u-e4w"/>
-                                        <constraint firstAttribute="centerX" secondItem="z1g-2d-87z" secondAttribute="centerX" constant="-7" id="oKe-f3-tOr"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -539,19 +524,12 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </label>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="fCx-n3-c2f">
-                                    <rect key="frame" x="290" y="52" width="20" height="20"/>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </activityIndicatorView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="IbO-8U-Z60" firstAttribute="trailing" secondItem="Ta5-UP-Api" secondAttribute="trailingMargin" id="4QH-PV-OfX"/>
                                 <constraint firstItem="IbO-8U-Z60" firstAttribute="top" secondItem="Ta5-UP-Api" secondAttribute="top" constant="5" id="5dd-zU-ubl"/>
                                 <constraint firstAttribute="bottom" secondItem="GJf-Tq-2s8" secondAttribute="bottom" constant="5" id="JQo-gB-PDz"/>
                                 <constraint firstAttribute="bottom" secondItem="fxh-tK-GpB" secondAttribute="bottom" constant="26" id="YLW-6V-oAx"/>
-                                <constraint firstAttribute="centerX" secondItem="fCx-n3-c2f" secondAttribute="centerX" id="Yc0-8Z-Uqb"/>
-                                <constraint firstAttribute="centerY" secondItem="fCx-n3-c2f" secondAttribute="centerY" id="hNB-Al-cMI"/>
                                 <constraint firstAttribute="centerX" secondItem="fxh-tK-GpB" secondAttribute="centerX" id="iOg-b5-df6"/>
                                 <constraint firstAttribute="centerX" secondItem="GJf-Tq-2s8" secondAttribute="centerX" id="iPj-Zb-s7h"/>
                                 <constraint firstAttribute="centerX" secondItem="IbO-8U-Z60" secondAttribute="centerX" id="n4S-aa-pwY"/>
@@ -753,14 +731,13 @@
                                 <segment title="BEST"/>
                                 <segment title="RECENT"/>
                             </segments>
-                            <color key="tintColor" red="0.29411764705881999" green="0.82745098039216003" blue="0.92549019607842997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.94117647059999998" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="sortBy:" destination="x8f-fR-aoa" eventType="valueChanged" id="7Md-Zs-j0T"/>
                             </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="connectionLostSpinner" destination="fCx-n3-c2f" id="Z6V-GY-sr4"/>
                         <outlet property="parentMessageContentTextView" destination="IbO-8U-Z60" id="xAA-62-osE"/>
                         <outlet property="parentMessageScoreLabel" destination="fxh-tK-GpB" id="KCY-n3-zyd"/>
                         <outlet property="parentMessageView" destination="Ta5-UP-Api" id="jtb-Rb-h8h"/>
