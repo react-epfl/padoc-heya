@@ -329,7 +329,7 @@
         NSString* rowInString = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
         if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
+            [thumbUpButton setImage:[UIImage imageNamed:@"thumbLIKE_PRESSED.png"] forState:UIControlStateNormal];
             [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else{
             [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
