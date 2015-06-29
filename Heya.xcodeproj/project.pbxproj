@@ -113,14 +113,14 @@
 		8090FE6B1664FC6A005A6358 /* SpeakUpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeakUpManager.m; sourceTree = "<group>"; };
 		8090FE6C1664FC6A005A6358 /* SpeakUpManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeakUpManagerDelegate.h; sourceTree = "<group>"; };
 		80939B87166E0D7D0079BEF0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		8096A8A71636E80C0092F049 /* SpeakUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeakUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8096A8A71636E80C0092F049 /* Heya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8096A8AB1636E80C0092F049 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8096A8AD1636E80C0092F049 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8096A8AF1636E80C0092F049 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		8096A8B31636E80C0092F049 /* SpeakUp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpeakUp-Info.plist"; sourceTree = "<group>"; };
+		8096A8B31636E80C0092F049 /* Heya-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Heya-Info.plist"; sourceTree = "<group>"; };
 		8096A8B51636E80C0092F049 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8096A8B71636E80C0092F049 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8096A8B91636E80C0092F049 /* SpeakUp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpeakUp-Prefix.pch"; sourceTree = "<group>"; };
+		8096A8B91636E80C0092F049 /* Heya-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Heya-Prefix.pch"; sourceTree = "<group>"; };
 		8096A8BA1636E80C0092F049 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8096A8BB1636E80C0092F049 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8096A8D11636E9C60092F049 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 		8096A8A81636E80C0092F049 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8096A8A71636E80C0092F049 /* SpeakUp.app */,
+				8096A8A71636E80C0092F049 /* Heya.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,10 +315,10 @@
 			children = (
 				8096A8BA1636E80C0092F049 /* AppDelegate.h */,
 				8096A8BB1636E80C0092F049 /* AppDelegate.m */,
-				8096A8B31636E80C0092F049 /* SpeakUp-Info.plist */,
+				8096A8B31636E80C0092F049 /* Heya-Info.plist */,
 				8096A8B41636E80C0092F049 /* InfoPlist.strings */,
 				8096A8B71636E80C0092F049 /* main.m */,
-				8096A8B91636E80C0092F049 /* SpeakUp-Prefix.pch */,
+				8096A8B91636E80C0092F049 /* Heya-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -473,9 +473,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8096A8A61636E80B0092F049 /* SpeakUp */ = {
+		8096A8A61636E80B0092F049 /* Heya */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8096A8C51636E80C0092F049 /* Build configuration list for PBXNativeTarget "SpeakUp" */;
+			buildConfigurationList = 8096A8C51636E80C0092F049 /* Build configuration list for PBXNativeTarget "Heya" */;
 			buildPhases = (
 				8096A8A31636E80B0092F049 /* Sources */,
 				8096A8A41636E80B0092F049 /* Frameworks */,
@@ -485,9 +485,9 @@
 			);
 			dependencies = (
 			);
-			name = SpeakUp;
+			name = Heya;
 			productName = SpeakUp;
-			productReference = 8096A8A71636E80C0092F049 /* SpeakUp.app */;
+			productReference = 8096A8A71636E80C0092F049 /* Heya.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -504,7 +504,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8096A8A11636E80B0092F049 /* Build configuration list for PBXProject "SpeakUp" */;
+			buildConfigurationList = 8096A8A11636E80B0092F049 /* Build configuration list for PBXProject "Heya" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -526,7 +526,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8096A8A61636E80B0092F049 /* SpeakUp */,
+				8096A8A61636E80B0092F049 /* Heya */,
 			);
 		};
 /* End PBXProject section */
@@ -701,15 +701,15 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SpeakUp/SpeakUp-Prefix.pch";
-				INFOPLIST_FILE = "SpeakUp/SpeakUp-Info.plist";
+				GCC_PREFIX_HEADER = "SpeakUp/Heya-Prefix.pch";
+				INFOPLIST_FILE = "SpeakUp/Heya-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					Library,
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Heya;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -731,15 +731,15 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SpeakUp/SpeakUp-Prefix.pch";
-				INFOPLIST_FILE = "SpeakUp/SpeakUp-Info.plist";
+				GCC_PREFIX_HEADER = "SpeakUp/Heya-Prefix.pch";
+				INFOPLIST_FILE = "SpeakUp/Heya-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					Library,
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Heya;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -750,7 +750,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8096A8A11636E80B0092F049 /* Build configuration list for PBXProject "SpeakUp" */ = {
+		8096A8A11636E80B0092F049 /* Build configuration list for PBXProject "Heya" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8096A8C31636E80C0092F049 /* Debug */,
@@ -759,7 +759,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8096A8C51636E80C0092F049 /* Build configuration list for PBXNativeTarget "SpeakUp" */ = {
+		8096A8C51636E80C0092F049 /* Build configuration list for PBXNativeTarget "Heya" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8096A8C61636E80C0092F049 /* Debug */,
