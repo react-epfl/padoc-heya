@@ -5,7 +5,6 @@
 //  Copyright (c) 2012 Seance Association. All rights reserved.
 //
 #import "SpeakUpManager.h"
-#import "SocketIOPacket.h"
 #import "ConnectionDelegate.h"
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"

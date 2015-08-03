@@ -38,8 +38,8 @@
 		80B3A52B19F27FB600E7CB7C /* button-add1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A51B19F27FB600E7CB7C /* button-add1@2x.png */; };
 		80B3A52C19F27FB600E7CB7C /* button-back1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A51C19F27FB600E7CB7C /* button-back1@2x.png */; };
 		80B3A52D19F27FB600E7CB7C /* button-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A51D19F27FB600E7CB7C /* button-refresh@2x.png */; };
-		80B6B18519F54490006D10B1 /* EtiquetteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B6B18419F54490006D10B1 /* EtiquetteViewController.m */; };
 		80C6626419F153F1003E1268 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80C6626319F153F1003E1268 /* libAdIdAccess.a */; };
+		80E5E2051B6F898800E153EB /* PacketContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E5E2041B6F898800E153EB /* PacketContent.m */; };
 		80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4617251F460004965A /* CFNetwork.framework */; };
 		80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4817251F540004965A /* libicucore.dylib */; };
 		80FB4C4B17251F5D0004965A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4A17251F5D0004965A /* Security.framework */; };
@@ -136,14 +136,14 @@
 		80B3A51B19F27FB600E7CB7C /* button-add1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-add1@2x.png"; sourceTree = "<group>"; };
 		80B3A51C19F27FB600E7CB7C /* button-back1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back1@2x.png"; sourceTree = "<group>"; };
 		80B3A51D19F27FB600E7CB7C /* button-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-refresh@2x.png"; sourceTree = "<group>"; };
-		80B6B18319F54490006D10B1 /* EtiquetteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EtiquetteViewController.h; sourceTree = "<group>"; };
-		80B6B18419F54490006D10B1 /* EtiquetteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EtiquetteViewController.m; sourceTree = "<group>"; };
 		80C6626319F153F1003E1268 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdIdAccess.a; path = Library/libAdIdAccess.a; sourceTree = "<group>"; };
 		80C6626519F15F69003E1268 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceFields.h; path = Library/GAIEcommerceFields.h; sourceTree = "<group>"; };
 		80C6626619F15F69003E1268 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProduct.h; path = Library/GAIEcommerceProduct.h; sourceTree = "<group>"; };
 		80C6626719F15F69003E1268 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProductAction.h; path = Library/GAIEcommerceProductAction.h; sourceTree = "<group>"; };
 		80C6626819F15F69003E1268 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommercePromotion.h; path = Library/GAIEcommercePromotion.h; sourceTree = "<group>"; };
 		80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
+		80E5E2031B6F898800E153EB /* PacketContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketContent.h; sourceTree = "<group>"; };
+		80E5E2041B6F898800E153EB /* PacketContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketContent.m; sourceTree = "<group>"; };
 		80FB4C4617251F460004965A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		80FB4C4817251F540004965A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		80FB4C4A17251F5D0004965A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -304,8 +304,6 @@
 				8096A8D71636E9C60092F049 /* MessageTableViewController.m */,
 				8096A8D81636E9C60092F049 /* NewRoomViewController.h */,
 				8096A8D91636E9C60092F049 /* NewRoomViewController.m */,
-				80B6B18319F54490006D10B1 /* EtiquetteViewController.h */,
-				80B6B18419F54490006D10B1 /* EtiquetteViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -313,6 +311,8 @@
 		8096A9211636EA750092F049 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				80E5E2031B6F898800E153EB /* PacketContent.h */,
+				80E5E2041B6F898800E153EB /* PacketContent.m */,
 				8096A8D11636E9C60092F049 /* Message.h */,
 				8096A8D21636E9C60092F049 /* Message.m */,
 				8096A8E41636E9C60092F049 /* Room.h */,
@@ -509,7 +509,7 @@
 				AA52967B1B3EF4D60017019B /* MHDatagram.m in Sources */,
 				AA5296731B3EF4D60017019B /* MH6ShotsProtocol.m in Sources */,
 				8096A8F91636E9C60092F049 /* NewRoomViewController.m in Sources */,
-				80B6B18519F54490006D10B1 /* EtiquetteViewController.m in Sources */,
+				80E5E2051B6F898800E153EB /* PacketContent.m in Sources */,
 				AA5296821B3EF4D60017019B /* MHPeer.m in Sources */,
 				8096A9011636E9C60092F049 /* Room.m in Sources */,
 				8096A9031636E9C60092F049 /* RoomTableViewController.m in Sources */,
