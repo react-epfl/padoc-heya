@@ -38,7 +38,7 @@
     
     // Initialize tracker.
     //id<GAITracker> tracker =
-    [[GAI sharedInstance] trackerWithTrackingId:@"UA-45860154-1"];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-64703399-1"];
     
     
     return YES;

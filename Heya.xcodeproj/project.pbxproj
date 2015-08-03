@@ -251,9 +251,9 @@
 			isa = PBXGroup;
 			children = (
 				802BF6591B41A280003E9E31 /* LaunchScreen.xib */,
+				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
 				AA52964C1B3EF4D60017019B /* Multihop */,
 				80AB3D7C183E727B0005C603 /* Google analytics */,
-				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
 				80A6704D17381C150082275E /* Socket.io */,
 				80FB4C3B17251E950004965A /* SocketRocket */,
@@ -503,7 +503,7 @@
 				ORGANIZATIONNAME = "Adrian Holzer";
 				TargetAttributes = {
 					8096A8A61636E80B0092F049 = {
-						DevelopmentTeam = 8HKT3VB273;
+						DevelopmentTeam = ZUF96Y7BKS;
 					};
 				};
 			};
