@@ -1,0 +1,4 @@
+*.DS_Store
+Heya.xcodeproj/xcuserdata/*
+Heya.xcodeproj/project.xcworkspace/xcuserdata/*
+*.xcuserstate
