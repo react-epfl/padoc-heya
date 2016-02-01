@@ -8,9 +8,9 @@
 #import "ConnectionDelegate.h"
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
+//#import "GAI.h"
+//#import "GAIDictionaryBuilder.h"
+//#import "GAIFields.h"
 
 #import "PacketContent.h"
 
@@ -515,7 +515,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [self receivedMessage:message];
     [messageManagerDelegate updateMessagesInRoom:message.roomID];
     
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"send" value:nil] build]];
 }
 
 // CREATE NEW ROOM
@@ -536,7 +537,9 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     handler(myData);
     
     [self savePeerData];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
+    
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"create_room" value:nil] build]];
 }
 
 // RATE MESSAGE
@@ -569,7 +572,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_room" value:nil] build]];
     
     // Delete the room locally
     [self receivedRoomToDelete:room.roomID];
@@ -598,7 +602,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [self receivedMessageToDelete:message.messageID inRoom:message.roomID withParent:message.parentMessageID];
     [messageManagerDelegate updateMessagesInRoom:message.roomID];
     
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"delete_message" value:nil] build]];
 }
 
 // SPAM MESSAGE
@@ -619,7 +624,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     // Update the message locally
     [self receivedMessage:message];
     
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"button_press" label:@"mark_spam_message" value:nil] build]];
 }
 
 

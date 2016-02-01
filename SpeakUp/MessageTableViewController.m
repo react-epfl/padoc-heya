@@ -8,9 +8,9 @@
 #import "MessageTableViewController.h"
 #import "Message.h"
 #import "SpeakUpManager.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
+//#import "GAI.h"
+//#import "GAIDictionaryBuilder.h"
+//#import "GAIFields.h"
 
 
 #define CELL_CONTENT_WIDTH 280.0f
@@ -427,7 +427,9 @@
     [self.tableView reloadData];
     NSIndexPath *myIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView selectRowAtIndexPath:myIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"tab_change"   label:eventName   value:nil] build]];    // Event value
+    
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"  action:@"tab_change"   label:eventName   value:nil] build]];    // Event value
 }
 
 // CONNECTION HANDLING
@@ -485,7 +487,9 @@
             }
             
             [self.tableView reloadData];
-            [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_up" value:nil] build]];
+            
+            // Google Analytics
+//            [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_up" value:nil] build]];
         }
     }
 }
@@ -537,7 +541,9 @@
             }
             
             [self.tableView reloadData];
-            [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_down" value:nil] build]];
+            
+            // Google Analytics
+//            [ [[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action" action:@"button_press" label:@"thumb_down" value:nil] build]];
         }
     }
 }

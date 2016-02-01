@@ -32,13 +32,11 @@
 		8096A9031636E9C60092F049 /* RoomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096A8EA1636E9C60092F049 /* RoomTableViewController.m */; };
 		8096A9241636F37E0092F049 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9231636F37D0092F049 /* QuartzCore.framework */; };
 		8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A9271636F3FD0092F049 /* MessageUI.framework */; };
-		80AB3D87183E72FB0005C603 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */; };
 		80AB3D8B183E73340005C603 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D8A183E73340005C603 /* SystemConfiguration.framework */; };
 		80AB3D8D183E73490005C603 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D8C183E73490005C603 /* libz.dylib */; };
 		80B3A52B19F27FB600E7CB7C /* button-add1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A51B19F27FB600E7CB7C /* button-add1@2x.png */; };
 		80B3A52C19F27FB600E7CB7C /* button-back1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A51C19F27FB600E7CB7C /* button-back1@2x.png */; };
 		80B3A52D19F27FB600E7CB7C /* button-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B3A51D19F27FB600E7CB7C /* button-refresh@2x.png */; };
-		80C6626419F153F1003E1268 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80C6626319F153F1003E1268 /* libAdIdAccess.a */; };
 		80E5E2051B6F898800E153EB /* PacketContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E5E2041B6F898800E153EB /* PacketContent.m */; };
 		80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4617251F460004965A /* CFNetwork.framework */; };
 		80FB4C4917251F540004965A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FB4C4817251F540004965A /* libicucore.dylib */; };
@@ -123,24 +121,12 @@
 		8096A9271636F3FD0092F049 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		809A5D6417F16C8B004B996C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		809A5D6517F16C8B004B996C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		80AB3D7E183E72A80005C603 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = Library/GAI.h; sourceTree = "<group>"; };
-		80AB3D7F183E72A80005C603 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = Library/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		80AB3D80183E72A80005C603 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = Library/GAIFields.h; sourceTree = "<group>"; };
-		80AB3D81183E72A80005C603 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = Library/GAILogger.h; sourceTree = "<group>"; };
-		80AB3D82183E72A80005C603 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = Library/GAITrackedViewController.h; sourceTree = "<group>"; };
-		80AB3D83183E72A80005C603 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = Library/GAITracker.h; sourceTree = "<group>"; };
-		80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = Library/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		80AB3D88183E73150005C603 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		80AB3D8A183E73340005C603 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		80AB3D8C183E73490005C603 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		80B3A51B19F27FB600E7CB7C /* button-add1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-add1@2x.png"; sourceTree = "<group>"; };
 		80B3A51C19F27FB600E7CB7C /* button-back1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back1@2x.png"; sourceTree = "<group>"; };
 		80B3A51D19F27FB600E7CB7C /* button-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-refresh@2x.png"; sourceTree = "<group>"; };
-		80C6626319F153F1003E1268 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdIdAccess.a; path = Library/libAdIdAccess.a; sourceTree = "<group>"; };
-		80C6626519F15F69003E1268 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceFields.h; path = Library/GAIEcommerceFields.h; sourceTree = "<group>"; };
-		80C6626619F15F69003E1268 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProduct.h; path = Library/GAIEcommerceProduct.h; sourceTree = "<group>"; };
-		80C6626719F15F69003E1268 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProductAction.h; path = Library/GAIEcommerceProductAction.h; sourceTree = "<group>"; };
-		80C6626819F15F69003E1268 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIEcommercePromotion.h; path = Library/GAIEcommercePromotion.h; sourceTree = "<group>"; };
 		80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
 		80E5E2031B6F898800E153EB /* PacketContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketContent.h; sourceTree = "<group>"; };
 		80E5E2041B6F898800E153EB /* PacketContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketContent.m; sourceTree = "<group>"; };
@@ -206,12 +192,10 @@
 				80FB4C4717251F460004965A /* CFNetwork.framework in Frameworks */,
 				80939B88166E0D7D0079BEF0 /* MapKit.framework in Frameworks */,
 				8096A9281636F3FD0092F049 /* MessageUI.framework in Frameworks */,
-				80C6626419F153F1003E1268 /* libAdIdAccess.a in Frameworks */,
 				8096A9241636F37E0092F049 /* QuartzCore.framework in Frameworks */,
 				8096A8AC1636E80C0092F049 /* UIKit.framework in Frameworks */,
 				8096A8AE1636E80C0092F049 /* Foundation.framework in Frameworks */,
 				8096A8B01636E80C0092F049 /* CoreGraphics.framework in Frameworks */,
-				80AB3D87183E72FB0005C603 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +208,6 @@
 				802BF6591B41A280003E9E31 /* LaunchScreen.xib */,
 				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
 				AA52964C1B3EF4D60017019B /* Multihop */,
-				80AB3D7C183E727B0005C603 /* Google analytics */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
 				8096A8B11636E80C0092F049 /* SpeakUp */,
 				8096A8AA1636E80C0092F049 /* Frameworks */,
@@ -319,25 +302,6 @@
 				8096A8E51636E9C60092F049 /* Room.m */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		80AB3D7C183E727B0005C603 /* Google analytics */ = {
-			isa = PBXGroup;
-			children = (
-				80C6626319F153F1003E1268 /* libAdIdAccess.a */,
-				80AB3D86183E72FB0005C603 /* libGoogleAnalyticsServices.a */,
-				80C6626519F15F69003E1268 /* GAIEcommerceFields.h */,
-				80C6626619F15F69003E1268 /* GAIEcommerceProduct.h */,
-				80C6626719F15F69003E1268 /* GAIEcommerceProductAction.h */,
-				80C6626819F15F69003E1268 /* GAIEcommercePromotion.h */,
-				80AB3D7E183E72A80005C603 /* GAI.h */,
-				80AB3D7F183E72A80005C603 /* GAIDictionaryBuilder.h */,
-				80AB3D80183E72A80005C603 /* GAIFields.h */,
-				80AB3D81183E72A80005C603 /* GAILogger.h */,
-				80AB3D82183E72A80005C603 /* GAITrackedViewController.h */,
-				80AB3D83183E72A80005C603 /* GAITracker.h */,
-			);
-			name = "Google analytics";
 			sourceTree = "<group>";
 		};
 		80B3A51A19F27FB600E7CB7C /* Pics */ = {

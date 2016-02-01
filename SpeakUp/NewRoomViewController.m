@@ -10,9 +10,9 @@
 #import "Room.h"
 #import "SpeakUpManager.h"
 #import <QuartzCore/QuartzCore.h>
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
+//#import "GAI.h"
+//#import "GAIDictionaryBuilder.h"
+//#import "GAIFields.h"
 
 #define MAX_LENGTH 30 // A room name cannot exceed 30 characters
 #define RANGE 200 // A room has a 200 meter range
@@ -141,10 +141,11 @@
 
 - (IBAction)goToWebSite:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.seance.ch/speakup"]];
-    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                                                        action:@"button_press"
-                                                                                         label:@"info_from_add"
-                                                                                         value:nil] build]];
+    // Google Analytics
+//    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+//                                                                                        action:@"button_press"
+//                                                                                         label:@"info_from_add"
+//                                                                                         value:nil] build]];
 }
 
 - (void)connectionWasLost {

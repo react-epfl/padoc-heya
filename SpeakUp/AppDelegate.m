@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "SpeakUpManager.h"
-#import "GAI.h"
+// #import "GAI.h"
 
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
@@ -23,22 +23,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
    
-    // Optional: automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
-    
-    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].dispatchInterval = 60;
-    
-    // Optional: set Logger to VERBOSE for debug information.
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
-    
-
-    // Enable IDFA collection.
-    [[[GAI sharedInstance] defaultTracker] setAllowIDFACollection:YES];
-    
-    // Initialize tracker.
-    //id<GAITracker> tracker =
-    [[GAI sharedInstance] trackerWithTrackingId:@"UA-64703399-1"];
+//    // Optional: automatically send uncaught exceptions to Google Analytics.
+//    [GAI sharedInstance].trackUncaughtExceptions = YES;
+//    
+//    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+//    [GAI sharedInstance].dispatchInterval = 60;
+//    
+//    // Optional: set Logger to VERBOSE for debug information.
+//    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+//    
+//
+//    // Enable IDFA collection.
+//    [[[GAI sharedInstance] defaultTracker] setAllowIDFACollection:YES];
+//    
+//    // Initialize tracker.
+//    //id<GAITracker> tracker =
+//    [[GAI sharedInstance] trackerWithTrackingId:@"UA-64703399-1"];
     
     
     return YES;

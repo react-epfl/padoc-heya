@@ -11,9 +11,9 @@
 #import "SpeakUpManager.h"
 #import "Message.h"
 #import "MessageTableViewController.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
+//#import "GAI.h"
+//#import "GAIDictionaryBuilder.h"
+//#import "GAIFields.h"
 
 #define DISTANCE 1500
 

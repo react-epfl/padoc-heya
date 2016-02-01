@@ -78,7 +78,7 @@
         NSInteger minutes = -self.secondsSinceCreation/60;
         int e = minutes/HotScoreHalfLifeInMinutes;
         double hot = self.score/pow(2,e);
-        NSLog(@"Message date in minutes: %d, score: %d, hot: %f", minutes, self.score, hot  );
+        NSLog(@"Message date in minutes: %ld, score: %d, hot: %f", (long)minutes, self.score, hot  );
         return hot;
     }
     
