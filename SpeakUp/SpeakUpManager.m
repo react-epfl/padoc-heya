@@ -19,7 +19,7 @@
 
 @implementation SpeakUpManager
 
-@synthesize peer_id, dev_id,likedMessages, speakUpDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, socket, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
+@synthesize peer_id, dev_id,likedMessages, speakUpDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, paddoc, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
 
 static SpeakUpManager *sharedSpeakUpManager = nil;
 
@@ -60,10 +60,10 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CALLBACKS OF MultiHop lib - INCOMING MESSAGES
+// CALLBACKS OF Paddoc lib - INCOMING MESSAGES
 
 // SOCKET DID RECEIVE MESSAGE
-- (void)mhSocket:(MHSocket *)mhSocket
+- (void)mhPaddoc:(MHPaddoc *)mhPaddoc
         didReceiveMessage:(NSData *)message
                  fromPeer:(NSString *)peer
             withTraceInfo:(NSArray *)traceInfo {
@@ -124,7 +124,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         // Send our list of rooms to the requesting peer
         PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:myOwnRoomArray];
         NSError *error;
-        [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
                       error:&error];
         
@@ -158,7 +158,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         
         PacketContent* msg = [[PacketContent alloc] initWithType:@"room" withContent:myData];
         NSError *error;
-        [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
                       error:&error];
         
@@ -173,7 +173,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [speakUpDelegate updateData];
 }
 
-- (void)mhSocket:(MHSocket *)mhSocket
+- (void)mhPaddoc:(MHPaddoc *)mhPaddoc
           failedToConnect:(NSError *)error {
     
 }
@@ -427,21 +427,21 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 
 // CONNECT
 - (void)connect {
-    if (socket == nil) {
-        // Set up the socket and the groups
-        socket = [[MHSocket alloc] initWithServiceType:@"heya"];
-        socket.delegate = self;
+    if (paddoc == nil) {
+        // Set up paddoc and the groups
+        paddoc = [[MHPaddoc alloc] initWithServiceType:@"heya"];
+        paddoc.delegate = self;
         
         // Set the peer id
-        peer_id = [socket getOwnPeer];
+        peer_id = [paddoc getOwnPeer];
     
         // For background mode
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate setSocket:self.socket];
+        [appDelegate setPaddoc:self.paddoc];
     
         // Join the groups
-        [socket joinGroup:GLOBAL];
-        [socket joinGroup:peer_id];
+        [paddoc joinGroup:GLOBAL];
+        [paddoc joinGroup:peer_id];
     }
     
     connectionIsOK = YES;
@@ -483,7 +483,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         // Broadcast a rooms retrieval message
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
-        [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                       error:&error];
     }
@@ -497,7 +497,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     // Broadcast a message to retrieve the mesages in the room
     PacketContent* msg = [[PacketContent alloc] initWithType:@"getroom" withContent:myData];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
 }
@@ -507,7 +507,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     // Broadcast the message
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:message];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -527,7 +527,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     // Broadcast the room to the other peers
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:room];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -550,7 +550,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     // Broadcast the message to the other peers
     PacketContent* msg = [[PacketContent alloc] initWithType:@"updatemessage" withContent:message];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -568,7 +568,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     
     PacketContent* msg = [[PacketContent alloc] initWithType:@"deleteroom" withContent:myData];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -594,7 +594,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     
     PacketContent* msg = [[PacketContent alloc] initWithType:@"deletemessage" withContent:myData];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -617,7 +617,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 
     PacketContent* msg = [[PacketContent alloc] initWithType:@"tag_message" withContent:myData];
     NSError *error;
-    [socket sendMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
