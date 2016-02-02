@@ -63,13 +63,17 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 // CALLBACKS OF Paddoc lib - INCOMING MESSAGES
 
 // SOCKET DID RECEIVE MESSAGE
+//- (void)mhPaddoc:(MHPaddoc *)mhPaddoc
+//        didReceiveMessage:(NSData *)message
+//                 fromPeer:(NSString *)peer
+//            withTraceInfo:(NSArray *)traceInfo {
+
 - (void)mhPaddoc:(MHPaddoc *)mhPaddoc
-        didReceiveMessage:(NSData *)message
-                 fromPeer:(NSString *)peer
-            withTraceInfo:(NSArray *)traceInfo {
+  deliverMessage:(NSData *)data
+      fromGroups:(NSArray *)groups {
     [self stopNetworking];
     
-    PacketContent *packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:message];
+    PacketContent *packetContent = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     NSString *type = packetContent.type;
     NSLog(@"Packet of type '%@' received", type);
@@ -124,8 +128,11 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         // Send our list of rooms to the requesting peer
         PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:myOwnRoomArray];
         NSError *error;
+//        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+//                  toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
+//                           error:&error];
         [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
-             toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
+             toDestinations:[[NSArray alloc] initWithObjects:groups, nil]
                       error:&error];
         
     } else if ([type isEqual:@"getroom"]) {
@@ -158,8 +165,11 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         
         PacketContent* msg = [[PacketContent alloc] initWithType:@"room" withContent:myData];
         NSError *error;
+//        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+//                  toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
+//                           error:&error];
         [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
-             toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
+             toDestinations:[[NSArray alloc] initWithObjects:groups, nil]
                       error:&error];
         
     } else if ([type isEqual:@"tag_message"]) {
@@ -434,6 +444,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         
         // Set the peer id
         peer_id = [paddoc getOwnPeer];
+        NSLog(@"PEER_ID: %@", peer_id);
     
         // For background mode
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
