@@ -1,6 +1,6 @@
 //
-//  SpeakUpManager.h
-//  SpeakUp
+//  HeyaManager.h
+//  Heya
 //
 //  Created by Adrian Holzer on 06.11.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Message.h"
 #import "Room.h"
-#import "SpeakUpManagerDelegate.h"
+#import "HeyaManagerDelegate.h"
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
 #import "ConnectionDelegate.h"
@@ -46,9 +46,9 @@
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 
-@interface SpeakUpManager : NSObject <CLLocationManagerDelegate, MHPaddocDelegate>
+@interface HeyaManager : NSObject <CLLocationManagerDelegate, MHPaddocDelegate>
 
-+ (id)sharedSpeakUpManager;
++ (id)sharedHeyaManager;
 
 - (void)connect;
 - (void)savePeerData;
@@ -97,7 +97,7 @@
 @property (strong, nonatomic) id<ConnectionDelegate> connectionDelegate;
 @property (strong, nonatomic) id<RoomManagerDelegate> roomManagerDelegate;
 @property (strong, nonatomic) id<MessageManagerDelegate> messageManagerDelegate;
-@property (strong, nonatomic) id<SpeakUpManagerDelegate> speakUpDelegate;
+@property (strong, nonatomic) id<HeyaManagerDelegate> heyaDelegate;
 @property (nonatomic) NSString *likeType;//type of like buttons (e.g. THUMB, PLUS, ARROW)
 @property (nonatomic) NSString *etiquetteType;//type of etiquette (e.g. ETIQUETTE, NO_ETIQUETTE)
 @property (nonatomic) BOOL *etiquetteWasShown;

@@ -1,13 +1,13 @@
 //
 //  Room.m
-//  SpeakUp
+//  Heya
 //
 //  Created by Adrian Holzer on 02.04.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
 //
 
 #import "Room.h"
-#import "SpeakUpManager.h"
+#import "HeyaManager.h"
 
 @implementation Room
 
@@ -43,11 +43,11 @@
         [self setId_type:[dict objectForKey:@"id_type"]];
         [self setIsOfficial:[[dict objectForKey:@"official"] boolValue]];
         [self setIsUnlocked:[[dict objectForKey:@"unlocked"] boolValue]];
-        if (self.isUnlocked && ![[[SpeakUpManager sharedSpeakUpManager]unlockedRoomIDArray] containsObject:self.roomID]) {
-            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomIDArray] addObject:self.roomID];
+        if (self.isUnlocked && ![[[HeyaManager sharedHeyaManager]unlockedRoomIDArray] containsObject:self.roomID]) {
+            [[[HeyaManager sharedHeyaManager] unlockedRoomIDArray] addObject:self.roomID];
         }
         CLLocation *roomlocation = [[CLLocation alloc] initWithLatitude:[self latitude] longitude: [self longitude]];
-        self.distance = [[[SpeakUpManager sharedSpeakUpManager] peerLocation] distanceFromLocation:roomlocation];
+        self.distance = [[[HeyaManager sharedHeyaManager] peerLocation] distanceFromLocation:roomlocation];
         
         // MESSAGES
         if ([dict objectForKey:@"messages"]) { // meesages are nil if there are none

@@ -1,10 +1,10 @@
 //
-//  sharedSpeakUpManager.m
+//  HeyaManager.m
 //
 //  Created by Adrian Holzer on 06.11.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
 //
-#import "SpeakUpManager.h"
+#import "HeyaManager.h"
 #import "ConnectionDelegate.h"
 #import "RoomTableViewController.h"
 #import "AppDelegate.h"
@@ -17,45 +17,45 @@
 #define GLOBAL @"global"
 
 
-@implementation SpeakUpManager
+@implementation HeyaManager
 
-@synthesize peer_id, dev_id,likedMessages, speakUpDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, paddoc, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
+@synthesize peer_id, dev_id,likedMessages, heyaDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, paddoc, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
 
-static SpeakUpManager *sharedSpeakUpManager = nil;
+static HeyaManager *sharedHeyaManager = nil;
 
-// creates the sharedSpeakUpManager singleton
-+ (id) sharedSpeakUpManager{
+// creates the sharedHeyaManager singleton
++ (id) sharedHeyaManager{
     @synchronized(self) {
-        if (sharedSpeakUpManager == nil){
-            sharedSpeakUpManager.avatarCacheByPeerID = [[NSCache alloc] init];
-            sharedSpeakUpManager = [[self alloc] init];
-            sharedSpeakUpManager.roomArray = [[NSMutableArray alloc] init];
-            sharedSpeakUpManager.unlockedRoomArray = [[NSMutableArray alloc] init];
-            sharedSpeakUpManager.myOwnRoomArray = [[NSMutableArray alloc] init];
-            sharedSpeakUpManager.connectionDelegate = nil;
-            [sharedSpeakUpManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
-            sharedSpeakUpManager.connectionIsOK = NO;
-            sharedSpeakUpManager.locationIsOK = YES;
-            sharedSpeakUpManager.currentRoomID = nil;
-            sharedSpeakUpManager.peerLocation = nil;
+        if (sharedHeyaManager == nil){
+            sharedHeyaManager.avatarCacheByPeerID = [[NSCache alloc] init];
+            sharedHeyaManager = [[self alloc] init];
+            sharedHeyaManager.roomArray = [[NSMutableArray alloc] init];
+            sharedHeyaManager.unlockedRoomArray = [[NSMutableArray alloc] init];
+            sharedHeyaManager.myOwnRoomArray = [[NSMutableArray alloc] init];
+            sharedHeyaManager.connectionDelegate = nil;
+            [sharedHeyaManager initPeerData];// assign values to the fields, either by retriving it from storage or by initializing them
+            sharedHeyaManager.connectionIsOK = NO;
+            sharedHeyaManager.locationIsOK = YES;
+            sharedHeyaManager.currentRoomID = nil;
+            sharedHeyaManager.peerLocation = nil;
             
-            sharedSpeakUpManager.locationManager = [[CLLocationManager alloc] init];
+            sharedHeyaManager.locationManager = [[CLLocationManager alloc] init];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
-                [sharedSpeakUpManager.locationManager requestWhenInUseAuthorization];
+                [sharedHeyaManager.locationManager requestWhenInUseAuthorization];
             }
-            sharedSpeakUpManager.locationManager.delegate = sharedSpeakUpManager;
-            sharedSpeakUpManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
-            sharedSpeakUpManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
-            [sharedSpeakUpManager.locationManager startUpdatingLocation];// sets up the local location manager, this triggers the didUpdateToLocation callback
+            sharedHeyaManager.locationManager.delegate = sharedHeyaManager;
+            sharedHeyaManager.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+            sharedHeyaManager.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+            [sharedHeyaManager.locationManager startUpdatingLocation];// sets up the local location manager, this triggers the didUpdateToLocation callback
             
-            [sharedSpeakUpManager connect];
+            [sharedHeyaManager connect];
             
-            sharedSpeakUpManager.likeType = THUMB;
-            sharedSpeakUpManager.etiquetteType = NO_ETIQUETTE;
-            sharedSpeakUpManager.etiquetteWasShown = NO;
+            sharedHeyaManager.likeType = THUMB;
+            sharedHeyaManager.etiquetteType = NO_ETIQUETTE;
+            sharedHeyaManager.etiquetteWasShown = NO;
         }
     }
-    return sharedSpeakUpManager;
+    return sharedHeyaManager;
 }
 
 
@@ -180,7 +180,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
     
     [self savePeerData];
-    [speakUpDelegate updateData];
+    [heyaDelegate updateData];
 }
 
 - (void)mhPaddoc:(MHPaddoc *)mhPaddoc
@@ -207,7 +207,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 //    if([myNavController.visibleViewController isKindOfClass:[RoomTableViewController class]]){
 //        [self getNearbyRooms];
 //    }else{
-//        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler){
+//        [[HeyaManager sharedHeyaManager] getMessagesInRoomID: [[HeyaManager sharedHeyaManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler){
 //            NSLog(@"got nearby rooms in the callback");
 //        }];
 //    }
@@ -656,7 +656,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.peerLocation = newLocation;
     locationIsOK=YES;
-    [sharedSpeakUpManager getNearbyRooms];
+    [sharedHeyaManager getNearbyRooms];
 }
 //-(void)updateRoomLocations{
 //    for(Room *room in roomArray){
@@ -728,8 +728,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
     
     inputText = @"";
-    sharedSpeakUpManager.locationAtLastReset = nil;
-    sharedSpeakUpManager.peerLocation = nil;
+    sharedHeyaManager.locationAtLastReset = nil;
+    sharedHeyaManager.peerLocation = nil;
 }
 -(void)savePeerData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

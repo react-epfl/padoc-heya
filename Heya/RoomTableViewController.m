@@ -1,6 +1,6 @@
 //
 //  RoomTableViewController.m
-//  SpeakUp
+//  Heya
 //
 //  Created by Adrian Holzer on 19.12.11.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import "RoomTableViewController.h"
 #import "Room.h"
-#import "SpeakUpManager.h"
+#import "HeyaManager.h"
 #import "Message.h"
 #import "MessageTableViewController.h"
 //#import "GAI.h"
@@ -26,9 +26,9 @@
     NEARBY_SECTION = 0;
     UNLOCKED_SECTION = -1;
     MY_SECTION = -1;
-    [[SpeakUpManager sharedSpeakUpManager] setRoomManagerDelegate:self];
-    [[SpeakUpManager sharedSpeakUpManager] setSpeakUpDelegate:self];
-    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    [[HeyaManager sharedHeyaManager] setRoomManagerDelegate:self];
+    [[HeyaManager sharedHeyaManager] setHeyaDelegate:self];
+    [[HeyaManager sharedHeyaManager] setConnectionDelegate:self];
     self.navigationController.navigationBar.translucent = NO;
     self.tableView.separatorColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:255.0/255.0 alpha:0.8];// LITE GREY
     [super viewDidLoad];
@@ -59,8 +59,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
-    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    [[HeyaManager sharedHeyaManager] getNearbyRooms];
+    [[HeyaManager sharedHeyaManager] setConnectionDelegate:self];
     
 //    // GOOGLE TRACKER
 //    id tracker = [[GAI sharedInstance] defaultTracker];
@@ -69,7 +69,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+    [[HeyaManager sharedHeyaManager] savePeerData];
     [super viewDidDisappear:animated];
 }
 
@@ -87,8 +87,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == NEARBY_SECTION) {
-        int roomsCount = [[[SpeakUpManager sharedSpeakUpManager] roomArray] count];
-        if (![[SpeakUpManager sharedSpeakUpManager] locationIsOK] || roomsCount == 0) {
+        int roomsCount = [[[HeyaManager sharedHeyaManager] roomArray] count];
+        if (![[HeyaManager sharedHeyaManager] locationIsOK] || roomsCount == 0) {
             return 1; // returns one when there is no room (the cell will contain an instruction)
         } else {
             return roomsCount;
@@ -96,11 +96,11 @@
     }
     
     else if (section == UNLOCKED_SECTION) {
-        return [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] count];
+        return [[[HeyaManager sharedHeyaManager] unlockedRoomArray] count];
     }
     
     else if (section == MY_SECTION) {
-        return [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] count];
+        return [[[HeyaManager sharedHeyaManager] myOwnRoomArray] count];
     }
     
     return 0;
@@ -109,7 +109,7 @@
 // LOAD DATA
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ((![[SpeakUpManager sharedSpeakUpManager] connectionIsOK] || ![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) && indexPath.section == NEARBY_SECTION) {
+    if ((![[HeyaManager sharedHeyaManager] connectionIsOK] || ![[HeyaManager sharedHeyaManager] locationIsOK]) && indexPath.section == NEARBY_SECTION) {
         
         static NSString *CellIdentifier = @"NoRoomCell";
         UITableViewCell *cell = [self buildCellForIdentifier:CellIdentifier inTableView:tableView];
@@ -117,11 +117,11 @@
         // Populate Community Cells
         UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
 //        UIActivityIndicatorView *connectionLostSpinner = (UIActivityIndicatorView *)[cell viewWithTag:2];
-        if (![[SpeakUpManager sharedSpeakUpManager] locationIsOK]) {
+        if (![[HeyaManager sharedHeyaManager] locationIsOK]) {
             nameLabel.text = NSLocalizedString(@"NO_ROOM", nil);
 //            [connectionLostSpinner stopAnimating];
         }
-        if (![[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+        if (![[HeyaManager sharedHeyaManager] connectionIsOK]) {
             nameLabel.text = @"";
 //            [connectionLostSpinner startAnimating];
         }
@@ -137,12 +137,12 @@
         
         if (section == NEARBY_SECTION) {
             
-            if ([[[SpeakUpManager sharedSpeakUpManager] roomArray] count] == 0) {
+            if ([[[HeyaManager sharedHeyaManager] roomArray] count] == 0) {
                 
                 static NSString *CellIdentifier = @"NoRoomCell";
                 UITableViewCell *cell = [self buildCellForIdentifier:CellIdentifier inTableView:tableView];
                 
-                if ([[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] count] == 0) {
+                if ([[[HeyaManager sharedHeyaManager] myOwnRoomArray] count] == 0) {
                     [self setRoomName:NSLocalizedString(@"NO_ROOM", nil) toCell:cell];
                 } else {
                     [self setRoomName:NSLocalizedString(@"", nil) toCell:cell];
@@ -152,7 +152,7 @@
                 
             } else {
                 
-                Room *room = (Room *)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:row];
+                Room *room = (Room *)[[[HeyaManager sharedHeyaManager] roomArray] objectAtIndex:row];
                 
                 static NSString *CellIdentifier = @"CommunityCell";
                 UITableViewCell *cell = [self buildCellForIdentifier:CellIdentifier inTableView:tableView];
@@ -169,9 +169,9 @@
             
             Room *room = nil;
             if (section == UNLOCKED_SECTION) {
-                room = (Room *)[[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] objectAtIndex:row];
+                room = (Room *)[[[HeyaManager sharedHeyaManager] unlockedRoomArray] objectAtIndex:row];
             } else if (section == MY_SECTION) {
-                room = (Room *)[[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] objectAtIndex:row];
+                room = (Room *)[[[HeyaManager sharedHeyaManager] myOwnRoomArray] objectAtIndex:row];
             }
             
             static NSString *CellIdentifier = @"CommunityCell";
@@ -211,7 +211,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionName = nil;
     if (section == NEARBY_SECTION) {
-        if ([[[SpeakUpManager sharedSpeakUpManager] roomArray] count] == 0) {
+        if ([[[HeyaManager sharedHeyaManager] roomArray] count] == 0) {
             sectionName = NSLocalizedString(@"NO_NEARBY_ROOMS", nil);
         } else {
             sectionName = NSLocalizedString(@"NEARBY_ROOMS", nil);
@@ -251,7 +251,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"JoinRoomSegue"]) {
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
+        [[HeyaManager sharedHeyaManager] getMessagesInRoomID:[[HeyaManager sharedHeyaManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
             NSLog(@"XXXXXXXXXXXXXXX");
         }];
     }
@@ -264,15 +264,15 @@
         MessageTableViewController *mvc = (MessageTableViewController *)[segue destinationViewController];
         [mvc setParentMessage:nil];
         if (indexPath.section == NEARBY_SECTION) {
-            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID:[((Room*)[[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:row])roomID]];
+            [[HeyaManager sharedHeyaManager] setCurrentRoomID:[((Room*)[[[HeyaManager sharedHeyaManager] roomArray] objectAtIndex:row])roomID]];
         } else if (indexPath.section == UNLOCKED_SECTION) {
-            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID:[((Room*)[[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] objectAtIndex:row])roomID]];
+            [[HeyaManager sharedHeyaManager] setCurrentRoomID:[((Room*)[[[HeyaManager sharedHeyaManager] unlockedRoomArray] objectAtIndex:row])roomID]];
         } else if (indexPath.section == MY_SECTION) {
-            [[SpeakUpManager sharedSpeakUpManager] setCurrentRoomID:[((Room*)[[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] objectAtIndex:row])roomID]];
+            [[HeyaManager sharedHeyaManager] setCurrentRoomID:[((Room*)[[[HeyaManager sharedHeyaManager] myOwnRoomArray] objectAtIndex:row])roomID]];
         }
         
         // ADER could be done asynchronously with callback
-        [[SpeakUpManager sharedSpeakUpManager] getMessagesInRoomID: [[SpeakUpManager sharedSpeakUpManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
+        [[HeyaManager sharedHeyaManager] getMessagesInRoomID: [[HeyaManager sharedHeyaManager] currentRoomID] orRoomHash:nil withHandler:^(NSDictionary* handler) {
             NSLog(@"YYYYYY");
         }];
     }
@@ -286,12 +286,12 @@
         UNLOCKED_SECTION = 1;
         NEARBY_SECTION = 2;
         
-        if ([[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] count] == 0) {
+        if ([[[HeyaManager sharedHeyaManager] myOwnRoomArray] count] == 0) {
             MY_SECTION = -1;
             UNLOCKED_SECTION--;
             NEARBY_SECTION--;
         }
-        if ([[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] count] == 0) {
+        if ([[[HeyaManager sharedHeyaManager] unlockedRoomArray] count] == 0) {
             UNLOCKED_SECTION = -1;
             NEARBY_SECTION--;
         }
@@ -327,7 +327,7 @@
 }
 
 - (IBAction)refresh:(id)sender {
-    [[SpeakUpManager sharedSpeakUpManager] getNearbyRooms];
+    [[HeyaManager sharedHeyaManager] getNearbyRooms];
     
 //    // GOOGLE ANALYTICS
 //    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -349,19 +349,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if (indexPath.section == MY_SECTION) {
-            Room* room = [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] objectAtIndex:indexPath.row];
-            [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomArray] removeObject:room];
-            [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomIDArray] removeObject:room.roomID];
-            [[SpeakUpManager sharedSpeakUpManager] deleteRoom:room];
+            Room* room = [[[HeyaManager sharedHeyaManager] myOwnRoomArray] objectAtIndex:indexPath.row];
+            [[[HeyaManager sharedHeyaManager] myOwnRoomArray] removeObject:room];
+            [[[HeyaManager sharedHeyaManager] myOwnRoomIDArray] removeObject:room.roomID];
+            [[HeyaManager sharedHeyaManager] deleteRoom:room];
             [tableView reloadData];
         } else if (indexPath.section == UNLOCKED_SECTION) {
-            Room* room = [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] objectAtIndex:indexPath.row];
-            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomArray] removeObject:room];
-            [[[SpeakUpManager sharedSpeakUpManager] unlockedRoomIDArray] removeObject:room.roomID];
+            Room* room = [[[HeyaManager sharedHeyaManager] unlockedRoomArray] objectAtIndex:indexPath.row];
+            [[[HeyaManager sharedHeyaManager] unlockedRoomArray] removeObject:room];
+            [[[HeyaManager sharedHeyaManager] unlockedRoomIDArray] removeObject:room.roomID];
             [tableView reloadData];
         } else {
-            Room* room = [[[SpeakUpManager sharedSpeakUpManager] roomArray] objectAtIndex:indexPath.row];
-            [[[SpeakUpManager sharedSpeakUpManager] roomArray] removeObject:room];
+            Room* room = [[[HeyaManager sharedHeyaManager] roomArray] objectAtIndex:indexPath.row];
+            [[[HeyaManager sharedHeyaManager] roomArray] removeObject:room];
             [tableView reloadData];
         }
     }

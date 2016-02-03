@@ -1,13 +1,13 @@
 //
 //  Packet.h
-//  SpeakUp
+//  Heya
 //
 //  Created by Sven Reber on 28/05/15.
 //  Copyright (c) 2015 Adrian Holzer. All rights reserved.
 //
 
-#ifndef SpeakUp_Packet_h
-#define SpeakUp_Packet_h
+#ifndef Heya_Packet_h
+#define Heya_Packet_h
 #import <Foundation/Foundation.h>
 
 

@@ -1,6 +1,6 @@
 //
 //  Message.m
-//  SpeakUp
+//  Heya
 //
 //  Created by Adrian Holzer on 16.12.11.
 //  Copyright (c) 2012 Seance Association. All rights reserved.

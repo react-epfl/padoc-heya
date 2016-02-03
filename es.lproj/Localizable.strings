@@ -1,6 +1,6 @@
 /* 
   Localizable.strings
-  SpeakUp
+  Heya
 
   Created by Adrian Holzer on 15.08.13.
   Copyright (c) 2012 Seance Association. All rights reserved.
@@ -10,7 +10,7 @@
 
 
 
-//"ROOMS" = "SpeakUp";
+//"ROOMS" = "Heya";
 
 //"NO_LOCATION" = "No se puede conseguir un lugar";
 

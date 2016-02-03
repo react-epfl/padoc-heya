@@ -1,13 +1,13 @@
 //
 //  AppDelegate.m
-//  SpeakUp
+//  Heya
 //
 //  Created by Adrian Holzer on 23.10.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "SpeakUpManager.h"
+#import "HeyaManager.h"
 // #import "GAI.h"
 
 
@@ -69,7 +69,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
    // NSLog(@"applicationWillEnterForeground and thus call reset!");
-   // [[SpeakUpManager sharedSpeakUpManager] resetData];
+   // [[HeyaManager sharedHeyaManager] resetData];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     if (self.paddoc != nil) {
         [self.paddoc applicationDidBecomeActive];
@@ -87,9 +87,9 @@
 -(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
    // NSLog(@"%@",[url description]);
     
-  //  if ([[url description] isEqual:@"speakup://reset"]) {
+  //  if ([[url description] isEqual:@"heya://reset"]) {
   //      NSLog(@"resetting the peer ID");
-  //     [[SpeakUpManager sharedSpeakUpManager] resetPeerID];
+  //     [[HeyaManager sharedHeyaManager] resetPeerID];
    // }
     
    

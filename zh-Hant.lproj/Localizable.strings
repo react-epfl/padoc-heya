@@ -1,6 +1,6 @@
 /*
  Localizable.strings
- SpeakUp
+ Heya
  
  Created by Yiwei Cao on 24.09.13.
  Copyright (c) 2013 Seance Association. All rights reserved.
@@ -10,7 +10,7 @@
 
 //"NO_ROOM"= "附近沒有聊天室，新建一個聊天室吧！";
 
-//"ROOMS"="SpeakUp";
+//"ROOMS"="Heya";
 
 //"NO_LOCATION" = "暫時無法獲取地點信息";
 

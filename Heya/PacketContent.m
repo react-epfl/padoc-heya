@@ -1,6 +1,6 @@
 //
 //  Packet.m
-//  SpeakUp
+//  Heya
 //
 //  Created by Sven Reber on 28/05/15.
 //  Copyright (c) 2015 Adrian Holzer. All rights reserved.

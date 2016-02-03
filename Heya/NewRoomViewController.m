@@ -1,6 +1,6 @@
 //
 //  NewRoomViewController.m
-//  SpeakUp
+//  Heya
 //
 //  Created by Adrian Holzer on 07.05.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import "NewRoomViewController.h"
 #import "Room.h"
-#import "SpeakUpManager.h"
+#import "HeyaManager.h"
 #import <QuartzCore/QuartzCore.h>
 //#import "GAI.h"
 //#import "GAIDictionaryBuilder.h"
@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
+    [[HeyaManager sharedHeyaManager] setConnectionDelegate:self];
     
     // BACK BUTTON
     UIButton *newBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,7 +61,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     createRoomButton.enabled = YES;
-//    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+//    if ([[HeyaManager sharedHeyaManager] connectionIsOK]) {
 //        [connectionLostSpinner stopAnimating];
 //    } else {
 //        [connectionLostSpinner startAnimating];
@@ -85,7 +85,7 @@
 }
 
 - (IBAction)createRoom:(id)sender {
-    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+    if ([[HeyaManager sharedHeyaManager] connectionIsOK]) {
         NSString *trimmedString = [input.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if (self.input.text.length > 0 && trimmedString.length > 0) {
             NSLog(@"creating a new room %@ ", input.text);
@@ -97,19 +97,19 @@
             myRoom.id_type = ANONYMOUS;
             
             myRoom.roomID = [[NSProcessInfo processInfo] globallyUniqueString];
-            myRoom.creatorID = [[SpeakUpManager sharedSpeakUpManager] peer_id];
+            myRoom.creatorID = [[HeyaManager sharedHeyaManager] peer_id];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
             myRoom.lastUpdateTime = [dateFormatter stringFromDate:[NSDate date]];
             
             createRoomButton.enabled = NO;
-            [[SpeakUpManager sharedSpeakUpManager] createRoom:myRoom withHandler:^(NSDictionary *handler) {
+            [[HeyaManager sharedHeyaManager] createRoom:myRoom withHandler:^(NSDictionary *handler) {
                 NSString *roomID = [handler objectForKey:@"room_id"];
                 if (roomID) {
                     [self.navigationController popViewControllerAnimated:YES];
                     self.input.text = @"";
-                    [[[SpeakUpManager sharedSpeakUpManager] myOwnRoomIDArray] addObject:roomID];
+                    [[[HeyaManager sharedHeyaManager] myOwnRoomIDArray] addObject:roomID];
                 } else {
                     [self createfailed];
                 }
@@ -117,7 +117,7 @@
             }];
         }
         
-        [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+        [[HeyaManager sharedHeyaManager] savePeerData];
     }
 }
 

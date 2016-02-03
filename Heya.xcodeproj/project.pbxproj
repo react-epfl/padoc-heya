@@ -17,7 +17,7 @@
 		803EB69517EDF75100E053EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803EB69417EDF75100E053EA /* Images.xcassets */; };
 		8048553218EF2352000979E8 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048553118EF2352000979E8 /* AdSupport.framework */; };
 		8048553318EF240A000979E8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AB3D88183E73150005C603 /* CoreData.framework */; };
-		8090FE6D1664FC6A005A6358 /* SpeakUpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8090FE6B1664FC6A005A6358 /* SpeakUpManager.m */; };
+		8090FE6D1664FC6A005A6358 /* HeyaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8090FE6B1664FC6A005A6358 /* HeyaManager.m */; };
 		80939B88166E0D7D0079BEF0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80939B87166E0D7D0079BEF0 /* MapKit.framework */; };
 		8096A8AC1636E80C0092F049 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A8AB1636E80C0092F049 /* UIKit.framework */; };
 		8096A8AE1636E80C0092F049 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8096A8AD1636E80C0092F049 /* Foundation.framework */; };
@@ -90,9 +90,9 @@
 		8048553118EF2352000979E8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		806F490D1808448900BFBC91 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		806F490E1808448900BFBC91 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8090FE6A1664FC6A005A6358 /* SpeakUpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeakUpManager.h; sourceTree = "<group>"; };
-		8090FE6B1664FC6A005A6358 /* SpeakUpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeakUpManager.m; sourceTree = "<group>"; };
-		8090FE6C1664FC6A005A6358 /* SpeakUpManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeakUpManagerDelegate.h; sourceTree = "<group>"; };
+		8090FE6A1664FC6A005A6358 /* HeyaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeyaManager.h; sourceTree = "<group>"; };
+		8090FE6B1664FC6A005A6358 /* HeyaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeyaManager.m; sourceTree = "<group>"; };
+		8090FE6C1664FC6A005A6358 /* HeyaManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeyaManagerDelegate.h; sourceTree = "<group>"; };
 		80939B87166E0D7D0079BEF0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8096A8A71636E80C0092F049 /* Heya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8096A8AB1636E80C0092F049 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -252,9 +252,9 @@
 		8096A8B11636E80C0092F049 /* Heya */ = {
 			isa = PBXGroup;
 			children = (
-				8090FE6A1664FC6A005A6358 /* SpeakUpManager.h */,
-				8090FE6B1664FC6A005A6358 /* SpeakUpManager.m */,
-				8090FE6C1664FC6A005A6358 /* SpeakUpManagerDelegate.h */,
+				8090FE6A1664FC6A005A6358 /* HeyaManager.h */,
+				8090FE6B1664FC6A005A6358 /* HeyaManager.m */,
+				8090FE6C1664FC6A005A6358 /* HeyaManagerDelegate.h */,
 				80DB2ADA177AF2FD003C297A /* ConnectionDelegate.h */,
 				8096A8E81636E9C60092F049 /* RoomManagerDelegate.h */,
 				8096A8D51636E9C60092F049 /* MessageManagerDelegate.h */,
@@ -489,7 +489,7 @@
 				AA5296751B3EF4D60017019B /* MH6ShotsScheduler.m in Sources */,
 				AA5296741B3EF4D60017019B /* MH6ShotsSchedule.m in Sources */,
 				AA5296831B3EF4D60017019B /* MHPeerBuffer.m in Sources */,
-				8090FE6D1664FC6A005A6358 /* SpeakUpManager.m in Sources */,
+				8090FE6D1664FC6A005A6358 /* HeyaManager.m in Sources */,
 				AA52967C1B3EF4D60017019B /* MHDiagnostics.m in Sources */,
 				AA5296801B3EF4D60017019B /* MHMultipeerWrapper.m in Sources */,
 				AA5296811B3EF4D60017019B /* MHPacket.m in Sources */,

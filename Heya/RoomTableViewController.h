@@ -8,11 +8,11 @@
 #import <CoreLocation/CoreLocation.h>
 #import "RoomManagerDelegate.h"
 #import <UIKit/UIKit.h>
-#import "SpeakUpManagerDelegate.h"
+#import "HeyaManagerDelegate.h"
 #import "ConnectionDelegate.h"
 
 
-@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SpeakUpManagerDelegate, ConnectionDelegate>
+@interface RoomTableViewController : UITableViewController <RoomManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, HeyaManagerDelegate, ConnectionDelegate>
 
 -(IBAction)refresh:(id)sender;
 

@@ -1,6 +1,6 @@
 //
 //  MemberManagerDelegate.h
-//  InterMix
+//  Heya
 //
 //  Created by Adrian Holzer on 07.02.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.

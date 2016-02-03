@@ -28,10 +28,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.headfirst.SpeakUp</string>
+			<string>com.headfirst.Heya</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>speakup</string>
+				<string>heya</string>
 			</array>
 		</dict>
 	</array>

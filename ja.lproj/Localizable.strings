@@ -1,6 +1,6 @@
 /* 
   Localizable.strings
-  SpeakUp
+  Heya
 
   Created by Adrian Holzer on 15.08.13.
   Copyright (c) 2013 Seance Association. All rights reserved.
@@ -10,7 +10,7 @@
 
 "NO_ROOM"="周辺にチャットルームなし、一つを作成しよ";
 
-"ROOMS"="SpeakUp";
+"ROOMS"="Heya";
 
 
 //"NO_LOCATION"="位置認識なし";

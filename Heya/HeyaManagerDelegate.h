@@ -1,6 +1,6 @@
 //
-//  ALPSManagerDelegate.h
-//  Hello ALPS
+//  HeyaManagerDelegate.h
+//  Heya
 //
 //  Created by Adrian Holzer on 27.11.12.
 //  Copyright (c) 2012 Seance Association. All rights reserved.
@@ -10,7 +10,7 @@
 
 #import "MHPaddoc.h"
 
-@protocol SpeakUpManagerDelegate <NSObject>
+@protocol HeyaManagerDelegate <NSObject>
 
 -(void)updateData;
 

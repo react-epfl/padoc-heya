@@ -7,7 +7,7 @@
 
 #import "MessageTableViewController.h"
 #import "Message.h"
-#import "SpeakUpManager.h"
+#import "HeyaManager.h"
 //#import "GAI.h"
 //#import "GAIDictionaryBuilder.h"
 //#import "GAIFields.h"
@@ -79,8 +79,8 @@
     if (parentMessage) {
         [self updateReplyMessages];//sets messageArray and header
     }else{
-        self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
-        [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+        self.messageArray=[[[HeyaManager sharedHeyaManager] currentRoom] messages];
+        [roomNameLabel setText:[[[HeyaManager sharedHeyaManager] currentRoom]name]];
     }
     
     /// INPUT VIEW
@@ -136,7 +136,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]&&!viewIsPopping) {
+    if (! [[[HeyaManager sharedHeyaManager] currentRoom] roomID]&&!viewIsPopping) {
         self.viewIsPopping=YES;
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -154,8 +154,8 @@
     [UIView animateWithDuration:0.3f animations:^{
         [self.inputView setFrame:CGRectMake(0,self.inputView.frame.origin.y-keyboardFrameBeginRect.size.height,self.inputView.frame.size.width,self.inputView.frame.size.height)];
     }];
-    if (![[SpeakUpManager sharedSpeakUpManager] etiquetteWasShown] && ![[[SpeakUpManager sharedSpeakUpManager] etiquetteType] isEqual:NO_ETIQUETTE]) {
-        [[SpeakUpManager  sharedSpeakUpManager] setEtiquetteWasShown:YES];
+    if (![[HeyaManager sharedHeyaManager] etiquetteWasShown] && ![[[HeyaManager sharedHeyaManager] etiquetteType] isEqual:NO_ETIQUETTE]) {
+        [[HeyaManager  sharedHeyaManager] setEtiquetteWasShown:YES];
         [self performSegueWithIdentifier:@"EtiquetteSegue" sender:self];
     }
     
@@ -183,9 +183,9 @@
 {
     isFirstMessageUpdate=YES;
     [self setRoomInfo];
-    [[SpeakUpManager sharedSpeakUpManager] setMessageManagerDelegate:self];
-    [[SpeakUpManager sharedSpeakUpManager] setConnectionDelegate:self];
-//    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+    [[HeyaManager sharedHeyaManager] setMessageManagerDelegate:self];
+    [[HeyaManager sharedHeyaManager] setConnectionDelegate:self];
+//    if ([[HeyaManager sharedHeyaManager] connectionIsOK]){
 //        [connectionLostSpinner stopAnimating];
 //    }else{
 //        [connectionLostSpinner startAnimating];
@@ -194,7 +194,7 @@
     // EXPIRATION TIME (24 hours since last change)
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    NSDate *lastUpdateTime = [dateFormatter dateFromString:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]lastUpdateTime]];
+    NSDate *lastUpdateTime = [dateFormatter dateFromString:[[[HeyaManager sharedHeyaManager] currentRoom]lastUpdateTime]];
     NSTimeInterval expirationTimeInSeconds = EXPIRATION_DURATION_IN_HOURS * 60 * 60;
     NSDate *expirationDate = [lastUpdateTime dateByAddingTimeInterval:expirationTimeInSeconds];
     NSDateFormatter *dateFormatterHourMinutes = [[NSDateFormatter alloc]init];
@@ -223,13 +223,13 @@
 //    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     
 
-    [[[SpeakUpManager sharedSpeakUpManager] deletedMessageIDs] removeAllObjects];
+    [[[HeyaManager sharedHeyaManager] deletedMessageIDs] removeAllObjects];
     [self placeInputView];
     if (parentMessage) {
         [self updateReplyMessages];//sets messageArray and header
     }else{
-        self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
-        [roomNameLabel setText:[[[SpeakUpManager sharedSpeakUpManager] currentRoom]name]];
+        self.messageArray=[[[HeyaManager sharedHeyaManager] currentRoom] messages];
+        [roomNameLabel setText:[[[HeyaManager sharedHeyaManager] currentRoom]name]];
     }
     [self sortMessages];
     [self.tableView reloadData];
@@ -246,7 +246,7 @@
 }
 
 -(void)notifyThatRoomHasBeenDeleted:(NSString*) room_id{
-    if (! [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID]&&!self.viewIsPopping) {
+    if (! [[[HeyaManager sharedHeyaManager] currentRoom] roomID]&&!self.viewIsPopping) {
         self.viewIsPopping=YES;
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -254,7 +254,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+    [[HeyaManager sharedHeyaManager] savePeerData];
     [super viewDidDisappear:animated];
 }
 
@@ -285,7 +285,7 @@
 // LOADS DATA
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (![[SpeakUpManager sharedSpeakUpManager] currentRoom] && indexPath.row==0) {
+    if (![[HeyaManager sharedHeyaManager] currentRoom] && indexPath.row==0) {
         [expirationLabel setText:@""];
         NSString *CellIdentifier = @"NoMessageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -328,21 +328,21 @@
         UIButton *thumbUpButton = (UIButton *)[cell viewWithTag:3];
         NSString* rowInString = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
         [thumbUpButton setTitle:rowInString forState:UIControlStateNormal];
-        if([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:message.messageID]){
+        if([[[HeyaManager sharedHeyaManager] likedMessages]  containsObject:message.messageID]){
             [thumbUpButton setImage:[UIImage imageNamed:@"thumbLIKE_PRESSED.png"] forState:UIControlStateNormal];
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else{
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_NOTPRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]] forState:UIControlStateNormal];
+            [thumbUpButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@LIKE_PRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         UIButton *thumbDownButton = (UIButton *)[cell viewWithTag:5];
         [thumbDownButton setTitle:rowInString forState:UIControlStateNormal];
-        if([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:message.messageID]){
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+        if([[[HeyaManager sharedHeyaManager] dislikedMessages]  containsObject:message.messageID]){
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_PRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]] forState:UIControlStateNormal];
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_NOTPRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }else {
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_NOTPRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]] forState:UIControlStateNormal];
-            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_PRESSED.png",[[SpeakUpManager sharedSpeakUpManager] likeType]]]  forState:UIControlStateHighlighted] ;
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_NOTPRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]] forState:UIControlStateNormal];
+            [thumbDownButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@DISLIKE_PRESSED.png",[[HeyaManager sharedHeyaManager] likeType]]]  forState:UIControlStateHighlighted] ;
         }
         
         //COMMENTS
@@ -367,7 +367,7 @@
         NSInteger hours = -(message.secondsSinceCreation / 3600);
         NSString* time=@"";
         NSString* name=@"";
-        if ([message.authorPeerID isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]) {
+        if ([message.authorPeerID isEqualToString:[[HeyaManager sharedHeyaManager] peer_id]]) {
             name=NSLocalizedString(@"ME", nil);
         }
         if(minutes  <1 && hours  <1){
@@ -442,7 +442,7 @@
 
 // RATING UP
 -(IBAction)rateMessageUp:(id)sender {
-    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+    if ([[HeyaManager sharedHeyaManager] connectionIsOK]) {
         @synchronized(self) {
             NSString* messageID;
             int yesRating = 0;
@@ -456,20 +456,20 @@
             messageID = message.messageID;
             if (messageID) {
                 //if the message was disliked, remove the message from the list of disliked messages and add it to the liked messages
-                if ([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:messageID]) {
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:messageID];
+                if ([[[HeyaManager sharedHeyaManager] dislikedMessages]  containsObject:messageID]) {
+                    [[[HeyaManager sharedHeyaManager] dislikedMessages]  removeObject:messageID];
                     noRating = -1;
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:messageID];
+                    [[[HeyaManager sharedHeyaManager] likedMessages]  addObject:messageID];
                     yesRating = 1;
                 }
                 //else if the message was liked remove it from the list of liked messages
-                else if ([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:messageID]) {
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:messageID];
+                else if ([[[HeyaManager sharedHeyaManager] likedMessages]  containsObject:messageID]) {
+                    [[[HeyaManager sharedHeyaManager] likedMessages]  removeObject:messageID];
                     yesRating = -1;
                 }
                 // else (i.e., when the message was neither liked or disliked, add it to the list of liked messages)
                 else {
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  addObject:messageID];
+                    [[[HeyaManager sharedHeyaManager] likedMessages]  addObject:messageID];
                     yesRating = 1;
                 }
                 
@@ -480,8 +480,8 @@
                 message.score = message.numberOfYes - message.numberOfNo;
                 
                 // update the message rating
-                [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
-                [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+                [[HeyaManager sharedHeyaManager] rateMessage:message inRoom:[[HeyaManager sharedHeyaManager] currentRoomID] yesRating:yesRating noRating:noRating];
+                [[HeyaManager sharedHeyaManager] savePeerData];
             } else {
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
@@ -496,7 +496,7 @@
 
 // RATING DOWN
 -(IBAction)rateMessageDown:(id)sender {
-    if ([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]) {
+    if ([[HeyaManager sharedHeyaManager] connectionIsOK]) {
         @synchronized(self) {
             NSString* messageID;
             int yesRating = 0;
@@ -510,20 +510,20 @@
             messageID = message.messageID;
             if (messageID) {
                 //if the message was disliked, remove the message from the list of disliked messages
-                if ([[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  containsObject:messageID]) {
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  removeObject:messageID];
+                if ([[[HeyaManager sharedHeyaManager] dislikedMessages]  containsObject:messageID]) {
+                    [[[HeyaManager sharedHeyaManager] dislikedMessages]  removeObject:messageID];
                     noRating--;
                 }
                 //else if the message was liked remove it from the list of liked messages and add it to the disliked messages
-                else if ([[[SpeakUpManager sharedSpeakUpManager] likedMessages]  containsObject:messageID]) {
-                    [[[SpeakUpManager sharedSpeakUpManager] likedMessages]  removeObject:messageID];
+                else if ([[[HeyaManager sharedHeyaManager] likedMessages]  containsObject:messageID]) {
+                    [[[HeyaManager sharedHeyaManager] likedMessages]  removeObject:messageID];
                     yesRating--;
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+                    [[[HeyaManager sharedHeyaManager] dislikedMessages]  addObject:messageID];
                     noRating++;
                 }
                 // else (i.e., when the message was neither liked or disliked, add it to the list of disliked messages)
                 else {
-                    [[[SpeakUpManager sharedSpeakUpManager] dislikedMessages]  addObject:messageID];
+                    [[[HeyaManager sharedHeyaManager] dislikedMessages]  addObject:messageID];
                     noRating++;
                 }
                 
@@ -534,8 +534,8 @@
                 message.score = message.numberOfYes - message.numberOfNo;
                 
                 // update the message rating
-                [[SpeakUpManager sharedSpeakUpManager] rateMessage:message inRoom:[[SpeakUpManager sharedSpeakUpManager] currentRoomID] yesRating:yesRating noRating:noRating];
-                [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+                [[HeyaManager sharedHeyaManager] rateMessage:message inRoom:[[HeyaManager sharedHeyaManager] currentRoomID] yesRating:yesRating noRating:noRating];
+                [[HeyaManager sharedHeyaManager] savePeerData];
             } else {
                 NSLog(@"the message %@ does not have an id",[message description]);
             }
@@ -551,12 +551,12 @@
 
 // RECEIVE NEW MESSAGES
 -(void)updateMessagesInRoom:(NSString*) roomID{
-    if([roomID isEqual:[[SpeakUpManager sharedSpeakUpManager] currentRoomID]]){
+    if([roomID isEqual:[[HeyaManager sharedHeyaManager] currentRoomID]]){
         if (!parentMessage) {
-            self.messageArray=[[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages];
+            self.messageArray=[[[HeyaManager sharedHeyaManager] currentRoom] messages];
         }else{
             BOOL parentWasDeleted = YES;
-            for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+            for (Message* message in [[[HeyaManager sharedHeyaManager] currentRoom] messages]){
                 if ([message.messageID isEqualToString:parentMessage.messageID] ) {
                     parentMessage=message;
                     self.messageArray=message.replies;
@@ -584,7 +584,7 @@
 }
 -(void)updateReplyMessages{
     BOOL foundparentMessage = NO;
-    for (Message* message in [[[SpeakUpManager sharedSpeakUpManager] currentRoom] messages]){
+    for (Message* message in [[[HeyaManager sharedHeyaManager] currentRoom] messages]){
         if ([message.messageID isEqualToString:parentMessage.messageID] ) {
             parentMessage=message;
             self.messageArray=message.replies;
@@ -687,7 +687,7 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     int characterNumber = (int)[[inputTextView text] length];
-    [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
+    [[HeyaManager sharedHeyaManager] setInputText:inputTextView.text];
     [inputButton setEnabled:NO];
     if(characterNumber>0){
         [inputButton setEnabled:YES];
@@ -711,14 +711,14 @@
 }
 
 -(IBAction)sendInput:(id)sender{
-    if([[SpeakUpManager sharedSpeakUpManager] connectionIsOK]){
+    if([[HeyaManager sharedHeyaManager] connectionIsOK]){
         // should send the message first
         if(![inputTextView.text isEqualToString:@""]){
             // create a new message
             Message *newMessage = [[Message alloc] init];
             newMessage.content = inputTextView.text;
             newMessage.parentMessageID = parentMessage.messageID;
-            newMessage.roomID = [[[SpeakUpManager sharedSpeakUpManager] currentRoom] roomID];
+            newMessage.roomID = [[[HeyaManager sharedHeyaManager] currentRoom] roomID];
             
             // Generate a random long string for the message id
             newMessage.messageID = [[NSProcessInfo processInfo] globallyUniqueString];
@@ -728,16 +728,16 @@
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
             newMessage.creationTime = [dateFormatter stringFromDate:[NSDate date]];
             
-            [[SpeakUpManager sharedSpeakUpManager] createMessage:newMessage];
+            [[HeyaManager sharedHeyaManager] createMessage:newMessage];
             [inputTextView setText:@""];
             //update the input
             [inputTextView resignFirstResponder];
-            [[SpeakUpManager sharedSpeakUpManager] setInputText:inputTextView.text];
-            [[SpeakUpManager sharedSpeakUpManager] savePeerData];
+            [[HeyaManager sharedHeyaManager] setInputText:inputTextView.text];
+            [[HeyaManager sharedHeyaManager] savePeerData];
             [self resizeInputBox];
             
             // Update the room
-            [[SpeakUpManager sharedSpeakUpManager] currentRoom].lastUpdateTime = [dateFormatter stringFromDate:[NSDate date]];
+            [[HeyaManager sharedHeyaManager] currentRoom].lastUpdateTime = [dateFormatter stringFromDate:[NSDate date]];
         }
     }
 }
@@ -780,20 +780,20 @@
     UITableViewRowAction *spamAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Spam" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
         [self.messageArray removeObject:message];
-        [[SpeakUpManager sharedSpeakUpManager] markMessageAsSpam:message];
+        [[HeyaManager sharedHeyaManager] markMessageAsSpam:message];
         [tableView reloadData];
     }];
     spamAction.backgroundColor = [UIColor orangeColor];
     NSString* hideOrDelete=NSLocalizedString(@"HIDE", nil);
    //Only room admins can delete
-    if( [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID] isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]){
+    if( [[[[HeyaManager sharedHeyaManager] currentRoom] creatorID] isEqualToString:[[HeyaManager sharedHeyaManager] peer_id]]){
         hideOrDelete=NSLocalizedString(@"DELETE", nil);
     }
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:hideOrDelete  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         Message* message = [self getMessageForIndex:indexPath.row];
         [self.messageArray  removeObject:message];
-        if( [[[[SpeakUpManager sharedSpeakUpManager] currentRoom] creatorID] isEqualToString:[[SpeakUpManager sharedSpeakUpManager] peer_id]]){
-            [[SpeakUpManager sharedSpeakUpManager] deleteMessage:message];
+        if( [[[[HeyaManager sharedHeyaManager] currentRoom] creatorID] isEqualToString:[[HeyaManager sharedHeyaManager] peer_id]]){
+            [[HeyaManager sharedHeyaManager] deleteMessage:message];
         }
         [tableView reloadData];
     }];
