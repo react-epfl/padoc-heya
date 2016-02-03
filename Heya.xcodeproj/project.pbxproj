@@ -212,7 +212,7 @@
 				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
 				AA52964C1B3EF4D60017019B /* Paddoc */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
-				8096A8B11636E80C0092F049 /* SpeakUp */,
+				8096A8B11636E80C0092F049 /* Heya */,
 				8096A8AA1636E80C0092F049 /* Frameworks */,
 				8096A8A81636E80C0092F049 /* Products */,
 			);
@@ -249,7 +249,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8096A8B11636E80C0092F049 /* SpeakUp */ = {
+		8096A8B11636E80C0092F049 /* Heya */ = {
 			isa = PBXGroup;
 			children = (
 				8090FE6A1664FC6A005A6358 /* SpeakUpManager.h */,
@@ -265,7 +265,7 @@
 				803EB69417EDF75100E053EA /* Images.xcassets */,
 				8096A8B21636E80C0092F049 /* Supporting Files */,
 			);
-			path = SpeakUp;
+			path = Heya;
 			sourceTree = "<group>";
 		};
 		8096A8B21636E80C0092F049 /* Supporting Files */ = {
@@ -595,13 +595,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/SpeakUp\"",
+					"\"$(SRCROOT)/Heya\"",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SpeakUp/Heya-Prefix.pch";
-				INFOPLIST_FILE = "SpeakUp/Heya-Info.plist";
+				GCC_PREFIX_HEADER = "Heya/Heya-Prefix.pch";
+				INFOPLIST_FILE = "Heya/Heya-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -624,13 +624,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/SpeakUp\"",
+					"\"$(SRCROOT)/Heya\"",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SpeakUp/Heya-Prefix.pch";
-				INFOPLIST_FILE = "SpeakUp/Heya-Info.plist";
+				GCC_PREFIX_HEADER = "Heya/Heya-Prefix.pch";
+				INFOPLIST_FILE = "Heya/Heya-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
