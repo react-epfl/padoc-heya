@@ -132,7 +132,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 //                  toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
 //                           error:&error];
         [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
-             toDestinations:[[NSArray alloc] initWithObjects:groups, nil]
+             toDestinations:groups
                       error:&error];
         
     } else if ([type isEqual:@"getroom"]) {
@@ -169,7 +169,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 //                  toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
 //                           error:&error];
         [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
-             toDestinations:[[NSArray alloc] initWithObjects:groups, nil]
+             toDestinations:groups
                       error:&error];
         
     } else if ([type isEqual:@"tag_message"]) {
@@ -225,6 +225,9 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 // RECEIVED ROOM
 - (NSString*)receivedRoom:(Room *)room {
     // when a room is received it is added if it was not already in the list, unless the user has hidden the room before
+    
+    NSLog(@"Room received : %@", room);
+    
     NSMutableArray* roomsToRemove = [NSMutableArray array];
     for (Room *r in roomArray) {
         if ([r.roomID isEqual:room.roomID]) {
@@ -233,6 +236,8 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
     [roomArray removeObjectsInArray:roomsToRemove];
     [roomsToRemove removeAllObjects];
+    
+    
     for (Room *r in unlockedRoomArray) {
         if ([r.roomID isEqual:room.roomID]) {
             [roomsToRemove addObject:r];
@@ -240,6 +245,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     }
     [unlockedRoomArray removeObjectsInArray:roomsToRemove];
     [roomsToRemove removeAllObjects];
+    
     for (Room *r in myOwnRoomArray) {
         if ([r.roomID isEqual:room.roomID]) {
             [roomsToRemove addObject:r];
@@ -248,6 +254,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     [myOwnRoomArray removeObjectsInArray:roomsToRemove];
     
     if ([room.creatorID isEqualToString:self.peer_id]) {
+        
         if (![myOwnRoomIDArray containsObject:room.roomID]) {
             [myOwnRoomIDArray addObject:room.roomID];
         }
@@ -444,7 +451,6 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         
         // Set the peer id
         peer_id = [paddoc getOwnPeer];
-        NSLog(@"PEER_ID: %@", peer_id);
     
         // For background mode
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -487,6 +493,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
     if (!connectionIsOK) {
         [self connect];
     } else {
+        
         // Empty the current list of rooms
         [roomArray removeAllObjects];
 //        [roomArray addObjectsFromArray:myOwnRoomArray];
@@ -494,6 +501,7 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
         // Broadcast a rooms retrieval message
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
+        
         [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                       error:&error];
@@ -532,8 +540,10 @@ static SpeakUpManager *sharedSpeakUpManager = nil;
 
 // CREATE NEW ROOM
 - (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler {
+    
     // Save the room locally
     [self receivedRoom:room];
+    
     
     // Broadcast the room to the other peers
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:room];

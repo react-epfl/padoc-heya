@@ -295,9 +295,9 @@
             UNLOCKED_SECTION = -1;
             NEARBY_SECTION--;
         }
+        NSLog(@"HELLO");
         
         [self.tableView reloadData];
-        NSLog(@"HELLO");
     }
 }
 
