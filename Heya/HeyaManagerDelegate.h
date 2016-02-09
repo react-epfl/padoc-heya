@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHPaddoc.h"
+#import "MHPadoc.h"
 
 @protocol HeyaManagerDelegate <NSObject>
 

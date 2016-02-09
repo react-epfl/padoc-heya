@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MHPaddoc.h"
+#import "MHPadoc.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-- (void)setPaddoc:(MHPaddoc *)paddoc;
+- (void)setPadoc:(MHPadoc *)padoc;
 
 @end

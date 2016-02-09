@@ -13,7 +13,7 @@
 #import "MessageManagerDelegate.h"
 #import "RoomManagerDelegate.h"
 #import "ConnectionDelegate.h"
-#import "MHPaddoc.h"
+#import "MHPadoc.h"
 
 #define RANGE 200 
 #define CREATE_TAB 1
@@ -46,7 +46,7 @@
 #define IS_OS_7_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 
-@interface HeyaManager : NSObject <CLLocationManagerDelegate, MHPaddocDelegate>
+@interface HeyaManager : NSObject <CLLocationManagerDelegate, MHPadocDelegate>
 
 + (id)sharedHeyaManager;
 
@@ -61,7 +61,7 @@
 - (void)createRoom:(Room *)room withHandler:(void (^)(NSDictionary*))handler;
 - (void)getMessagesInRoomID:(NSString*)room_id orRoomHash:(NSString*)key withHandler:(void (^)(NSDictionary*))handler;
 
-@property (strong, nonatomic) MHPaddoc *paddoc;
+@property (strong, nonatomic) MHPadoc *padoc;
 @property (nonatomic) BOOL connectionIsOK;
 @property (nonatomic) BOOL locationIsOK;
 // Peer fields

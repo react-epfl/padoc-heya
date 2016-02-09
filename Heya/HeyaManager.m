@@ -19,7 +19,7 @@
 
 @implementation HeyaManager
 
-@synthesize peer_id, dev_id,likedMessages, heyaDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, paddoc, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
+@synthesize peer_id, dev_id,likedMessages, heyaDelegate, dislikedMessages,deletedRoomIDs,inputText, messageManagerDelegate, roomManagerDelegate, roomArray, locationIsOK, connectionIsOK, unlockedRoomIDArray, deletedMessageIDs, locationAtLastReset, avatarCacheByPeerID, padoc, connectionDelegate, currentRoomID, currentRoom, inputRoomIDText,unlockedRoomArray, likeType, etiquetteType, etiquetteWasShown, myOwnRoomIDArray, myOwnRoomArray;
 
 static HeyaManager *sharedHeyaManager = nil;
 
@@ -60,15 +60,15 @@ static HeyaManager *sharedHeyaManager = nil;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CALLBACKS OF Paddoc lib - INCOMING MESSAGES
+// CALLBACKS OF Padoc lib - INCOMING MESSAGES
 
 // SOCKET DID RECEIVE MESSAGE
-//- (void)mhPaddoc:(MHPaddoc *)mhPaddoc
+//- (void)mhPadoc:(MHPadoc *)mhPadoc
 //        didReceiveMessage:(NSData *)message
 //                 fromPeer:(NSString *)peer
 //            withTraceInfo:(NSArray *)traceInfo {
 
-- (void)mhPaddoc:(MHPaddoc *)mhPaddoc
+- (void)mhPadoc:(MHPadoc *)mhPadoc
   deliverMessage:(NSData *)data
       fromGroups:(NSArray *)groups {
     [self stopNetworking];
@@ -128,10 +128,10 @@ static HeyaManager *sharedHeyaManager = nil;
         // Send our list of rooms to the requesting peer
         PacketContent* msg = [[PacketContent alloc] initWithType:@"rooms" withContent:myOwnRoomArray];
         NSError *error;
-//        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+//        [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
 //                  toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
 //                           error:&error];
-        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+        [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:groups
                       error:&error];
         
@@ -165,10 +165,10 @@ static HeyaManager *sharedHeyaManager = nil;
         
         PacketContent* msg = [[PacketContent alloc] initWithType:@"room" withContent:myData];
         NSError *error;
-//        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+//        [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
 //                  toDestinations:[[NSArray alloc] initWithObjects:peer, nil]
 //                           error:&error];
-        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+        [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:groups
                       error:&error];
         
@@ -183,7 +183,7 @@ static HeyaManager *sharedHeyaManager = nil;
     [heyaDelegate updateData];
 }
 
-- (void)mhPaddoc:(MHPaddoc *)mhPaddoc
+- (void)mhPadoc:(MHPadoc *)mhPadoc
           failedToConnect:(NSError *)error {
     
 }
@@ -444,21 +444,21 @@ static HeyaManager *sharedHeyaManager = nil;
 
 // CONNECT
 - (void)connect {
-    if (paddoc == nil) {
-        // Set up paddoc and the groups
-        paddoc = [[MHPaddoc alloc] initWithServiceType:@"heya"];
-        paddoc.delegate = self;
+    if (padoc == nil) {
+        // Set up padoc and the groups
+        padoc = [[MHPadoc alloc] initWithServiceType:@"heya"];
+        padoc.delegate = self;
         
         // Set the peer id
-        peer_id = [paddoc getOwnPeer];
+        peer_id = [padoc getOwnPeer];
     
         // For background mode
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate setPaddoc:self.paddoc];
+        [appDelegate setPadoc:self.padoc];
     
         // Join the groups
-        [paddoc joinGroup:GLOBAL];
-        [paddoc joinGroup:peer_id];
+        [padoc joinGroup:GLOBAL];
+        [padoc joinGroup:peer_id];
     }
     
     connectionIsOK = YES;
@@ -502,7 +502,7 @@ static HeyaManager *sharedHeyaManager = nil;
         PacketContent* msg = [[PacketContent alloc] initWithType:@"getrooms" withContent:nil];
         NSError *error;
         
-        [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+        [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
              toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                       error:&error];
     }
@@ -516,7 +516,7 @@ static HeyaManager *sharedHeyaManager = nil;
     // Broadcast a message to retrieve the mesages in the room
     PacketContent* msg = [[PacketContent alloc] initWithType:@"getroom" withContent:myData];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
 }
@@ -526,7 +526,7 @@ static HeyaManager *sharedHeyaManager = nil;
     // Broadcast the message
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createmessage" withContent:message];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -548,7 +548,7 @@ static HeyaManager *sharedHeyaManager = nil;
     // Broadcast the room to the other peers
     PacketContent* msg = [[PacketContent alloc] initWithType:@"createroom" withContent:room];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -571,7 +571,7 @@ static HeyaManager *sharedHeyaManager = nil;
     // Broadcast the message to the other peers
     PacketContent* msg = [[PacketContent alloc] initWithType:@"updatemessage" withContent:message];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -589,7 +589,7 @@ static HeyaManager *sharedHeyaManager = nil;
     
     PacketContent* msg = [[PacketContent alloc] initWithType:@"deleteroom" withContent:myData];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -615,7 +615,7 @@ static HeyaManager *sharedHeyaManager = nil;
     
     PacketContent* msg = [[PacketContent alloc] initWithType:@"deletemessage" withContent:myData];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     
@@ -638,7 +638,7 @@ static HeyaManager *sharedHeyaManager = nil;
 
     PacketContent* msg = [[PacketContent alloc] initWithType:@"tag_message" withContent:myData];
     NSError *error;
-    [paddoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
+    [padoc multicastMessage:[NSKeyedArchiver archivedDataWithRootObject:msg]
          toDestinations:[[NSArray alloc] initWithObjects:GLOBAL, nil]
                   error:&error];
     

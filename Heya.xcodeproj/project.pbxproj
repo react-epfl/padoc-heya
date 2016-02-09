@@ -62,7 +62,7 @@
 		AA5296821B3EF4D60017019B /* MHPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52966C1B3EF4D60017019B /* MHPeer.m */; };
 		AA5296831B3EF4D60017019B /* MHPeerBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52966E1B3EF4D60017019B /* MHPeerBuffer.m */; };
 		AA5296841B3EF4D60017019B /* MHRoutingProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5296701B3EF4D60017019B /* MHRoutingProtocol.m */; };
-		AA5296851B3EF4D60017019B /* MHPaddoc.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5296721B3EF4D60017019B /* MHPaddoc.m */; };
+		AA5296851B3EF4D60017019B /* MHPadoc.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5296721B3EF4D60017019B /* MHPadoc.m */; };
 		C05C84A21C5FAE39000DDE9A /* MHCBSProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = C05C84A11C5FAE39000DDE9A /* MHCBSProtocol.m */; };
 /* End PBXBuildFile section */
 
@@ -171,8 +171,8 @@
 		AA52966E1B3EF4D60017019B /* MHPeerBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPeerBuffer.m; sourceTree = "<group>"; };
 		AA52966F1B3EF4D60017019B /* MHRoutingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHRoutingProtocol.h; sourceTree = "<group>"; };
 		AA5296701B3EF4D60017019B /* MHRoutingProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHRoutingProtocol.m; sourceTree = "<group>"; };
-		AA5296711B3EF4D60017019B /* MHPaddoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPaddoc.h; sourceTree = "<group>"; };
-		AA5296721B3EF4D60017019B /* MHPaddoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPaddoc.m; sourceTree = "<group>"; };
+		AA5296711B3EF4D60017019B /* MHPadoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPadoc.h; sourceTree = "<group>"; };
+		AA5296721B3EF4D60017019B /* MHPadoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPadoc.m; sourceTree = "<group>"; };
 		C05C849F1C5FADEA000DDE9A /* MH6ShotsProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MH6ShotsProtocol.h; sourceTree = "<group>"; };
 		C05C84A01C5FAE39000DDE9A /* MHCBSProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHCBSProtocol.h; sourceTree = "<group>"; };
 		C05C84A11C5FAE39000DDE9A /* MHCBSProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHCBSProtocol.m; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 			children = (
 				802BF6591B41A280003E9E31 /* LaunchScreen.xib */,
 				80070C941A727E0900256E60 /* GenericStoryboard.storyboard */,
-				AA52964C1B3EF4D60017019B /* Paddoc */,
+				AA52964C1B3EF4D60017019B /* Padoc */,
 				803165AB17BCC8CC003C4E77 /* Localizable.strings */,
 				8096A8B11636E80C0092F049 /* Heya */,
 				8096A8AA1636E80C0092F049 /* Frameworks */,
@@ -329,7 +329,7 @@
 			path = Likes;
 			sourceTree = "<group>";
 		};
-		AA52964C1B3EF4D60017019B /* Paddoc */ = {
+		AA52964C1B3EF4D60017019B /* Padoc */ = {
 			isa = PBXGroup;
 			children = (
 				C05C84A01C5FAE39000DDE9A /* MHCBSProtocol.h */,
@@ -370,11 +370,10 @@
 				AA52966E1B3EF4D60017019B /* MHPeerBuffer.m */,
 				AA52966F1B3EF4D60017019B /* MHRoutingProtocol.h */,
 				AA5296701B3EF4D60017019B /* MHRoutingProtocol.m */,
-				AA5296711B3EF4D60017019B /* MHPaddoc.h */,
-				AA5296721B3EF4D60017019B /* MHPaddoc.m */,
+				AA5296711B3EF4D60017019B /* MHPadoc.h */,
+				AA5296721B3EF4D60017019B /* MHPadoc.m */,
 			);
-			name = Paddoc;
-			path = "../padoc-lib/Paddoc";
+			path = Padoc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,7 +466,7 @@
 			files = (
 				8096A8B81636E80C0092F049 /* main.m in Sources */,
 				8096A8BC1636E80C0092F049 /* AppDelegate.m in Sources */,
-				AA5296851B3EF4D60017019B /* MHPaddoc.m in Sources */,
+				AA5296851B3EF4D60017019B /* MHPadoc.m in Sources */,
 				AA52967F1B3EF4D60017019B /* MHMessage.m in Sources */,
 				8096A8F61636E9C60092F049 /* Message.m in Sources */,
 				8096A8F81636E9C60092F049 /* MessageTableViewController.m in Sources */,
